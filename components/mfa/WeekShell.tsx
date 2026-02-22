@@ -31,7 +31,23 @@ function renderBlock(block: WeekBlock) {
   }
 }
 
-export default function WeekShell({ week, nextHref = "/diy-mfa/year-one/week-2", nextLabel = "Week 2: Sustainable Practice" }: { week: WeekData; nextHref?: string; nextLabel?: string }) {
+type WeekShellProps = {
+  week?: WeekData;
+  nextHref?: string;
+  nextLabel?: string;
+  variant?: "essay" | "module";
+  moduleContent?: React.ReactNode;
+};
+
+export default function WeekShell({ week, nextHref = "/diy-mfa/year-one/week-2", nextLabel = "Week 2: Sustainable Practice", variant = "essay", moduleContent }: WeekShellProps) {
+  if (variant === "module") {
+    return <>{moduleContent}</>;
+  }
+
+  if (!week) {
+    throw new Error("WeekShell requires week data for variant='essay'.");
+  }
+
   return (
     <div>
       <Masthead weekNumber={week.weekNumber} totalWeeks={week.totalWeeks} subtitle={`MFA Year One · ${week.semesterLabel}`} prevHref="/diy-mfa" nextHref={nextHref} />
@@ -40,7 +56,7 @@ export default function WeekShell({ week, nextHref = "/diy-mfa/year-one/week-2",
         {week.sections.map((section) => <Section key={section.id} id={section.id} label={section.label} title={section.title}>{section.blocks.map((b, i) => <div key={i}>{renderBlock(b)}</div>)}</Section>)}
       </main>
       <WeekFooterNav center={`Year One · Week ${week.weekNumber} of ${week.totalWeeks}
-${week.title}`} nextLabel={nextLabel} />
+${week.title}`} nextLabel={nextLabel} nextHref={nextHref} />
     </div>
   );
 }
