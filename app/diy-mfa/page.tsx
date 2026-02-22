@@ -8,7 +8,7 @@ export default function DiyMfaHome() {
       <p className="mx-auto mt-6 max-w-2xl text-xl text-muted">A 36-week writing curriculum organized around practice, craft, and editorial rigor.</p>
       <div className="mt-10 flex justify-center gap-4">
         <Link href="/diy-mfa/year-one/week-1" className="rounded-sm border border-border px-4 py-2 no-underline">Enter Week 1</Link>
-        <Link href="/diy-mfa/year-one/week-2" className="rounded-sm border border-border px-4 py-2 no-underline">Week 2 Placeholder</Link>
+        <Link href="/diy-mfa/year-one/week-2" className="rounded-sm border border-border px-4 py-2 no-underline">Enter Week 2</Link>
       </div>
     </section>
   );

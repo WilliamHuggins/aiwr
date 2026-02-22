@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import WeekShell from "@/components/mfa/WeekShell";
-import Week2Module from "@/components/mfa/Week2Module";
+import { week2Data } from "@/lib/mfa/year-one/week-2";
 
 export const metadata: Metadata = {
   title: "Week 2 — Image & Sensory Detail | MFA Year One",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Week2Page() {
-  return <WeekShell variant="module" moduleContent={<Week2Module />} />;
+  return <WeekShell week={week2Data} prevHref="/diy-mfa/year-one/week-1" nextHref="/diy-mfa/year-one/week-3" nextLabel="Week 3: Coming Soon" />;
 }
