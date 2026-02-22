@@ -42,7 +42,7 @@ const aiTools = [
 export default function HomePage() {
   return (
     <>
-      <section className="relative flex min-h-[640px] items-start justify-center py-20 text-white lg:min-h-[72vh] lg:py-24">
+      <section className="relative flex h-[72vh] min-h-[640px] items-center justify-center text-white">
         <HeroBackgroundVideo />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
         <Container className="relative z-20 flex flex-col items-center pt-8 text-center md:pt-12 lg:pt-16">
