@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { BookOpen, MapPin, User, Users } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
+import HeroBackgroundVideo from "@/components/HeroBackgroundVideo";
 
 const aiTools = [
   {
@@ -43,13 +43,7 @@ export default function HomePage() {
   return (
     <>
       <section className="relative flex h-[72vh] min-h-[480px] items-center justify-center text-white">
-        <Image
-          src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80"
-          alt="A writer looking out a window with a mug, inspired."
-          fill
-          priority
-          className="z-0 object-cover brightness-[0.42]"
-        />
+        <HeroBackgroundVideo />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
         <Container className="relative z-20 flex flex-col items-center text-center">
           <p className="font-ui text-xs uppercase tracking-[0.24em] text-white/80">AI Writers&apos; Retreat</p>
