@@ -42,18 +42,35 @@ const aiTools = [
 export default function HomePage() {
   return (
     <>
-      <section className="relative flex h-[72vh] min-h-[480px] items-center justify-center text-white">
+      <section className="relative flex min-h-[640px] items-center justify-center py-16 text-white md:py-24">
         <HeroBackgroundVideo />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
         <Container className="relative z-20 flex flex-col items-center text-center">
           <p className="font-ui text-xs uppercase tracking-[0.24em] text-white/80">AI Writers&apos; Retreat</p>
           <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            Master the Craft. Command the Code.
+            Author in charge. Tool in service.
           </h1>
-          <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/85 md:text-xl">
-            The future of writing belongs to those who blend timeless craft with powerful technology. Our primary focus
-            is teaching you to leverage generative AI as a revolutionary creative partner.
-          </p>
+          <div className="mt-7 max-w-5xl space-y-5 text-left text-base leading-relaxed text-white/90 sm:text-lg md:text-xl">
+            <p>
+              AI Writers&apos; Retreat is a craft-first studio for writers who want the advantages of generative AI
+              without compromising voice, taste, or authority on the page. We teach a practical, editorial approach:
+              AI can accelerate research, clarify structure, surface blind spots, and strengthen revision—but it
+              can&apos;t decide what your work means. That part stays with you.
+            </p>
+            <p>
+              Start with the DIY MFA, a focused curriculum built around craft fundamentals and disciplined practice.
+              Then use our purpose-built AI writing partners as support tools: for historically grounded research,
+              world and character development, constructive critique, and line-level polish. The goal isn&apos;t to
+              &ldquo;write for you.&rdquo; It&apos;s to help you write with more control—fewer dead ends, cleaner drafts,
+              sharper revisions.
+            </p>
+            <p>
+              For writers who are hesitant to use AI—or hesitant to admit it—we take that seriously. We treat AI as
+              an instrument, not an identity: a professional tool you direct, document, and use with standards that
+              hold up to editorial scrutiny. The result is work that reads intentional, coherent, and human—because
+              it is.
+            </p>
+          </div>
         </Container>
       </section>
 
