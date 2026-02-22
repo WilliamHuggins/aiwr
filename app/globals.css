@@ -93,3 +93,30 @@
     --tw-prose-captions: rgb(var(--muted));
   }
 }
+
+@layer components {
+  .mfa-scope {
+    --mfa-rust: 160 64 42;
+    --mfa-gold: 184 147 42;
+    font-family: var(--font-mfa-body), serif;
+  }
+
+  .mfa-scope .font-mfa-display {
+    font-family: var(--font-mfa-display), serif;
+  }
+
+  .mfa-scope .font-mfa-mono {
+    font-family: var(--font-mfa-mono), monospace;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
