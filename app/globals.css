@@ -120,3 +120,35 @@
     transform: translateY(0);
   }
 }
+
+@layer components {
+  .mfa-module-scope {
+    font-family: var(--font-module-body), serif;
+  }
+
+  .mfa-module-scope .font-module-heading {
+    font-family: var(--font-module-heading), serif;
+  }
+
+  .mfa-module-scope .font-module-ui {
+    font-family: var(--font-module-ui), sans-serif;
+  }
+
+  .mfa-module-scope.dyslexia-mode,
+  .mfa-module-scope.dyslexia-mode .font-module-heading,
+  .mfa-module-scope.dyslexia-mode .font-module-ui {
+    font-family: Verdana, sans-serif;
+    letter-spacing: 0.04em;
+    line-height: 1.8;
+  }
+
+  .mfa-module-scope.dyslexia-mode .content-max {
+    max-width: 55ch;
+  }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
