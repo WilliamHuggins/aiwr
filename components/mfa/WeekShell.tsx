@@ -7,7 +7,7 @@ import { AiWorkshopBox, Card, DividerOrnament, ExerciseBox, GenreGrid, GrammarBo
 function renderParagraphContent(content: any[]) {
   return content.map((part, i) => {
     if (typeof part === "string") return <span key={i}>{part}</span>;
-    if (part.highlight) return <span key={i} className="bg-gradient-to-b from-transparent from-60% to-[#EED09A] to-60% pb-0.5">{part.text}</span>;
+    if (part.highlight) return <span key={i} className="inline-highlight">{part.text}</span>;
     if (part.emphasized) return <strong key={i}>{part.text}</strong>;
     return <span key={i}>{part.text}</span>;
   });
@@ -33,13 +33,14 @@ function renderBlock(block: WeekBlock) {
 
 type WeekShellProps = {
   week?: WeekData;
+  prevHref?: string;
   nextHref?: string;
   nextLabel?: string;
   variant?: "essay" | "module";
   moduleContent?: React.ReactNode;
 };
 
-export default function WeekShell({ week, nextHref = "/diy-mfa/year-one/week-2", nextLabel = "Week 2: Sustainable Practice", variant = "essay", moduleContent }: WeekShellProps) {
+export default function WeekShell({ week, prevHref = "/diy-mfa", nextHref = "/diy-mfa/year-one/week-2", nextLabel = "Week 2: Sustainable Practice", variant = "essay", moduleContent }: WeekShellProps) {
   if (variant === "module") {
     return <>{moduleContent}</>;
   }
@@ -50,7 +51,7 @@ export default function WeekShell({ week, nextHref = "/diy-mfa/year-one/week-2",
 
   return (
     <div>
-      <Masthead weekNumber={week.weekNumber} totalWeeks={week.totalWeeks} subtitle={`MFA Year One · ${week.semesterLabel}`} prevHref="/diy-mfa" nextHref={nextHref} />
+      <Masthead weekNumber={week.weekNumber} totalWeeks={week.totalWeeks} subtitle={`MFA Year One · ${week.semesterLabel}`} prevHref={prevHref} nextHref={nextHref} />
       <Hero label={`Week ${week.weekNumber} of ${week.totalWeeks} · ${week.semesterLabel} · ${week.phaseLabel}`} title={week.title} emphasis={week.emphasizedWord} deck={week.deck} meta={week.meta} />
       <main className="mx-auto max-w-[860px] px-5 pb-24 md:px-8" aria-label={`Week ${week.weekNumber} content`}>
         {week.sections.map((section) => <Section key={section.id} id={section.id} label={section.label} title={section.title}>{section.blocks.map((b, i) => <div key={i}>{renderBlock(b)}</div>)}</Section>)}

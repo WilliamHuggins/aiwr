@@ -31,6 +31,11 @@
 
     --selection-bg: 107 140 204;
     --selection-text: 26 26 46;
+    --essay-inline-highlight: 138 168 227;
+  }
+
+  :root {
+    --essay-inline-highlight: 191 134 46;
   }
 
   html {
@@ -107,6 +112,29 @@
 
   .mfa-scope .font-mfa-mono {
     font-family: var(--font-mfa-mono), monospace;
+  }
+
+  .mfa-scope .mfa-essay-body {
+    color: rgb(var(--text));
+    text-wrap: pretty;
+    font-weight: 400;
+  }
+
+  .mfa-scope .mfa-essay-body .text-muted,
+  .mfa-scope .text-muted {
+    color: rgb(var(--muted));
+  }
+
+  .mfa-scope .mfa-essay-body a,
+  .mfa-scope a {
+    color: rgb(var(--accent));
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.2em;
+  }
+
+  .inline-highlight {
+    border-bottom: 0.14em solid rgb(var(--essay-inline-highlight) / 0.55);
+    padding-bottom: 0.04em;
   }
 }
 
