@@ -7,7 +7,16 @@ import { AiWorkshopBox, Card, DividerOrnament, ExerciseBox, GenreGrid, GrammarBo
 function renderParagraphContent(content: any[]) {
   return content.map((part, i) => {
     if (typeof part === "string") return <span key={i}>{part}</span>;
-    if (part.highlight) return <span key={i} className="bg-gradient-to-b from-transparent from-60% to-[#EED09A] to-60% pb-0.5">{part.text}</span>;
+    if (part.highlight) {
+      return (
+        <span
+          key={i}
+          className="bg-gradient-to-b from-transparent from-60% to-[#EED09A]/75 to-60% pb-0.5 dark:to-[#8E7640]/45"
+        >
+          {part.text}
+        </span>
+      );
+    }
     if (part.emphasized) return <strong key={i}>{part.text}</strong>;
     return <span key={i}>{part.text}</span>;
   });
