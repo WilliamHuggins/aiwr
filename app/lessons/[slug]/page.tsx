@@ -40,27 +40,27 @@ export default function LessonPage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <main className="bg-canvas dark:bg-canvasDark text-ink dark:text-canvas min-h-screen font-body">
+    <main className="bg-canvas dark:bg-canvasDark text-text min-h-screen font-body">
       <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
-        <article className="prose prose-lg dark:prose-invert prose-headings:font-display prose-a:text-glow dark:prose-a:text-mint hover:prose-a:underline">
+        <article className="prose-editorial prose-lg prose-headings:font-display">
           
           {/* A11Y: The <header> provides a landmark for the main content's introduction. */}
-          <header className="mb-8 border-b pb-4 border-gray-200 dark:border-gray-700">
-            <p className="text-sm font-ui uppercase tracking-wider text-glow dark:text-mint flex items-center">
+          <header className="mb-8 border-b pb-4 border-border">
+            <p className="text-sm font-ui uppercase tracking-wider text-accent flex items-center">
               <GraduationCap className="w-4 h-4 mr-2" />
               {lesson.module}
             </p>
-            <h1 className="mt-2 text-4xl md:text-5xl font-bold font-display text-ink dark:text-canvas">
+            <h1 className="mt-2 text-4xl md:text-5xl font-bold font-display text-text">
               {lesson.title}
             </h1>
-            <div className="mt-4 flex items-center space-x-4 text-sm font-ui text-gray-500 dark:text-gray-400">
+            <div className="mt-4 flex items-center space-x-4 text-sm font-ui text-muted">
               <div className="flex items-center">
                 <Clock className="w-4 h-4 mr-1.5" />
                 <span>{lesson.readingTime} min read</span>
               </div>
               <button
                 aria-label="Bookmark this lesson"
-                className="flex items-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-glow dark:focus-visible:ring-offset-canvasDark"
+                className="flex items-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-bg"
               >
                 <Bookmark className="w-4 h-4" />
               </button>

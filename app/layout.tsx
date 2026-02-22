@@ -1,39 +1,34 @@
 import type { Metadata } from "next";
-// Correctly import fonts from Next.js Google font package
-import { Inter, Montserrat, Merriweather } from "next/font/google";
+import { Inter, Playfair_Display, Source_Serif_4 } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
-// Instantiate Google fonts with the desired subsets, display and CSS variable names.
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-ui",
 });
 
-const montserrat = Montserrat({
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-montserrat",
+  variable: "--font-body",
 });
 
-const merriweather = Merriweather({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "700"],
   display: "swap",
-  variable: "--font-merriweather",
+  variable: "--font-display",
 });
 
-// Metadata exported for static generation. Defines the page title and description.
 export const metadata: Metadata = {
   title: "AI Writers' Retreat",
   description: "Master the Craft. Command the Code.",
 };
 
-// RootLayout wraps every page in the global providers and layout components.
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -41,17 +36,16 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-canvas text-ink dark:bg-canvasDark dark:text-canvas font-ui transition-colors duration-300",
+          "min-h-screen bg-bg text-text font-body transition-colors duration-300",
           inter.variable,
-          montserrat.variable,
-          merriweather.variable,
+          sourceSerif.variable,
+          playfair.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {/* Skip link for accessibility */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:p-3 bg-canvas dark:bg-canvasDark focus:ring-2 focus:ring-glow"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-surface-1 focus:p-3 focus-ring"
           >
             Skip to main content
           </a>
