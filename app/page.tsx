@@ -45,7 +45,7 @@ export default function HomePage() {
       <section className="relative flex h-[72vh] min-h-[640px] items-center justify-center text-white">
         <HeroBackgroundVideo />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
-        <Container className="relative z-20 flex flex-col items-center text-center">
+        <Container className="relative z-20 flex flex-col items-center pt-8 text-center md:pt-12 lg:pt-16">
           <p className="font-ui text-xs uppercase tracking-[0.24em] text-white/80">AI Writers&apos; Retreat</p>
           <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
             Author in charge. Tool in service.
