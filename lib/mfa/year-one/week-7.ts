@@ -1,7 +1,7 @@
 import type { WeekData } from "@/lib/mfa/types";
 
-export const week8Data: WeekData = {
-  weekNumber: 8,
+export const week7Data: WeekData = {
+  weekNumber: 7,
   totalWeeks: 36,
   semesterLabel: "Fall Semester",
   phaseLabel: "Foundation",
@@ -204,7 +204,7 @@ export const week8Data: WeekData = {
     {
       id: "ai",
       label: "AI Workshop",
-      title: "Exercise 8 — The Filter Audit",
+      title: "Exercise 7 — The Filter Audit",
       blocks: [
         {
           type: "ai",
@@ -276,9 +276,9 @@ export const week8Data: WeekData = {
         },
         {
           type: "card",
-          title: "Looking Ahead to Week 9",
+          title: "Looking Ahead to Week 8",
           paragraphs: [
-            "Week 9 introduces character: not character description or backstory, but the structural question of what makes a fictional person feel fully inhabited on the page. You will study the difference between a character who is described and a character who is rendered — and learn the specific craft tools that close that gap. Point of view and character are inseparable; the filter you have been studying this week is the character made into a narrative instrument.",
+            "Week 8 introduces character: not character description or backstory, but the structural question of what makes a fictional person feel fully inhabited on the page. You will study the difference between a character who is described and a character who is rendered — and learn the specific craft tools that close that gap. Point of view and character are inseparable; the filter you have been studying this week is the character made into a narrative instrument.",
           ],
         },
         {
