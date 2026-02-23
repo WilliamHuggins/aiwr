@@ -15,7 +15,7 @@ export default function AboutPage() {
             <div className="aspect-square bg-gray-200 dark:bg-gray-800 rounded-lg flex items-center justify-center">
               {/* Placeholder for a profile picture. You can replace this with an <Image> component later. */}
               <svg
-                className="w-16 h-16 text-gray-400"
+                className="w-16 h-16 text-gray-400 dark:text-gray-500"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
