@@ -500,7 +500,7 @@ export default function ReadingListPage() {
         <h1 className="text-4xl font-extrabold tracking-tight font-display md:text-5xl lg:text-6xl">
           Essential Reading List
         </h1>
-        <div className="mt-6 max-w-3xl mx-auto space-y-4 font-body text-ink/80 dark:text-canvas/80 leading-relaxed">
+        <div className="mt-6 max-w-3xl mx-auto space-y-4 font-body text-ink/80 dark:text-text/80 leading-relaxed">
           <p>
             Pursuing a Master of Fine Arts in writing is more than an academic
             path; it’s an intensive journey demanding both technical mastery and
@@ -552,7 +552,7 @@ export default function ReadingListPage() {
               <p className="font-bold font-display text-sm truncate">
                 {book.title}
               </p>
-              <p className="text-xs text-ink/70 dark:text-canvas/70">
+              <p className="text-xs text-ink/70 dark:text-text/70">
                 {book.author}
               </p>
             </div>
@@ -592,10 +592,10 @@ export default function ReadingListPage() {
                 <h2 id="book-modal-title" className="text-2xl font-bold font-display mb-1">
                   {selectedBook.title}
                 </h2>
-                <p className="text-md text-ink/70 dark:text-canvas/70 mb-4">
+                <p className="text-md text-ink/70 dark:text-text/70 mb-4">
                   {selectedBook.author}
                 </p>
-                <p className="font-body leading-relaxed text-ink/90 dark:text-canvas/90">
+                <p className="font-body leading-relaxed text-ink/90 dark:text-text/90">
                   {selectedBook.description}
                 </p>
                 {selectedBook.purchaseUrl && (

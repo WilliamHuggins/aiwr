@@ -163,7 +163,7 @@ export default function AIWritingNewsPage() {
   }, [activeArticle]);
 
   return (
-    <div className="relative bg-canvas text-ink dark:bg-canvasDark dark:text-canvas">
+    <div className="relative bg-canvas text-ink dark:bg-canvasDark dark:text-text">
       <div className="flex min-h-screen">
         {/* Sidebar */}
         <aside
@@ -178,7 +178,7 @@ export default function AIWritingNewsPage() {
             <h2 className="text-2xl font-bold text-glow">AI Writing News</h2>
             <button
               type="button"
-              className="rounded-md p-2 text-ink focus:outline-none focus:ring-2 focus:ring-glow dark:text-canvas lg:hidden"
+              className="rounded-md p-2 text-ink focus:outline-none focus:ring-2 focus:ring-glow dark:text-text lg:hidden"
               onClick={() => setSidebarOpen(false)}
             >
               <span className="sr-only">Close menu</span>
@@ -196,12 +196,12 @@ export default function AIWritingNewsPage() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search articles..."
-              className="w-full rounded-lg border border-ink/15 bg-ink/5 px-4 py-2 text-sm text-ink placeholder:text-ink/50 focus:border-glow focus:outline-none focus:ring-2 focus:ring-glow dark:border-canvas/10 dark:bg-canvas/10 dark:text-canvas dark:placeholder:text-canvas/50"
+              className="w-full rounded-lg border border-ink/15 bg-ink/5 px-4 py-2 text-sm text-ink placeholder:text-ink/50 focus:border-glow focus:outline-none focus:ring-2 focus:ring-glow dark:border-canvas/10 dark:bg-canvas/10 dark:text-text dark:placeholder:text-text/50"
             />
           </div>
 
           <nav className="mt-10">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/60 dark:text-canvas/60">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/60 dark:text-text/60">
               Archives
             </h3>
             <ul className="mt-4 space-y-3 text-sm font-medium">
@@ -209,7 +209,7 @@ export default function AIWritingNewsPage() {
                 <li key={group.id}>
                   <a
                     href={`#${group.id}`}
-                    className="block rounded-md px-2 py-1 text-ink/80 transition-colors hover:text-glow focus:outline-none focus:ring-2 focus:ring-glow dark:text-canvas/80"
+                    className="block rounded-md px-2 py-1 text-ink/80 transition-colors hover:text-glow focus:outline-none focus:ring-2 focus:ring-glow dark:text-text/80"
                     onClick={() => setSidebarOpen(false)}
                   >
                     {group.label}
@@ -223,7 +223,7 @@ export default function AIWritingNewsPage() {
         {/* Mobile menu button */}
         <button
           type="button"
-          className="fixed left-4 top-28 z-20 rounded-md bg-canvas/90 px-3 py-2 text-sm font-semibold text-ink shadow-md focus:outline-none focus:ring-2 focus:ring-glow dark:bg-canvasDark/90 dark:text-canvas lg:hidden"
+          className="fixed left-4 top-28 z-20 rounded-md bg-canvas/90 px-3 py-2 text-sm font-semibold text-ink shadow-md focus:outline-none focus:ring-2 focus:ring-glow dark:bg-canvasDark/90 dark:text-text lg:hidden"
           onClick={() => setSidebarOpen(true)}
         >
           Open Archive
@@ -251,8 +251,8 @@ export default function AIWritingNewsPage() {
           <section className="px-6 py-12 md:px-10 lg:px-12">
             {!hasResults && (
               <div className="rounded-lg border border-ink/10 bg-ink/5 p-8 text-center dark:border-canvas/10 dark:bg-canvas/10">
-                <h2 className="text-2xl font-semibold text-ink/80 dark:text-canvas/80">No articles found</h2>
-                <p className="mt-2 text-base text-ink/60 dark:text-canvas/60">
+                <h2 className="text-2xl font-semibold text-ink/80 dark:text-text/80">No articles found</h2>
+                <p className="mt-2 text-base text-ink/60 dark:text-text/60">
                   Try adjusting your search terms to find another story.
                 </p>
               </div>
@@ -261,7 +261,7 @@ export default function AIWritingNewsPage() {
             {filteredGroups.map((group) => (
               <section key={group.id} id={group.id} className="article-group mt-12 first:mt-0">
                 <div className="border-b border-ink/10 pb-4 dark:border-canvas/10">
-                  <h2 className="text-3xl font-bold text-ink dark:text-canvas">{group.label}</h2>
+                  <h2 className="text-3xl font-bold text-ink dark:text-text">{group.label}</h2>
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -273,7 +273,7 @@ export default function AIWritingNewsPage() {
                       <span className="text-xs font-semibold uppercase tracking-wide text-coral">
                         {article.date}
                       </span>
-                      <h3 className="mt-3 text-xl font-semibold text-ink dark:text-canvas">
+                      <h3 className="mt-3 text-xl font-semibold text-ink dark:text-text">
                         <a
                           href={article.url}
                           target="_blank"
@@ -283,18 +283,18 @@ export default function AIWritingNewsPage() {
                           {article.title}
                         </a>
                       </h3>
-                      <p className="mt-2 text-sm font-medium text-ink/60 dark:text-canvas/70">By {article.author}</p>
-                      <p className="mt-4 text-sm leading-relaxed text-ink/70 dark:text-canvas/80">{article.summary}</p>
+                      <p className="mt-2 text-sm font-medium text-ink/60 dark:text-text/70">By {article.author}</p>
+                      <p className="mt-4 text-sm leading-relaxed text-ink/70 dark:text-text/80">{article.summary}</p>
 
                       <div className="mt-4">
-                        <h4 className="text-xs font-semibold uppercase tracking-wide text-ink/50 dark:text-canvas/60">
+                        <h4 className="text-xs font-semibold uppercase tracking-wide text-ink/50 dark:text-text/60">
                           Subjects
                         </h4>
                         <div className="mt-2 flex flex-wrap gap-2">
                           {article.keywords.map((keyword) => (
                             <span
                               key={keyword}
-                              className="rounded-full bg-ink/10 px-2 py-1 text-xs font-medium text-ink/70 dark:bg-canvas/20 dark:text-canvas/70"
+                              className="rounded-full bg-ink/10 px-2 py-1 text-xs font-medium text-ink/70 dark:bg-canvas/20 dark:text-text/70"
                             >
                               {keyword}
                             </span>
@@ -314,7 +314,7 @@ export default function AIWritingNewsPage() {
                           href={article.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm font-semibold text-ink/70 underline-offset-4 transition-colors hover:text-glow dark:text-canvas/70"
+                          className="text-sm font-semibold text-ink/70 underline-offset-4 transition-colors hover:text-glow dark:text-text/70"
                         >
                           Visit source
                         </a>
@@ -342,23 +342,23 @@ export default function AIWritingNewsPage() {
             <div className="flex items-start justify-between border-b border-ink/10 bg-ink/5 p-6 dark:border-canvas/10 dark:bg-canvas/10">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-coral">{activeArticle.date}</p>
-                <h2 className="mt-2 text-2xl font-bold text-ink dark:text-canvas">{activeArticle.title}</h2>
-                <p className="mt-1 text-sm text-ink/60 dark:text-canvas/70">By {activeArticle.author}</p>
+                <h2 className="mt-2 text-2xl font-bold text-ink dark:text-text">{activeArticle.title}</h2>
+                <p className="mt-1 text-sm text-ink/60 dark:text-text/70">By {activeArticle.author}</p>
               </div>
               <button
                 type="button"
-                className="ml-4 rounded-md p-2 text-ink/60 transition hover:text-coral focus:outline-none focus:ring-2 focus:ring-glow dark:text-canvas/60"
+                className="ml-4 rounded-md p-2 text-ink/60 transition hover:text-coral focus:outline-none focus:ring-2 focus:ring-glow dark:text-text/60"
                 onClick={() => setActiveArticle(null)}
               >
                 <span className="sr-only">Close modal</span>
                 ×
               </button>
             </div>
-            <div className="max-h-[60vh] overflow-y-auto px-6 py-6 text-sm leading-relaxed text-ink/80 dark:text-canvas/80">
+            <div className="max-h-[60vh] overflow-y-auto px-6 py-6 text-sm leading-relaxed text-ink/80 dark:text-text/80">
               {activeArticle.fullAbstract}
             </div>
             <div className="flex flex-wrap items-center gap-3 border-t border-ink/10 bg-ink/5 px-6 py-4 text-sm font-medium dark:border-canvas/10 dark:bg-canvas/10">
-              <span className="text-ink/70 dark:text-canvas/70">Source: {getSourceName(activeArticle)}</span>
+              <span className="text-ink/70 dark:text-text/70">Source: {getSourceName(activeArticle)}</span>
               <a
                 href={activeArticle.url}
                 target="_blank"

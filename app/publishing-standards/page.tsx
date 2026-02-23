@@ -456,7 +456,7 @@ export default function PublishingStandardsPage() {
           </section>
 
           <section id="technical-matrix" className="rounded-3xl border border-ink/10 bg-canvas p-6 shadow-sm dark:border-canvas/10 dark:bg-canvasDark/70">
-            <h2 className="font-display text-2xl font-semibold text-ink dark:text-canvas">Technical parameter matrix</h2>
+            <h2 className="font-display text-2xl font-semibold text-ink dark:text-text">Technical parameter matrix</h2>
             <div className="mt-4 overflow-x-auto">
               <table className="min-w-full text-left text-sm">
                 <thead>
@@ -469,9 +469,9 @@ export default function PublishingStandardsPage() {
                 <tbody>
                   {technicalMatrix.map((row) => (
                     <tr key={row.parameter} className="border-b border-ink/5 dark:border-canvas/10">
-                      <td className="px-3 py-2 font-medium text-ink dark:text-canvas">{row.parameter}</td>
-                      <td className="px-3 py-2 text-ink/80 dark:text-canvas/80">{row.standard}</td>
-                      <td className="px-3 py-2 text-ink/80 dark:text-canvas/80">{row.variation}</td>
+                      <td className="px-3 py-2 font-medium text-ink dark:text-text">{row.parameter}</td>
+                      <td className="px-3 py-2 text-ink/80 dark:text-text/80">{row.standard}</td>
+                      <td className="px-3 py-2 text-ink/80 dark:text-text/80">{row.variation}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -480,8 +480,8 @@ export default function PublishingStandardsPage() {
           </section>
 
           <section id="directories" className="space-y-5">
-            <h2 className="font-display text-3xl font-semibold text-ink dark:text-canvas">A–Z publisher registry</h2>
-            <p className="max-w-3xl text-sm text-ink/80 dark:text-canvas/80">
+            <h2 className="font-display text-3xl font-semibold text-ink dark:text-text">A–Z publisher registry</h2>
+            <p className="max-w-3xl text-sm text-ink/80 dark:text-text/80">
               The full list remains central to this guide, now presented as scan-friendly cards for faster comparison by niche,
               submission model, and technical requirements.
             </p>
@@ -493,8 +493,8 @@ export default function PublishingStandardsPage() {
           </section>
 
           <section id="conclusions" className="rounded-3xl border border-ink/10 bg-canvas p-6 shadow-sm dark:border-canvas/10 dark:bg-canvasDark/70">
-            <h2 className="font-display text-2xl font-semibold text-ink dark:text-canvas">Operational conclusions</h2>
-            <ul className="mt-4 space-y-3 text-sm text-ink/85 dark:text-canvas/85">
+            <h2 className="font-display text-2xl font-semibold text-ink dark:text-text">Operational conclusions</h2>
+            <ul className="mt-4 space-y-3 text-sm text-ink/85 dark:text-text/85">
               {[
                 "Technical precision now acts as a first-pass gate before editorial quality is even reviewed.",
                 "Unagented paths are viable, but only with niche alignment and excellent formatting discipline.",
@@ -510,8 +510,8 @@ export default function PublishingStandardsPage() {
           </section>
 
           <section id="works-cited" className="rounded-3xl border border-ink/10 bg-canvas p-6 shadow-sm dark:border-canvas/10 dark:bg-canvasDark/70">
-            <h2 className="font-display text-2xl font-semibold text-ink dark:text-canvas">Works cited (selected)</h2>
-            <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-ink/80 dark:text-canvas/80">
+            <h2 className="font-display text-2xl font-semibold text-ink dark:text-text">Works cited (selected)</h2>
+            <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-ink/80 dark:text-text/80">
               {worksCited.map((source) => (
                 <li key={source}>
                   <Link href={source} target="_blank" rel="noopener noreferrer" className="text-glow underline-offset-2 hover:underline">
