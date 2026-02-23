@@ -32,7 +32,7 @@ const bookLectures: BookLecture[] = [
     purchaseUrl:
       "https://www.hachettebookgroup.com/titles/j-d-salinger/nine-stories/9780316769501/?lens=little-brown",
     imageUrl: "https://www.hachettebookgroup.com/wp-content/uploads/2017/06/9780316769501.jpg?resize=635,1024",
-    category: "Dialogue, Distance & Gesture",
+    category: "Story Mechanics",
     summary:
       "A precision study in subtext, narrative distance, and making meaning through gesture and framing.",
     content: {
@@ -97,7 +97,7 @@ const bookLectures: BookLecture[] = [
     purchaseUrl:
       "https://www.penguinrandomhouse.com/books/531360/the-master-and-margarita-by-mikhail-bulgakov-a-newly-revised-translation-by-richard-pevear-and-larissa-volokhonsky-introduction-by-richard-pevear-foreword-by-boris-fishman/9780143108276/readers-guide/",
     imageUrl: "https://images1.penguinrandomhouse.com/cover/9780143108276",
-    category: "Braided Plotting, Satire & Grotesque",
+    category: "Expansive Novel Systems",
     summary:
       "A model for blending farce, romance, political satire, and moral philosophy without tonal collapse.",
     content: {
@@ -154,6 +154,69 @@ const bookLectures: BookLecture[] = [
       ],
     },
   },
+  {
+    id: "wind-up-bird-chronicle",
+    title: "The Wind-Up Bird Chronicle",
+    author: "Haruki Murakami",
+    purchaseUrl: "https://www.penguinrandomhouse.com/books/118727/the-wind-up-bird-chronicle-by-haruki-murakami/",
+    imageUrl: "https://images1.penguinrandomhouse.com/cover/9780679775430",
+    category: "Expansive Novel Systems",
+    summary:
+      "A practical blueprint for sustaining mystery pressure across drift, modular formats, and uncanniness.",
+    content: {
+      writersCase: [
+        "The Wind-Up Bird Chronicle is a practical blueprint for writing a long novel that stays gripping while refusing the usual engines (tight causality, continuous action, clean answers).",
+        "The core craft problem it solves is sustaining narrative compulsion through drift—domestic routine, episodic encounters, documentary inserts—while still producing the felt pressure of mystery.",
+        "Murakami’s method is transferable: a soft surface plot with hard question-management, modular scene design, and motif-based cohesion.",
+      ],
+      technicalBreakdown: [
+        {
+          heading: "Suspense by micro-perturbation",
+          body: [
+            "The novel begins in procedural mundanity (meals, errands, idle time) and turns routine into tension rather than dead air.",
+            "Recurring scene pattern: ordinary task → minor anomaly → conversational intrusion → unresolved residue.",
+            "That residue (name, threat, fragment, physical marker) creates forward pull without requiring chase-plot escalation.",
+          ],
+          takeaway:
+            "Writerly takeaway: you do not need constant events; you need a steady drip of interpretive problems that keep reframing what the novel is about.",
+        },
+        {
+          heading: "Dossier structure as structural ballast",
+          body: [
+            "Murakami alternates real-time first-person drift, embedded testimonies, letters, and document-like modules.",
+            "Format shifts redistribute authority: the protagonist receives while other voices supply density, horror, and historical pressure.",
+            "Temporal ambiguity (what arrives when, what counts as evidence) sustains mystery without conventional clue-chaining.",
+          ],
+          takeaway:
+            "Writerly takeaway: let each narrative format do a specific job—confess, prove, unsettle, densify, redirect, historicize, moralize.",
+        },
+        {
+          heading: "Motif-based cohesion instead of tight plotting",
+          body: [
+            "Recurrence system (wells, birdsong, water, marks, rooms/corridors, music, missingness) acts as structural glue, not decorative symbolism.",
+            "Deadpan, reportorial sentence control keeps surreal content readable and prevents tonal collapse.",
+          ],
+          takeaway:
+            "Writerly takeaway: for uncanny fiction, keep narration behaviorally literal; let recurrence and placement build meaning.",
+        },
+      ],
+      criticalVerification: [
+        {
+          label: "Tim Gingrich on deliberate fragmentation and motif-based unity",
+          url: "https://www.literatureandscience.org/wp-content/uploads/2020/09/GINGRICH-FINAL.pdf",
+        },
+        {
+          label: "Keiko Maynard on omitted/rearranged material in the English edition",
+          url: "https://www.uog.edu/_resources/files/schools-and-colleges/college-of-liberal-arts-and-social-sciences/maynard_lost-chapters-wind-up-bird.pdf",
+        },
+      ],
+      readingDirective: [
+        "Buy a physical copy and read with one lens: chapter-by-chapter question management across format shifts.",
+        "At each chapter break, note: active question, newly introduced residue, and withheld explanation.",
+        "Mark every mode switch (testimony/letter/document/real-time narration) and label each module’s job in one verb.",
+      ],
+    },
+  },
 ];
 
 export default function ReadingLikeAWriterPage() {
@@ -181,7 +244,7 @@ export default function ReadingLikeAWriterPage() {
   return (
     <div className="container mx-auto max-w-6xl px-4 py-12 md:py-16">
       <header className="mb-10 space-y-5">
-        <h1 className="text-center font-display text-4xl font-extrabold tracking-tight md:text-5xl">Reading Like A Writer</h1>
+        <h1 className="text-center font-display text-4xl font-extrabold tracking-tight md:text-5xl">Read Like a Writer</h1>
         <div className="rounded-2xl border border-border bg-surface-1 p-5 md:p-6">
           <h2 className="font-ui text-lg font-bold">How to use this page</h2>
           <ol className="mt-3 list-decimal space-y-2 pl-5 font-body text-sm leading-relaxed text-ink/85 dark:text-text/85 md:text-base">
@@ -213,7 +276,10 @@ export default function ReadingLikeAWriterPage() {
                 const isOpen = openBookId === book.id;
 
                 return (
-                  <article key={book.id} className="overflow-hidden rounded-2xl border border-border bg-surface-1 shadow-sm">
+                  <article
+                    key={book.id}
+                    className="overflow-hidden rounded-2xl border border-border bg-surface-1 shadow-sm transition-transform duration-200 hover:-translate-y-1"
+                  >
                     <button
                       type="button"
                       onClick={() => setOpenBookId(isOpen ? null : book.id)}
@@ -221,14 +287,14 @@ export default function ReadingLikeAWriterPage() {
                       aria-expanded={isOpen}
                       aria-controls={`lecture-${book.id}`}
                     >
-                      <div className="aspect-[3/4] w-full bg-gray-100 dark:bg-gray-800">
+                      <div className="aspect-[4/5] w-full bg-gray-100 dark:bg-gray-800">
                         <img src={book.imageUrl} alt={`Cover of ${book.title}`} className="h-full w-full object-cover" loading="lazy" />
                       </div>
                       <div className="space-y-2 p-4">
                         <p className="font-display text-xl font-bold leading-tight">{book.title}</p>
                         <p className="font-ui text-sm text-ink/70 dark:text-text/70">{book.author}</p>
                         <p className="font-body text-sm text-ink/80 dark:text-text/80">{book.summary}</p>
-                        <p className="font-ui text-xs font-semibold uppercase tracking-wide text-ink/60 dark:text-text/60">
+                        <p className="font-ui text-xs font-semibold uppercase tracking-wide text-accent">
                           {isOpen ? "Hide Lecture" : "Open Lecture"}
                         </p>
                       </div>
@@ -256,7 +322,7 @@ export default function ReadingLikeAWriterPage() {
                       href={book.purchaseUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block rounded-full bg-glow px-5 py-2 font-ui text-sm font-bold text-ink no-underline"
+                      className="inline-block rounded-full bg-ink px-5 py-2 font-ui text-sm font-bold text-canvas no-underline transition-opacity hover:opacity-90 dark:bg-text dark:text-bg"
                     >
                       Book Link
                     </a>
@@ -291,8 +357,13 @@ export default function ReadingLikeAWriterPage() {
                     <ul className="list-disc space-y-2 pl-5 font-body text-ink/90 dark:text-text/90">
                       {book.content.criticalVerification.map((link) => (
                         <li key={link.url}>
-                          {link.label}: {" "}
-                          <a href={link.url} target="_blank" rel="noopener noreferrer" className="underline">
+                          {link.label}:{" "}
+                          <a
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-medium text-accent underline underline-offset-2"
+                          >
                             {link.url}
                           </a>
                         </li>
