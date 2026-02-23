@@ -323,9 +323,9 @@ const worksCited = [
 
 function PublisherCard({ publisher, url, focus, notes }: PublisherRow) {
   return (
-    <article className="group rounded-2xl border border-ink/10 bg-canvas p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-canvas/15 dark:bg-canvasDark/70">
+    <article className="group rounded-2xl border border-ink/10 bg-canvas p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-900/70">
       <div className="flex items-start justify-between gap-2">
-        <h4 className="font-display text-lg font-semibold text-ink dark:text-canvas">{publisher}</h4>
+        <h4 className="font-display text-lg font-semibold text-ink dark:text-slate-100">{publisher}</h4>
         <a
           href={url}
           target="_blank"
@@ -335,18 +335,18 @@ function PublisherCard({ publisher, url, focus, notes }: PublisherRow) {
           Visit <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
         </a>
       </div>
-      <p className="mt-2 text-sm text-ink/80 dark:text-canvas/80">{focus}</p>
-      <p className="mt-3 rounded-xl bg-ink/[0.03] p-3 text-sm text-ink/75 dark:bg-canvas/5 dark:text-canvas/75">{notes}</p>
+      <p className="mt-2 text-sm text-ink/80 dark:text-slate-300">{focus}</p>
+      <p className="mt-3 rounded-xl bg-ink/[0.03] p-3 text-sm text-ink/75 dark:bg-slate-800/60 dark:text-slate-300">{notes}</p>
     </article>
   );
 }
 
 function SegmentSection({ id, title, rows }: { id: string; title: string; rows: PublisherRow[] }) {
   return (
-    <section id={id} className="space-y-4 rounded-3xl border border-ink/10 bg-gradient-to-b from-canvas to-canvas/70 p-5 shadow-sm dark:border-canvas/15 dark:from-canvasDark dark:to-canvasDark/70">
+    <section id={id} className="space-y-4 rounded-3xl border border-ink/10 bg-gradient-to-b from-canvas to-canvas/70 p-5 shadow-sm dark:border-slate-700 dark:from-slate-950 dark:to-slate-900/70">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="font-display text-2xl font-semibold text-ink dark:text-canvas">{title}</h3>
-        <span className="rounded-full border border-ink/10 bg-canvas px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink/70 dark:border-canvas/15 dark:bg-canvasDark dark:text-canvas/70">
+        <h3 className="font-display text-2xl font-semibold text-ink dark:text-slate-100">{title}</h3>
+        <span className="rounded-full border border-ink/10 bg-canvas px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink/70 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
           {rows.length} listings
         </span>
       </div>
@@ -367,20 +367,20 @@ export default function PublishingStandardsPage() {
 
       <main className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 pt-10 md:px-6 md:pt-14 lg:flex-row">
         <aside className="lg:sticky lg:top-24 lg:h-fit lg:w-72">
-          <div className="rounded-2xl border border-ink/10 bg-canvas/95 p-5 shadow-sm backdrop-blur dark:border-canvas/10 dark:bg-canvasDark/80">
-            <h2 className="font-display text-lg font-semibold text-ink dark:text-canvas">Navigate this guide</h2>
+          <div className="rounded-2xl border border-ink/10 bg-canvas/95 p-5 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/80">
+            <h2 className="font-display text-lg font-semibold text-ink dark:text-slate-100">Navigate this guide</h2>
             <nav className="mt-4 space-y-2" aria-label="Section navigation">
               {sectionLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="block rounded-md px-3 py-2 text-sm text-ink/80 transition hover:bg-glow/10 hover:text-ink dark:text-canvas/80 dark:hover:text-canvas"
+                  className="block rounded-md px-3 py-2 text-sm text-ink/80 transition hover:bg-glow/10 hover:text-ink dark:text-slate-300 dark:hover:text-slate-100"
                 >
                   {link.label}
                 </a>
               ))}
             </nav>
-            <div className="mt-5 rounded-xl border border-glow/25 bg-glow/10 p-3 text-xs text-ink/70 dark:text-canvas/70">
+            <div className="mt-5 rounded-xl border border-glow/25 bg-glow/10 p-3 text-xs text-ink/70 dark:text-slate-300">
               <p className="font-semibold">Fast workflow tip</p>
               <p className="mt-1">Use one segment at a time and build a custom query packet per publisher.</p>
             </div>
@@ -417,40 +417,40 @@ export default function PublishingStandardsPage() {
           </section>
 
           <section id="pathways" className="grid gap-4 md:grid-cols-3">
-            <article className="rounded-2xl border border-ink/10 bg-canvas p-5 shadow-sm dark:border-canvas/10 dark:bg-canvasDark/70">
-              <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-canvas"><Building2 className="h-5 w-5 text-glow" /> Agented trade route</h3>
-              <p className="mt-2 text-sm text-ink/80 dark:text-canvas/80">
+            <article className="rounded-2xl border border-ink/10 bg-canvas p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
+              <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-slate-100"><Building2 className="h-5 w-5 text-glow" /> Agented trade route</h3>
+              <p className="mt-2 text-sm text-ink/80 dark:text-slate-300">
                 Major houses rely on agents as quality and market filters, especially for high-volume commercial lists.
               </p>
             </article>
-            <article className="rounded-2xl border border-ink/10 bg-canvas p-5 shadow-sm dark:border-canvas/10 dark:bg-canvasDark/70">
-              <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-canvas"><BookOpen className="h-5 w-5 text-glow" /> Independent windows</h3>
-              <p className="mt-2 text-sm text-ink/80 dark:text-canvas/80">
+            <article className="rounded-2xl border border-ink/10 bg-canvas p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
+              <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-slate-100"><BookOpen className="h-5 w-5 text-glow" /> Independent windows</h3>
+              <p className="mt-2 text-sm text-ink/80 dark:text-slate-300">
                 Smaller presses open limited windows for unagented work, rewarding strong niche fit and clean technical prep.
               </p>
             </article>
-            <article className="rounded-2xl border border-ink/10 bg-canvas p-5 shadow-sm dark:border-canvas/10 dark:bg-canvasDark/70">
-              <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-canvas"><Compass className="h-5 w-5 text-glow" /> Strategic fit first</h3>
-              <p className="mt-2 text-sm text-ink/80 dark:text-canvas/80">
+            <article className="rounded-2xl border border-ink/10 bg-canvas p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
+              <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-slate-100"><Compass className="h-5 w-5 text-glow" /> Strategic fit first</h3>
+              <p className="mt-2 text-sm text-ink/80 dark:text-slate-300">
                 The fastest way to rejection is mismatch. Target lists, backlist style, and mission alignment are now mandatory checks.
               </p>
             </article>
           </section>
 
-          <section id="style-frameworks" className="rounded-3xl border border-ink/10 bg-canvas p-6 shadow-sm dark:border-canvas/10 dark:bg-canvasDark/70">
-            <h2 className="font-display text-2xl font-semibold text-ink dark:text-canvas">Documentation and style frameworks</h2>
+          <section id="style-frameworks" className="rounded-3xl border border-ink/10 bg-canvas p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
+            <h2 className="font-display text-2xl font-semibold text-ink dark:text-slate-100">Documentation and style frameworks</h2>
             <div className="mt-5 grid gap-4 md:grid-cols-3">
-              <div className="rounded-xl border border-ink/10 p-4 dark:border-canvas/10">
-                <h3 className="flex items-center gap-2 font-semibold text-ink dark:text-canvas"><FileText className="h-4 w-4" /> CMOS standardization</h3>
-                <p className="mt-2 text-sm text-ink/80 dark:text-canvas/80">CMOS remains the default framework, with house-level exceptions based on production workflows.</p>
+              <div className="rounded-xl border border-ink/10 p-4 dark:border-slate-700">
+                <h3 className="flex items-center gap-2 font-semibold text-ink dark:text-slate-100"><FileText className="h-4 w-4" /> CMOS standardization</h3>
+                <p className="mt-2 text-sm text-ink/80 dark:text-slate-300">CMOS remains the default framework, with house-level exceptions based on production workflows.</p>
               </div>
-              <div className="rounded-xl border border-ink/10 p-4 dark:border-canvas/10">
-                <h3 className="flex items-center gap-2 font-semibold text-ink dark:text-canvas"><Scale className="h-4 w-4" /> Scholarly precision</h3>
-                <p className="mt-2 text-sm text-ink/80 dark:text-canvas/80">University presses require structured citations and endnote discipline for reliable digital conversion.</p>
+              <div className="rounded-xl border border-ink/10 p-4 dark:border-slate-700">
+                <h3 className="flex items-center gap-2 font-semibold text-ink dark:text-slate-100"><Scale className="h-4 w-4" /> Scholarly precision</h3>
+                <p className="mt-2 text-sm text-ink/80 dark:text-slate-300">University presses require structured citations and endnote discipline for reliable digital conversion.</p>
               </div>
-              <div className="rounded-xl border border-ink/10 p-4 dark:border-canvas/10">
-                <h3 className="flex items-center gap-2 font-semibold text-ink dark:text-canvas"><FlaskConical className="h-4 w-4" /> AI governance</h3>
-                <p className="mt-2 text-sm text-ink/80 dark:text-canvas/80">Disclosure requirements are expanding rapidly; some genres and houses enforce explicit AI-authorship bans.</p>
+              <div className="rounded-xl border border-ink/10 p-4 dark:border-slate-700">
+                <h3 className="flex items-center gap-2 font-semibold text-ink dark:text-slate-100"><FlaskConical className="h-4 w-4" /> AI governance</h3>
+                <p className="mt-2 text-sm text-ink/80 dark:text-slate-300">Disclosure requirements are expanding rapidly; some genres and houses enforce explicit AI-authorship bans.</p>
               </div>
             </div>
           </section>
