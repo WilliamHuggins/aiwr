@@ -17,6 +17,7 @@ const navLinks = [
   { href: "/ai-writing-news", label: "AI Writing News" },
   { href: "/reading-list", label: "Reading List" },
   { href: "/resources", label: "Resources" },
+  { href: "/publishing-standards", label: "Publishing Standards" },
 ];
 
 export default function Header() {
