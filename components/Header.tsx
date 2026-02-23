@@ -26,7 +26,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-bg/90 backdrop-blur-sm">
-      <Container className="flex h-20 items-center justify-between gap-4">
+      <Container className="flex h-24 items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setMobileMenuOpen((open) => !open)}
@@ -38,7 +38,15 @@ export default function Header() {
             {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
           <Link href="/" className="rounded-md focus-ring">
-            <Image src="/Logo.png" alt="AI Writers Retreat Logo" width={90} height={90} className="h-14 w-auto" priority />
+            <Image
+              src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/AIWR%20AI%20Writers%27%20Retreat.png"
+              alt="AI Writers Retreat Logo"
+              width={220}
+              height={220}
+              className="h-16 w-auto md:h-20"
+              priority
+              unoptimized
+            />
           </Link>
         </div>
 
