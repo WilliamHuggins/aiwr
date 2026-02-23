@@ -21,6 +21,7 @@ export default function DiyMfaHome() {
         <Link href="/diy-mfa/year-one/week-12" className="rounded-sm border border-border px-4 py-2 no-underline">Enter Week 12</Link>
         <Link href="/diy-mfa/year-one/week-13" className="rounded-sm border border-border px-4 py-2 no-underline">Enter Week 13</Link>
         <Link href="/diy-mfa/year-one/week-14" className="rounded-sm border border-border px-4 py-2 no-underline">Enter Week 14</Link>
+        <Link href="/diy-mfa/year-one/week-15" className="rounded-sm border border-border px-4 py-2 no-underline">Enter Week 15</Link>
       </div>
     </section>
   );
