@@ -498,7 +498,7 @@ export default function ReadingListPage() {
     <div className="container mx-auto px-4 py-12 md:py-16">
       <div className="text-center">
         <h1 className="text-4xl font-extrabold tracking-tight font-display md:text-5xl lg:text-6xl">
-          Essential Reading List
+          Books on Writing
         </h1>
         <div className="mt-6 max-w-3xl mx-auto space-y-4 font-body text-ink/80 dark:text-text/80 leading-relaxed">
           <p>
@@ -616,7 +616,6 @@ export default function ReadingListPage() {
     </div>
   );
 }
-
 
 
 
