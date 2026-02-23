@@ -123,6 +123,34 @@ const lessons: Lesson[] = [
     `,
   },
   {
+    slug: 'the-living-world',
+    title: 'The Living World: Mastering Setting and Scene Construction',
+    module: "The Writer's Apprenticeship: A Two-Year, Self-Paced MFA",
+    readingTime: 24,
+    content: `
+      <p class="text-sm italic">Position: Year 1, Semester 1, Week 4</p>
+      <p class="text-sm italic">Estimated Time Commitment: 3-4 hours</p>
+      <p class="text-sm italic">Prerequisites: Lessons 1–3</p>
+
+      <h2 class="font-display">Focus of Week 4</h2>
+      <p>This lesson introduces scene construction as the core unit of dramatic movement. You will work with setting as an active pressure, then apply Goal–Conflict–Disaster architecture to build scenes that turn.</p>
+
+      <h2 class="font-display">Core Craft Targets</h2>
+      <ul>
+        <li>Use setting as narrative force (not backdrop).</li>
+        <li>Define and execute a clear scene goal, escalating conflict, and consequential turn.</li>
+        <li>Control pacing through scene/summary ratio and sentence rhythm.</li>
+      </ul>
+
+      <h2 class="font-display">Practice Assignment</h2>
+      <p>Draft a 1,000-word scene with a clearly stated character goal, at least one escalating obstacle, and an ending that leaves the character in a meaningfully altered position.</p>
+
+      <h2 class="font-display">Reading Pairing</h2>
+      <p>Read Jack London&apos;s <em>To Build a Fire</em> and annotate where setting functions as antagonist, where tension escalates, and where the decisive turn occurs.</p>
+    `,
+  },
+
+  {
     slug: 'weaving-the-fabric',
     title: 'DIY MFA Lesson Five: Weaving the Fabric',
     module: "The Writer's Apprenticeship: A Two-Year, Self-Paced MFA",
