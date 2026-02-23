@@ -42,7 +42,7 @@ const aiTools = [
 export default function HomePage() {
   return (
     <>
-      <section className="relative flex h-[72vh] min-h-[640px] items-center justify-center text-white">
+      <section className="relative flex min-h-[640px] items-center justify-center py-16 text-white md:py-24">
         <HeroBackgroundVideo />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
         <Container className="relative z-20 flex flex-col items-center pt-8 text-center md:pt-12 lg:pt-16">
@@ -50,7 +50,7 @@ export default function HomePage() {
           <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
             Author in charge. Tool in service.
           </h1>
-          <div className="mt-7 max-w-5xl space-y-5 text-left text-base leading-relaxed text-white/90 sm:text-lg md:text-xl">
+          <div className="mt-7 w-full max-w-4xl space-y-5 text-left text-base leading-relaxed text-white/90 sm:text-lg md:text-xl">
             <p>
               AI Writers&apos; Retreat is a craft-first studio for writers who want the advantages of generative AI
               without compromising voice, taste, or authority on the page. We teach a practical, editorial approach:
