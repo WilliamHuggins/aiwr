@@ -15,7 +15,8 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/diy-mfa", label: "DIY MFA" },
   { href: "/ai-writing-news", label: "AI Writing News" },
-  { href: "/reading-list", label: "Reading List" },
+  { href: "/reading-list", label: "Books on Writing" },
+  { href: "/reading-like-a-writer", label: "Reading Like A Writer" },
   { href: "/resources", label: "Resources" },
   { href: "/publishing-standards", label: "Publishing Standards" },
 ];
