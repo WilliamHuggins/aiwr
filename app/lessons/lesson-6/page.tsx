@@ -1,15 +1,15 @@
 export default function Lesson6Page() {
   return (
-    <main className="bg-gray-100 text-gray-800 leading-relaxed">
-      <div className="max-w-4xl mx-auto p-6 md:p-10 bg-white shadow-lg my-10 rounded-lg">
-        <header className="border-b-2 border-gray-200 pb-6 mb-8">
+    <main className="bg-gray-100 dark:bg-slate-900 text-gray-800 dark:text-gray-100 leading-relaxed">
+      <div className="max-w-4xl mx-auto p-6 md:p-10 bg-white dark:bg-slate-950 shadow-lg my-10 rounded-lg">
+        <header className="border-b-2 border-gray-200 dark:border-slate-700 pb-6 mb-8">
           <p className="text-sm font-semibold text-indigo-600 uppercase tracking-wider">
             DIY MFA IN WRITING
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mt-2">
             Lesson Six: The Soul of the Story: Crafting Purposeful Dialogue and Subtext
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mt-6 text-sm text-gray-600">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mt-6 text-sm text-gray-600 dark:text-gray-300">
             <div>
               <strong>Program:</strong> The Writer&apos;s Apprenticeship: A Two-Year, Self-Paced MFA
             </div>
@@ -26,11 +26,11 @@ export default function Lesson6Page() {
         </header>
 
         <section className="mb-10">
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             1. Learning Objectives
           </h2>
           <p className="mb-4">By the end of this lesson, you will be able to:</p>
-          <ol className="list-decimal list-inside space-y-3 text-gray-700">
+          <ol className="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-200">
             <li>
               Analyze dialogue to determine its three primary functions: revealing character,
               advancing plot, and creating tension.
@@ -50,12 +50,12 @@ export default function Lesson6Page() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             2. Lecture
           </h2>
 
-          <h3 className="text-2xl font-semibold text-gray-700 mt-6 mb-3">Dialogue is Action</h3>
-          <div className="space-y-5 text-gray-700">
+          <h3 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 mt-6 mb-3">Dialogue is Action</h3>
+          <div className="space-y-5 text-gray-700 dark:text-gray-200">
             <p>
               Novice writers often make a critical mistake: they believe dialogue is for conveying
               information. They write scenes where characters tell each other things they already know,
@@ -73,8 +73,8 @@ export default function Lesson6Page() {
             </p>
           </div>
 
-          <h4 className="text-xl font-semibold text-gray-700 mt-8 mb-4">Part I: The Three Functions of Dialogue</h4>
-          <div className="space-y-5 text-gray-700">
+          <h4 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mt-8 mb-4">Part I: The Three Functions of Dialogue</h4>
+          <div className="space-y-5 text-gray-700 dark:text-gray-200">
             <p>
               Every significant line of dialogue must serve at least one of three functions, and the best
               dialogue often serves all three at once.
@@ -101,8 +101,8 @@ export default function Lesson6Page() {
             </ul>
           </div>
 
-          <h4 className="text-xl font-semibold text-gray-700 mt-8 mb-4">Part II: The Art of Implication - Subtext</h4>
-          <div className="space-y-5 text-gray-700">
+          <h4 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mt-8 mb-4">Part II: The Art of Implication - Subtext</h4>
+          <div className="space-y-5 text-gray-700 dark:text-gray-200">
             <p>
               Characters, like real people, rarely say exactly what they mean, especially when they are under
               emotional pressure or pursuing a hidden agenda. The real story happens between the lines.
@@ -139,8 +139,8 @@ export default function Lesson6Page() {
             </p>
           </div>
 
-          <h4 className="text-xl font-semibold text-gray-700 mt-8 mb-4">Part III: Crafting Naturalistic Dialogue</h4>
-          <div className="space-y-5 text-gray-700">
+          <h4 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mt-8 mb-4">Part III: Crafting Naturalistic Dialogue</h4>
+          <div className="space-y-5 text-gray-700 dark:text-gray-200">
             <p>
               Your dialogue must sound believable, but it must not be a verbatim transcript of real speech.
               Real speech is messy; it is full of filler words (&quot;um,&quot; &quot;ah,&quot; &quot;like&quot;), repetitions, and
@@ -167,10 +167,10 @@ export default function Lesson6Page() {
                 <strong>Show, Don&apos;t Tell (in Tags):</strong> Do not use adverbs in your dialogue tags to explain
                 how a line was spoken (e.g., &quot;he said angrily&quot;). The anger should be evident in the words
                 themselves or in a corresponding action.
-                <blockquote className="ml-4 pl-4 border-l-4 border-gray-300 italic text-gray-600 mt-2">
+                <blockquote className="ml-4 pl-4 border-l-4 border-gray-300 dark:border-slate-600 italic text-gray-600 dark:text-gray-300 mt-2">
                   <strong>Telling:</strong> &quot;Get out,&quot; he said angrily.
                 </blockquote>
-                <blockquote className="ml-4 pl-4 border-l-4 border-gray-300 italic text-gray-600">
+                <blockquote className="ml-4 pl-4 border-l-4 border-gray-300 dark:border-slate-600 italic text-gray-600 dark:text-gray-300">
                   <strong>Showing:</strong> &quot;Get out.&quot; He swept the papers from his desk with a crash.
                 </blockquote>
               </li>
@@ -183,10 +183,10 @@ export default function Lesson6Page() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             3. Reading Assignment
           </h2>
-          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700">
+          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700 dark:text-gray-200">
             <li>
               <strong>Primary Reading 1:</strong> Reread &quot;Hills Like White Elephants&quot; by Ernest Hemingway.
               (This story is in the public domain and widely available).
@@ -196,92 +196,92 @@ export default function Lesson6Page() {
               admire. Good examples known for subtext include scenes from <em>Mad Men</em>, <em>The Sopranos</em>,
               or plays by Harold Pinter. Read the dialogue aloud.
               <p className="mt-3 mb-1 font-semibold">Here are some sites to consider:</p>
-              <div className="overflow-x-auto rounded-lg border border-gray-300">
+              <div className="overflow-x-auto rounded-lg border border-gray-300 dark:border-slate-600">
                 <table className="w-full min-w-[500px] border-collapse">
-                  <thead className="bg-gray-100">
+                  <thead className="bg-gray-100 dark:bg-slate-900">
                     <tr>
-                      <th className="border-b border-gray-300 p-3 text-left text-sm font-semibold text-gray-700">
+                      <th className="border-b border-gray-300 dark:border-slate-600 p-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-200">
                         Screenplays
                       </th>
-                      <th className="border-b border-gray-300 p-3 text-left text-sm font-semibold text-gray-700">
+                      <th className="border-b border-gray-300 dark:border-slate-600 p-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-200">
                         Plays
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="hover:bg-gray-50">
-                      <td className="border-b border-gray-300 p-3">
+                    <tr className="hover:bg-gray-50 dark:bg-slate-800/60">
+                      <td className="border-b border-gray-300 dark:border-slate-600 p-3">
                         <a
                           href="https://www.simplyscripts.com/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                          className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
                         >
                           Simply Scripts
                         </a>
                       </td>
-                      <td className="border-b border-gray-300 p-3">
+                      <td className="border-b border-gray-300 dark:border-slate-600 p-3">
                         <a
                           href="https://www.playscripts.com/free-reads"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                          className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
                         >
                           PlayScripts (Free Reads)
                         </a>
                       </td>
                     </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="border-b border-gray-300 p-3">
+                    <tr className="hover:bg-gray-50 dark:bg-slate-800/60">
+                      <td className="border-b border-gray-300 dark:border-slate-600 p-3">
                         <a
                           href="https://imsdb.com/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                          className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
                         >
                           Internet Movie Script Database (IMSDb)
                         </a>
                       </td>
-                      <td className="border-b border-gray-300 p-3">
+                      <td className="border-b border-gray-300 dark:border-slate-600 p-3">
                         <a
                           href="https://www.dramatists.com/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                          className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
                         >
                           Dramatists Play Service (DPS)
                         </a>
                       </td>
                     </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="border-b border-gray-300 p-3">
+                    <tr className="hover:bg-gray-50 dark:bg-slate-800/60">
+                      <td className="border-b border-gray-300 dark:border-slate-600 p-3">
                         <a
                           href="http://www.script-o-rama.com/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                          className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
                         >
                           Drew&apos;s Script-O-Rama
                         </a>
                       </td>
-                      <td className="border-b border-gray-300 p-3">
+                      <td className="border-b border-gray-300 dark:border-slate-600 p-3">
                         <a
                           href="https://www.concordtheatricals.com/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                          className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
                         >
                           Concord Theatricals
                         </a>
                       </td>
                     </tr>
-                    <tr className="hover:bg-gray-50">
+                    <tr className="hover:bg-gray-50 dark:bg-slate-800/60">
                       <td className="p-3">
                         <a
                           href="https://www.dailyscript.com/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                          className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
                         >
                           The Daily Script
                         </a>
@@ -291,7 +291,7 @@ export default function Lesson6Page() {
                           href="https://www.dramaticpublishing.com/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                          className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
                         >
                           Dramatic Publishing
                         </a>
@@ -307,7 +307,7 @@ export default function Lesson6Page() {
                 href="https://self-publishingschool.com/how-to-write-dialogue/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                className="text-indigo-700 hover:text-indigo-900 dark:text-indigo-300 dark:hover:text-indigo-200 hover:underline"
               >
                 <strong>&quot;How to Write Dialogue That Captivates Your Reader&quot;</strong>
               </a>{' '}
@@ -316,8 +316,8 @@ export default function Lesson6Page() {
             </li>
           </ul>
 
-          <h4 className="text-xl font-semibold text-gray-700 mt-8 mb-4">Reading Questions:</h4>
-          <ol className="list-decimal list-outside space-y-3 pl-6 text-gray-700">
+          <h4 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mt-8 mb-4">Reading Questions:</h4>
+          <ol className="list-decimal list-outside space-y-3 pl-6 text-gray-700 dark:text-gray-200">
             <li>
               In &quot;Hills Like White Elephants,&quot; find a line of dialogue where the surface meaning is
               completely at odds with the subtext. What is the character really saying?
@@ -337,18 +337,18 @@ export default function Lesson6Page() {
             </li>
           </ol>
 
-          <h4 className="text-xl font-semibold text-gray-700 mt-8 mb-4">Reading Journal Prompt:</h4>
-          <p className="text-gray-700">
+          <h4 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mt-8 mb-4">Reading Journal Prompt:</h4>
+          <p className="text-gray-700 dark:text-gray-200">
             In 300 words, analyze the power dynamic in &quot;Hills Like White Elephants.&quot; Who has more power in
             the conversation, and how is this power demonstrated through their dialogue tactics?
           </p>
         </section>
 
         <section className="mb-10">
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             4. Writing Assignment
           </h2>
-          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700">
+          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700 dark:text-gray-200">
             <li>
               <strong>Warm-up Exercise (10 minutes):</strong> Write a short exchange between two people stuck in
               an elevator. The only words they are allowed to say are &quot;hello,&quot; &quot;okay,&quot; &quot;nice,&quot; and
@@ -390,13 +390,13 @@ export default function Lesson6Page() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             5. AI Integration Component
           </h2>
-          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700">
+          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700 dark:text-gray-200">
             <li>
               <strong>AI Brainstorming Prompt (Subtext Generator):</strong>
-              <blockquote className="mt-2 p-4 bg-gray-50 border-l-4 border-indigo-500 rounded-r-lg text-gray-600 italic">
+              <blockquote className="mt-2 p-4 bg-gray-50 dark:bg-slate-800/60 border-l-4 border-indigo-500 rounded-r-lg text-gray-600 dark:text-gray-300 italic">
                 &quot;I am writing a scene where a character wants to accuse another character of stealing from
                 them, but is too afraid to do so directly. The surface conversation is about a missing coffee
                 mug. Generate 5 lines of dialogue for the accuser where they are ostensibly talking about the
@@ -405,7 +405,7 @@ export default function Lesson6Page() {
             </li>
             <li>
               <strong>AI Editing Exercise (Dialogue Polish):</strong>
-              <blockquote className="mt-2 p-4 bg-gray-50 border-l-4 border-indigo-500 rounded-r-lg text-gray-600 italic">
+              <blockquote className="mt-2 p-4 bg-gray-50 dark:bg-slate-800/60 border-l-4 border-indigo-500 rounded-r-lg text-gray-600 dark:text-gray-300 italic">
                 &quot;Please analyze the following dialogue. Identify any lines that sound unnatural, stilted, or
                 overly formal. Suggest more naturalistic alternatives using contractions and simpler phrasing.
                 Also, identify any dialogue tags that could be replaced by a stronger action beat.&quot;
@@ -422,10 +422,10 @@ export default function Lesson6Page() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             6. Community Component
           </h2>
-          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700">
+          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700 dark:text-gray-200">
             <li>
               <strong>Peer Exchange:</strong> Share your 1,000-word scene with your accountability partner. Ask
               them to read it and then answer two questions: 1) &quot;What is this scene <em>really</em> about?&quot; and 2)
@@ -436,10 +436,10 @@ export default function Lesson6Page() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             7. Self-Assessment Tools
           </h2>
-          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700">
+          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700 dark:text-gray-200">
             <li>
               <strong>Progress Checklist:</strong>
               <ul className="list-none space-y-2 pl-2 mt-3">
@@ -486,10 +486,10 @@ export default function Lesson6Page() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             8. Extension Activities (Optional)
           </h2>
-          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700">
+          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700 dark:text-gray-200">
             <li>
               <strong>For Advanced Students:</strong> Take the scene you just wrote and rewrite it from the
               other character&apos;s point of view. How do their interpretations of the subtext differ? What new
@@ -510,10 +510,10 @@ export default function Lesson6Page() {
         </section>
 
         <section>
-          <h2 className="text-3xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-5">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-slate-700 pb-3 mb-5">
             9. Key Takeaways &amp; Next Steps
           </h2>
-          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700">
+          <ul className="list-disc list-outside space-y-4 pl-6 text-gray-700 dark:text-gray-200">
             <li>
               <strong>Essential Concepts:</strong>
               <ul className="list-[circle] list-outside space-y-1 pl-8 mt-2">
