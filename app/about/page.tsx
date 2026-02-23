@@ -7,7 +7,7 @@ export default function AboutPage() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight font-display md:text-5xl lg:text-6xl">My Story</h1>
-          <p className="mt-4 text-lg md:text-xl font-display text-ink/80 dark:text-canvas/80">(And Why I Built This Place)</p>
+          <p className="mt-4 text-lg md:text-xl font-display text-ink/80 dark:text-text/80">(And Why I Built This Place)</p>
         </div>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start">
@@ -30,7 +30,7 @@ export default function AboutPage() {
               </svg>
             </div>
           </div>
-          <div className="md:col-span-2 font-body text-lg leading-relaxed space-y-6 text-ink/90 dark:text-canvas/90">
+          <div className="md:col-span-2 font-body text-lg leading-relaxed space-y-6 text-ink/90 dark:text-text/90">
             <p>
               Hello, I’m Will. Like many of you, my foundational passion is for writing. I studied it formally at USC, earning a B.A. in English with a
               concentration in Creative Writing. But my career took me in a different direction: I became a librarian, earning an MLIS from San Jose State
@@ -41,7 +41,7 @@ export default function AboutPage() {
               understanding its structure, and figuring out how to query it for the best possible results. I realized that the secret to using AI wasn’t just about
               the right prompt; it was about understanding how to have a structured, intentional conversation.
             </p>
-            <blockquote className="border-l-4 border-glow pl-6 italic text-ink/80 dark:text-canvas/80">
+            <blockquote className="border-l-4 border-glow pl-6 italic text-ink/80 dark:text-text/80">
               I built the AI Writers’ Retreat to be the resource I wished I had. It’s a place to merge the art of storytelling with the science of these new tools.
               My mission is to give other writers the frameworks and confidence to use AI to support their endeavors, not replace their voice.
             </blockquote>
@@ -62,14 +62,14 @@ export default function AboutPage() {
 
         <div className="mt-16 pt-12 border-t border-gray-200 dark:border-gray-800">
           <h2 className="text-3xl font-bold font-display text-center mb-8">A Note on Transparency</h2>
-          <div className="max-w-3xl mx-auto font-body space-y-4 text-ink/80 dark:text-canvas/80 text-base">
+          <div className="max-w-3xl mx-auto font-body space-y-4 text-ink/80 dark:text-text/80 text-base">
             <p>
-              <strong className="text-ink dark:text-canvas">All opinions expressed on this website are my own.</strong> The resources, tools, and methods recommended here
+              <strong className="text-ink dark:text-text">All opinions expressed on this website are my own.</strong> The resources, tools, and methods recommended here
               are based solely on their merit and their value to a writer’s process. This project is not currently sponsored by any entity, nor does it use
               affiliate links. Should that change in the future, any sponsored or affiliated content will be clearly and conspicuously marked.
             </p>
             <p>
-              <strong className="text-ink dark:text-canvas">Furthermore, this is an independent, personal project.</strong> The views and information presented here do not represent
+              <strong className="text-ink dark:text-text">Furthermore, this is an independent, personal project.</strong> The views and information presented here do not represent
               those of my employer or any other professional affiliation.
             </p>
           </div>

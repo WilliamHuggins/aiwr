@@ -70,10 +70,10 @@ function ResourceCard({ title, href, type, description }: Resource) {
         <List className="h-3.5 w-3.5" aria-hidden="true" />
         {type}
       </span>
-      <h3 className="mt-4 font-display text-xl font-semibold text-ink transition-colors group-hover:text-glow dark:text-canvas">
+      <h3 className="mt-4 font-display text-xl font-semibold text-ink transition-colors group-hover:text-glow dark:text-text">
         {title}
       </h3>
-      <p className="mt-2 font-body text-sm text-ink/70 dark:text-canvas/70">
+      <p className="mt-2 font-body text-sm text-ink/70 dark:text-text/70">
         {description}
       </p>
     </a>
@@ -109,10 +109,10 @@ export default function ResourcesPage() {
 
         <section className="mt-14">
           <header className="mb-8 max-w-3xl">
-            <h2 className="font-display text-2xl font-semibold text-ink dark:text-canvas">
+            <h2 className="font-display text-2xl font-semibold text-ink dark:text-text">
               Explore our go-to picks
             </h2>
-            <p className="mt-2 font-body text-base text-ink/80 dark:text-canvas/80">
+            <p className="mt-2 font-body text-base text-ink/80 dark:text-text/80">
               These are the resources we reference most often during workshops and coaching sessions. Each one pairs well with our DIY MFA lessons.
             </p>
           </header>

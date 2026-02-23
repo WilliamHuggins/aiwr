@@ -96,7 +96,7 @@ export default function FindingTheFilterLessonPage() {
   };
 
   return (
-    <main className="bg-canvas dark:bg-canvasDark text-ink dark:text-canvas min-h-screen font-body">
+    <main className="bg-canvas dark:bg-canvasDark text-ink dark:text-text min-h-screen font-body">
       <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
         <article className="prose prose-lg dark:prose-invert prose-headings:font-display prose-a:text-glow dark:prose-a:text-mint hover:prose-a:underline">
           
@@ -105,7 +105,7 @@ export default function FindingTheFilterLessonPage() {
               <GraduationCap className="w-4 h-4 mr-2" />
               {lesson.module}
             </p>
-            <h1 className="mt-2 text-4xl md:text-5xl font-bold font-display text-ink dark:text-canvas">
+            <h1 className="mt-2 text-4xl md:text-5xl font-bold font-display text-ink dark:text-text">
               {lesson.title}
             </h1>
             <div className="mt-4 flex items-center space-x-4 text-sm font-ui text-gray-500 dark:text-gray-400">
