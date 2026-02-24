@@ -32,6 +32,11 @@ const retreatMenu = [
     href: "/reading-list",
   },
   {
+    title: "Reading Like A Writer",
+    description: "Practice close reading techniques that sharpen scene craft, voice, structure, and revision instincts.",
+    href: "/reading-like-a-writer",
+  },
+  {
     title: "Publishing Standards",
     description: "Use practical standards for attribution, ethics, and quality control in AI-assisted writing.",
     href: "/publishing-standards",
@@ -75,17 +80,33 @@ export default function HomePage() {
 
       <section className="bg-surface-2/70 py-16 md:py-24">
         <Container>
-          <div className="mx-auto max-w-3xl rounded-2xl border border-border/70 bg-surface-1 p-8 text-center shadow-editorial md:p-10">
-            <h2 className="font-display text-3xl font-semibold text-text">Meet Your AI Writing Partners</h2>
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-3xl font-semibold text-text">Start with the essentials</h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted">
-              Custom-built AI tools designed to assist, not replace, the creative writer. Explore all four partners on
-              one dedicated page with launch links and quick role overviews.
+              Begin in the DIY MFA, then bring in focused AI partners when you need research, critique, and revision support.
             </p>
-            <Link href="/tools" className="mt-8 inline-flex no-underline">
-              <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">
-                Browse all AI Writing Partners
-              </Button>
-            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <Card className="directory-card flex flex-col p-8">
+              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">Featured Path</p>
+              <h3 className="mt-3 font-display text-3xl font-semibold text-text">Lessons &amp; DIY MFA</h3>
+              <p className="mt-4 flex-grow text-sm leading-relaxed text-muted">
+                Follow the core curriculum to build durable writing habits, stronger craft instincts, and deliberate editorial control.
+              </p>
+              <Link href="/diy-mfa" className="mt-7 inline-flex self-start no-underline">
+                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Explore DIY MFA</Button>
+              </Link>
+            </Card>
+            <Card className="directory-card flex flex-col p-8">
+              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">Featured Tools</p>
+              <h3 className="mt-3 font-display text-3xl font-semibold text-text">Meet Your AI Writing Partners</h3>
+              <p className="mt-4 flex-grow text-sm leading-relaxed text-muted">
+                Custom-built AI tools designed to assist, not replace, the creative writer. Explore all four partners and launch any tool in one click.
+              </p>
+              <Link href="/tools" className="mt-7 inline-flex self-start no-underline">
+                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Browse all AI Writing Partners</Button>
+              </Link>
+            </Card>
           </div>
         </Container>
       </section>
