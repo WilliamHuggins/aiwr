@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
 import HeroBackgroundVideo from "@/components/HeroBackgroundVideo";
+import { LatestPostsTeaser } from "@/components/blog/BlogPostListings";
 
 const retreatMenu = [
   {
@@ -103,6 +104,21 @@ export default function HomePage() {
               </Link>
             </Card>
           </div>
+        </Container>
+      </section>
+
+      <section className="bg-surface-2/70 py-16 md:py-24">
+        <Container>
+          <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="font-display text-3xl font-semibold text-text">Latest Posts</h2>
+              <p className="mt-4 max-w-2xl text-muted">The newest essays from the Retreat journal.</p>
+            </div>
+            <Link href="/blog" className="font-ui text-xs uppercase tracking-[0.14em] text-accent no-underline">
+              Read All Posts →
+            </Link>
+          </div>
+          <LatestPostsTeaser />
         </Container>
       </section>
 
