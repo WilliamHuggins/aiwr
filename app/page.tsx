@@ -7,11 +7,6 @@ import HeroBackgroundVideo from "@/components/HeroBackgroundVideo";
 
 const retreatMenu = [
   {
-    title: "Lessons & DIY MFA",
-    description: "Learn to collaborate with AI through structured lessons and long-form craft practice.",
-    href: "/diy-mfa",
-  },
-  {
     title: "AI Writing News",
     description: "Track practical AI developments for writers with editorial context and clear takeaways.",
     href: "/ai-writing-news",
