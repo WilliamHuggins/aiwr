@@ -217,6 +217,199 @@ const bookLectures: BookLecture[] = [
       ],
     },
   },
+  {
+    id: "jane-eyre",
+    title: "Jane Eyre",
+    author: "Charlotte Bronte",
+    purchaseUrl: "https://www.penguinrandomhouse.com/books/18823/jane-eyre-by-charlotte-bronte/",
+    imageUrl: "https://images1.penguinrandomhouse.com/cover/9780307455192",
+    category: "First-Person Architecture",
+    summary:
+      "A blueprint for first-person narration that is intimate in voice but architected for long-range structural control.",
+    content: {
+      writersCase: [
+        "Jane Eyre is essential for learning how to write a first-person life narrative that feels both intimate and architected—a voice close enough to generate heat, but disciplined enough to build long-range structure.",
+        "The specific craft problem it solves is how to turn interior conviction into plot without turning the novel into a diary or a thesis.",
+        "Brontë’s novel is a toolkit for retrospective first-person control, genre oscillation without incoherence, and a Bildungsroman built from pressure environments that force the protagonist to choose a self.",
+      ],
+      technicalBreakdown: [
+        {
+          heading: "Autodiegetic narration with double-vision (experiencing-self vs narrating-self)",
+          body: [
+            "Jane’s ‘I’ runs in two temporal registers: the younger self in-scene and the older narrator shaping judgment, irony, and suspense.",
+            "Brontë compresses time when she wants moral pattern and expands into scene when she wants confrontation through dialogue, sensory detail, and choice.",
+            "Direct address (‘Reader…’) works as a narrative-distance lever: intimacy when alignment is needed, explicit constructedness when persuasion is foregrounded.",
+          ],
+          takeaway:
+            "Craft takeaway: pace first-person novels by alternating retrospective summary with high-pressure scene, and use reader-address strategically to calibrate distance.",
+        },
+        {
+          heading: "Genre as structural rhythm (realism anchored, Gothic deployed, then re-anchored)",
+          body: [
+            "The novel uses Gothic apparatus—confinement, thresholds, uncanny sound/light, secret history—to externalize social power as lived physical pressure.",
+            "Brontë stabilizes those intensities with a concrete, evaluative narratorial stance so dread rises without collapsing trust in the storyteller.",
+            "This creates a transferable method: borrow high-voltage genre energy while preserving realist authority through consistent voice control.",
+          ],
+          takeaway:
+            "Craft takeaway: keep narration behaviorally consistent, then let setting and event volatility supply tonal lift.",
+        },
+        {
+          heading: "Confrontation scenes as moral tests (dialogue as ethical action)",
+          body: [
+            "Major dialogue sequences are value collisions, not only romantic exchanges; characterization emerges through what Jane refuses or concedes under pressure.",
+            "Asymmetric power structures (class, gender, money, institutional authority) are staged so speech acts—refusal, clarification, boundary setting—carry action.",
+            "Long-plot coherence comes from repeated design: each setting installs a new authority system, then scenes force a choice between belonging and self-definition.",
+          ],
+          takeaway:
+            "Craft takeaway: if you want interiority to generate plot, build recurrent pressure scenes where language choices have social cost.",
+        },
+      ],
+      criticalVerification: [
+        {
+          label: "Oxford Faculty of English on retrospective Bildungsroman stance and realism/Gothic blend",
+          url: "https://www.english.ox.ac.uk/ten-minute-book-club/bronte-jane-eyre",
+        },
+        {
+          label: "Jessica Cox on genre oscillation in Jane Eyre",
+          url: "https://epi-revel.univ-cotedazur.fr/cycnos/311.pdf",
+        },
+      ],
+      readingDirective: [
+        "Buy a physical copy and read with one lens: narrative distance as a pacing tool.",
+        "In every chapter, mark S for summary (time compression), C for full scene (dialogue + physical space), and R for reader-management (direct address, overt retrospection, editorial selection).",
+        "Write one sentence per chapter: what moral claim the narration made, and which scene detail functioned as proof.",
+      ],
+    },
+  },
+  {
+    id: "frankenstein",
+    title: "Frankenstein, or the Modern Prometheus",
+    author: "Mary Shelley",
+    purchaseUrl:
+      "https://www.penguinrandomhouse.com/books/165577/frankenstein-by-mary-shelley-introduction-by-jeanette-winterson/",
+    imageUrl: "https://images1.penguinrandomhouse.com/cover/9780307743312",
+    category: "First-Person Architecture",
+    summary:
+      "A masterclass in staging ethical argument through narrative structure, competing testimony, and sympathy control.",
+    content: {
+      writersCase: [
+        "Frankenstein is direct instruction for one central craft problem: how to stage ethical argument through narrative mechanics rather than authorial explanation.",
+        "Shelley forces readers to adjudicate competing testimonies, making moral judgment an active part of reading instead of a supplied conclusion.",
+        "The novel is especially useful when thematic fiction feels static, first-person voices flatten ambiguity, or sympathy control is too blunt.",
+      ],
+      technicalBreakdown: [
+        {
+          heading: "Frame narration as moral pressure (testimony, mediation, controlled reliability)",
+          body: [
+            "The Walton → Victor → Creature stack functions as an accountability system in which each narrator has stakes in how events are framed.",
+            "Focalization shifts from Victor’s loaded perceptual language to the Creature’s own account, creating a structural sympathy pivot in real time.",
+            "Letters compress time while confessions expand it, giving Shelley elastic pacing between scope and confrontation without losing drive.",
+          ],
+          takeaway:
+            "Craft takeaway: for moral complexity, write competing narrative performances and let readers judge between them.",
+        },
+        {
+          heading: "Characterization through rhetoric (syntax and diction as moral behavior)",
+          body: [
+            "Victor often uses abstraction, destiny language, and emotional nouns that diffuse agency even when narrating his own decisions.",
+            "The Creature builds authority through observational reasoning (observation → inference → desire → thwarting → adaptation), not pure plea.",
+            "Embedded human stories act as calibration devices, teaching both the Creature and the reader how empathy and judgment are learned.",
+          ],
+          takeaway:
+            "Craft takeaway: encode narrator ethics in grammar and naming habits—what gets stated clearly versus blurred into inevitability.",
+        },
+        {
+          heading: "Deferred confrontation as propulsion (obligation, delay, pursuit)",
+          body: [
+            "Shelley repeatedly plants obligations and writes the dread-producing gap between knowing what must be faced and refusing to face it.",
+            "The novel alternates argument scenes (plea, confession, negotiation) with movement sequences (flight, travel, chase) as structural breath control.",
+            "The pursuit endgame physicalizes responsibility: ethics becomes geography and plot velocity becomes unavoidable.",
+          ],
+          takeaway:
+            "Craft takeaway: idea-driven fiction gains speed when every scene either increases obligation or reveals the cost of evasion.",
+        },
+      ],
+      criticalVerification: [
+        {
+          label: "Beth Newman on frame narration as a seductive structure of persuasion",
+          url: "https://www.jstor.org/stable/2873151",
+        },
+        {
+          label: "Anne K. Mellor on gender, creation, and narrative presence/absence in Frankenstein",
+          url: "https://cpb-us-w2.wpmucdn.com/blogs.cofc.edu/dist/e/748/files/2015/01/Mellor-1vhx09r.pdf",
+        },
+      ],
+      readingDirective: [
+        "Buy a physical copy and read with one lens: agency tracking through narration.",
+        "Mark A for explicit agency (‘I did / I chose / I refused’), D for displaced agency (passive, fate language, euphemism), and H for narration handoffs.",
+        "After each major section, write one sentence: what this narrator asks to be forgiven, then cite the D-marked sentences doing that work.",
+      ],
+    },
+  },
+  {
+    id: "the-beach",
+    title: "The Beach",
+    author: "Alex Garland",
+    purchaseUrl: "https://www.penguinrandomhouse.com/books/348300/the-beach-by-alex-garland/",
+    imageUrl: "https://images2.penguinrandomhouse.com/cover/9781573226523",
+    category: "First-Person Architecture",
+    summary:
+      "A model for writing fast first-person suspense that sustains social critique through closed-community pressure mechanics.",
+    content: {
+      writersCase: [
+        "The Beach shows how to build a high-velocity first-person novel that reads like a thriller while delivering social critique.",
+        "Its core craft problem is how to keep narrative compulsion alive after characters arrive at the destination where many utopia/travel premises stall.",
+        "Garland’s solution is mechanical: media-literate voice, pressure-cooker community design, and a controlled reliability slide that escalates intensity without tonal rupture.",
+      ],
+      technicalBreakdown: [
+        {
+          heading: "Voice as propulsion (media-coded perception turned into action)",
+          body: [
+            "The narrator filters perception through war-film, game, and cinematic templates, converting observation into quest logic.",
+            "Risk is repeatedly reframed as narrative opportunity, which generates momentum even when external action is minimal.",
+            "Voice becomes structural: it decides what counts as salient, what gets skipped, and what is framed as imminent.",
+          ],
+          takeaway:
+            "Craft takeaway: let diction and interpretive habit supply forward motion, not just stylistic flavor.",
+        },
+        {
+          heading: "Threshold-based structure (travelogue → enclave → governance crisis)",
+          body: [
+            "The novel is built on threshold crossings that reduce world size and increase social pressure.",
+            "Once inside the enclave, pacing shifts from mobility episodes to systems scenes about rules, roles, scarcity, and enforcement.",
+            "Arrival functions as midpoint: suspense relocates from destination-seeking to collective rationalization under stress.",
+          ],
+          takeaway:
+            "Craft takeaway: make arrival the start of systems conflict, so setting converts directly into plot.",
+        },
+        {
+          heading: "Group psychology as plot engine (maintenance decisions drive collapse)",
+          body: [
+            "Conflict grows through community maintenance choices—exclusion, secrecy, punishment, rationing, narrative control—rather than a single villain.",
+            "Collective complicity allows escalation to feel earned, with each compromise framed as preserving paradise.",
+            "The resulting tension is not only ‘what happens next’ but ‘what this group will justify next.’",
+          ],
+          takeaway:
+            "Craft takeaway: in closed-community suspense, plot each scene as either obligation maintenance or moral cost accrual.",
+        },
+      ],
+      criticalVerification: [
+        {
+          label: "Kirkus review on the novel’s anti-travelogue/thriller/small-group psychology hybrid",
+          url: "https://www.kirkusreviews.com/book-reviews/alex-garland/the-beach/",
+        },
+        {
+          label: "Alex Tickell on postcolonial dynamics and representation in The Beach",
+          url: "https://oro.open.ac.uk/28761/",
+        },
+      ],
+      readingDirective: [
+        "Buy a physical copy and read with one lens: pressure mechanics in a closed community.",
+        "Annotate every use of genre language (war/movie/game logic), every maintenance decision, and every shift from place-description to governance.",
+        "End each chapter with a five-word answer to: what did the community just trade away?",
+      ],
+    },
+  },
 ];
 
 export default function ReadingLikeAWriterPage() {
