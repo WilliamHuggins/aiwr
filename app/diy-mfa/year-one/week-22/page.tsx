@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function Week22Page() {
-  return <WeekShell week={week22Data} prevHref="/diy-mfa/year-one/week-21" nextHref="/diy-mfa" nextLabel="Week 23: Coming Soon" />;
+  return <WeekShell week={week22Data} prevHref="/diy-mfa/year-one/week-21" nextHref="/diy-mfa/year-one/week-23" nextLabel="Week 23: Psychic Distance — The Variable Lens" />;
 }
