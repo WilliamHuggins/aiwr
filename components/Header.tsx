@@ -14,6 +14,7 @@ const primaryNavLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/diy-mfa", label: "DIY MFA" },
+  { href: "/tools", label: "AI Partners" },
   { href: "/ai-writing-news", label: "AI Writing News" },
 ];
 
