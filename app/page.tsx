@@ -1,41 +1,45 @@
-import { BookOpen, MapPin, User, Users } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
 import HeroBackgroundVideo from "@/components/HeroBackgroundVideo";
 
-const aiTools = [
+const retreatMenu = [
   {
-    icon: <MapPin className="h-8 w-8 text-success" />,
-    bgColor: "bg-success/15",
-    title: "Location Scout",
-    description:
-      "Get rich, immersive 'Writer's Location Dossiers' for any place and time to make your settings feel authentic and alive.",
-    href: "https://chatgpt.com/share/687d4aa0-90b8-8000-8b0e-39bc6e6e6d9c",
+    title: "Lessons & DIY MFA",
+    description: "Learn to collaborate with AI through structured lessons and long-form craft practice.",
+    href: "/diy-mfa",
   },
   {
-    icon: <User className="h-8 w-8 text-accent2" />,
-    bgColor: "bg-accent2/15",
-    title: "Character-Smith",
-    description:
-      "Forge deep, multidimensional characters. Build a 'Character Profile Canvas' with goals, flaws, backstories, and arcs to drive your drama.",
-    href: "https://chatgpt.com/share/687d4ace-1810-8000-a569-b723f9ee97e9",
+    title: "AI Writing News",
+    description: "Track practical AI developments for writers with editorial context and clear takeaways.",
+    href: "/ai-writing-news",
   },
   {
-    icon: <Users className="h-8 w-8 text-accent" />,
-    bgColor: "bg-accent/15",
-    title: "Writer's Group",
-    description:
-      "Get instant, constructive feedback. This AI simulates a supportive writers' group, offering critiques on pacing, character, and prose.",
-    href: "https://chatgpt.com/g/g-6862f670d3a8819192c032cc5a8b3222-ai-writers-retreat-the-perfect-writers-group",
+    title: "About",
+    description: "Read our craft-first philosophy and publishing standards for using AI with integrity.",
+    href: "/about",
   },
   {
-    icon: <BookOpen className="h-8 w-8 text-accent" />,
-    bgColor: "bg-accent/15",
-    title: "StrunkSensei",
-    description:
-      "Master *The Elements of Style*. Learn timeless principles of punctuation, sentence structure, and word economy with an interactive AI guide.",
-    href: "https://chatgpt.com/g/g-685dd59ed1e88191b2cb4ec3793ff05f-strunksensei",
+    title: "Resources",
+    description: "Explore handpicked references, tools, and guides to strengthen your writing workflow.",
+    href: "/resources",
+  },
+  {
+    title: "Books on Writing",
+    description: "Browse a curated reading list of foundational books on style, story, and professional practice.",
+    href: "/reading-list",
+  },
+  {
+    title: "Reading Like A Writer",
+    description: "Practice close reading techniques that sharpen scene craft, voice, structure, and revision instincts.",
+    href: "/reading-like-a-writer",
+  },
+  {
+    title: "Publishing Standards",
+    description: "Use practical standards for attribution, ethics, and quality control in AI-assisted writing.",
+    href: "/publishing-standards",
   },
 ];
 
@@ -76,43 +80,58 @@ export default function HomePage() {
 
       <section className="bg-surface-2/70 py-16 md:py-24">
         <Container>
-          <div className="text-center">
-            <h2 className="mb-4 font-display text-3xl font-semibold text-text">Meet Your AI Writing Partners</h2>
-            <p className="mx-auto mb-12 max-w-2xl text-muted">
-              Custom-built AI tools designed to assist, not replace, the creative writer.
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-3xl font-semibold text-text">Start with the essentials</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted">
+              Begin in the DIY MFA, then bring in focused AI partners when you need research, critique, and revision support.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {aiTools.map((tool) => (
-              <Card key={tool.title} className="flex flex-col items-center p-8 text-center">
-                <div className={`mb-4 rounded-full p-4 ${tool.bgColor}`}>{tool.icon}</div>
-                <h3 className="mb-2 font-display text-xl font-semibold text-text">{tool.title}</h3>
-                <p className="flex-grow text-sm text-muted">{tool.description}</p>
-                <a href={tool.href} target="_blank" rel="noopener noreferrer" className="mt-6 no-underline">
-                  <Button className="text-xs uppercase tracking-wide">Launch Tool</Button>
-                </a>
-              </Card>
-            ))}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <Card className="directory-card flex flex-col p-8">
+              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">Featured Path</p>
+              <h3 className="mt-3 font-display text-3xl font-semibold text-text">Lessons &amp; DIY MFA</h3>
+              <p className="mt-4 flex-grow text-sm leading-relaxed text-muted">
+                Follow the core curriculum to build durable writing habits, stronger craft instincts, and deliberate editorial control.
+              </p>
+              <Link href="/diy-mfa" className="mt-7 inline-flex self-start no-underline">
+                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Explore DIY MFA</Button>
+              </Link>
+            </Card>
+            <Card className="directory-card flex flex-col p-8">
+              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">Featured Tools</p>
+              <h3 className="mt-3 font-display text-3xl font-semibold text-text">Meet Your AI Writing Partners</h3>
+              <p className="mt-4 flex-grow text-sm leading-relaxed text-muted">
+                Custom-built AI tools designed to assist, not replace, the creative writer. Explore all four partners and launch any tool in one click.
+              </p>
+              <Link href="/tools" className="mt-7 inline-flex self-start no-underline">
+                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Browse all AI Writing Partners</Button>
+              </Link>
+            </Card>
           </div>
         </Container>
       </section>
 
       <section className="py-16 md:py-24">
         <Container>
-          <h2 className="mb-12 text-center font-display text-3xl font-semibold text-text">Explore the Retreat</h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <Card className="p-8 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40">
-              <h3 className="mb-2 font-display text-xl font-semibold text-text">Lessons &amp; DIY MFA</h3>
-              <p className="text-muted">Learn to collaborate with AI through structured lessons and projects.</p>
-            </Card>
-            <Card className="p-8 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40">
-              <h3 className="mb-2 font-display text-xl font-semibold text-text">AI Tools &amp; Custom GPTs</h3>
-              <p className="text-muted">Use our pre-trained AI writing partners or build your own custom muse.</p>
-            </Card>
-            <Card className="p-8 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40">
-              <h3 className="mb-2 font-display text-xl font-semibold text-text">Explore Genres</h3>
-              <p className="text-muted">Find tools and community spaces tailored to your chosen craft.</p>
-            </Card>
+          <div className="mb-12 text-center">
+            <h2 className="font-display text-3xl font-semibold text-text">Explore the Retreat</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted">
+              A calm, practical directory for finding courses, tools, editorial guidance, and writing resources.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {retreatMenu.map((item) => (
+              <Link key={item.title} href={item.href} className="group no-underline">
+                <Card className="directory-card flex h-full flex-col p-7">
+                  <h3 className="font-display text-xl font-semibold text-text">{item.title}</h3>
+                  <p className="mt-3 flex-grow text-sm leading-relaxed text-muted">{item.description}</p>
+                  <span className="mt-6 inline-flex items-center gap-2 font-ui text-xs uppercase tracking-[0.14em] text-accent">
+                    Explore section
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </span>
+                </Card>
+              </Link>
+            ))}
           </div>
         </Container>
       </section>

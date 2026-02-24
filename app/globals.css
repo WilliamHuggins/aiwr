@@ -4,34 +4,50 @@
 
 @layer base {
   :root {
-    --bg: 250 250 247;
-    --surface-1: 255 255 252;
-    --surface-2: 244 244 240;
-    --text: 45 45 45;
-    --muted: 107 114 128;
-    --border: 229 231 235;
-    --accent: 27 54 93;
-    --accent2: 122 46 59;
-    --success: 91 140 106;
+    --bg: 250 249 245;
+    --surface-1: 255 253 248;
+    --surface-2: 244 241 233;
+    --text: 20 20 19;
+    --muted: 97 95 90;
+    --border: 232 230 220;
+    --accent: 217 119 87;
+    --accent2: 176 174 165;
+    --success: 176 174 165;
 
-    --selection-bg: 27 54 93;
-    --selection-text: 250 250 247;
+    --selection-bg: 217 119 87;
+    --selection-text: 250 249 245;
+
+    --code-bg: 243 238 228;
+    --code-text: 55 50 45;
+    --code-border: 228 218 204;
+    --code-accent: 194 97 66;
+    --code-selection-bg: 217 119 87;
+    --code-selection-text: 250 249 245;
+    --inline-code-bg: 239 234 224;
   }
 
   .dark {
-    --bg: 26 26 46;
-    --surface-1: 34 34 56;
-    --surface-2: 43 43 68;
-    --text: 224 224 224;
-    --muted: 156 163 175;
-    --border: 62 67 95;
-    --accent: 107 140 204;
-    --accent2: 170 88 106;
-    --success: 127 170 141;
+    --bg: 20 20 19;
+    --surface-1: 30 30 28;
+    --surface-2: 38 37 35;
+    --text: 250 249 245;
+    --muted: 176 174 165;
+    --border: 71 68 64;
+    --accent: 217 119 87;
+    --accent2: 176 174 165;
+    --success: 176 174 165;
 
-    --selection-bg: 107 140 204;
-    --selection-text: 26 26 46;
+    --selection-bg: 217 119 87;
+    --selection-text: 250 249 245;
     --essay-inline-highlight: 138 168 227;
+
+    --code-bg: 29 28 27;
+    --code-text: 233 229 217;
+    --code-border: 84 77 71;
+    --code-accent: 232 148 119;
+    --code-selection-bg: 217 119 87;
+    --code-selection-text: 250 249 245;
+    --inline-code-bg: 46 42 39;
   }
 
   :root {
@@ -74,6 +90,39 @@
     @apply decoration-accent text-accent;
   }
 
+  pre,
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  pre {
+    background: rgb(var(--code-bg));
+    color: rgb(var(--code-text));
+    border: 1px solid rgb(var(--code-border));
+    border-radius: 0.9rem;
+  }
+
+  pre [class*="keyword"],
+  pre [class*="attr-name"],
+  pre [class*="property"],
+  pre [class*="selector"] {
+    color: rgb(var(--code-accent));
+  }
+
+  pre ::selection,
+  code ::selection {
+    background: rgb(var(--code-selection-bg));
+    color: rgb(var(--code-selection-text));
+  }
+
+  :not(pre) > code {
+    background: rgb(var(--inline-code-bg));
+    color: rgb(var(--code-accent));
+    border: 1px solid rgb(var(--code-border));
+    border-radius: 0.4rem;
+    padding: 0.1rem 0.35rem;
+  }
+
   * {
     @apply border-border;
   }
@@ -113,6 +162,18 @@
 
   .focus-ring {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+
+  .directory-card {
+    @apply rounded-2xl border border-border bg-surface-1 shadow-editorial transition-all duration-200;
+  }
+
+  .directory-card:hover {
+    @apply -translate-y-0.5 border-accent/55 shadow-lg;
+  }
+
+  .directory-card:focus-within {
+    @apply border-accent ring-2 ring-accent/40 ring-offset-2 ring-offset-bg;
   }
 
   .prose-editorial {
