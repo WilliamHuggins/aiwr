@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Writers' Retreat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: rgb(250, 249, 245);
+        --surface-1: rgb(255, 253, 248);
+        --surface-2: rgb(244, 241, 233);
+        --text: rgb(20, 20, 19);
+        --muted: rgb(97, 95, 90);
+        --border: rgb(232, 230, 220);
+        --accent: rgb(217, 119, 87);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--bg);
+        font-family: "Source Serif 4", serif;
+      }
+      .container { width: min(1120px, calc(100% - 3rem)); margin: 0 auto; }
+      .hero {
+        min-height: 62vh;
+        display: flex;
+        align-items: center;
+        padding: 5rem 0;
+        background: radial-gradient(circle at top right, rgba(217,119,87,.14), transparent 40%), linear-gradient(180deg, #222 0%, #141413 100%);
+        color: #f7f3ee;
+      }
+      .eyebrow {
+        margin: 0;
+        letter-spacing: .24em;
+        text-transform: uppercase;
+        font: 500 .72rem/1 "Inter", sans-serif;
+        color: rgba(255,255,255,.8);
+      }
+      h1 {
+        margin: 1rem 0;
+        max-width: 15ch;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.3rem, 6vw, 4.6rem);
+        line-height: 1.08;
+      }
+      .hero p { max-width: 72ch; margin: 0; color: rgba(255,255,255,.9); font-size: 1.1rem; }
+
+      .latest-posts { padding: 4.5rem 0; background: var(--surface-2); border-top: 1px solid rgba(255,255,255,.06); }
+      .section-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1.5rem; }
+      .section-head h2 { margin: 0; font-family: "Playfair Display", serif; font-size: clamp(1.9rem, 4vw, 2.7rem); }
+      .section-head p { margin: .4rem 0 0; color: var(--muted); }
+      .read-all {
+        white-space: nowrap;
+        color: var(--accent);
+        text-decoration: none;
+        font: 600 .8rem/1 "Inter", sans-serif;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .post-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+      .post-card {
+        background: var(--surface-1);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1.3rem;
+        text-decoration: none;
+        color: inherit;
+      }
+      .post-card h3 { margin: .6rem 0 .45rem; font-size: 1.35rem; font-family: "Playfair Display", serif; line-height: 1.25; }
+      .post-date {
+        margin: 0;
+        color: var(--muted);
+        font: 500 .68rem/1 "Inter", sans-serif;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .post-card p { margin: 0; color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">AI Writers' Retreat</p>
+        <h1>Author in charge. Tool in service.</h1>
+        <p>
+          A craft-first studio for writers using AI with clear editorial standards. Build stronger work, keep your voice, and publish with intent.
+        </p>
+      </div>
+    </section>
+
+    <section class="latest-posts">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Latest Posts</h2>
+            <p>The newest essays from the Retreat journal.</p>
+          </div>
+          <a class="read-all" href="/blog.html">Read All Posts →</a>
+        </div>
+        <div id="latest-posts" class="post-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <script>
+      const latestEl = document.getElementById('latest-posts');
+
+      const formatDate = (dateString) => {
+        const date = new Date(`${dateString}T00:00:00`);
+        if (Number.isNaN(date.getTime())) return dateString;
+        return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+      };
+
+      fetch('/posts/index.json')
+        .then((response) => {
+          if (!response.ok) throw new Error('Unable to load posts.');
+          return response.json();
+        })
+        .then((posts) => {
+          if (!Array.isArray(posts) || posts.length === 0) {
+            latestEl.innerHTML = '<p>No posts yet. Visit again soon.</p>';
+            return;
+          }
+
+          const latest = [...posts]
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .slice(0, 3);
+
+          latestEl.innerHTML = latest
+            .map((post) => {
+              const filename = post.filename.endsWith('.html') ? post.filename : `${post.filename}.html`;
+              return `
+              <a class="post-card" href="/posts/${filename}">
+                <p class="post-date">${formatDate(post.date)}</p>
+                <h3>${post.title}</h3>
+                <p>${post.description}</p>
+              </a>`;
+            })
+            .join('');
+        })
+        .catch(() => {
+          latestEl.innerHTML = '<p>We could not load posts right now.</p>';
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | AI Writers' Retreat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: rgb(250, 249, 245);
+        --surface-1: rgb(255, 253, 248);
+        --surface-2: rgb(244, 241, 233);
+        --text: rgb(20, 20, 19);
+        --muted: rgb(97, 95, 90);
+        --border: rgb(232, 230, 220);
+        --accent: rgb(217, 119, 87);
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--bg);
+        font-family: "Source Serif 4", serif;
+        line-height: 1.6;
+      }
+      .container { width: min(1120px, calc(100% - 3rem)); margin: 0 auto; }
+      .masthead {
+        background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
+        border-bottom: 1px solid var(--border);
+        padding: 5rem 0 3.5rem;
+      }
+      .eyebrow {
+        margin: 0;
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font: 600 0.72rem/1 "Inter", sans-serif;
+      }
+      h1 {
+        margin: 0.85rem 0 1rem;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        line-height: 1.1;
+      }
+      .tagline { margin: 0; max-width: 70ch; color: var(--muted); font-size: 1.08rem; }
+      .meta-nav {
+        display: inline-flex; margin-top: 1.4rem; color: var(--text); text-decoration: none;
+        border-bottom: 1px solid var(--border); font: 500 0.8rem/1 "Inter", sans-serif; letter-spacing: 0.08em; text-transform: uppercase;
+      }
+      main { padding: 3rem 0 5rem; }
+      .post-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+      .post-card {
+        background: var(--surface-1);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 1.6rem;
+        box-shadow: 0 8px 30px rgba(20, 20, 19, 0.06);
+        text-decoration: none;
+        color: inherit;
+        transition: transform .2s ease, border-color .2s ease;
+      }
+      .post-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+      .post-date {
+        margin: 0;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font: 500 0.72rem/1.1 "Inter", sans-serif;
+      }
+      .post-title { margin: .85rem 0 .55rem; font-family: "Playfair Display", serif; font-size: 1.6rem; line-height: 1.25; }
+      .post-description { margin: 0; color: var(--muted); }
+      .status { color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="container">
+        <p class="eyebrow">AI Writers' Retreat Journal</p>
+        <h1>Notes, essays, and field reports from the craft desk.</h1>
+        <p class="tagline">
+          A magazine-style index of long-form writing on language, editorial control, and practical AI use for serious writers.
+        </p>
+        <a class="meta-nav" href="/index.html">Back to Home</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <div id="post-list" class="post-grid" aria-live="polite"></div>
+      </div>
+    </main>
+
+    <script>
+      const listEl = document.getElementById('post-list');
+
+      const formatDate = (dateString) => {
+        const date = new Date(`${dateString}T00:00:00`);
+        if (Number.isNaN(date.getTime())) return dateString;
+        return new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(date);
+      };
+
+      fetch('/posts/index.json')
+        .then((response) => {
+          if (!response.ok) throw new Error('Unable to load posts.');
+          return response.json();
+        })
+        .then((posts) => {
+          if (!Array.isArray(posts) || posts.length === 0) {
+            listEl.innerHTML = '<p class="status">No posts yet. Check back soon.</p>';
+            return;
+          }
+
+          const sorted = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+          listEl.innerHTML = sorted
+            .map((post) => {
+              const filename = post.filename.endsWith('.html') ? post.filename : `${post.filename}.html`;
+              return `
+              <a class="post-card" href="/posts/${filename}">
+                <p class="post-date">${formatDate(post.date)}</p>
+                <h2 class="post-title">${post.title}</h2>
+                <p class="post-description">${post.description}</p>
+              </a>`;
+            })
+            .join('');
+        })
+        .catch(() => {
+          listEl.innerHTML = '<p class="status">Could not load the blog manifest right now.</p>';
+        });
+    </script>
+  </body>
+</html>
