@@ -37,7 +37,7 @@ const retreatMenu = [
 export default function HomePage() {
   return (
     <>
-      <section className="relative flex min-h-[640px] items-center justify-center py-16 text-white md:py-24">
+      <section className="relative -mt-24 flex min-h-[640px] items-center justify-center pb-16 pt-32 text-white md:pb-24 md:pt-40">
         <HeroBackgroundVideo />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
         <Container className="relative z-20 flex flex-col items-center pt-8 text-center md:pt-12 lg:pt-16">
