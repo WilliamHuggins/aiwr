@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -42,16 +41,8 @@ export default function Header() {
           >
             {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-          <Link href="/" className="rounded-md focus-ring">
-            <Image
-              src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/AIWR%20AI%20Writers%27%20Retreat.png"
-              alt="AI Writers Retreat Logo"
-              width={220}
-              height={220}
-              className="h-16 w-auto md:h-20"
-              priority
-              unoptimized
-            />
+          <Link href="/" className="rounded-md font-display text-lg font-semibold no-underline focus-ring md:text-xl">
+            AI Writers&apos; Retreat
           </Link>
         </div>
 
