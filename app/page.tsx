@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -41,7 +42,15 @@ export default function HomePage() {
         <HeroBackgroundVideo />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
         <Container className="relative z-20 flex flex-col items-center pt-8 text-center md:pt-12 lg:pt-16">
-          <p className="font-ui text-xs uppercase tracking-[0.24em] text-white/80">AI Writers&apos; Retreat</p>
+          <Image
+            src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/ChatGPT%20Image%20Feb%2024%2C%202026%2C%2010_09_34%20PM.png"
+            alt="AI Writers' Retreat crest logo"
+            width={180}
+            height={180}
+            className="h-20 w-20 rounded-xl object-contain shadow-soft md:h-24 md:w-24"
+            unoptimized
+          />
+          <p className="mt-4 font-ui text-xs uppercase tracking-[0.24em] text-white/80">AI Writers&apos; Retreat</p>
           <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
             Author in charge. Tool in service.
           </h1>
