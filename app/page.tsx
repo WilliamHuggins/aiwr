@@ -105,9 +105,12 @@ export default function HomePage() {
       <section className="bg-surface-2/70 py-16 md:py-24">
         <Container>
           <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="font-display text-3xl font-semibold text-text">Latest Posts</h2>
-              <p className="mt-4 max-w-2xl text-muted">The newest essays from the Retreat journal.</p>
+            <div className="max-w-3xl rounded-2xl border border-border/70 bg-surface-1/85 p-6 shadow-soft backdrop-blur-sm md:p-8">
+              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">From the blog</p>
+              <h2 className="mt-3 font-display text-3xl font-semibold text-text md:text-4xl">AI &amp; The Craft</h2>
+              <p className="mt-4 max-w-2xl text-muted">
+                Essays on writing with judgment in the age of AI—practical notes on process, voice, revision, and craft.
+              </p>
             </div>
             <Link href="/blog" className="font-ui text-xs uppercase tracking-[0.14em] text-accent no-underline">
               Read All Posts →
