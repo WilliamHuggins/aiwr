@@ -276,7 +276,16 @@
 
 @layer components {
   .hero-studio {
-    @apply -mt-24 bg-surface-1 pb-20 pt-36 md:pb-28 md:pt-44;
+    @apply relative -mt-24 flex min-h-[700px] items-center justify-center overflow-hidden pb-20 pt-36 md:pb-28 md:pt-44;
+  }
+
+  .hero-studio__overlay {
+    @apply absolute inset-0 z-10;
+    background: linear-gradient(to top, rgb(13 12 11 / 0.68), rgb(13 12 11 / 0.46));
+  }
+
+  .hero-studio__container {
+    @apply relative z-20;
   }
 
   .hero-studio__inner {
@@ -290,26 +299,28 @@
   }
 
   .hero-studio__headline {
-    @apply mt-10 max-w-3xl font-display text-4xl font-semibold text-text sm:text-5xl md:text-6xl;
+    @apply mt-10 max-w-3xl font-display text-4xl font-semibold text-white sm:text-5xl md:text-6xl;
     letter-spacing: 0.015em;
     text-wrap: balance;
+    text-shadow: 0 2px 12px rgb(0 0 0 / 0.3);
   }
 
   .hero-studio__divider {
-    @apply mt-7 h-px w-24 bg-border;
+    @apply mt-7 h-px w-24 bg-white/55;
   }
 
   .hero-studio__subhead {
-    @apply mt-7 max-w-2xl text-base leading-relaxed text-muted sm:text-lg md:text-xl;
+    @apply mt-7 max-w-2xl text-base leading-relaxed text-white/90 sm:text-lg md:text-xl;
     text-wrap: pretty;
+    text-shadow: 0 2px 12px rgb(0 0 0 / 0.26);
   }
 
   .hero-studio__cta {
-    @apply mt-10 inline-flex items-center justify-center rounded-full border border-text bg-text px-8 py-3 font-ui text-xs uppercase tracking-[0.14em] text-bg no-underline transition-all duration-200;
+    @apply mt-10 inline-flex items-center justify-center rounded-full border border-white/75 bg-white/90 px-8 py-3 font-ui text-xs uppercase tracking-[0.14em] text-stone-900 no-underline transition-all duration-200;
   }
 
   .hero-studio__cta:hover {
-    @apply -translate-y-0.5 border-accent bg-accent text-bg;
+    @apply -translate-y-0.5 border-white bg-white text-stone-950;
   }
 
   .hero-studio__cta:focus-visible {

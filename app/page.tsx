@@ -37,7 +37,26 @@ export default function HomePage() {
   return (
     <>
       <section className="hero-studio" aria-labelledby="hero-studio-title">
-        <Container>
+        <div className="heroVideoWrap" aria-label="Decorative ambient alpine night video background">
+          <video
+            className="heroVideo"
+            src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/AIWR%20Hero%20Vid.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            controlsList="nodownload noplaybackrate noremoteplayback"
+            crossOrigin="anonymous"
+            tabIndex={-1}
+          >
+            Calm nighttime alpine landscape used as a decorative background video.
+          </video>
+          <div className="heroVideoShield" aria-hidden="true" />
+        </div>
+        <div className="hero-studio__overlay" aria-hidden="true" />
+        <Container className="hero-studio__container">
           <header className="hero-studio__inner">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
