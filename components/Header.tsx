@@ -27,7 +27,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full transition-colors",
+        "w-full transition-colors",
         isHomePage && !isMobileMenuOpen ? "border-b border-transparent bg-transparent" : "border-b bg-bg/90 backdrop-blur-sm",
       )}
     >
