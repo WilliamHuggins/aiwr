@@ -71,14 +71,14 @@ export default function HomePage() {
             <p className="hero-studio__subhead">
               Build voice, structure, and story with tools designed for thinking authors — not content farms.
             </p>
-            <Link href="/tools" className="hero-studio__cta" aria-label="Enter the Studio">
+            <Link href="#home-essentials" className="hero-studio__cta" aria-label="Enter the Studio">
               Enter the Studio
             </Link>
           </header>
         </Container>
       </section>
 
-      <section className="bg-surface-2/70 py-16 md:py-24">
+      <section id="home-essentials" className="bg-surface-2/70 py-16 md:py-24">
         <Container>
           <div className="mb-10 text-center">
             <h2 className="font-display text-3xl font-semibold text-text">Start with the essentials</h2>
