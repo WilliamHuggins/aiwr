@@ -18,13 +18,19 @@ const primaryNavLinks = [
 export default function Header() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-bg/90 backdrop-blur-sm">
+    <header
+      className={cn(
+        "sticky top-0 z-40 w-full transition-colors",
+        isHomePage && !isMobileMenuOpen ? "border-b border-transparent bg-transparent" : "border-b bg-bg/90 backdrop-blur-sm",
+      )}
+    >
       <Container className="flex h-24 items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <button
