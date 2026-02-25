@@ -13,11 +13,6 @@ const retreatMenu = [
     href: "/ai-writing-news",
   },
   {
-    title: "About",
-    description: "Read our craft-first philosophy and publishing standards for using AI with integrity.",
-    href: "/about",
-  },
-  {
     title: "Resources",
     description: "Explore handpicked references, tools, and guides to strengthen your writing workflow.",
     href: "/resources",
