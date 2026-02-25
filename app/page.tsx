@@ -1,10 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
-import HeroBackgroundVideo from "@/components/HeroBackgroundVideo";
 import { LatestPostsTeaser } from "@/components/blog/BlogPostListings";
 
 const retreatMenu = [
@@ -38,43 +36,26 @@ const retreatMenu = [
 export default function HomePage() {
   return (
     <>
-      <section className="relative -mt-24 flex min-h-[640px] items-center justify-center pb-16 pt-32 text-white md:pb-24 md:pt-40">
-        <HeroBackgroundVideo />
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
-        <Container className="relative z-20 flex flex-col items-center pt-8 text-center md:pt-12 lg:pt-16">
-          <Image
-            src="/Logo.png"
-            alt="AI Writers' Retreat logo"
-            width={180}
-            height={180}
-            className="h-24 w-24 rounded-2xl border border-white/35 bg-white/90 p-1 object-contain shadow-soft md:h-28 md:w-28"
-            unoptimized
-          />
-          <p className="mt-4 font-ui text-xs uppercase tracking-[0.24em] text-white/80">AI Writers&apos; Retreat</p>
-          <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            Author in charge. Tool in service.
-          </h1>
-          <div className="mt-7 w-full max-w-4xl space-y-5 text-left text-base leading-relaxed text-white/90 sm:text-lg md:text-xl">
-            <p>
-              AI Writers&apos; Retreat is a craft-first studio for writers who want the advantages of generative AI
-              without compromising voice, taste, or authority on the page. We teach a practical, editorial approach:
-              AI can accelerate research, clarify structure, surface blind spots, and strengthen revision—but it
-              can&apos;t decide what your work means. That part stays with you.
+      <section className="hero-studio" aria-labelledby="hero-studio-title">
+        <Container>
+          <header className="hero-studio__inner">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/ChatGPT%20Image%20Feb%2024%2C%202026%2C%2010_34_11%20PM.png"
+              alt="AI Writers' Retreat"
+              className="hero-studio__logo"
+            />
+            <h1 id="hero-studio-title" className="hero-studio__headline">
+              The Writer&apos;s Studio for the AI Era.
+            </h1>
+            <div className="hero-studio__divider" aria-hidden="true" />
+            <p className="hero-studio__subhead">
+              Build voice, structure, and story with tools designed for thinking authors — not content farms.
             </p>
-            <p>
-              Start with the DIY MFA, a focused curriculum built around craft fundamentals and disciplined practice.
-              Then use our purpose-built AI writing partners as support tools: for historically grounded research,
-              world and character development, constructive critique, and line-level polish. The goal isn&apos;t to
-              &ldquo;write for you.&rdquo; It&apos;s to help you write with more control—fewer dead ends, cleaner drafts,
-              sharper revisions.
-            </p>
-            <p>
-              For writers who are hesitant to use AI—or hesitant to admit it—we take that seriously. We treat AI as
-              an instrument, not an identity: a professional tool you direct, document, and use with standards that
-              hold up to editorial scrutiny. The result is work that reads intentional, coherent, and human—because
-              it is.
-            </p>
-          </div>
+            <Link href="/tools" className="hero-studio__cta" aria-label="Enter the Studio">
+              Enter the Studio
+            </Link>
+          </header>
         </Container>
       </section>
 
