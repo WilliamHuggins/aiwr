@@ -293,13 +293,8 @@
     animation: fadeUp 0.7s ease-out both;
   }
 
-  .hero-studio__logo {
-    width: min(860px, 94vw);
-    height: auto;
-  }
-
   .hero-studio__headline {
-    @apply mt-10 max-w-3xl font-display text-4xl font-semibold text-white sm:text-5xl md:text-6xl;
+    @apply max-w-3xl font-display text-4xl font-semibold text-white sm:text-5xl md:text-6xl;
     letter-spacing: 0.015em;
     text-wrap: balance;
     text-shadow: 0 2px 12px rgb(0 0 0 / 0.3);

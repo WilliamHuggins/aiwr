@@ -58,12 +58,6 @@ export default function HomePage() {
         <div className="hero-studio__overlay" aria-hidden="true" />
         <Container className="hero-studio__container">
           <header className="hero-studio__inner">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/ChatGPT%20Image%20Feb%2024%2C%202026%2C%2010_34_11%20PM.png"
-              alt="AI Writers' Retreat"
-              className="hero-studio__logo"
-            />
             <h1 id="hero-studio-title" className="hero-studio__headline">
               The Writer&apos;s Studio for the AI Era.
             </h1>
