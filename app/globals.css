@@ -272,3 +272,47 @@
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
+
+
+@layer components {
+  .hero-studio {
+    @apply -mt-24 bg-surface-1 pb-20 pt-36 md:pb-28 md:pt-44;
+  }
+
+  .hero-studio__inner {
+    @apply mx-auto flex max-w-4xl flex-col items-center text-center;
+    animation: fadeUp 0.7s ease-out both;
+  }
+
+  .hero-studio__logo {
+    width: min(860px, 94vw);
+    height: auto;
+  }
+
+  .hero-studio__headline {
+    @apply mt-10 max-w-3xl font-display text-4xl font-semibold text-text sm:text-5xl md:text-6xl;
+    letter-spacing: 0.015em;
+    text-wrap: balance;
+  }
+
+  .hero-studio__divider {
+    @apply mt-7 h-px w-24 bg-border;
+  }
+
+  .hero-studio__subhead {
+    @apply mt-7 max-w-2xl text-base leading-relaxed text-muted sm:text-lg md:text-xl;
+    text-wrap: pretty;
+  }
+
+  .hero-studio__cta {
+    @apply mt-10 inline-flex items-center justify-center rounded-full border border-text bg-text px-8 py-3 font-ui text-xs uppercase tracking-[0.14em] text-bg no-underline transition-all duration-200;
+  }
+
+  .hero-studio__cta:hover {
+    @apply -translate-y-0.5 border-accent bg-accent text-bg;
+  }
+
+  .hero-studio__cta:focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg;
+  }
+}
