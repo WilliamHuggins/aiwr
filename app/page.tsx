@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
-import HeroBackgroundVideo from "@/components/HeroBackgroundVideo";
 import { LatestPostsTeaser } from "@/components/blog/BlogPostListings";
 
 const retreatMenu = [
