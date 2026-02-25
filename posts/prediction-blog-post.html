@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Machine That Guesses — Brilliantly | AI Writers Retreat</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '?';
+    position: absolute;
+    font-size: 400px;
+    color: rgba(0,0,0,0.03);
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--faded);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin: 2em 0 0.6em;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: '\201D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  .series-tag {
+    display: inline-block;
+    background: var(--rust);
+    color: white;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 2.5em;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    background: var(--parchment);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--rust);
+  }
+
+  /* ── Interactive prediction demo ── */
+  .demo-box {
+    margin: 2.5em 0;
+    padding: 32px;
+    background: white;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .demo-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 20px;
+  }
+
+  .prompt-text {
+    font-size: 22px;
+    font-family: 'Source Serif 4', serif;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .prompt-text .given {
+    color: var(--ink);
+  }
+
+  .prompt-text .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1.1em;
+    background: var(--rust);
+    vertical-align: middle;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .candidates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .candidate {
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--parchment);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 90px;
+  }
+
+  .candidate:hover {
+    background: var(--ink);
+    color: var(--parchment);
+    transform: translateY(-2px);
+  }
+
+  .candidate .cword {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .candidate .cpct {
+    font-size: 11px;
+    color: var(--faded);
+    letter-spacing: 1px;
+  }
+
+  .candidate:hover .cpct { color: var(--gold); }
+
+  .prob-bar-wrap {
+    background: #eee;
+    height: 8px;
+    border-radius: 2px;
+    width: 100%;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+
+  .prob-bar {
+    height: 100%;
+    background: var(--rust);
+    border-radius: 2px;
+  }
+
+  .demo-note {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    color: var(--faded);
+    letter-spacing: 1px;
+    margin-top: 8px;
+  }
+
+  /* ── Temperature slider ── */
+  .temp-demo {
+    margin: 2.5em 0;
+    padding: 32px;
+    background: white;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .temp-track {
+    position: relative;
+    margin: 24px 0 16px;
+  }
+
+  .temp-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--ink), var(--rust));
+    outline: none;
+    cursor: pointer;
+  }
+
+  .temp-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 3px solid var(--parchment);
+    box-shadow: 0 0 0 2px var(--ink);
+    cursor: pointer;
+  }
+
+  .temp-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 20px;
+  }
+
+  .temp-output {
+    background: var(--parchment);
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 20px 24px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 18px;
+    line-height: 1.7;
+    min-height: 100px;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .temp-value-display {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    color: var(--rust);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  /* ── Compare grid (reused from post 1) ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 2em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .compare-col { padding: 24px; }
+
+  .compare-col:first-child {
+    border-right: 2px solid var(--ink);
+    background: var(--parchment);
+  }
+
+  .compare-col:last-child {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  .compare-col h4 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--gold);
+  }
+
+  .compare-col p { font-size: 16px; line-height: 1.7; margin-bottom: 0; }
+
+  /* ── Confidence meter ── */
+  .confidence-demo {
+    margin: 2em 0;
+    padding: 28px;
+    background: white;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .conf-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  .conf-row:last-child { margin-bottom: 0; }
+
+  .conf-label {
+    font-size: 16px;
+    min-width: 260px;
+    line-height: 1.4;
+  }
+
+  .conf-bar-wrap {
+    flex: 1;
+    background: #eee;
+    height: 28px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .conf-bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: white;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+
+  .conf-high { background: var(--ink); }
+  .conf-mid { background: var(--faded); }
+  .conf-low { background: #b5651d; }
+  .conf-none { background: var(--rust); }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+
+  a { color: var(--rust); text-decoration: underline; }
+  a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+    .pull-quote { margin: 2.5em 0; }
+    .conf-label { min-width: 140px; font-size: 14px; }
+    .candidates { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI Writers Retreat &nbsp;·&nbsp; AI & The Craft &nbsp;·&nbsp; Issue No. 2</div>
+
+<div class="hero">
+  <span class="issue-tag">AI & the Craft — A Series for Writers</span>
+  <h1>The Machine<br>That Guesses —<br><em>Brilliantly.</em></h1>
+  <p class="deck">An AI doesn't know what it's going to say next. It predicts it. Understanding that one fact changes everything about how you work with these tools.</p>
+  <span class="byline">A Writer's Guide to Next-Token Prediction</span>
+</div>
+
+<div class="article-wrapper">
+
+  <span class="series-tag">Part 2 of the Series</span>
+
+  <p class="drop-cap">In the last issue, we established that an AI doesn't read your words — it eats them, chopping your carefully crafted sentences into tokens before processing a single syllable of meaning. Today, we go one level deeper. Because once the machine has its tokens, it has to do something with them. And what it does is so simple, so almost embarrassingly straightforward, that it will either make you laugh or make you stare into the middle distance for a few minutes.</p>
+
+  <p>It guesses what comes next.</p>
+
+  <p>That's it. That's the whole trick. Every word an AI produces — every sentence, every story opening, every piece of feedback on your manuscript — is the result of the model asking itself, over and over again: <em>given everything I've seen so far, what token is most likely to come next?</em></p>
+
+  <p>One token. Then another. Then another. Until it's done.</p>
+
+  <div class="pull-quote">
+    Every word an AI writes is a prediction. It does not know where it is going. It only knows what comes next.
+  </div>
+
+  <h2>You Already Know This Feeling</h2>
+
+  <p>You've seen this logic before. It's the autocomplete on your phone — the little grey suggestions that appear above your keyboard as you type. Type "Happy birth—" and it offers <em>day</em>, <em>to</em>, <em>day!</em> Your phone has learned, from your own messages and millions of others, which words statistically follow which.</p>
+
+  <p>A large language model is this idea taken to a scale that is almost impossible to comprehend. Instead of learning from your texts, it learned from an enormous swath of the written internet, digitized books, academic papers, forums, news articles, code repositories — hundreds of billions of words. Its predictions aren't just about what follows "Happy birth—." They encompass the deep statistical patterns of how human language works, across subjects, styles, tones, and centuries of writing.</p>
+
+  <p>The result is autocomplete that can write a sonnet, summarize a legal brief, and argue both sides of a philosophical debate. But at its core, the mechanism is identical to your phone keyboard. Predict. Output. Repeat.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Interactive Demo — What Token Comes Next?</div>
+    <div class="prompt-text">
+      <span class="given" id="demo-text">It was a dark and stormy</span><span class="cursor"></span>
+    </div>
+    <div class="demo-label" style="margin-bottom:12px;">The model assigns a probability to every possible next token. Click one to continue the sentence.</div>
+    <div class="candidates" id="candidates-wrap"></div>
+    <div class="demo-note" id="demo-note">Each choice changes what comes next — the model recalculates every time.</div>
+  </div>
+
+  <h2>Why It Sounds So Fluent</h2>
+
+  <p>Here is the thing that baffles most people when they first use these tools: the output is so <em>smooth</em>. It doesn't sound like a machine guessing. It sounds like a confident, capable writer. How?</p>
+
+  <p>The answer lies in what the model learned. Language, it turns out, is deeply, almost tyrannically predictable at the local level. After the word <em>dark</em>, certain words are far more likely than others. After <em>dark and stormy</em>, the field narrows further. The model has internalized these patterns at a depth and precision no human could consciously achieve — having processed more text than any person could read in a thousand lifetimes.</p>
+
+  <p>So when it predicts the next token, it is drawing on an extraordinarily rich map of how words relate to each other. The fluency isn't artificial smoothing. It's the emergent result of pattern mastery at enormous scale.</p>
+
+  <div class="compare-grid">
+    <div class="compare-col">
+      <h4>What Fluency Means to You</h4>
+      <p>When a sentence flows, something is working — the syntax is right, the rhythm holds, the word choices belong in the same register. Fluency is evidence of craft and intention.</p>
+    </div>
+    <div class="compare-col">
+      <h4>What Fluency Means to AI</h4>
+      <p>When an AI sentence flows, it means those tokens statistically follow each other with high confidence. Fluency is evidence of pattern frequency — not understanding, not intention, not truth.</p>
+    </div>
+  </div>
+
+  <p>That distinction matters. A lot. We'll come back to it.</p>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>The Temperature Dial Nobody Tells You About</h2>
+
+  <p>If the model always picked the single most probable next token, every output would be deterministic — the same input would produce the same output, every time. Perfectly consistent, perfectly boring, and dangerously prone to getting stuck in repetitive loops.</p>
+
+  <p>So there's a setting — called <strong>temperature</strong> — that controls how adventurous the model's predictions are. Think of it as a dial between <em>cautious</em> and <em>wild</em>.</p>
+
+  <p>At low temperature, the model almost always picks the highest-probability token. Output is predictable, safe, and coherent — but can feel flat and repetitive. At high temperature, the model is more likely to reach further down its list of candidates and pick something surprising, unexpected, even a little strange.</p>
+
+  <div class="temp-demo">
+    <div class="demo-label">Temperature Slider — Same Prompt, Different Behavior</div>
+    <div class="demo-label" style="margin-top:4px; margin-bottom:12px; font-size:10px;">Prompt: "The old lighthouse keeper opened the door and—"</div>
+    <div class="temp-value-display" id="temp-display">TEMPERATURE: 0.3 — CAUTIOUS</div>
+    <div class="temp-track">
+      <div class="temp-labels"><span>Cautious</span><span>Balanced</span><span>Wild</span></div>
+      <input type="range" class="temp-slider" id="temp-slider" min="0" max="100" value="30">
+    </div>
+    <div class="temp-output" id="temp-output"></div>
+  </div>
+
+  <p>Most consumer AI tools like ChatGPT or Claude sit somewhere in the middle — balanced enough to be coherent, loose enough to feel generative. When you're asking for creative writing assistance, that balance is doing a lot of work. And when the output surprises you in a good way, you can thank a touch of temperature for that happy accident.</p>
+
+  <h2>The Part Where It Goes Off the Rails</h2>
+
+  <p>Now for the confession buried inside all that fluency.</p>
+
+  <p>Because prediction is local — one token at a time, each one conditioned on what came before — the model has no grand plan. It is not holding a mental outline of your story. It is not checking the last paragraph against the first. It is not asking whether the claim it's about to make is actually true.</p>
+
+  <p>It is asking: <em>what token is statistically likely here?</em></p>
+
+  <p>This is why AI "hallucinates" — a term the tech world uses when a model confidently states something false. It isn't lying. It isn't confused. It is doing exactly what it was designed to do: produce the most plausible-sounding continuation. And sometimes, the most plausible-sounding continuation happens to be wrong.</p>
+
+  <div class="confidence-demo">
+    <div class="demo-label">AI Confidence — High vs. Low Reliability Zones</div>
+    <div class="conf-row">
+      <span class="conf-label">"Write me a sentence about autumn leaves"</span>
+      <div class="conf-bar-wrap"><div class="conf-bar conf-high" style="width:95%">Very reliable</div></div>
+    </div>
+    <div class="conf-row">
+      <span class="conf-label">"Help me fix the rhythm of this sentence"</span>
+      <div class="conf-bar-wrap"><div class="conf-bar conf-high" style="width:88%">Very reliable</div></div>
+    </div>
+    <div class="conf-row">
+      <span class="conf-label">"Summarize the themes in my story"</span>
+      <div class="conf-bar-wrap"><div class="conf-bar conf-mid" style="width:70%">Generally reliable</div></div>
+    </div>
+    <div class="conf-row">
+      <span class="conf-label">"Who published this obscure 1987 novel?"</span>
+      <div class="conf-bar-wrap"><div class="conf-bar conf-low" style="width:45%">Verify this</div></div>
+    </div>
+    <div class="conf-row">
+      <span class="conf-label">"What did this author say in that interview?"</span>
+      <div class="conf-bar-wrap"><div class="conf-bar conf-none" style="width:25%">Check every word</div></div>
+    </div>
+  </div>
+
+  <p>Notice the pattern: the model is most reliable when the task is generative — creating, shaping, imagining. It is least reliable when the task is factual retrieval of specific, obscure information. That's because generating plausible text and accurately recalling specific facts are very different challenges. The model was built for the former, not the latter.</p>
+
+  <div class="insight">
+    Use AI as a writer's room, not a research library. It is a magnificent collaborator for generation. It is an unreliable witness for facts.
+  </div>
+
+  <h2>What This Means For Your Writing Practice</h2>
+
+  <p>Understanding prediction changes how you prompt. When you ask an AI to continue your story, it is not reading your intent — it is reading your words and predicting what comes statistically next in a passage that looks like yours. This means the specificity of your prompt matters enormously.</p>
+
+  <p>A vague prompt gives the model enormous latitude to follow high-probability paths — which tend to be the most generic ones. A precise prompt narrows the probability landscape and guides the model toward outputs that feel tailored rather than templated.</p>
+
+  <p>Think of it like casting. The more specifically you describe the role — the character's wound, their speech patterns, what they want and can't say — the better the performance you'll get. Leave it vague and the model will cast whoever it cast last time in something similar.</p>
+
+  <p>Three things worth taking into your practice:</p>
+
+  <p><strong>1. Specificity is your steering wheel.</strong> The more context and detail you give, the more the model's probability landscape shifts toward what you actually want. Vague in, generic out.</p>
+
+  <p><strong>2. The first few words carry enormous weight.</strong> Because each token conditions the next, your opening sets the trajectory. If you want a melancholy tone, start melancholy. Don't hope the model will find it three sentences in.</p>
+
+  <p><strong>3. Treat factual outputs as drafts, not sources.</strong> The confident tone is a statistical artifact, not a warranty. Any specific fact an AI gives you — a date, a quote, a name — deserves a quick check before it ends up in your manuscript.</p>
+
+  <div class="pull-quote">
+    Fluency is not accuracy. The voice of certainty is not the voice of truth.
+  </div>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">END OF ISSUE NO. 2 — AI &amp; THE CRAFT</p>
+
+</div>
+
+<footer>
+  <p>AI WRITERS RETREAT &nbsp;·&nbsp; AI & THE CRAFT SERIES &nbsp;·&nbsp; ISSUE NO. 2</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  // ── Prediction demo ──
+  const steps = [
+    {
+      text: "It was a dark and stormy",
+      options: [
+        { word: "night", pct: 71 },
+        { word: "evening", pct: 18 },
+        { word: "afternoon", pct: 7 },
+        { word: "season", pct: 4 }
+      ]
+    },
+    {
+      text: "It was a dark and stormy night",
+      options: [
+        { word: "when", pct: 38 },
+        { word: ".", pct: 29 },
+        { word: "—", pct: 19 },
+        { word: "and", pct: 14 }
+      ]
+    },
+    {
+      text: "It was a dark and stormy night when",
+      options: [
+        { word: "she", pct: 34 },
+        { word: "the", pct: 28 },
+        { word: "he", pct: 22 },
+        { word: "I", pct: 16 }
+      ]
+    },
+    {
+      text: "It was a dark and stormy night when she",
+      options: [
+        { word: "heard", pct: 41 },
+        { word: "arrived", pct: 27 },
+        { word: "finally", pct: 18 },
+        { word: "opened", pct: 14 }
+      ]
+    },
+    {
+      text: "It was a dark and stormy night when she heard",
+      options: [
+        { word: "the", pct: 52 },
+        { word: "a", pct: 29 },
+        { word: "it", pct: 12 },
+        { word: "something", pct: 7 }
+      ]
+    }
+  ];
+
+  let stepIndex = 0;
+
+  function renderStep() {
+    const step = steps[Math.min(stepIndex, steps.length - 1)];
+    document.getElementById('demo-text').textContent = step.text;
+    const wrap = document.getElementById('candidates-wrap');
+    wrap.innerHTML = '';
+
+    if (stepIndex >= steps.length) {
+      document.getElementById('demo-note').textContent = "You've reached the end of this demo. Refresh to start again.";
+      return;
+    }
+
+    step.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'candidate';
+      btn.innerHTML = `
+        <span class="cword">${opt.word}</span>
+        <span class="cpct">${opt.pct}%</span>
+        <div class="prob-bar-wrap"><div class="prob-bar" style="width:${opt.pct}%"></div></div>
+      `;
+      btn.addEventListener('click', () => {
+        stepIndex++;
+        renderStep();
+      });
+      wrap.appendChild(btn);
+    });
+
+    document.getElementById('demo-note').textContent = `Each choice reshapes what comes next. Step ${stepIndex + 1} of ${steps.length}.`;
+  }
+
+  renderStep();
+
+  // ── Temperature demo ──
+  const tempOutputs = [
+    { range: [0, 20], label: "0.1 — CAUTIOUS", text: "saw the storm had worsened. He stepped back inside, latched the door, and returned to his chair by the fire." },
+    { range: [21, 40], label: "0.3 — CAUTIOUS", text: "found a stranger standing on the step — a woman, soaked through, carrying nothing but a small leather case." },
+    { range: [41, 60], label: "0.7 — BALANCED", text: "smelled something that didn't belong to the sea. Sweet, almost floral, cutting through the brine. He stood very still." },
+    { range: [61, 80], label: "1.0 — ADVENTUROUS", text: "realized the lighthouse had been dark for three hours and no one had reported a ship. He began to understand what that meant." },
+    { range: [81, 100], label: "1.5 — WILD", text: "saw his own reflection in the glass — but wearing a coat he hadn't owned in forty years, and younger by a lifetime." }
+  ];
+
+  const slider = document.getElementById('temp-slider');
+  const tempDisplay = document.getElementById('temp-display');
+  const tempOutput = document.getElementById('temp-output');
+
+  function updateTemp() {
+    const val = parseInt(slider.value);
+    const match = tempOutputs.find(t => val >= t.range[0] && val <= t.range[1]);
+    if (match) {
+      tempDisplay.textContent = `TEMPERATURE: ${match.label}`;
+      tempOutput.style.opacity = '0';
+      setTimeout(() => {
+        tempOutput.textContent = `"…${match.text}"`;
+        tempOutput.style.opacity = '1';
+      }, 150);
+    }
+  }
+
+  slider.addEventListener('input', updateTemp);
+  updateTemp();
+</script>
+
+</body>
+</html>
