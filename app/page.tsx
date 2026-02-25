@@ -37,7 +37,9 @@ export default function HomePage() {
   return (
     <>
       <section className="hero-studio" aria-labelledby="hero-studio-title">
-        <Container>
+        <HeroBackgroundVideo />
+        <div className="hero-studio__overlay" aria-hidden="true" />
+        <Container className="hero-studio__container">
           <header className="hero-studio__inner">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
