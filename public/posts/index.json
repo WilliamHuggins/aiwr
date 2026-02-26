@@ -1,5 +1,11 @@
 [
   {
+    "filename": "talk-to-it-like-an-editor-blog-post.html",
+    "title": "Talk to It Like an Editor.",
+    "date": "2026-02-25",
+    "description": "Prompting and context engineering can turn generic AI feedback into precise, revision-ready editorial insight."
+  },
+  {
     "filename": "prediction-blog-post.html",
     "title": "The Machine That Guesses \u2014 Brilliantly.",
     "date": "2026-02-24",

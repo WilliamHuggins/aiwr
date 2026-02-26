@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talk to It Like an Editor | AI Writers Retreat</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '✍';
+    position: absolute;
+    font-size: 360px;
+    color: rgba(0,0,0,0.025);
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--faded);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: '\201D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  .series-tag {
+    display: inline-block;
+    background: var(--rust);
+    color: white;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 2.5em;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    background: var(--parchment);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--rust);
+  }
+
+  /* ── Before/After prompt comparison ── */
+  .before-after {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .ba-tab-row {
+    display: flex;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .ba-tab {
+    flex: 1;
+    padding: 12px 20px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: var(--parchment);
+    border: none;
+    text-align: center;
+    transition: all 0.15s;
+    color: var(--faded);
+  }
+
+  .ba-tab.active {
+    background: var(--ink);
+    color: var(--gold);
+  }
+
+  .ba-tab:first-child { border-right: 1px solid var(--ink); }
+
+  .ba-panel { display: none; padding: 28px 32px; }
+  .ba-panel.active { display: block; }
+
+  .ba-prompt {
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    background: var(--parchment);
+    padding: 16px 20px;
+    border-left: 4px solid var(--faded);
+    margin-bottom: 20px;
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+
+  .ba-prompt.good { border-left-color: var(--gold); }
+
+  .ba-result {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink);
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 20px;
+  }
+
+  .ba-result-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 10px;
+  }
+
+  /* ── Context layers diagram ── */
+  .context-stack {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    overflow: hidden;
+  }
+
+  .context-layer {
+    padding: 22px 28px;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+  }
+
+  .context-layer:last-child { border-bottom: none; }
+
+  .context-layer:hover { background: rgba(0,0,0,0.02); }
+
+  .context-layer.expanded { background: var(--parchment); }
+
+  .layer-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--rust);
+    opacity: 0.25;
+    line-height: 1;
+    min-width: 36px;
+    margin-top: 2px;
+  }
+
+  .layer-body { flex: 1; }
+
+  .layer-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .layer-subtitle {
+    font-size: 16px;
+    color: var(--faded);
+    font-style: italic;
+  }
+
+  .layer-detail {
+    display: none;
+    margin-top: 14px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    padding-top: 14px;
+    border-top: 1px dashed rgba(0,0,0,0.15);
+  }
+
+  .layer-detail.open { display: block; }
+
+  .layer-example {
+    margin-top: 10px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    background: white;
+    border-left: 3px solid var(--gold);
+    padding: 10px 14px;
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+
+  .layer-toggle {
+    font-family: 'Courier Prime', monospace;
+    font-size: 18px;
+    color: var(--faded);
+    min-width: 20px;
+    text-align: center;
+    margin-top: 4px;
+    transition: transform 0.2s;
+  }
+
+  .context-layer.expanded .layer-toggle {
+    transform: rotate(45deg);
+    color: var(--rust);
+  }
+
+  /* ── Revision question builder ── */
+  .question-builder {
+    margin: 2.5em 0;
+    padding: 32px;
+    background: white;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .demo-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 20px;
+  }
+
+  .builder-row {
+    margin-bottom: 16px;
+  }
+
+  .builder-row label {
+    display: block;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 6px;
+  }
+
+  .builder-row select {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    background: var(--parchment);
+    color: var(--ink);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1208' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+
+  .builder-output-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin: 20px 0 8px;
+  }
+
+  .builder-prompt-preview {
+    background: var(--parchment);
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--ink);
+    min-height: 100px;
+    white-space: pre-wrap;
+  }
+
+  .builder-prompt-preview .hl {
+    background: rgba(184, 134, 11, 0.18);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+
+  a { color: var(--rust); text-decoration: underline; }
+  a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .pull-quote { margin: 2.5em 0; }
+    .layer-num { font-size: 24px; min-width: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI Writers Retreat &nbsp;·&nbsp; AI & The Craft &nbsp;·&nbsp; Issue No. 3</div>
+
+<div class="hero">
+  <span class="issue-tag">AI & the Craft — A Series for Writers</span>
+  <h1>Talk to It Like<br>an <em>Editor.</em></h1>
+  <p class="deck">The quality of what AI gives you during revision has almost nothing to do with the AI. It has everything to do with what you hand it — and how you ask.</p>
+  <span class="byline">Prompting & Context Engineering for Revision</span>
+</div>
+
+<div class="article-wrapper">
+
+  <span class="series-tag">Part 3 of the Series</span>
+
+  <p class="drop-cap">Imagine handing your manuscript to a reader — a sharp, attentive one — and saying only: "What do you think?" They'd do their best. They might notice something useful. But they'd be working without any idea of what you were trying to do, what you already know isn't working, what kind of feedback you can actually use right now, or what draft number this is. Their response would be shaped more by their own assumptions than by your actual needs.</p>
+
+  <p>This is exactly what most writers do when they bring a draft to an AI for revision help. They paste the text, type something brief, and hope for insight. Sometimes they get lucky. More often they get a polite, generic response that reads like a creative writing rubric.</p>
+
+  <p>The problem isn't the AI. The problem is the handoff.</p>
+
+  <p>This issue is about two things that fix that: <strong>prompting</strong> — the specific question you ask — and <strong>context engineering</strong> — everything you give the AI before you ask it. Together, they are the difference between a reader who says "this is interesting" and an editor who says "the tension breaks on page four because of this specific sentence."</p>
+
+  <div class="pull-quote">
+    You wouldn't hand a manuscript to a new reader and say "what do you think?" You'd brief them first. Do the same with AI.
+  </div>
+
+  <h2>The Prompt Is the Question. Context Is Everything Else.</h2>
+
+  <p>Writers often treat these as the same thing. They're not. Your prompt is the specific ask — the question you need answered, the task you need done. Your context is the full picture you hand the AI so it can answer well: your draft, your intentions, your constraints, your reader, your concerns.</p>
+
+  <p>Think of it this way. If the prompt is the question you ask your editor, context is the conversation you have before you ask it. A great editor's note doesn't arrive in a vacuum — it arrives after the writer has said: <em>here's what I was going for, here's where I think it's failing, here's what I've already tried.</em></p>
+
+  <p>AI responds to exactly this kind of briefing. Not because it "understands" your intention in any human sense — remember from Issue 2, it is predicting what comes next — but because rich, specific context narrows the probability landscape dramatically. It shifts the model away from generic literary feedback and toward observations that are actually relevant to the piece in your hands.</p>
+
+  <div class="before-after">
+    <div class="ba-tab-row">
+      <button class="ba-tab active" onclick="switchTab(0)">The Unbriefed Ask</button>
+      <button class="ba-tab" onclick="switchTab(1)">The Briefed Ask</button>
+    </div>
+    <div class="ba-panel active" id="panel-0">
+      <div class="ba-prompt">[Paste of draft]
+
+"What do you think of this scene?"</div>
+      <div class="ba-result-label">What you get</div>
+      <div class="ba-result">
+        <p style="font-size:17px; font-style:italic;">"This is a compelling scene with strong atmospheric details. The dialogue feels authentic and the pacing builds tension effectively. You might consider deepening the emotional stakes for the protagonist and ensuring the scene's purpose within the larger narrative arc is clear to the reader..."</p>
+        <p style="font-size:14px; font-family:'Courier Prime',monospace; color:var(--faded); margin-bottom:0;">Generic. Could apply to almost any scene ever written.</p>
+      </div>
+    </div>
+    <div class="ba-panel" id="panel-1">
+      <div class="ba-prompt good">[Paste of draft]
+
+"This is the third draft of a scene where two estranged sisters meet at their father's house after his death. My intention is that the reader feels the affection underneath the argument — not stated, just present. I think I'm losing it somewhere in the middle. Don't give me general feedback. Read only for that one thing: where does the affection stop being legible, and why?"</div>
+      <div class="ba-result-label">What you get</div>
+      <div class="ba-result">
+        <p style="font-size:17px; font-style:italic;">"The affection is clear in the first exchange — particularly the detail about the younger sister using her sister's childhood nickname without seeming to notice. It starts to disappear around the line 'You always do this.' That phrase is familiar enough to signal intimacy, but the stage direction immediately after ('she turned away') reads as final rather than habitual. The body language is shutting the door instead of leaving it ajar..."</p>
+        <p style="font-size:14px; font-family:'Courier Prime',monospace; color:var(--faded); margin-bottom:0;">Specific. Earned. Actually useful in the revision.</p>
+      </div>
+    </div>
+  </div>
+
+  <p>The draft in both examples is identical. The AI is identical. The only difference is what the writer handed over alongside the text.</p>
+
+  <h2>The Four Layers of Useful Context</h2>
+
+  <p>Context engineering sounds technical. It isn't. It's just the practice of giving the AI the briefing your best reader would need. There are four layers worth building into the habit — click any of them to see what this looks like in practice.</p>
+
+  <div class="context-stack" id="context-stack">
+
+    <div class="context-layer" onclick="toggleLayer(0)">
+      <div class="layer-num">1</div>
+      <div class="layer-body">
+        <div class="layer-title">The Draft</div>
+        <div class="layer-subtitle">What you're working on and where it lives in the larger piece</div>
+        <div class="layer-detail" id="layer-0">
+          Don't just paste the excerpt. Tell the AI what it's looking at. Is this the opening? A mid-story turn? The final scene? Chapter three of a novel or a standalone flash piece? The same paragraph reads differently depending on where it sits. A sentence that's too on-the-nose as an ending might be exactly right as an anchor in the middle.
+          <div class="layer-example">"This is the opening scene of a 4,000-word personal essay. The full piece is about my mother's dementia. This scene takes place before the diagnosis — she is still herself, mostly. I'm including just this scene for now."</div>
+        </div>
+      </div>
+      <div class="layer-toggle">+</div>
+    </div>
+
+    <div class="context-layer" onclick="toggleLayer(1)">
+      <div class="layer-num">2</div>
+      <div class="layer-body">
+        <div class="layer-title">Your Intention</div>
+        <div class="layer-subtitle">What you were trying to do — not what happened on the page</div>
+        <div class="layer-detail" id="layer-1">
+          This is the most important layer and the one writers skip most often. Your intention is not a summary of the draft — it is the thing the draft is trying to become. What effect were you after? What should the reader feel, understand, or carry away? What is the central tension you're trying to hold? State this explicitly. The gap between your intention and the AI's reading of the draft is often the most useful piece of feedback you'll get.
+          <div class="layer-example">"My intention is that the reader feels the mother's vitality very specifically — not as nostalgia, but as a present-tense fact. I want her to be funny and difficult at the same time. I don't want the scene to feel like a memorial."</div>
+        </div>
+      </div>
+      <div class="layer-toggle">+</div>
+    </div>
+
+    <div class="context-layer" onclick="toggleLayer(2)">
+      <div class="layer-num">3</div>
+      <div class="layer-body">
+        <div class="layer-title">Your Concern</div>
+        <div class="layer-subtitle">The specific thing you already suspect isn't working</div>
+        <div class="layer-detail" id="layer-2">
+          Every writer comes to a revision session with a nagging suspicion about their own draft. Name it. "I think the pacing collapses in the third paragraph." "I'm worried the narrator is too sympathetic too early." "The last line feels like I'm reaching." Naming your concern does two things: it directs the AI's attention precisely where you need it, and it gives you permission to ask a sharper question than "what do you think?"
+          <div class="layer-example">"My concern is that the scene is too warm too quickly. She hasn't earned the reader's affection yet. I might be doing the sentimental work for them instead of letting the details do it."</div>
+        </div>
+      </div>
+      <div class="layer-toggle">+</div>
+    </div>
+
+    <div class="context-layer" onclick="toggleLayer(3)">
+      <div class="layer-num">4</div>
+      <div class="layer-body">
+        <div class="layer-title">The Scope</div>
+        <div class="layer-subtitle">What kind of feedback you need right now — and what you don't</div>
+        <div class="layer-detail" id="layer-3">
+          This is your most powerful tool for avoiding the generic. Narrow the scope of the feedback to match where you are in the revision. A first-pass structural read and a line-level copyedit are completely different tasks — don't ask for both at once, and don't leave it to the AI to decide which you need. Scope also means telling the AI what to leave alone. "Don't comment on the dialogue — I'm happy with it." "Ignore the grammar; this draft is still loose." These exclusions are as useful as the instructions.
+          <div class="layer-example">"Read only for structure and pacing. I'm not ready for line edits. Tell me if the scene has a clear turn, and where you feel the energy drop. Don't comment on the dialogue or the ending — I know those need work."</div>
+        </div>
+      </div>
+      <div class="layer-toggle">+</div>
+    </div>
+
+  </div>
+
+  <div class="insight">
+    You don't need all four layers every time. Even one — your intention, your concern — transforms the quality of feedback you get. Start there.
+  </div>
+
+  <h2>Asking the Right Question</h2>
+
+  <p>Once you've built your context, the prompt itself — the actual question — should be as precise as a surgical instrument. The most useful revision prompts share a quality that good workshop questions also share: they are <em>specific enough to be answerable</em> and <em>open enough to be honest</em>.</p>
+
+  <p>"Is this good?" is not answerable. "Does the tension in this scene have a clear release, and if so, where does it happen?" is. "Make this better" is not a question — it's a surrender. "Read the last two paragraphs and tell me what the narrator seems to want, based only on what's on the page — not what I've told you about the piece" is an invitation to genuine reading.</p>
+
+  <p>Use the builder below to see how your context and your question work together.</p>
+
+  <div class="question-builder">
+    <div class="demo-label">Revision Prompt Builder</div>
+
+    <div class="builder-row">
+      <label>What you're working on</label>
+      <select id="sel-form" onchange="buildPrompt()">
+        <option value="the opening scene of a personal essay">Opening scene of a personal essay</option>
+        <option value="a mid-story turning point in a short story">Mid-story turning point in a short story</option>
+        <option value="a chapter ending in a novel-in-progress">Chapter ending in a novel-in-progress</option>
+        <option value="a monologue in a one-act play">Monologue in a one-act play</option>
+        <option value="the final paragraph of a lyric essay">Final paragraph of a lyric essay</option>
+      </select>
+    </div>
+
+    <div class="builder-row">
+      <label>Your intention</label>
+      <select id="sel-intent" onchange="buildPrompt()">
+        <option value="the reader should feel the weight of what isn't said">Reader should feel the weight of what isn't said</option>
+        <option value="the narrator's unreliability should be legible but not announced">Narrator's unreliability — legible, not announced</option>
+        <option value="the relationship between the two characters should feel genuinely unresolved">The relationship should feel genuinely unresolved</option>
+        <option value="the setting should be doing emotional work, not just providing atmosphere">Setting should do emotional work, not just atmosphere</option>
+        <option value="the tone should shift — but gradually, so the reader doesn't notice when it happens">Tone should shift gradually and imperceptibly</option>
+      </select>
+    </div>
+
+    <div class="builder-row">
+      <label>Your concern</label>
+      <select id="sel-concern" onchange="buildPrompt()">
+        <option value="I may be over-explaining what the reader should feel">Over-explaining what the reader should feel</option>
+        <option value="the pacing may collapse in the middle">Pacing may collapse in the middle</option>
+        <option value="the emotional register may shift too abruptly">Emotional register shifts too abruptly</option>
+        <option value="the ending may be working too hard to land">Ending is working too hard to land</option>
+        <option value="the narrator's voice may be too consistent — no roughness where roughness belongs">Narrator's voice is too smooth — no roughness</option>
+      </select>
+    </div>
+
+    <div class="builder-row">
+      <label>The ask</label>
+      <select id="sel-ask" onchange="buildPrompt()">
+        <option value="Don't give me general feedback. Read only for my intention above — tell me exactly where it breaks down and why.">Where does my intention break down — and why?</option>
+        <option value="Tell me what the narrator seems to want, based only on the text — not on what I've told you.">What does the narrator seem to want, per the text only?</option>
+        <option value="Identify the moment where the energy drops. Quote the sentence where it happens.">Where does the energy drop? Quote the sentence.</option>
+        <option value="Read as a resistant reader — someone who isn't already on my side. Where do you lose them?">Read as a resistant reader. Where do you lose them?</option>
+        <option value="Don't fix anything. Just tell me what you notice that I might not see because I wrote it.">What do you notice that I can't see because I wrote it?</option>
+      </select>
+    </div>
+
+    <div class="builder-output-label">Your Revision Prompt</div>
+    <div class="builder-prompt-preview" id="builder-output"></div>
+  </div>
+
+  <h2>One Thing AI Can't Replace in This Process</h2>
+
+  <p>All of this — the context, the precise question, the narrowed scope — is in service of getting feedback you can actually use. But there is a step that no prompt engineering can do for you, and it is the most important one: <strong>deciding what the work is actually trying to be.</strong></p>
+
+  <p>The AI can tell you where your intention isn't landing on the page. It cannot tell you whether your intention is the right one. It can identify where the emotional register shifts. It cannot tell you whether that shift is a flaw or the whole point. It can read your draft as a resistant reader. It cannot tell you whether that resistance is something to overcome or something to honor.</p>
+
+  <p>Those judgments are yours. They are the reason the work exists. Context engineering and precise prompting give you better raw material for revision — clearer observations, more specific problems, more targeted questions. But the revision itself, the real one, the one where you decide what the story is about and fight for it sentence by sentence, remains entirely human work.</p>
+
+  <p>Which is, of course, why you're here.</p>
+
+  <div class="pull-quote">
+    AI can tell you where the intention breaks down. It cannot tell you what the intention should be.
+  </div>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">END OF ISSUE NO. 3 — AI &amp; THE CRAFT</p>
+
+</div>
+
+<footer>
+  <p>AI WRITERS RETREAT &nbsp;·&nbsp; AI & THE CRAFT SERIES &nbsp;·&nbsp; ISSUE NO. 3</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  // ── Before/After tabs ──
+  function switchTab(idx) {
+    document.querySelectorAll('.ba-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('.ba-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // ── Expandable context layers ──
+  function toggleLayer(idx) {
+    const layer = document.querySelectorAll('.context-layer')[idx];
+    const detail = document.getElementById('layer-' + idx);
+    const isOpen = detail.classList.contains('open');
+    detail.classList.toggle('open', !isOpen);
+    layer.classList.toggle('expanded', !isOpen);
+  }
+
+  // ── Revision prompt builder ──
+  function buildPrompt() {
+    const form    = document.getElementById('sel-form').value;
+    const intent  = document.getElementById('sel-intent').value;
+    const concern = document.getElementById('sel-concern').value;
+    const ask     = document.getElementById('sel-ask').value;
+
+    document.getElementById('builder-output').innerHTML =
+      `[Paste your draft here]\n\n` +
+      `This is <span class="hl">${form}</span>.\n\n` +
+      `My intention: <span class="hl">${intent}</span>.\n\n` +
+      `My concern: <span class="hl">${concern}</span>.\n\n` +
+      `<span class="hl">${ask}</span>`;
+  }
+
+  buildPrompt();
+</script>
+
+</body>
+</html>
