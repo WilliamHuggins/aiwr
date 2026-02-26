@@ -141,7 +141,7 @@ export const week31Data: WeekData = {
               author: "F. Scott Fitzgerald",
               href: "https://www.gutenberg.org/ebooks/64317",
               note: "Free on Project Gutenberg (entered public domain in 2021). Read Chapter 1 for the first appearance of the green light — it is there, in the novel's opening, before it has become what it will become — and Chapter 5 for its second major appearance, when Gatsby shows Daisy the light across the water and it shifts from desire to something more complicated. Track every appearance of the light between those two chapters as well. The task is not to interpret the symbol but to map its structural placement: when does it appear, in whose presence, at what emotional moments? The meaning is in the architecture, not in the object.",
-              badge: "Free",
+              badge: "Free Online",
             },
             {
               number: "02",
@@ -149,7 +149,7 @@ export const week31Data: WeekData = {
               author: "James Joyce",
               href: "https://www.gutenberg.org/ebooks/2814",
               note: "Free on Project Gutenberg. Read 'Araby' for how a single orienting image (the girl in the doorway, the journey to the bazaar, the darkened hall) accumulates meaning across a very short story until the final epiphany. Then read 'The Dead' for the master class: track the snow across its appearances from the opening pages to the final paragraph. What is the snow in its first appearance? What has it accumulated by the last? The distance between those two is the story's emotional and thematic arc, carried by an image rather than by event.",
-              badge: "Free",
+              badge: "Free Online",
             },
             {
               number: "03",
