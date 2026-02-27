@@ -38,9 +38,10 @@ type WeekShellProps = {
   nextLabel?: string;
   variant?: "essay" | "module";
   moduleContent?: React.ReactNode;
+  yearLabel?: string;
 };
 
-export default function WeekShell({ week, prevHref = "/diy-mfa", nextHref = "/diy-mfa/year-one/week-2", nextLabel = "Week 2: Sustainable Practice", variant = "essay", moduleContent }: WeekShellProps) {
+export default function WeekShell({ week, prevHref = "/diy-mfa", nextHref = "/diy-mfa/year-one/week-2", nextLabel = "Week 2: Sustainable Practice", variant = "essay", moduleContent, yearLabel = "Year One" }: WeekShellProps) {
   if (variant === "module") {
     return <>{moduleContent}</>;
   }
@@ -51,12 +52,12 @@ export default function WeekShell({ week, prevHref = "/diy-mfa", nextHref = "/di
 
   return (
     <div>
-      <Masthead weekNumber={week.weekNumber} totalWeeks={week.totalWeeks} subtitle={`MFA Year One · ${week.semesterLabel}`} prevHref={prevHref} nextHref={nextHref} />
+      <Masthead weekNumber={week.weekNumber} totalWeeks={week.totalWeeks} subtitle={`MFA ${yearLabel} · ${week.semesterLabel}`} prevHref={prevHref} nextHref={nextHref} />
       <Hero label={`Week ${week.weekNumber} of ${week.totalWeeks} · ${week.semesterLabel} · ${week.phaseLabel}`} title={week.title} emphasis={week.emphasizedWord} deck={week.deck} meta={week.meta} />
       <main className="mx-auto max-w-[860px] px-5 pb-24 md:px-8" aria-label={`Week ${week.weekNumber} content`}>
         {week.sections.map((section) => <Section key={section.id} id={section.id} label={section.label} title={section.title}>{section.blocks.map((b, i) => <div key={i}>{renderBlock(b)}</div>)}</Section>)}
       </main>
-      <WeekFooterNav center={`Year One · Week ${week.weekNumber} of ${week.totalWeeks}
+      <WeekFooterNav center={`${yearLabel} · Week ${week.weekNumber} of ${week.totalWeeks}
 ${week.title}`} nextLabel={nextLabel} nextHref={nextHref} />
     </div>
   );
