@@ -32,6 +32,15 @@ export default function DiyMfaHome() {
             ))}
           </div>
         </div>
+
+        <div>
+          <h2 className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Year Two</h2>
+          <div className="mt-4 flex flex-wrap gap-4">
+            <Link href="/diy-mfa/year-two/week-1" className="rounded-sm border border-border px-4 py-2 no-underline">
+              Enter Year Two, Week 1
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );
