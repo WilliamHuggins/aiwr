@@ -1,9 +1,15 @@
 [
   {
+    "filename": "ai-has-a-desk-not-a-filing-cabinet-blog-post.html",
+    "title": "AI Has a Desk, Not a Filing Cabinet.",
+    "date": "2026-02-27",
+    "description": "Every revision session with AI begins from scratch. Understanding the context window helps long-form writers design better, focused editing sessions."
+  },
+  {
     "filename": "dont-let-it-sand-you-down-blog-post.html",
     "title": "Don't Let It Sand You Down.",
     "date": "2026-02-26",
-    "description": "AI feedback often pushes prose toward the statistical average—here's how to preserve the stylistic fingerprints that make your voice yours."
+    "description": "AI feedback often pushes prose toward the statistical average\u2014here's how to preserve the stylistic fingerprints that make your voice yours."
   },
   {
     "filename": "talk-to-it-like-an-editor-blog-post.html",
@@ -13,9 +19,9 @@
   },
   {
     "filename": "prediction-blog-post.html",
-    "title": "The Machine That Guesses — Brilliantly.",
+    "title": "The Machine That Guesses \u2014 Brilliantly.",
     "date": "2026-02-24",
-    "description": "An AI doesn't know what it's going to say next—it predicts it. Understanding that one fact changes everything about how you work with these tools."
+    "description": "An AI doesn't know what it's going to say next\u2014it predicts it. Understanding that one fact changes everything about how you work with these tools."
   },
   {
     "filename": "tokenization-blog-post.html",
