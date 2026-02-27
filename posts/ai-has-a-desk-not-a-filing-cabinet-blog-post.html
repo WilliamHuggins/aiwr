@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Has a Desk, Not a Filing Cabinet | AI Writers Retreat</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '□';
+    position: absolute;
+    font-size: 420px;
+    color: rgba(0,0,0,0.025);
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--faded);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: '\201D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  .series-tag {
+    display: inline-block;
+    background: var(--rust);
+    color: white;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 2.5em;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    background: var(--parchment);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--rust);
+  }
+
+  /* ── Desk visualizer ── */
+  .desk-demo {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    background: white;
+    padding: 32px;
+  }
+
+  .demo-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 24px;
+  }
+
+  .desk-surface {
+    background: var(--parchment);
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    padding: 20px;
+    min-height: 120px;
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .desk-label {
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+  }
+
+  .desk-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    min-height: 48px;
+    align-items: flex-start;
+  }
+
+  .desk-item {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    padding: 6px 12px;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    background: white;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .desk-item.fading {
+    opacity: 0.25;
+    border-style: dashed;
+    border-color: var(--faded);
+    color: var(--faded);
+  }
+
+  .desk-item.gone {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .desk-item.new-item {
+    background: var(--highlight);
+    border-color: var(--gold);
+    animation: popIn 0.3s ease;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .desk-controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .desk-btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    border: 2px solid var(--ink);
+    background: var(--parchment);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+  }
+
+  .desk-btn:hover {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  .desk-btn.danger {
+    border-color: var(--rust);
+    color: var(--rust);
+  }
+
+  .desk-btn.danger:hover {
+    background: var(--rust);
+    color: white;
+  }
+
+  .desk-status {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    color: var(--faded);
+    margin-top: 14px;
+    letter-spacing: 1px;
+    min-height: 20px;
+    font-style: italic;
+  }
+
+  /* ── Capacity meter ── */
+  .capacity-demo {
+    margin: 2.5em 0;
+    padding: 32px;
+    background: white;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .capacity-bar-wrap {
+    background: #e8e4dc;
+    height: 40px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 16px 0 10px;
+    position: relative;
+  }
+
+  .capacity-bar {
+    height: 100%;
+    transition: width 0.4s ease;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: white;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+
+  .capacity-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--faded);
+    margin-bottom: 20px;
+  }
+
+  .capacity-scenarios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .cap-btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 2px solid var(--ink);
+    background: var(--parchment);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+  }
+
+  .cap-btn:hover, .cap-btn.active {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  .cap-note {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    color: var(--faded);
+    margin-top: 14px;
+    letter-spacing: 1px;
+    min-height: 20px;
+  }
+
+  /* ── Session strategies ── */
+  .strategies {
+    margin: 2.5em 0;
+  }
+
+  .strategy {
+    border: 2px solid var(--ink);
+    margin-bottom: -2px;
+  }
+
+  .strategy-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .strategy-header:hover { background: rgba(0,0,0,0.02); }
+
+  .strategy.open .strategy-header {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  .strategy-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--rust);
+    opacity: 0.35;
+    min-width: 28px;
+    line-height: 1;
+  }
+
+  .strategy.open .strategy-num { color: var(--gold); opacity: 1; }
+
+  .strategy-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .strategy-toggle {
+    font-size: 18px;
+    font-family: 'Courier Prime', monospace;
+    color: var(--faded);
+    transition: transform 0.2s;
+  }
+
+  .strategy.open .strategy-toggle {
+    transform: rotate(45deg);
+    color: var(--gold);
+  }
+
+  .strategy-body {
+    display: none;
+    padding: 24px 28px 28px 68px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .strategy.open .strategy-body { display: block; }
+
+  .strategy-example {
+    margin-top: 14px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    background: var(--parchment);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    color: var(--ink);
+  }
+
+  /* ── Compare grid ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 2em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .compare-col { padding: 24px; }
+
+  .compare-col:first-child {
+    border-right: 2px solid var(--ink);
+    background: var(--parchment);
+  }
+
+  .compare-col:last-child {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  .compare-col h4 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--gold);
+  }
+
+  .compare-col p { font-size: 16px; line-height: 1.7; margin-bottom: 0; }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+
+  a { color: var(--rust); text-decoration: underline; }
+  a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+    .pull-quote { margin: 2.5em 0; }
+    .strategy-body { padding-left: 24px; }
+    .capacity-scenarios { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI Writers Retreat &nbsp;·&nbsp; AI & The Craft &nbsp;·&nbsp; Issue No. 5</div>
+
+<div class="hero">
+  <span class="issue-tag">AI & the Craft — A Series for Writers</span>
+  <h1>AI Has a <em>Desk,</em><br>Not a Filing Cabinet.</h1>
+  <p class="deck">Every revision session with AI begins from scratch. It doesn't remember your novel. It doesn't remember last Tuesday. Understanding this one fact will change how you work — especially on long projects.</p>
+  <span class="byline">The Context Window & What It Means for Writers</span>
+</div>
+
+<div class="article-wrapper">
+
+  <span class="series-tag">Part 5 of the Series</span>
+
+  <p class="drop-cap">Picture an editor with an unusual condition. Brilliant, attentive, genuinely perceptive about prose — but at the end of every session, they forget everything. Not just your manuscript. Your name. The entire conversation. Tomorrow they will sit across from you just as alert and capable as before, with absolutely no memory of what you discussed the day prior. You hand them pages. They read them fresh. Every single time.</p>
+
+  <p>This is not a flaw in AI. It is simply how it works. And for writers — especially those revising long-form work — it is the single most important structural fact to understand about these tools.</p>
+
+  <p>It has a name: the <strong>context window.</strong> And once you understand it, you'll stop being frustrated by AI's apparent lapses and start designing your revision sessions to work with it rather than against it.</p>
+
+  <h2>What the Context Window Actually Is</h2>
+
+  <p>When you open a conversation with an AI, you are opening a temporary workspace. Everything in that workspace — your messages, the AI's responses, any text you've pasted in — exists within the context window. The model can see all of it. It can reason across it, refer back to it, hold it in relationship.</p>
+
+  <p>But the context window is finite. It has a size limit, measured in tokens — those chunks of text we explored in Issue 1. And critically: when you close the conversation and open a new one, the context window empties completely. The desk is cleared. Every scrap of paper, every note, every page of your manuscript — gone.</p>
+
+  <div class="desk-demo">
+    <div class="demo-label">The Desk — An Interactive Model</div>
+    <div class="desk-surface">
+      <div class="desk-label">Current Context Window</div>
+      <div class="desk-items" id="desk-items"></div>
+    </div>
+    <div class="desk-controls">
+      <button class="desk-btn" onclick="addItem('Chapter 3 draft')">+ Add Chapter Draft</button>
+      <button class="desk-btn" onclick="addItem('Character notes')">+ Add Character Notes</button>
+      <button class="desk-btn" onclick="addItem('Your question')">+ Add Your Question</button>
+      <button class="desk-btn" onclick="addItem('AI response')">+ Add AI Response</button>
+      <button class="desk-btn danger" onclick="clearDesk()">Close Conversation ✕</button>
+    </div>
+    <div class="desk-status" id="desk-status">Add items to the desk, then close the conversation to see what happens.</div>
+  </div>
+
+  <p>That cleared desk is not a bug — it is a privacy feature and a design choice. It means the AI is never carrying baggage from someone else's session into yours. But it also means that every time you start a new conversation, you are starting from zero. The AI does not know you wrote a novel. It does not know your protagonist's name. It does not know that you already solved the pacing problem in chapter two last week.</p>
+
+  <h2>The Size of the Desk Matters Too</h2>
+
+  <p>Even within a single conversation, the context window has limits. Different AI tools have different window sizes, but all of them have one. Think of it as the surface area of the desk. You can only spread so many pages across it at once.</p>
+
+  <p>For short-form writers revising a poem or a flash piece, this is rarely a problem. The work fits comfortably on the desk alongside the conversation. But for novelists, memoirists, and essayists working with long manuscripts, it becomes a genuine constraint. You cannot paste a 90,000-word novel into a single context window and ask the AI to hold all of it while you revise chapter seven.</p>
+
+  <div class="capacity-demo">
+    <div class="demo-label">Context Window — How Full Is Your Desk?</div>
+    <div class="capacity-label-row">
+      <span>Empty</span>
+      <span>Getting Full</span>
+      <span>At Limit</span>
+    </div>
+    <div class="capacity-bar-wrap">
+      <div class="capacity-bar" id="cap-bar" style="width: 0%; background: var(--ink);">
+        <span id="cap-bar-text"></span>
+      </div>
+    </div>
+    <div class="capacity-scenarios">
+      <button class="cap-btn" onclick="setCapacity(5, 'A short poem + your question + AI response.', 5)">A poem</button>
+      <button class="cap-btn" onclick="setCapacity(18, 'A flash fiction piece + revision notes + back-and-forth.', 18)">Flash fiction</button>
+      <button class="cap-btn" onclick="setCapacity(40, 'A short story + detailed context + several exchanges.', 40)">Short story</button>
+      <button class="cap-btn" onclick="setCapacity(75, 'A single novel chapter + context + conversation. Getting tight.', 75)">One chapter</button>
+      <button class="cap-btn" onclick="setCapacity(100, 'Full novel. Does not fit. The earliest parts begin falling off the desk.', 100)">Full novel</button>
+    </div>
+    <div class="cap-note" id="cap-note">Select a scenario to see how it fills the context window.</div>
+  </div>
+
+  <p>What happens when the desk is full? The model doesn't crash. It simply begins to lose access to the earliest parts of the conversation — the first things you put on the desk get pushed off the edge to make room for what's coming in. If you pasted your story notes at the start of a long session and the conversation has grown significantly since then, there's a real chance the AI can no longer "see" those notes. It isn't ignoring them. They've simply fallen off the desk.</p>
+
+  <div class="pull-quote">
+    When the context window fills, the AI doesn't forget everything at once. The oldest things go first — quietly, without warning.
+  </div>
+
+  <h2>What This Means for Long-Form Revision</h2>
+
+  <p>This is where the implications get practical and specific. Short-form writers can often ignore the context window entirely — their work fits, the session is contained, and everything stays on the desk. But novelists and long-form essayists need a different approach.</p>
+
+  <div class="compare-grid">
+    <div class="compare-col">
+      <h4>Short-Form Work</h4>
+      <p>A poem, flash piece, or short essay fits comfortably inside a single session. Paste it in, add your context, ask your questions. The desk has room. The model holds everything simultaneously.</p>
+    </div>
+    <div class="compare-col">
+      <h4>Long-Form Work</h4>
+      <p>A novel chapter, memoir section, or long essay may fill the desk on its own. Multiple chapters cannot all be present at once. Each session must be deliberately scoped — one scene, one problem, one question at a time.</p>
+    </div>
+  </div>
+
+  <p>This isn't a limitation to work around so much as a discipline to embrace. The context window enforces exactly the kind of focused, scoped revision that good editors recommend anyway. You cannot revise a novel all at once — human or AI reader. The constraint turns out to be a feature in disguise.</p>
+
+  <h2>Five Ways to Work With It</h2>
+
+  <p>Once you understand the context window, you can design sessions that make it work for you rather than against you. Here are five strategies that long-form writers find most useful.</p>
+
+  <div class="strategies">
+
+    <div class="strategy" id="s0">
+      <div class="strategy-header" onclick="toggleStrategy(0)">
+        <div class="strategy-num">1</div>
+        <div class="strategy-title">Scope Each Session to One Problem</div>
+        <div class="strategy-toggle">+</div>
+      </div>
+      <div class="strategy-body">
+        Don't paste an entire chapter and ask for general feedback. Paste the scene, the passage, or even the paragraph where a specific problem lives — and ask only about that problem. This keeps the desk clear, the context rich, and the feedback focused. You get more useful output from a smaller, better-scoped session than from a sprawling one where the model is holding too much at once.
+        <div class="strategy-example">"Here is the scene where Marcus and his father argue at the hospital. I am only working on this scene today. My question is about the moment of rupture — I'll describe what I'm after below."</div>
+      </div>
+    </div>
+
+    <div class="strategy" id="s1">
+      <div class="strategy-header" onclick="toggleStrategy(1)">
+        <div class="strategy-num">2</div>
+        <div class="strategy-title">Write a Manuscript Brief You Reuse</div>
+        <div class="strategy-toggle">+</div>
+      </div>
+      <div class="strategy-body">
+        Since the AI forgets everything between sessions, bring the essential context with you every time. Write a standing brief for your project — 150 to 300 words covering the premise, the narrator's position, the central tension, the tone you're after, and the key character relationships. Paste this brief at the top of every new session before you paste any draft material. It takes thirty seconds and it transforms the quality of feedback immediately.
+        <div class="strategy-example">"MANUSCRIPT BRIEF — paste this at the start of every session: This is a memoir about my father's second marriage, told from the perspective of his adult daughter who was not consulted. The tone is dry and precise with grief underneath it. The narrator is unreliable in ways she doesn't fully recognize. Key tension: love and resentment for the same person..."</div>
+      </div>
+    </div>
+
+    <div class="strategy" id="s2">
+      <div class="strategy-header" onclick="toggleStrategy(2)">
+        <div class="strategy-num">3</div>
+        <div class="strategy-title">Keep Sessions Short and Save Them</div>
+        <div class="strategy-toggle">+</div>
+      </div>
+      <div class="strategy-body">
+        Long conversations drift. As the session grows, earlier context fades — and the feedback quality tends to decline with it. Work in shorter, focused bursts rather than marathon sessions. When you've solved one problem, close the conversation and start fresh for the next one. Save the useful exchanges: copy out any feedback or observations worth keeping into your own notes before you close the tab. That's your filing cabinet — the AI doesn't have one.
+        <div class="strategy-example">Keep a running document called "AI revision notes" where you paste anything worth saving from a session. Date each entry. Over time this becomes a record of your revision thinking — something the AI can never give you but you can build yourself.</div>
+      </div>
+    </div>
+
+    <div class="strategy" id="s3">
+      <div class="strategy-header" onclick="toggleStrategy(3)">
+        <div class="strategy-num">4</div>
+        <div class="strategy-title">Use It as a First Reader for Isolated Scenes</div>
+        <div class="strategy-toggle">+</div>
+      </div>
+      <div class="strategy-body">
+        The context window's limitation is also a gift: the AI reads each scene without the accumulated assumptions a long-term human reader develops. Paste a scene cold — with just enough context to orient the reader — and ask what it seems to be doing, who the characters appear to be, what the scene wants. The fresh read surfaces assumptions you've stopped questioning because you've lived with the material too long.
+        <div class="strategy-example">"Read this scene without any context about the larger book. Tell me: who do you think these two people are to each other? What does each of them seem to want? What question does the scene seem to be asking? I want your cold read, not a judgment."</div>
+      </div>
+    </div>
+
+    <div class="strategy" id="s4">
+      <div class="strategy-header" onclick="toggleStrategy(4)">
+        <div class="strategy-num">5</div>
+        <div class="strategy-title">Ask It to Summarize Before You Go Long</div>
+        <div class="strategy-toggle">+</div>
+      </div>
+      <div class="strategy-body">
+        If you're in the middle of a long session and worried about earlier context fading, ask the AI to summarize what it knows about your project and the conversation so far. This forces the key information back to the top of the context window — refreshing it — and shows you immediately whether anything critical has been lost. Think of it as tidying the desk mid-session.
+        <div class="strategy-example">"Before we continue — summarize what you know about this manuscript, the revision problem we've been working on, and the decisions we've made so far in this conversation. I want to make sure we're still working from the same foundation."</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="insight">
+    The context window is not a memory problem to solve. It is a session design problem — and once you design around it, it stops mattering.
+  </div>
+
+  <h2>The Filing Cabinet Is Yours to Build</h2>
+
+  <p>There is something clarifying about working with a tool that has no memory. It makes explicit something that is easy to forget when working with human readers and editors: <strong>the continuity of your project lives with you.</strong> The accumulating knowledge of what the novel is becoming, what you've tried, what you've ruled out, what you've decided — that has always been the writer's job to hold. AI just makes the dependency visible.</p>
+
+  <p>Your manuscript brief, your revision notes, your decisions document, your voice inventory from Issue 4 — these are your filing cabinet. They are the institutional memory of the project. The AI brings a fresh desk to every session. You bring everything it needs to know.</p>
+
+  <p>That division of labor, once understood, is actually a good one. The AI is tireless and attentive in the present tense. You are the keeper of the long story. Between the two, the revision gets done.</p>
+
+  <div class="pull-quote">
+    The AI brings a fresh desk every time. You bring everything that needs to be on it.
+  </div>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">END OF ISSUE NO. 5 — AI &amp; THE CRAFT</p>
+
+</div>
+
+<footer>
+  <p>AI WRITERS RETREAT &nbsp;·&nbsp; AI & THE CRAFT SERIES &nbsp;·&nbsp; ISSUE NO. 5</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  // ── Desk demo ──
+  let deskItems = [];
+
+  function addItem(label) {
+    deskItems.push({ label, id: Date.now() });
+    renderDesk();
+    document.getElementById('desk-status').textContent =
+      `"${label}" is now on the desk. The AI can see it.`;
+  }
+
+  function clearDesk() {
+    if (deskItems.length === 0) {
+      document.getElementById('desk-status').textContent = 'The desk is already empty.';
+      return;
+    }
+    const wrap = document.getElementById('desk-items');
+    wrap.querySelectorAll('.desk-item').forEach(el => el.classList.add('fading'));
+    setTimeout(() => {
+      wrap.querySelectorAll('.desk-item').forEach(el => el.classList.add('gone'));
+      setTimeout(() => {
+        deskItems = [];
+        renderDesk();
+        document.getElementById('desk-status').textContent =
+          'Conversation closed. The desk is cleared. The AI remembers nothing.';
+      }, 400);
+    }, 300);
+  }
+
+  function renderDesk() {
+    const wrap = document.getElementById('desk-items');
+    wrap.innerHTML = '';
+    deskItems.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'desk-item new-item';
+      el.textContent = item.label;
+      wrap.appendChild(el);
+      setTimeout(() => el.classList.remove('new-item'), 350);
+    });
+  }
+
+  // ── Capacity demo ──
+  const capColors = ['var(--ink)', 'var(--ink)', '#7a6f5e', '#b5651d', 'var(--rust)'];
+
+  function setCapacity(pct, note, idx) {
+    document.querySelectorAll('.cap-btn').forEach((b, i) => b.classList.toggle('active', i === idx - 1));
+    const bar = document.getElementById('cap-bar');
+    bar.style.width = pct + '%';
+    bar.style.background = pct >= 90 ? 'var(--rust)' : pct >= 65 ? '#b5651d' : 'var(--ink)';
+    bar.querySelector('span').textContent = pct >= 20 ? pct + '% full' : '';
+    document.getElementById('cap-note').textContent = note;
+  }
+
+  // ── Strategy accordions ──
+  function toggleStrategy(idx) {
+    const el = document.getElementById('s' + idx);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.strategy').forEach(s => s.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+</script>
+
+</body>
+</html>
