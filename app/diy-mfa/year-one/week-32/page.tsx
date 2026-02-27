@@ -5,7 +5,7 @@ import { week32Data } from "@/lib/mfa/year-one/week-32";
 export const metadata: Metadata = {
   title: "Week 32 — Pacing & Rhythm — Controlling the Reader's Experience of Time | MFA Year One",
   description:
-    "Week 32 develops pacing control through scene/summary contrast, dilation and compression, and deliberate repetition via anaphora and epistrophe.",
+    "Pacing is not speed — it is the relationship between what a moment deserves and how much space it is given. Week 32 covers scene and summary, dilation and compression, and anaphora and epistrophe as a micro-pacing tool.",
 };
 
 export default function Week32Page() {
