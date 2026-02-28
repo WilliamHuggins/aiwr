@@ -41,7 +41,13 @@ export default function Header() {
           >
             {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-          <Link href="/" className="rounded-md font-display text-lg font-semibold no-underline focus-ring md:text-xl">
+          <Link
+            href="/"
+            className={cn(
+              "rounded-md font-display text-lg font-semibold no-underline focus-ring md:text-xl",
+              isHomePage && !isMobileMenuOpen ? "text-white hover:text-white" : "text-text",
+            )}
+          >
             AI Writers&apos; Retreat
           </Link>
         </div>
