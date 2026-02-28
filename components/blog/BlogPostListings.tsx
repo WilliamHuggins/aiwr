@@ -127,8 +127,8 @@ export function LatestPostsTeaser() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-      {posts.slice(0, 3).map((post) => (
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {posts.slice(0, 2).map((post) => (
         <Link key={post.filename} href={`/posts/${normalizeFilename(post.filename)}`} className="group no-underline">
           <Card className="directory-card flex h-full flex-col p-7">
             <p className="font-ui text-xs uppercase tracking-[0.12em] text-muted">{formatShortDate(post.date)}</p>
