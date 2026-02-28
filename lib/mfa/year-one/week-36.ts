@@ -130,7 +130,7 @@ export const week36Data: WeekData = {
               author: "You",
               href: "",
               note: "Reread the Spring Plan document you wrote at the end of the fall semester. How accurate were your predictions about the spring? What did you get right about yourself — about what you needed, what you were ready for, what would be difficult? What did you get wrong? The gap between the predictions and the actuality is not a record of failure; it is a record of what you learned that you could not have predicted. It is also a model for the Year Two plan you are beginning to write this week.",
-              badge: "Free",
+              badge: "Free Online",
             },
             {
               number: "02",
@@ -138,7 +138,7 @@ export const week36Data: WeekData = {
               author: "Your choice",
               href: "",
               note: "Choose three published works that are formally closest to what you imagine your thesis becoming — not the works you most admire in the abstract, but the works whose form, length, structure, and relationship between content and container most resembles what you need to build. Read their openings again this week with a specific question: how do they begin? At what moment do they enter the work? What contract does the opening establish? What do they withhold and what do they declare? The answer to those questions is the model your thesis opening is in dialogue with.",
-              badge: "Free",
+              badge: "Free Online",
             },
           ],
         },
