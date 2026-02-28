@@ -97,14 +97,14 @@ export default function HomePage() {
               </Link>
             </Card>
             <Card className="directory-card flex flex-col p-8">
-              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">Coming Soon</p>
+              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">New</p>
               <h3 className="mt-3 font-display text-3xl font-semibold text-text">AI Tutorials</h3>
               <p className="mt-4 flex-grow text-sm leading-relaxed text-muted">
                 Step-by-step walkthroughs for using AI in your writing practice with practical workflows, examples, and clear guardrails.
               </p>
-              <Button className="mt-7 rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]" disabled>
-                Tutorials in progress
-              </Button>
+              <Link href="/ai-basics" className="mt-7 inline-flex self-start no-underline">
+                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Explore Tutorials</Button>
+              </Link>
             </Card>
           </div>
         </Container>
