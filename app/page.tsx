@@ -7,6 +7,11 @@ import { LatestPostsTeaser } from "@/components/blog/BlogPostListings";
 
 const retreatMenu = [
   {
+    title: "Meet Your AI Writing Partners",
+    description: "Custom-built AI tools designed to assist, not replace, your creative process across research, critique, and revision.",
+    href: "/tools",
+  },
+  {
     title: "AI Writing News",
     description: "Track practical AI developments for writers with editorial context and clear takeaways.",
     href: "/ai-writing-news",
@@ -92,14 +97,14 @@ export default function HomePage() {
               </Link>
             </Card>
             <Card className="directory-card flex flex-col p-8">
-              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">Featured Tools</p>
-              <h3 className="mt-3 font-display text-3xl font-semibold text-text">Meet Your AI Writing Partners</h3>
+              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">Coming Soon</p>
+              <h3 className="mt-3 font-display text-3xl font-semibold text-text">AI Tutorials</h3>
               <p className="mt-4 flex-grow text-sm leading-relaxed text-muted">
-                Custom-built AI tools designed to assist, not replace, the creative writer. Explore all four partners and launch any tool in one click.
+                Step-by-step walkthroughs for using AI in your writing practice with practical workflows, examples, and clear guardrails.
               </p>
-              <Link href="/tools" className="mt-7 inline-flex self-start no-underline">
-                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Browse all AI Writing Partners</Button>
-              </Link>
+              <Button className="mt-7 rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]" disabled>
+                Tutorials in progress
+              </Button>
             </Card>
           </div>
         </Container>
