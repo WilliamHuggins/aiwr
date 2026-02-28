@@ -13,8 +13,8 @@ export default function YearTwoWeek1Page() {
     <WeekShell
       week={week1Data}
       prevHref="/diy-mfa/year-one/week-36"
-      nextHref="/diy-mfa"
-      nextLabel="Return to Program Overview"
+      nextHref="/diy-mfa/year-two/week-2"
+      nextLabel="Week 2: Subtext & Implication — The Iceberg Theory"
       yearLabel="Year Two"
     />
   );
