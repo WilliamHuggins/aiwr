@@ -33,16 +33,17 @@ export default function DiyMfaHome() {
             ))}
           </div>
         </div>
+      </div>
 
-        <div>
-          <h2 className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Year Two</h2>
-          <div className="mt-4 flex flex-wrap gap-4">
-            {yearTwoWeeks.map((weekNumber) => (
-              <Link key={weekNumber} href={`/diy-mfa/year-two/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
-                Enter Week {weekNumber}
-              </Link>
-            ))}
-          </div>
+      <h2 className="mt-16 font-mfa-display text-6xl">Year Two</h2>
+      <div className="mt-10 text-left">
+        <h3 className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Semester One</h3>
+        <div className="mt-4 flex flex-wrap gap-4">
+          {yearTwoWeeks.map((weekNumber) => (
+            <Link key={weekNumber} href={`/diy-mfa/year-two/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
+              Enter Week {weekNumber}
+            </Link>
+          ))}
         </div>
       </div>
     </section>
