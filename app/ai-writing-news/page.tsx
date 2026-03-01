@@ -31,9 +31,94 @@ type ArticleRecord = {
 
 const ARTICLE_GROUPS: ArticleGroup[] = [
   {
+    id: "feb-2026",
+    label: "February 2026",
+    articles: [
+      {
+        title:
+          "“Novelist” Boasts That Using AI She Can Churn Out a New Book in 45 Minutes, Says Regular Writers Will Never Be Able to Keep Up",
+        url: "https://futurism.com/artificial-intelligence/ai-novelist",
+        date: "Feb 10, 2026",
+        author: "Frank Landymore",
+        summary:
+          "A profile of romance novelist Coral Hart examines claims of rapid AI-assisted book production and the resulting concerns about marketplace saturation.",
+        fullAbstract:
+          "The article profiles romance novelist Coral Hart, who says she began using Anthropic’s Claude to rapidly produce and self-publish romance novels on Amazon. Citing a New York Times interview, it reports that Hart claims to have written more than 200 books in a year across 21 pen names, selling about 50,000 copies in total and earning six figures, and that she demonstrated generating a book in roughly 45 minutes during a Zoom interview. It also describes her coaching business, “Plot Prose,” which she says has taught over 1,600 people how to use AI, including techniques for bypassing chatbot guardrails and avoiding repetitive language. The piece notes industry concern about AI “slop” flooding marketplaces and highlights Hart’s use of pseudonyms to avoid stigma.",
+        keywords: [
+          "romance publishing",
+          "generative ai",
+          "amazon self-publishing",
+          "author coaching",
+          "ai-generated content",
+        ],
+        sourceOverride: "Futurism",
+      },
+    ],
+  },
+  {
+    id: "jan-2026",
+    label: "January 2026",
+    articles: [
+      {
+        title: "Science fiction writers, Comic-Con say goodbye to AI",
+        url: "https://techcrunch.com/2026/01/25/science-fiction-writers-comic-con-say-goodbye-to-ai/",
+        date: "Jan 25, 2026",
+        author: "Anthony Ha",
+        summary:
+          "SFWA and San Diego Comic-Con tighten rules around generative AI, signaling stronger creative-policy restrictions across science fiction and fan communities.",
+        fullAbstract:
+          "The article reports that major science-fiction and pop-culture institutions are adopting stricter rules against generative AI. It highlights the Science Fiction and Fantasy Writers Association’s (SFWA) rule changes for the Nebula Awards, beginning with a policy allowing works written entirely by large language models to be ineligible while requiring disclosure of any LLM use. After backlash and an apology from SFWA’s board, the rules were revised again to make works written wholly or partially with generative LLM tools ineligible, with disqualification if LLMs were used at any point. The piece also describes San Diego Comic-Con updating its art show rules after complaints, banning AI-created material entirely. It notes continued debate over how broadly “LLM usage” should be defined as such tools become embedded in everyday software.",
+        keywords: ["generative ai", "science fiction", "comic-con", "nebula awards", "creative policy"],
+        sourceOverride: "TechCrunch",
+      },
+    ],
+  },
+  {
+    id: "dec-2025",
+    label: "December 2025",
+    articles: [
+      {
+        title: "4 Ways AI Could Change Book Publishing In 2026",
+        url: "https://www.forbes.com/sites/tonifitzgerald/2025/12/12/4-ways-ai-could-change-book-publishing-in-2026-experts-weigh-in/",
+        date: "Dec 12, 2025",
+        author: "Toni Fitzgerald",
+        summary:
+          "Experts forecast AI-driven shifts in publishing workflows, especially around editing automation, marketing strategy, and self-publishing operations.",
+        fullAbstract:
+          "The article outlines four ways experts expect artificial intelligence to affect book publishing in 2026, largely through behind-the-scenes workflows rather than blockbuster AI-authored novels. It says major publishers are unlikely to rely on AI to write significant releases soon, partly because human authorship is required for copyright, though smaller presses and self-publishers are experimenting and AI content can saturate markets with repetitive themes. The piece predicts more automated editing, warning that replacing human copy editors can increase factual, continuity, and quality-control problems without oversight. It also argues AI tools will shift branding and marketing power toward authors by enabling them to generate messaging, test positioning, and target audiences with less reliance on publisher marketing teams. Finally, it suggests AI could accelerate self-publishing by helping writers analyze demand, optimize launches, and manage formatting, distribution, and pricing.",
+        keywords: ["book publishing", "generative ai", "editing automation", "author marketing", "self-publishing"],
+        sourceOverride: "Forbes",
+      },
+    ],
+  },
+  {
     id: "oct-2025",
     label: "October 2025",
     articles: [
+      {
+        title: "President of DC Comics Says It Will Never Use AI",
+        url: "https://futurism.com/artificial-intelligence/president-dc-comics-never-use-ai",
+        date: "Oct 09, 2025",
+        author: "Victor Tangermann",
+        summary:
+          "DC Comics leadership publicly rejects AI-generated storytelling and art, framing the stance as a commitment to human creative authenticity.",
+        fullAbstract:
+          "The article describes DC Comics president and publisher Jim Lee’s statement at New York Comic Con that the company will not support AI-generated storytelling or artwork, adding that this position will hold “not now, not ever” while he and SVP/general manager Anne DePies are in charge. Lee argues that audiences can sense authenticity, saying people recoil from what feels fake, and contends that AI “doesn’t dream” or “feel” and instead aggregates existing work. The piece situates his remarks within broader entertainment-industry debates over generative AI, noting that studios and investors continue to push the technology despite early practical headaches. It also points to backlash in comics fandom, citing an AI-powered Stan Lee hologram at a recent convention, and says Lee’s comments drew cheers at the panel.",
+        keywords: ["dc comics", "generative ai", "creative industry", "comic conventions", "ai-generated art"],
+        sourceOverride: "Futurism",
+      },
+      {
+        title: "I’m a Screenwriter. Is It All Right if I Use A.I.?",
+        url: "https://www.nytimes.com/2025/10/04/magazine/magazine-email/screenwriter-ai-ethics.html",
+        date: "Oct 04, 2025",
+        author: "Kwame Anthony Appiah",
+        summary:
+          "An Ethicist column explores whether screenwriters can responsibly use AI tools for research and drafting while maintaining professional accountability.",
+        fullAbstract:
+          "In this Ethicist column, a television and film screenwriter asks whether using ChatGPT for research, script feedback, and even drafting a couple of scenes crosses an ethical line such as plagiarism, theft, or misrepresentation. Kwame Anthony Appiah argues that much scripted TV already relies on familiar tropes and that writers have long produced formulaic dialogue without A.I. He describes how some writers use chatbots for brainstorming, formatting work like treatments, or capturing period cadences, while noting that suspense and long-arc storytelling remain areas where A.I. tends to struggle. Appiah suggests the key ethical issue is transparency and consent within professional arrangements, pointing to Writers Guild of America rules and emphasizing that the writer remains accountable for the final script.",
+        keywords: ["screenwriting", "generative ai", "writers guild of america", "creative ethics", "television writing"],
+        sourceOverride: "The New York Times Magazine",
+      },
       {
         title: "Writing with AI turns chaos into clarity",
         url: "https://www.asbmb.org/asbmb-today/opinions/100225/writing-with-ai-turns-chaos-into-clarity",
@@ -79,6 +164,30 @@ const ARTICLE_GROUPS: ArticleGroup[] = [
     ],
   },
   {
+    id: "aug-2025",
+    label: "August 2025",
+    articles: [
+      {
+        title: "Page against the machine",
+        url: "https://sf.gazetteer.co/page-against-the-machine",
+        date: "Aug 29, 2025",
+        author: "Cydney Hayes",
+        summary:
+          "San Francisco’s expanding zine scene is portrayed as a hands-on response to AI slop, surveillance capitalism, and algorithmic media culture.",
+        fullAbstract:
+          "The article reports a surge of interest in handmade zines in San Francisco, framed as a pushback against “AI slop,” social media surveillance, and corporate media. Organizers of the San Francisco Zine Fest say they reviewed nearly 500 applications and, due to venue limits at Metreon City View, can accommodate less than half of applicants this year, suggesting rapid growth. They describe zines as a physical alternative to algorithm-driven culture and note that niche, marginal viewpoints have long defined the scene. The piece also highlights how tech culture intersects with zines, including tech workers seeking creative outlet, and argues that print can feel safer and harder to trace online—while raising questions about space constraints for a booming community.",
+        keywords: [
+          "zines",
+          "san francisco zine fest",
+          "artificial intelligence",
+          "surveillance capitalism",
+          "independent publishing",
+        ],
+        sourceOverride: "Gazetteer SF",
+      },
+    ],
+  },
+  {
     id: "jul-2025",
     label: "July 2025",
     articles: [
@@ -99,6 +208,48 @@ const ARTICLE_GROUPS: ArticleGroup[] = [
           "cognitive effects",
         ],
         sourceOverride: "The New York Times",
+      },
+      {
+        title: "Using AI to Explore Scientific Realism and Build Story Bibles for Fiction Writing",
+        url: "https://janefriedman.com/using-ai-to-explore-scientific-realism-and-build-story-bibles-for-fiction-writing/",
+        date: "Jul 17, 2025",
+        author: "Tuesday Kuykendall",
+        summary:
+          "A science-fiction author details how she uses AI for plausibility checks, technical research, and story bible maintenance without outsourcing prose.",
+        fullAbstract:
+          "The article explains how author Tuesday Kuykendall uses generative AI as a support tool for fiction rather than as a substitute for writing. A retired materials scientist who writes science fiction, she says she avoids using AI to draft prose but relies on it during revision and research to test the plausibility of scientific ideas, summarize technical papers in plain language, and suggest realistic terminology for scenes outside her expertise, with subsequent fact-checking. She provides examples of asking ChatGPT to evaluate the feasibility of lunar survival technologies and using Claude to propose medically accurate scenarios. Kuykendall also describes using AI to organize her own notes into “story bibles” that codify world rules, technology, and setting details to maintain consistency. She cautions against depending on free AI tools for nonfiction science due to hallucinations and emphasizes careful prompting, restarting flawed chat sessions, and ethical responsibility in AI use.",
+        keywords: ["fiction writing", "story bibles", "scientific realism", "generative ai", "worldbuilding"],
+        sourceOverride: "Jane Friedman",
+      },
+    ],
+  },
+  {
+    id: "undated",
+    label: "Date Not Specified",
+    articles: [
+      {
+        title: "Open Questions | Sci-fi writer Liu Cixin on why he’ll be happy if AI surpasses humans",
+        url: "https://www.scmp.com/news/china/science/article/3336312/rational-optimist-sci-fi-writer-liu-cixin-why-hell-be-happy-if-ai-surpasses-humans",
+        date: "Date not specified",
+        author: "Not specified",
+        summary:
+          "A Q&A with Liu Cixin explores dark forest theory, AI optimism, and his view that science fiction maps possibilities rather than predicts outcomes.",
+        fullAbstract:
+          "The article presents a Q&A with Chinese science-fiction writer Liu Cixin, conducted with media and students at the Hong Kong University of Science and Technology after he received an honorary doctorate in humanities. It provides brief background on Liu’s career and notes his international recognition for The Three-Body Problem trilogy. In the excerpted exchange, Liu is asked about the “dark forest” theory central to his trilogy and whether humanity should remain silent in the universe. He argues that science fiction is not a form of prophecy but a catalogue of imagined possibilities that can sometimes seem predictive by chance. He describes the dark forest scenario as the bleakest outcome he could conceive for contact among advanced civilisations, while acknowledging other plausible outcomes, including views that technological progress might coincide with rising moral standards and respect for life.",
+        keywords: ["liu cixin", "science fiction", "dark forest theory", "artificial intelligence", "hkust"],
+        sourceOverride: "South China Morning Post",
+      },
+      {
+        title: "I’m writing a novel without using AI – and I can prove it",
+        url: "https://spectator.com/article/im-writing-a-novel-without-using-ai-and-i-can-prove-it/?edition=us",
+        date: "Date not specified",
+        author: "Gary Dexter",
+        summary:
+          "An argument for human-authorship verification proposes livestreamed workflows and version histories as AI-generated fiction becomes harder to distinguish.",
+        fullAbstract:
+          "The article argues that as generative AI becomes faster and more convincing, readers and publishers may soon demand proof of human authorship for fiction. The author describes how AI has progressed from early predictive-text experiments to tools that can quickly imitate distinctive literary styles, and predicts a gradual shift where writers increasingly outsource brainstorming, scenes, chapters, and eventually entire novels to machines. He contends that even if AI novels are not as good as human work, they may be “good enough” to outcompete human writers economically. To preserve a market for demonstrably human-written books, he proposes a “Maximal Human Authorship Protocol” involving livestreamed writing sessions, offline work, and time-stamped version histories to document that no AI assisted the process.",
+        keywords: ["fiction writing", "generative ai", "authorship verification", "livestreaming", "publishing ethics"],
+        sourceOverride: "The Spectator",
       },
     ],
   },
