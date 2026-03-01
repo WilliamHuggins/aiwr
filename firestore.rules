@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() { return request.auth != null; }
+    function userDoc(uid) { return get(/databases/$(database)/documents/users/$(uid)); }
+    function isAdminOrMod() {
+      return isSignedIn() && (userDoc(request.auth.uid).data.role in ['ADMIN', 'MOD']);
+    }
+    function isVerifiedAndAccepted() {
+      return isSignedIn() && userDoc(request.auth.uid).data.emailVerified == true && userDoc(request.auth.uid).data.acceptedTermsAt != null;
+    }
+
+    match /users/{uid} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.auth.uid == uid;
+      allow update: if isSignedIn() && (
+        isAdminOrMod() || (
+          request.auth.uid == uid &&
+          request.resource.data.role == resource.data.role
+        )
+      );
+      allow delete: if isAdminOrMod();
+    }
+
+    match /usernames/{username} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && !exists(/databases/$(database)/documents/usernames/$(username)) && request.resource.data.uid == request.auth.uid;
+      allow update: if false;
+      allow delete: if isAdminOrMod();
+    }
+
+    match /posts/{postId} {
+      allow read: if isSignedIn() && (
+        resource.data.status == 'APPROVED' ||
+        resource.data.authorId == request.auth.uid ||
+        isAdminOrMod()
+      );
+
+      allow create: if isVerifiedAndAccepted()
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.status == 'PENDING'
+        && request.resource.data.moderation.reviewedBy == null
+        && request.resource.data.moderation.reviewedAt == null
+        && request.resource.data.moderation.decisionReason == null;
+
+      allow update: if isSignedIn() && (
+        (isAdminOrMod()) ||
+        (
+          request.auth.uid == resource.data.authorId &&
+          request.resource.data.authorId == resource.data.authorId &&
+          request.resource.data.status == 'PENDING' &&
+          (
+            (resource.data.status == 'PENDING' && request.resource.data.status == 'PENDING') ||
+            ((resource.data.status == 'APPROVED' || resource.data.status == 'DENIED') &&
+              request.resource.data.status == 'PENDING' &&
+              request.resource.data.moderation.reviewedBy == null &&
+              request.resource.data.moderation.reviewedAt == null &&
+              request.resource.data.moderation.decisionReason == null)
+          )
+        )
+      );
+
+      allow delete: if isSignedIn() && (request.auth.uid == resource.data.authorId || isAdminOrMod());
+
+      match /comments/{commentId} {
+        allow read: if isSignedIn();
+        allow create: if isVerifiedAndAccepted()
+          && get(/databases/$(database)/documents/posts/$(postId)).data.status == 'APPROVED'
+          && request.resource.data.authorId == request.auth.uid;
+        allow delete: if isSignedIn() && (
+          request.auth.uid == resource.data.authorId || isAdminOrMod()
+        );
+      }
+    }
+
+    match /events/{eventId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if isAdminOrMod();
+
+      match /rsvps/{uid} {
+        allow read: if isSignedIn();
+        allow create, update: if isVerifiedAndAccepted() && request.auth.uid == uid && request.resource.data.uid == request.auth.uid;
+        allow delete: if isSignedIn() && (request.auth.uid == uid || isAdminOrMod());
+      }
+    }
+  }
+}
