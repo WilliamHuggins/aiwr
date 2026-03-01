@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When Your Character Stops Moving | AI Writers Retreat</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '&';
+    position: absolute;
+    font-size: 440px;
+    color: rgba(0,0,0,0.025);
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--faded);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: '\201D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    background: var(--parchment);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--rust);
+  }
+
+  /* ── The five prompts ── */
+  .prompts-section {
+    margin: 2.5em 0;
+  }
+
+  .prompt-card {
+    border: 2px solid var(--ink);
+    margin-bottom: -2px;
+    position: relative;
+  }
+
+  .prompt-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px 28px;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+  }
+
+  .prompt-card-header:hover { background: rgba(0,0,0,0.02); }
+
+  .prompt-card.open .prompt-card-header {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  .prompt-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--rust);
+    opacity: 0.2;
+    min-width: 44px;
+    margin-top: -4px;
+    transition: opacity 0.15s;
+  }
+
+  .prompt-card.open .prompt-number {
+    opacity: 1;
+    color: var(--gold);
+  }
+
+  .prompt-header-text { flex: 1; }
+
+  .prompt-use-case {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 6px;
+  }
+
+  .prompt-card.open .prompt-use-case { color: var(--gold); }
+
+  .prompt-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .prompt-card.open .prompt-title { color: var(--parchment); }
+
+  .prompt-toggle {
+    font-size: 22px;
+    font-family: 'Courier Prime', monospace;
+    color: var(--faded);
+    transition: transform 0.2s;
+    margin-top: 4px;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .prompt-card.open .prompt-toggle {
+    transform: rotate(45deg);
+    color: var(--gold);
+  }
+
+  .prompt-body {
+    display: none;
+    padding: 28px 32px 32px 92px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .prompt-card.open .prompt-body { display: block; }
+
+  .prompt-why {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  .prompt-text-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 10px;
+  }
+
+  .prompt-text {
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    line-height: 1.9;
+    background: var(--parchment);
+    border-left: 4px solid var(--gold);
+    padding: 18px 20px;
+    color: var(--ink);
+    white-space: pre-wrap;
+    position: relative;
+  }
+
+  .prompt-fill {
+    color: var(--rust);
+    font-style: italic;
+  }
+
+  .copy-btn {
+    margin-top: 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 2px solid var(--ink);
+    background: white;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .copy-btn:hover {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  .copy-btn.copied {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: white;
+  }
+
+  .prompt-what-to-do {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 2px;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .prompt-what-to-do strong {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rust);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ── Cliché detector visual ── */
+  .cliche-demo {
+    margin: 2.5em 0;
+    padding: 32px;
+    background: white;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .demo-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 20px;
+  }
+
+  .cliche-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 16px;
+  }
+
+  .cliche-row:last-child { margin-bottom: 0; }
+
+  .cliche-trait {
+    flex: 1;
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+  }
+
+  .cliche-meter {
+    display: flex;
+    gap: 4px;
+    min-width: 120px;
+  }
+
+  .cliche-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: transparent;
+    transition: background 0.3s;
+  }
+
+  .cliche-dot.filled { background: var(--rust); border-color: var(--rust); }
+  .cliche-dot.half { background: var(--gold); border-color: var(--gold); }
+  .cliche-dot.low { background: var(--ink); border-color: var(--ink); }
+
+  .cliche-verdict {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    min-width: 80px;
+    text-align: right;
+    color: var(--faded);
+  }
+
+  .cliche-verdict.red { color: var(--rust); }
+  .cliche-verdict.gold { color: var(--gold); }
+  .cliche-verdict.green { color: #5a7a4a; }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+
+  a { color: var(--rust); text-decoration: underline; }
+  a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .pull-quote { margin: 2.5em 0; }
+    .prompt-body { padding-left: 24px; }
+    .prompt-number { font-size: 36px; min-width: 30px; }
+    .cliche-meter { min-width: 80px; }
+    .cliche-verdict { min-width: 60px; font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI Writers Retreat &nbsp;·&nbsp; Character & Craft</div>
+
+<div class="hero">
+  <span class="issue-tag">Character & Craft</span>
+  <h1>When Your Character<br><em>Stops Moving.</em></h1>
+  <p class="deck">Every writer hits the wall where a character stops feeling like a person and starts feeling like a function. Here are five prompts to break them open again — and break them out of cliché.</p>
+  <span class="byline">5 Prompts for Getting Unstuck with Character</span>
+</div>
+
+<div class="article-wrapper">
+
+  <p class="drop-cap">You know the feeling. A character who made perfect sense at the outline stage has gone flat on the page. They say what they need to say to move the plot. They react the way you need them to react. They are, technically, present — and yet there is nobody home. Or the opposite problem: a character who arrived vivid and specific in early drafts but has, somewhere in revision, calcified into a type. The grieving mother. The charming rogue. The wise mentor with the convenient death. Recognizable. Functional. Dead on arrival.</p>
+
+  <p>Character development is where many writers resist using AI — and understandably. Character feels like the most intimate, most human part of the work. The idea of outsourcing it, even partially, can feel like a betrayal of the whole project.</p>
+
+  <p>But that's not what these prompts ask you to do. None of them ask the AI to invent your character for you. They ask it to do something quite different: to pressure-test what you already have, to ask the questions you've stopped asking because you've been too close to the work, and to surface the assumptions you've been carrying without examining them.</p>
+
+  <p>The AI is not the writer here. It is the persistent, slightly uncomfortable reader who won't let you off the hook.</p>
+
+  <div class="pull-quote">
+    You are not asking the AI to build your character. You are asking it to find the places where you have stopped building.
+  </div>
+
+  <h2>Before You Use These Prompts</h2>
+
+  <p>Each prompt below works best with real material from your draft — not a description of your character, but actual sentences they appear in. Paste the scene or passage where they feel stuck or flat. The AI needs to see the character on the page, not hear you describe them from the outside. Your description of who they are is already shaped by your assumptions. The page is where the assumptions become visible.</p>
+
+  <p>Also worth remembering: the AI's response is a starting point, not a verdict. Push back on it. Ask follow-up questions. If an observation doesn't land, ask why it reached that conclusion. The conversation is the work — not just the first answer.</p>
+
+  <div class="cliche-demo">
+    <div class="demo-label">The Cliché Spectrum — Where Does Your Character Live?</div>
+    <div class="cliche-row">
+      <span class="cliche-trait">"She was strong but damaged by her past."</span>
+      <div class="cliche-meter">
+        <div class="cliche-dot filled"></div><div class="cliche-dot filled"></div><div class="cliche-dot filled"></div><div class="cliche-dot filled"></div><div class="cliche-dot filled"></div>
+      </div>
+      <span class="cliche-verdict red">Full cliché</span>
+    </div>
+    <div class="cliche-row">
+      <span class="cliche-trait">"He was gruff on the outside, warm underneath."</span>
+      <div class="cliche-meter">
+        <div class="cliche-dot filled"></div><div class="cliche-dot filled"></div><div class="cliche-dot filled"></div><div class="cliche-dot filled"></div><div class="cliche-dot"></div>
+      </div>
+      <span class="cliche-verdict red">Near-cliché</span>
+    </div>
+    <div class="cliche-row">
+      <span class="cliche-trait">"She was kind, but kept count of every favor."</span>
+      <div class="cliche-meter">
+        <div class="cliche-dot filled"></div><div class="cliche-dot filled"></div><div class="cliche-dot half"></div><div class="cliche-dot"></div><div class="cliche-dot"></div>
+      </div>
+      <span class="cliche-verdict gold">Getting there</span>
+    </div>
+    <div class="cliche-row">
+      <span class="cliche-trait">"He forgave people too quickly and resented them for it."</span>
+      <div class="cliche-meter">
+        <div class="cliche-dot low"></div><div class="cliche-dot"></div><div class="cliche-dot"></div><div class="cliche-dot"></div><div class="cliche-dot"></div>
+      </div>
+      <span class="cliche-verdict green">Specific</span>
+    </div>
+    <div class="cliche-row">
+      <span class="cliche-trait">"She was meticulous about everything except the one thing that mattered."</span>
+      <div class="cliche-meter">
+        <div class="cliche-dot low"></div><div class="cliche-dot"></div><div class="cliche-dot"></div><div class="cliche-dot"></div><div class="cliche-dot"></div>
+      </div>
+      <span class="cliche-verdict green">Specific</span>
+    </div>
+  </div>
+
+  <p>Notice what makes a character description feel specific: it is usually a <em>contradiction held in tension</em> rather than a trait plus a backstory reason for that trait. Clichés explain the character to you. Specific characterization creates a person who surprises you. The prompts below are designed to move you from the former toward the latter.</p>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>The Five Prompts</h2>
+
+  <p>Use these as written, or adapt them to your character and situation. The parts in red are where you fill in your own material.</p>
+
+  <div class="prompts-section">
+
+    <!-- Prompt 1 -->
+    <div class="prompt-card" id="pc0">
+      <div class="prompt-card-header" onclick="togglePrompt(0)">
+        <div class="prompt-number">1</div>
+        <div class="prompt-header-text">
+          <div class="prompt-use-case">When your character feels functional but hollow</div>
+          <div class="prompt-title">The Thing They Would Never Say</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-why">Characters go hollow when every line they speak is in service of the plot. They say what needs to be said, react how the story needs them to react, and nothing more. This prompt forces the AI to read against the grain of your character's function — to find what is being suppressed, avoided, or performed. The answer is often where the real person is hiding.</div>
+        <div class="prompt-text-label">The Prompt</div>
+        <div class="prompt-text" id="pt0">[Paste a scene or several lines of dialogue featuring your character]
+
+I'm trying to deepen <span class="prompt-fill">[character name]</span>. In this scene they seem to be doing their job in the story — but I suspect there's something they're not saying, something they're actively not doing, or a reaction they're suppressing.
+
+Read this passage and tell me: what is the one thing this character would never say aloud in this scene — and what does that silence reveal about who they actually are? Don't tell me what they should say. Tell me what the absence is doing.</div>
+        <button class="copy-btn" onclick="copyPrompt(0)">Copy Prompt</button>
+        <div class="prompt-what-to-do">
+          <strong>What to do with the response</strong>
+          Look for the gap between what the AI identifies as the suppressed thought and what you intended. If they match, you may already know this and your draft just isn't showing it yet. If they surprise you, you've found something.
+        </div>
+      </div>
+    </div>
+
+    <!-- Prompt 2 -->
+    <div class="prompt-card" id="pc1">
+      <div class="prompt-card-header" onclick="togglePrompt(1)">
+        <div class="prompt-number">2</div>
+        <div class="prompt-header-text">
+          <div class="prompt-use-case">When your character has become a type</div>
+          <div class="prompt-title">The Cliché Audit</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-why">This prompt is deliberately uncomfortable. It asks the AI to be a resistant, skeptical reader — to tell you where your character has become familiar in ways you may not have noticed. Because you've lived with this person, you can no longer see them fresh. The AI can. It has read thousands of characters who share your character's traits, and it knows exactly where the edges of the type are. Use that.</div>
+        <div class="prompt-text-label">The Prompt</div>
+        <div class="prompt-text" id="pt1">[Paste a scene, description, or several passages featuring your character]
+
+Read this as a skeptical reader — someone who has encountered a lot of fiction and is alert to familiar types. Tell me honestly: what character archetype or cliché does <span class="prompt-fill">[character name]</span> most resemble right now? Be specific about which traits are doing the flattening. Then tell me: what is already on the page that does NOT fit the cliché — the detail or moment that is genuinely this person and no one else?
+
+I want the diagnosis and the evidence that the patient is still alive.</div>
+        <button class="copy-btn" onclick="copyPrompt(1)">Copy Prompt</button>
+        <div class="prompt-what-to-do">
+          <strong>What to do with the response</strong>
+          The second half of this prompt is the treasure. Whatever the AI identifies as the non-cliché detail is your foothold. That's the thread to pull. Revise toward that detail, not away from the archetype.
+        </div>
+      </div>
+    </div>
+
+    <!-- Prompt 3 -->
+    <div class="prompt-card" id="pc2">
+      <div class="prompt-card-header" onclick="togglePrompt(2)">
+        <div class="prompt-number">3</div>
+        <div class="prompt-header-text">
+          <div class="prompt-use-case">When you can't hear their voice</div>
+          <div class="prompt-title">The Contradiction Test</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-why">Vivid characters are almost always built on a contradiction — two things that are both true and in tension. Not a flaw to balance a strength, which is the workshop formula and produces flat characters. A genuine contradiction: two true things about a person that create friction simply by coexisting. This prompt asks the AI to find — or confirm — yours. If it can't find one, that's your answer.</div>
+        <div class="prompt-text-label">The Prompt</div>
+        <div class="prompt-text" id="pt2">[Paste two or three scenes featuring your character, or a substantial passage]
+
+I'm looking for the contradiction at the center of <span class="prompt-fill">[character name]</span> — not a flaw paired with a strength, but two things that are simultaneously and genuinely true about this person that create internal friction just by coexisting.
+
+Based only on what is on the page, can you identify one? If you can find it, describe it as precisely as possible. If you can't find one — if the character seems to have traits without tension — tell me that too, and point to where on the page the flatness is most apparent.</div>
+        <button class="copy-btn" onclick="copyPrompt(2)">Copy Prompt</button>
+        <div class="prompt-what-to-do">
+          <strong>What to do with the response</strong>
+          If the AI finds a contradiction, ask yourself: is that the one I intended, or did it find a different one? Either answer is useful. If it can't find one, the prompt has done its job — the absence is the diagnosis.
+        </div>
+      </div>
+    </div>
+
+    <!-- Prompt 4 -->
+    <div class="prompt-card" id="pc3">
+      <div class="prompt-card-header" onclick="togglePrompt(3)">
+        <div class="prompt-number">4</div>
+        <div class="prompt-header-text">
+          <div class="prompt-use-case">When you don't know what your character wants</div>
+          <div class="prompt-title">The Two Wants</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-why">Characters often go still when the writer has given them one want — the plot want, the stated goal — without giving them a second, private, possibly contradictory want underneath it. The two-want structure is one of the oldest tools in character writing, but it's easy to lose in a long revision. This prompt asks the AI to read for both wants and to tell you which one is visible on the page — because sometimes the one you think is driving the scene is the one that's invisible.</div>
+        <div class="prompt-text-label">The Prompt</div>
+        <div class="prompt-text" id="pt3">[Paste a scene where your character feels stuck or passive]
+
+Read this scene and identify two wants for <span class="prompt-fill">[character name]</span>: the want that is visible and driving the action on the surface, and the want underneath it that they may not be able to name or admit.
+
+Tell me which one you can actually see in the language of the scene, and which one — if either — is absent or only implied. I'm trying to find out if the scene has two engines or only one.</div>
+        <button class="copy-btn" onclick="copyPrompt(3)">Copy Prompt</button>
+        <div class="prompt-what-to-do">
+          <strong>What to do with the response</strong>
+          A scene with only one engine almost always feels passive. If the AI can only find one want, your revision task is clear: find the second want and let it create pressure against the first — not by stating it, but by letting it leak into the behavior.
+        </div>
+      </div>
+    </div>
+
+    <!-- Prompt 5 -->
+    <div class="prompt-card" id="pc4">
+      <div class="prompt-card-header" onclick="togglePrompt(4)">
+        <div class="prompt-number">5</div>
+        <div class="prompt-header-text">
+          <div class="prompt-use-case">When your character is a cliché you can see but can't fix</div>
+          <div class="prompt-title">The Oblique Approach</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-why">Sometimes you already know your character is a type. You can name it yourself: the manic pixie, the stoic veteran, the brilliant-but-broken woman. The problem is that knowing the cliché doesn't tell you how to escape it — because the escape routes you can imagine from inside the cliché are often just neighboring clichés. This prompt asks the AI to approach from a direction you haven't tried: not to fix the character, but to find the most unexpected true thing about them.</div>
+        <div class="prompt-text-label">The Prompt</div>
+        <div class="prompt-text" id="pt4">[Paste a scene or description featuring your character]
+
+I know that <span class="prompt-fill">[character name]</span> is currently reading as <span class="prompt-fill">[name the cliché you're worried about]</span>. I don't want to simply invert the type — that's still defined by the type.
+
+Read what is actually on the page and find me the single most specific, unexpected, or strange detail about this character that is already there — something that could not belong to any other character in any other story. It might be small. It might be a single sentence. Tell me what it is and why it is theirs alone. That's the thread I want to pull.</div>
+        <button class="copy-btn" onclick="copyPrompt(4)">Copy Prompt</button>
+        <div class="prompt-what-to-do">
+          <strong>What to do with the response</strong>
+          This is an exercise in trust. The specific detail the AI finds is often something you wrote almost accidentally — a throwaway line that contains more character than the passages you labored over. Follow it. Revise the whole character toward that throwaway line, not toward the corrected cliché.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>A Note on What Comes After</h2>
+
+  <p>Every one of these prompts will give you observations. Some will be sharp. Some will miss. Some will describe a problem you already knew about and some will name something you couldn't see because you were too close.</p>
+
+  <p>The revision that follows is entirely yours. The AI has told you where it lost the thread — you decide what to do with the thread. It has found the contradiction — you decide how deep it goes and how much of it the reader should feel. It has named the cliché — you decide which specific, strange, particular detail of your character is real enough to pull them out of it.</p>
+
+  <p>Character is not something an AI can give you. But stuck is a solvable problem, and sometimes all you need is a reader who will ask the same uncomfortable question five different ways until you find the answer that was already inside the draft, waiting to be seen.</p>
+
+  <div class="insight">
+    The character is already in there. These prompts are not a construction kit. They are a flashlight.
+  </div>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">CHARACTER & CRAFT — AI WRITERS RETREAT</p>
+
+</div>
+
+<footer>
+  <p>AI WRITERS RETREAT &nbsp;·&nbsp; CHARACTER & CRAFT</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  // ── Prompt card accordions ──
+  function togglePrompt(idx) {
+    const el = document.getElementById('pc' + idx);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.prompt-card').forEach(p => p.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  // ── Copy prompt text ──
+  function copyPrompt(idx) {
+    const el = document.getElementById('pt' + idx);
+    // Get plain text, stripping HTML tags
+    const text = el.innerText || el.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = el.parentElement.querySelector('.copy-btn');
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy Prompt';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      // Fallback for older browsers
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+    });
+  }
+</script>
+
+</body>
+</html>

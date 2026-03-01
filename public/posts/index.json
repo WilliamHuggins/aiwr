@@ -1,5 +1,11 @@
 [
   {
+    "filename": "when-your-character-stops-moving-blog-post.html",
+    "title": "When Your Character Stops Moving.",
+    "date": "2026-02-28",
+    "description": "Every writer hits the wall where a character stops feeling like a person and starts feeling like a function. Five prompts to break them open again and out of cliché."
+  },
+  {
     "filename": "ai-has-a-desk-not-a-filing-cabinet-blog-post.html",
     "title": "AI Has a Desk, Not a Filing Cabinet.",
     "date": "2026-02-27",
@@ -9,7 +15,7 @@
     "filename": "dont-let-it-sand-you-down-blog-post.html",
     "title": "Don't Let It Sand You Down.",
     "date": "2026-02-26",
-    "description": "AI feedback often pushes prose toward the statistical average\u2014here's how to preserve the stylistic fingerprints that make your voice yours."
+    "description": "AI feedback often pushes prose toward the statistical average—here's how to preserve the stylistic fingerprints that make your voice yours."
   },
   {
     "filename": "talk-to-it-like-an-editor-blog-post.html",
@@ -19,9 +25,9 @@
   },
   {
     "filename": "prediction-blog-post.html",
-    "title": "The Machine That Guesses \u2014 Brilliantly.",
+    "title": "The Machine That Guesses — Brilliantly.",
     "date": "2026-02-24",
-    "description": "An AI doesn't know what it's going to say next\u2014it predicts it. Understanding that one fact changes everything about how you work with these tools."
+    "description": "An AI doesn't know what it's going to say next—it predicts it. Understanding that one fact changes everything about how you work with these tools."
   },
   {
     "filename": "tokenization-blog-post.html",
