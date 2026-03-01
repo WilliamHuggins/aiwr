@@ -12,8 +12,8 @@ const retreatMenu = [
     href: "/tools",
   },
   {
-    title: "AI Writing News",
-    description: "Track practical AI developments for writers with editorial context and clear takeaways.",
+    title: "AI + Writing in the News",
+    description: "Track AI + writing coverage with editorial context, searchable tags, and practical takeaways.",
     href: "/ai-writing-news",
   },
   {
