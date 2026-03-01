@@ -433,7 +433,7 @@ footer p + p { margin-top: .4rem; }
   <div class="hero-meta">
     <div class="hero-meta-item">🎬 <strong>Format:</strong> Self-paced lesson</div>
     <div class="hero-meta-item">🛠 <strong>Tools:</strong> ChatGPT · Nano Banana · Google Vids · Suno · ElevenLabs</div>
-    <div class="hero-meta-item">📽 <strong>Example:</strong> <em>To Build a Fire</em> by Jack London</div>
+    <div class="hero-meta-item">📽 <strong>Example:</strong> <em>The Vanishing Point</em> project</div>
   </div>
 
   <!-- Sample Finished Promo -->
@@ -447,7 +447,635 @@ footer p + p { margin-top: .4rem; }
   <div class="hero-rule"></div>
 </div>
 
-<section id="why"><div class="wrapper"><div class="section-label">The Case for Storyboarding</div><div class="step-header"><div class="step-num">0</div><h2>Why writers should storyboard promo videos with AI</h2></div><p>Writers already think like directors: you build tension, stage reveals, and control what the audience sees in their mind. Storyboarding turns that invisible movie into a shareable visual plan — sequential panels that map what the camera will see and help you plan composition, pacing, and key story beats before production.</p></div></section>
+<!-- ─── WHY ─── -->
+<section id="why">
+  <div class="wrapper">
+    <div class="section-label">The Case for Storyboarding</div>
+    <div class="step-header">
+      <div class="step-num">0</div>
+      <h2>Why writers should storyboard promo videos with AI</h2>
+    </div>
+
+    <p>Writers already think like directors: you build tension, stage reveals, and control what the audience "sees" in their mind. Storyboarding turns that invisible movie into a shareable visual plan — sequential panels that map what the "camera" will see, helping you plan composition, pacing, and key story beats before committing to expensive production.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Think of your promo video like a recipe: the storyboard is the recipe, and your images are the ingredients."</blockquote>
+      <cite>That metaphor is built into Google's own video tools — they literally call your reference images "ingredients."</cite>
+    </div>
+
+    <p>This workflow gives writers three concrete advantages:</p>
+
+    <div class="tool-grid">
+      <div class="tool-card lf">
+        <div class="tool-label">See Clearly</div>
+        <div class="tool-icon">👁</div>
+        <h4>Visual Consistency</h4>
+        <p>Generate character sheets and location stills so you can write with clearer blocking, wardrobe, tone, and sensory detail — and keep characters visually consistent across every clip.</p>
+      </div>
+      <div class="tool-card sp">
+        <div class="tool-label">Test Quickly</div>
+        <div class="tool-icon">⚡</div>
+        <h4>Mood & Pacing Sandbox</h4>
+        <p>Turn storyboard stills into short clips and see what actually feels suspenseful, cozy, epic, or eerie on screen — before you commit to anything.</p>
+      </div>
+      <div class="tool-card cnf">
+        <div class="tool-label">Ship It</div>
+        <div class="tool-icon">📱</div>
+        <h4>Real Marketing Assets</h4>
+        <p>Create social teasers, Kickstarter previews, and newsletter embeds without a production crew — because the plan (storyboard) drives the output.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The example running through this lesson</div>
+      <p><strong>The Vanishing Point</strong> is the example project used throughout — you can see the finished promo in the hero above. In Steps 1 and 2 you'll see the storyboard stills and ingredient images that were generated to build it. One project, start to finish.</p>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-label">Marketing Structure, Not Plot Summary</div>
+      <p>A writer-friendly promo storyboard usually works best when each panel has a single job: <strong>hook → introduce protagonist → show the threat → hint at the world → end on a question.</strong> That's a marketing arc, not your book's outline.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STORYBOARD TEMPLATE ─── -->
+<section id="storyboard">
+  <div class="wrapper">
+    <div class="section-label">Step One</div>
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <h2>Build your storyboard panel template</h2>
+    </div>
+
+    <p>Before you touch any AI tool, plan each shot on paper (or in a doc). The template below plugs directly into Google Vids "Generate video," Google Vids "Ingredients to Video," or Google Flow "Ingredients." Copy it into any doc — Notion, Word, Google Docs, whatever you use to write.</p>
+
+    <div class="panel-template">
+      <div class="panel-template-header">
+        <span>📋 Storyboard Panel Template — one per shot</span>
+        <button class="copy-btn" onclick="copyTemplate(this)">Copy template</button>
+      </div>
+      <div class="panel-fields">
+        <div class="panel-field">
+          <div class="field-label">Panel name / number</div>
+          <div class="field-hint">e.g., Panel 1 · Hook</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">Purpose</div>
+          <div class="field-hint">hook / character / world / conflict / twist / CTA</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">What we see</div>
+          <div class="field-hint">One sentence describing the visual. Be specific.</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">Camera + framing</div>
+          <div class="field-hint">wide / medium / close; lens vibe; handheld vs. tripod</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">Motion</div>
+          <div class="field-hint">What moves? character / environment / camera</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">Mood + lighting</div>
+          <div class="field-hint">time of day / weather / color palette</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">Audio notes</div>
+          <div class="field-hint">music vibe, SFX, VO line if any</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">On-screen text</div>
+          <div class="field-hint">optional — keep it very short</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">Ingredients</div>
+          <div class="field-hint">links/filenames of reference images for character, prop, location</div>
+        </div>
+        <div class="panel-field">
+          <div class="field-label">Video prompt</div>
+          <div class="field-hint">The final text prompt you'll paste into Vids or Flow — include subject, location, action, camera, lighting, sounds, and tone.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Why those fields?</div>
+      <p>Google Vids explicitly recommends prompts that include <strong>subject, location, action, camera, lighting, dialogue/sounds, and tone</strong> — because those details steer generation. The template fields map directly onto that requirement, so your storyboard <em>is</em> your prompt draft.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── IMAGE GENERATION ─── -->
+<section id="images">
+  <div class="wrapper">
+    <div class="section-label">Step Two</div>
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <h2>Generate character profiles &amp; location stills</h2>
+    </div>
+    <p>Two tools are your primary image generation options. Both are excellent — they have different strengths, and using both gives you more creative flexibility.</p>
+
+    <!-- CHATGPT -->
+    <h3>Tool A · ChatGPT Images (ChatGPT ImageGen)</h3>
+    <p>ChatGPT's image generation lets you generate images by asking for them in chat, or via <strong>View all tools → Create image</strong>. You can upload existing images and request edits, including a Select tool for targeted edits to a specific region. Per <a href="https://help.openai.com/en/articles/8932459-creating-images-in-chatgpt" target="_blank">OpenAI's documentation</a>, the tool excels at detailed prompt following, rendering text, and iterative multi-turn refinement — including transforming uploaded images or using them as visual inspiration.</p>
+
+    <div class="callout success">
+      <div class="callout-label">The Character Sheet Strategy</div>
+      <p>Instead of generating "a character," generate a <strong>character sheet</strong>: the same character from multiple views (front/side/back) plus 3–6 expressions. This gives you a stable visual anchor you can reuse as "ingredients" in video generation.</p>
+    </div>
+
+    <h3>Example storyboard stills — <em>The Vanishing Point</em></h3>
+    <p>These two stills were generated with ChatGPT Images as part of the Vanishing Point ingredient library. Each one solves a different continuity problem: one locks in a key scene's mood and setting, the other establishes a character or prop reference that repeats across clips. Together they give every generated clip the same visual world.</p>
+
+    <div class="img-two-up">
+      <div class="img-block">
+        <img
+          src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/Storyboard%20Examples/ChatGPT%20Image%20Feb%2028%2C%202026%2C%2011_11_38%20PM.png"
+          alt="Vanishing Point storyboard still 1"
+        />
+        <div class="img-caption"><strong>Storyboard still 1 · The Vanishing Point.</strong> A scene mood/setting reference — generates a consistent visual anchor for location and lighting across clips.</div>
+      </div>
+      <div class="img-block">
+        <img
+          src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/Storyboard%20Examples/ChatGPT%20Image%20Feb%2028%2C%202026%2C%2011_11_41%20PM.png"
+          alt="Vanishing Point storyboard still 2"
+        />
+        <div class="img-caption"><strong>Storyboard still 2 · The Vanishing Point.</strong> A character/prop reference — keeps the same subject visually consistent from panel to panel and clip to clip.</div>
+      </div>
+    </div>
+
+    <h4>Character profile prompt — paste into ChatGPT</h4>
+    <div class="prompt-box"><pre>Create a CHARACTER SHEET on a clean neutral background.
+Character: [Name], [age], [gender presentation], [build], [skin tone], [hair], [distinct feature].
+Wardrobe: [main outfit] + [one accessory that signals personality].
+World/genre: [your genre], grounded and believable.
+Style: [watercolor storybook / cinematic concept art / graphic novel inks / etc.]
+
+Layout:
+1) Full body: front view
+2) Full body: side view
+3) Full body: back view
+4) Head/shoulders: 4 expressions (calm, determined, afraid, exhausted)
+
+Keep the character design identical across all views. No extra text.</pre></div>
+
+    <h4>Location / establishing shot prompt — paste into ChatGPT</h4>
+    <div class="prompt-box"><pre>Create an ESTABLISHING SHOT storyboard still.
+Location: [place], [time period], [season], [weather].
+Mood: [lonely / magical / tense / cozy].
+Camera: wide shot, eye-level, cinematic composition.
+Lighting: [golden hour / moonlit / overcast blue hour].
+Include 3–5 key environment details that matter to the story (props/signage/terrain).
+Style: consistent with my character sheet style. No text.</pre></div>
+
+    <!-- NANO BANANA -->
+    <h3>Tool B · Nano Banana (Gemini's image generation)</h3>
+    <p>Nano Banana is Gemini's native image generation capability. Per <a href="https://ai.google.dev/gemini-api/docs/image-generation" target="_blank">Google's Gemini API documentation</a>, Nano Banana offers multiple model variants including Nano Banana 2 and Nano Banana Pro, and all generated images include a <strong>SynthID watermark</strong>. For writers (non-developers), access it through the Gemini app: select <strong>"Create images"</strong> from the tools menu, then choose the model — "Fast" for Nano Banana, "Thinking" for Nano Banana Pro.</p>
+
+    <p>Google's <a href="https://blog.google/innovation-and-ai/technology/ai/nano-banana-2/" target="_blank">February 2026 Nano Banana 2 announcement</a> emphasized capabilities especially relevant to writers storyboarding narratives: <strong>subject consistency</strong>, precise instruction following, and production-ready specs across aspect ratios and resolutions. Subject consistency is the whole game — if you want a character to look like the same person across multiple storyboard panels, this is what you need.</p>
+
+    <div class="tool-grid">
+      <div class="tool-card sp">
+        <div class="tool-label">Workflow 1</div>
+        <div class="tool-icon">✨</div>
+        <h4>Generate from scratch</h4>
+        <p>Open Gemini → Tools → Create images → pick model (Fast or Thinking). Prompt for a character sheet or establishing shot, same as with ChatGPT.</p>
+      </div>
+      <div class="tool-card cnf">
+        <div class="tool-label">Workflow 2 · The Secret Weapon</div>
+        <div class="tool-icon">🔁</div>
+        <h4>Edit for continuity</h4>
+        <p>Upload your best "canonical" character portrait. Ask Nano Banana to change only the wardrobe, expression, lighting, or angle — while preserving identity and style.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Pro Limit Note — Important for Classes</div>
+      <p>Google notes that once you hit your Nano Banana Pro limit, you may be automatically switched back to the standard model until limits reset. <strong>Lock your most important character sheet early</strong> while you have Pro access — and save those reference images locally before you do anything else.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VIDEO GENERATION ─── -->
+<section id="video">
+  <div class="wrapper">
+    <div class="section-label">Step Three</div>
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <h2>Turn storyboard stills into clips — Google Vids &amp; Veo</h2>
+    </div>
+
+    <p>This is where your storyboard becomes a production plan: every storyboard panel becomes one short generated clip, then you stitch them into a promo video. Google Vids runs at <a href="https://vids.new" target="_blank">vids.new</a> in your browser — no install required.</p>
+
+    <p>Per <a href="https://support.google.com/docs/answer/16143507?hl=en" target="_blank">Google's official "Use AI to generate video clips in Google Vids" help page</a>, generated clips are <strong>8 seconds long, 720p, 24fps</strong>, in landscape (16:9) or portrait (9:16). Daily limit: <strong>up to 10 generated videos per day</strong>, resetting at 12 AM PT.</p>
+
+    <div class="callout gold">
+      <div class="callout-label">Teaching Point: Plan your generation budget</div>
+      <p>Your storyboard solves the daily limit problem before it starts — because you know in advance which 6–10 shots you need to generate today. This is another reason to storyboard first.</p>
+    </div>
+
+    <h3>Three ways to generate clips in Google Vids</h3>
+
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="workflow-n">A</div>
+        <div class="workflow-content">
+          <h4>Create from scratch — no storyboard still yet</h4>
+          <p>Use when you need a purely atmospheric shot: fog rolling in, a streetlamp flickering, an empty road. Open Vids → select aspect ratio → open the Veo panel → choose "Create from scratch" → enter your prompt.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n">B</div>
+        <div class="workflow-content">
+          <h4>Animate an image → single panel becomes motion</h4>
+          <p>Use when your storyboard still already "frames" the shot perfectly. Upload a .jpg/.png and animate it into an 8-second clip. Google recommends: high-quality source image, supported aspect ratio, and <strong>motion-focused prompting</strong> — don't re-describe the still, describe what moves and how.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n">C</div>
+        <div class="workflow-content">
+          <h4>Ingredients → character + prop + location = continuity</h4>
+          <p>Use when your promo needs recurring identity: the same protagonist throughout, the same artifact, the same city skyline. Add <strong>up to 3 reference images</strong> and prompt how to incorporate them for consistent characters/objects across multiple clips.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Portrait Ingredients — Rollout Caveat</div>
+      <p>The original Vids help page noted "Videos with ingredients can only use Landscape (16:9)." However, a <a href="https://workspaceupdates.googleblog.com/2026/01/ingredients-to-video-portrait-vids.html" target="_blank">January 2026 Google Workspace announcement</a> confirmed portrait-sized clips are now supported in Ingredients to Video (Veo 3.1), rolling out from January 13, 2026. <strong>Safest phrasing when teaching live:</strong> check your UI — portrait ingredients may depend on your account's rollout status.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Operational Note — Don't Lose Your Work</div>
+      <p>Vids session history disappears when you close the tab. <strong>Copy your prompts and settings into your storyboard doc as you iterate.</strong> Your storyboard doc is your permanent record; Vids is your temporary workspace.</p>
+    </div>
+
+    <h3>Importing clips from other AI video tools — including Seedance</h3>
+    <p>If another generator gives you a better shot, export it and import it into Vids for assembly. Google Vids supports adding video clips via the Upload side panel from Drive/Photos and supports common formats including <strong>MP4</strong>.</p>
+    <p><a href="https://seed.bytedance.com/en/seedance" target="_blank">Seedance 1.0</a> (ByteDance) supports multi-shot video generation from text and image, producing 1080p videos. <a href="https://seed.bytedance.com/en/seedance2_0" target="_blank">Seedance 2.0</a> expands to multimodal inputs (text/image/audio/video references) and "director-level control." The practical workflow: create fancier or longer footage in Seedance, then import into Google Vids as the downstream editor and assembler.</p>
+  </div>
+</section>
+
+<!-- ─── GOOGLE FLOW ─── -->
+<section id="flow">
+  <div class="wrapper">
+    <div class="section-label">Alternative Workflow</div>
+    <div class="step-header">
+      <div class="step-num">3b</div>
+      <h2>Google Flow — the filmmaker-centric alternative</h2>
+    </div>
+
+    <p>If you want a more storyboard-native experience, <a href="https://labs.google/fx/tools/flow" target="_blank">Google Flow</a> was built for exactly the storyboard-to-scenes workflow — and it treats "ingredients" as a first-class concept. Access it at <strong>labs.google</strong>.</p>
+
+    <p>Per <a href="https://support.google.com/flow/answer/16353334?hl=en" target="_blank">Google Flow's official "Create videos in Flow" guide</a>, you can generate from:</p>
+
+    <div class="tool-grid">
+      <div class="tool-card lf">
+        <div class="tool-label">Input Type 1</div>
+        <div class="tool-icon">📝</div>
+        <h4>Text prompts</h4>
+        <p>Describe the scene in detail. Flow generates a clip from your description alone.</p>
+      </div>
+      <div class="tool-card sp">
+        <div class="tool-label">Input Type 2</div>
+        <div class="tool-icon">🖼</div>
+        <h4>Ingredients</h4>
+        <p>Your character sheet, hero props, signature locations — drag and drop reference images to repeat them for continuity across clips.</p>
+      </div>
+      <div class="tool-card cnf">
+        <div class="tool-label">Input Type 3</div>
+        <div class="tool-icon">🎞</div>
+        <h4>Frames</h4>
+        <p>Use your storyboard panels as start and end images. Flow generates the motion <em>between</em> them — storyboard gold.</p>
+      </div>
+    </div>
+
+    <h3>Step-by-step in Google Flow</h3>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="workflow-n">1</div>
+        <div class="workflow-content">
+          <h4>Go to Flow and create or open a project</h4>
+          <p>labs.google → Flow. Describe the scene in detail in the prompt field.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n">2</div>
+        <div class="workflow-content">
+          <h4>Switch the mode to Video</h4>
+          <p>Then optionally add ingredients or frames to guide the generation.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n">3</div>
+        <div class="workflow-content">
+          <h4>Add ingredients</h4>
+          <p>Drag reference images/video, use @ to select uploaded assets, or use the Add button under the prompt. Then describe in your text prompt how the ingredients should be used.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n">4</div>
+        <div class="workflow-content">
+          <h4>Follow Flow's own best-practice notes</h4>
+          <p>Use clean subject references on plain or segmented backgrounds. Avoid conflicting guidance between text and images. Keep a consistent look across ingredient images.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Availability &amp; Rate Limits</div>
+      <p>Per <a href="https://support.google.com/flow/answer/16353333?hl=en" target="_blank">Flow's "Get started" page</a>: Flow requires age verification (18+), is available in supported regions only, requires an eligible subscription, and outputs include <strong>SynthID watermarks</strong>. Some tiers add visible watermarks to videos made with Veo. Rate limits may kick in after many generations in a day. For teaching: <strong>have students storyboard first, then generate only their "must-have" clips during class time.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── AUDIO ─── -->
+<section id="audio">
+  <div class="wrapper">
+    <div class="section-label">Step Four</div>
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <h2>Soundtrack, voiceover &amp; sound effects</h2>
+    </div>
+    <p>A promo video becomes a trailer when it has a musical identity, intentional sound design, and (optionally) narration. Here are the tools and the rights conversation you must have with your students.</p>
+
+    <!-- SUNO -->
+    <h3>Music with Suno</h3>
+    <p>Per <a href="https://suno.com/hub/how-to-make-a-song" target="_blank">Suno's official guide</a>, you create songs by describing the genre, mood, and lyrics (or no lyrics) using Simple mode, or Custom mode for more control. You can <a href="https://help.suno.com/en/articles/2415873" target="_blank">use your own lyrics via Custom mode</a>.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Rights &amp; Monetization — Teach This Clearly</div>
+      <p>Per <a href="https://help.suno.com/en/articles/2746945" target="_blank">Suno's copyright FAQ</a> and <a href="https://suno.com/terms-of-service" target="_blank">Terms of Service</a>: on the <strong>free plan, Suno owns the songs</strong> and allows non-commercial use only. On Pro or Premier, you own the songs and receive a commercial use license. Per Suno's <a href="https://help.suno.com/en/articles/9601985" target="_blank">commercial use definition</a>, paid-plan songs can be monetized and royalties collected — without Suno claiming a share.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Copyright Reality Check — Critical for Writers</div>
+      <p>Suno warns that even on paid plans, AI-generated songs <strong>may not be eligible for copyright protection</strong>, especially if 100% AI-generated — "writing the prompt does not constitute creation of the song" under U.S. human-authorship standards. The <a href="https://www.copyright.gov/ai/" target="_blank">U.S. Copyright Office</a> similarly concludes that generative AI outputs may be copyrightable only when a human makes sufficient creative determinations, not merely by prompting.</p>
+      <p style="margin-top:.6rem;"><strong>Teach Suno as score sketching:</strong> create a mood bed, then consider adding human-authored lyrics, human edits, and clear documentation of your creative contributions if copyright status matters to your project.</p>
+    </div>
+
+    <!-- ELEVENLABS -->
+    <h3>Voiceover &amp; sound effects with ElevenLabs</h3>
+    <p>ElevenLabs provides three workflows relevant to writers building trailers, per their official product guides:</p>
+
+    <div class="tool-grid">
+      <div class="tool-card lf">
+        <div class="tool-label">Voiceover</div>
+        <div class="tool-icon">🎤</div>
+        <h4>Text-to-Speech</h4>
+        <p>Paste text, select a voice, adjust settings, generate audio.</p>
+        <a class="tool-link" href="https://elevenlabs.io/docs/eleven-creative/playground/text-to-speech" target="_blank">Official docs →</a>
+      </div>
+      <div class="tool-card sp">
+        <div class="tool-label">Sound Design</div>
+        <div class="tool-icon">🔊</div>
+        <h4>Sound Effects</h4>
+        <p>Describe a sound, set duration, generate (creates four variations), download MP3/WAV from history.</p>
+        <a class="tool-link" href="https://elevenlabs.io/docs/eleven-creative/playground/sound-effects" target="_blank">Official docs →</a>
+      </div>
+      <div class="tool-card cnf">
+        <div class="tool-label">Full Project</div>
+        <div class="tool-icon">🎚</div>
+        <h4>Voiceover Studio</h4>
+        <p>Build a timeline-based voiceover project, add/edit voiceover clips and sound effects, export the full mix.</p>
+        <a class="tool-link" href="https://elevenlabs.io/docs/eleven-creative/audio-tools/voiceover-studio" target="_blank">Official docs →</a>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Rights Note — ElevenLabs</div>
+      <p>Per <a href="https://elevenlabs.io/terms-of-use" target="_blank">ElevenLabs' Terms of Service</a>: you must have all necessary rights to what you upload. The Terms describe rights to inputs/outputs and the license you grant to ElevenLabs. <a href="https://elevenlabs.io/sound-effects-terms" target="_blank">Sound Effects Terms</a> cover sublicensing and opt-out controls for SFX outputs — worth reviewing before commercial use.</p>
+    </div>
+
+    <h3>Adding audio into Google Vids</h3>
+    <p>Per <a href="https://support.google.com/docs/answer/15001100?hl=en" target="_blank">Google Vids' "Add audio" help page</a>: add audio from Drive or upload from your computer via <strong>Insert → Uploads</strong>. Supported formats include MP3 and WAV. Per-video cap: <strong>up to 50 audio objects</strong> (music/SFX/voiceovers combined), subject to change. More than enough for a trailer — but worth knowing as a constraint before you build an overly complex session.</p>
+  </div>
+</section>
+
+<!-- ─── COPYRIGHT ─── -->
+<section id="copyright">
+  <div class="wrapper">
+    <div class="section-label">The Bigger Picture</div>
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <h2>Copyright &amp; AI — what every writer must know</h2>
+    </div>
+
+    <p>Every tool in this workflow touches copyright. The U.S. Copyright Office's official guidance applies to all AI-generated images, audio, and video you create.</p>
+
+    <div class="callout warn">
+      <div class="callout-label">U.S. Copyright Office Position</div>
+      <p>Per the <a href="https://www.copyright.gov/ai/ai_policy_guidance.pdf" target="_blank">Copyright Office's AI policy guidance</a> and <a href="https://www.copyright.gov/newsnet/2025/1060.html" target="_blank">NewsNet Issue 1060</a>: generative AI outputs may be copyrightable <strong>only when a human determines sufficient expressive elements</strong> — including creative selection, arrangement, or modification of the output — <strong>not merely by prompting.</strong></p>
+    </div>
+
+    <div class="tool-grid">
+      <div class="tool-card lf">
+        <div class="tool-label">Images</div>
+        <div class="tool-icon">🖼</div>
+        <h4>ChatGPT &amp; Nano Banana images</h4>
+        <p>Purely prompt-generated images likely have no copyright protection. Human-edited, arranged, or significantly modified outputs may qualify — document your creative decisions.</p>
+      </div>
+      <div class="tool-card sp">
+        <div class="tool-label">Music</div>
+        <div class="tool-icon">🎵</div>
+        <h4>Suno songs</h4>
+        <p>Free plan: non-commercial only; Suno owns the output. Paid plan: commercial license granted. Neither guarantees copyright protection for 100% AI-generated work.</p>
+      </div>
+      <div class="tool-card cnf">
+        <div class="tool-label">Video</div>
+        <div class="tool-icon">🎬</div>
+        <h4>Vids &amp; Flow clips</h4>
+        <p>Include SynthID watermarks. Some tiers add visible watermarks. The assembly and creative selection of clips into a finished promo may strengthen your authorship claim.</p>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <div class="callout-label">Practical Advice for Writers</div>
+      <p>Document your creative process: save prompts, note editing decisions, record which elements you modified and how. The more human creative judgment you apply — in selection, arrangement, editing, and combination — the stronger your authorship argument. Use AI as a <strong>production tool, not a replacement for your creative decisions.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESOURCES ─── -->
+<section id="resources">
+  <div class="wrapper">
+    <div class="section-label">Reference</div>
+    <div class="step-header">
+      <div class="step-num">✦</div>
+      <h2>All official resources &amp; example assets</h2>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">OpenAI / ChatGPT Image Generation</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Creating images in ChatGPT</span>
+        <a href="https://help.openai.com/en/articles/8932459-creating-images-in-chatgpt" target="_blank">help.openai.com/en/articles/8932459</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Introducing 4o Image Generation</span>
+        <a href="https://openai.com/index/introducing-4o-image-generation/" target="_blank">openai.com/index/introducing-4o-image-generation</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">Nano Banana / Gemini Image Generation</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Nano Banana Pro overview</span>
+        <a href="https://gemini.google/us/overview/image-generation/?hl=en-US" target="_blank">gemini.google/us/overview/image-generation</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Gemini API — Image generation docs</span>
+        <a href="https://ai.google.dev/gemini-api/docs/image-generation" target="_blank">ai.google.dev/gemini-api/docs/image-generation</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Nano Banana 2 announcement</span>
+        <a href="https://blog.google/innovation-and-ai/technology/ai/nano-banana-2/" target="_blank">blog.google/innovation-and-ai/technology/ai/nano-banana-2</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">Google Vids + Veo</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Use AI to generate video clips</span>
+        <a href="https://support.google.com/docs/answer/16143507?hl=en" target="_blank">support.google.com/docs/answer/16143507</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Add images/GIFs/video clips</span>
+        <a href="https://support.google.com/docs/answer/14917464?hl=en-GB" target="_blank">support.google.com/docs/answer/14917464</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Add audio to a video in Vids</span>
+        <a href="https://support.google.com/docs/answer/15001100?hl=en" target="_blank">support.google.com/docs/answer/15001100</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Ingredients to Video — Veo 3.1 (Nov 2025)</span>
+        <a href="https://workspaceupdates.googleblog.com/2025/11/google-vids-veo-ingredients-to-video.html" target="_blank">workspaceupdates.googleblog.com — Nov 2025</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Portrait ingredients in Veo 3.1 (Jan 2026)</span>
+        <a href="https://workspaceupdates.googleblog.com/2026/01/ingredients-to-video-portrait-vids.html" target="_blank">workspaceupdates.googleblog.com — Jan 2026</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Google Vids product page</span>
+        <a href="https://workspace.google.com/products/vids/" target="_blank">workspace.google.com/products/vids</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">Google Flow</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Flow — main tool</span>
+        <a href="https://labs.google/fx/tools/flow" target="_blank">labs.google/fx/tools/flow</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Get started with Flow</span>
+        <a href="https://support.google.com/flow/answer/16353333?hl=en" target="_blank">support.google.com/flow/answer/16353333</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Create videos in Flow</span>
+        <a href="https://support.google.com/flow/answer/16353334?hl=en" target="_blank">support.google.com/flow/answer/16353334</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">Seedance (ByteDance)</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Seedance 1.0</span>
+        <a href="https://seed.bytedance.com/en/seedance" target="_blank">seed.bytedance.com/en/seedance</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Seedance 2.0</span>
+        <a href="https://seed.bytedance.com/en/seedance2_0" target="_blank">seed.bytedance.com/en/seedance2_0</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">Suno (Music)</div>
+      <div class="resource-link">
+        <span class="resource-link-name">How to make a song</span>
+        <a href="https://suno.com/hub/how-to-make-a-song" target="_blank">suno.com/hub/how-to-make-a-song</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Can I use my own lyrics?</span>
+        <a href="https://help.suno.com/en/articles/2415873" target="_blank">help.suno.com/en/articles/2415873</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Do I have copyright to my songs?</span>
+        <a href="https://help.suno.com/en/articles/2746945" target="_blank">help.suno.com/en/articles/2746945</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">What is commercial use?</span>
+        <a href="https://help.suno.com/en/articles/9601985" target="_blank">help.suno.com/en/articles/9601985</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Suno Terms of Service</span>
+        <a href="https://suno.com/terms-of-service" target="_blank">suno.com/terms-of-service</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">ElevenLabs (Voiceover &amp; SFX)</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Text-to-Speech guide</span>
+        <a href="https://elevenlabs.io/docs/eleven-creative/playground/text-to-speech" target="_blank">elevenlabs.io/docs — Text to Speech</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Sound Effects guide</span>
+        <a href="https://elevenlabs.io/docs/eleven-creative/playground/sound-effects" target="_blank">elevenlabs.io/docs — Sound Effects</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Voiceover Studio guide</span>
+        <a href="https://elevenlabs.io/docs/eleven-creative/audio-tools/voiceover-studio" target="_blank">elevenlabs.io/docs — Voiceover Studio</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">ElevenLabs Terms of Use</span>
+        <a href="https://elevenlabs.io/terms-of-use" target="_blank">elevenlabs.io/terms-of-use</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Sound Effects Terms</span>
+        <a href="https://elevenlabs.io/sound-effects-terms" target="_blank">elevenlabs.io/sound-effects-terms</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">Copyright (U.S. Copyright Office)</div>
+      <div class="resource-link">
+        <span class="resource-link-name">AI &amp; Copyright overview</span>
+        <a href="https://www.copyright.gov/ai/" target="_blank">copyright.gov/ai</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">AI Policy Guidance (PDF)</span>
+        <a href="https://www.copyright.gov/ai/ai_policy_guidance.pdf" target="_blank">copyright.gov/ai/ai_policy_guidance.pdf</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">NewsNet Issue 1060</span>
+        <a href="https://www.copyright.gov/newsnet/2025/1060.html" target="_blank">copyright.gov/newsnet/2025/1060.html</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label">Example Assets (this lesson)</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Storyboard still 1 — The Vanishing Point</span>
+        <a href="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/Storyboard%20Examples/ChatGPT%20Image%20Feb%2028%2C%202026%2C%2011_11_38%20PM.png" target="_blank">View image ↗</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Storyboard still 2 — The Vanishing Point</span>
+        <a href="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/Storyboard%20Examples/ChatGPT%20Image%20Feb%2028%2C%202026%2C%2011_11_41%20PM.png" target="_blank">View image ↗</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Finished promo video — The Vanishing Point</span>
+        <a href="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/The%20Vanishing%20Point.mp4" target="_blank">Watch video ↗</a>
+      </div>
+    </div>
+
+    <div class="pull-quote" style="margin-top: 3rem;">
+      <blockquote>"The storyboard is the recipe. Your images are the ingredients. The video is the meal — and you're the chef."</blockquote>
+      <cite>AI Writers Retreat · Storyboarding &amp; Promo Videos module</cite>
+    </div>
+  </div>
+</section>
 
 <footer>
   <p>AI Writers Retreat · Lesson Module · February 2026</p>
