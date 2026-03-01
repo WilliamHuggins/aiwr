@@ -12,8 +12,7 @@ const config: Config = {
     extend: {
       colors: {
         bg: "rgb(var(--bg) / <alpha-value>)",
-        "surface-1": "rgb(var(--surface-1) / <alpha-value>)",
-        "surface-2": "rgb(var(--surface-2) / <alpha-value>)",
+        panel: "rgb(var(--panel) / <alpha-value>)",
         text: "rgb(var(--text) / <alpha-value>)",
         muted: "rgb(var(--muted) / <alpha-value>)",
         border: "rgb(var(--border) / <alpha-value>)",
