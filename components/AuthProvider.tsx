@@ -24,45 +24,56 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [refreshTick, setRefreshTick] = useState(0);
 
   useEffect(() => {
-    if (!auth) { setLoading(false); return; }
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
     const unsub = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+
       if (!currentUser) {
         setProfile(null);
         setLoading(false);
         return;
       }
 
-      const userRef = doc(db, "users", currentUser.uid);
-      const snap = await getDoc(userRef);
+      try {
+        const userRef = doc(db, "users", currentUser.uid);
+        const snap = await getDoc(userRef);
 
-      if (!snap.exists()) {
-        await setDoc(userRef, {
-          uid: currentUser.uid,
-          email: currentUser.email,
-          displayName: currentUser.displayName || "Writer",
-          username: (currentUser.email || "writer").split("@")[0].slice(0, 20),
-          bio: "",
-          avatarUrl: "",
-          genres: [],
-          goals: "",
-          role: "USER",
-          emailVerified: currentUser.emailVerified,
-          acceptedTermsAt: null,
-          acceptedTermsVersion: null,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        });
-      } else {
-        await updateDoc(userRef, {
-          emailVerified: currentUser.emailVerified,
-          updatedAt: serverTimestamp(),
-        });
+        if (!snap.exists()) {
+          await setDoc(userRef, {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            displayName: currentUser.displayName || "Writer",
+            username: (currentUser.email || "writer").split("@")[0].slice(0, 20),
+            bio: "",
+            avatarUrl: "",
+            genres: [],
+            goals: "",
+            role: "USER",
+            emailVerified: currentUser.emailVerified,
+            acceptedTermsAt: null,
+            acceptedTermsVersion: null,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          });
+        } else {
+          await updateDoc(userRef, {
+            emailVerified: currentUser.emailVerified,
+            updatedAt: serverTimestamp(),
+          });
+        }
+
+        const updated = await getDoc(userRef);
+        setProfile(updated.data() as UserProfile);
+      } catch (error) {
+        console.error("Failed to load user profile document.", error);
+        setProfile(null);
+      } finally {
+        setLoading(false);
       }
-
-      const updated = await getDoc(userRef);
-      setProfile(updated.data() as UserProfile);
-      setLoading(false);
     });
 
     return () => unsub();
