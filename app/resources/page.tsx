@@ -7,23 +7,29 @@ export const metadata = {
     "A curated list of podcasts, books, tools, and resources for creative writers.",
 };
 
+type ResourceLink = {
+  label: string;
+  href: string;
+};
+
 type Resource = {
   id: string;
   title: string;
-  href: string;
+  href?: string;
   type: string;
   description: string;
+  links?: ResourceLink[];
 };
 
+const aiTools: ResourceLink[] = [
+  { label: "NotebookLM", href: "https://notebooklm.google.com/" },
+  { label: "Google Vids", href: "https://workspace.google.com/products/vids/" },
+  { label: "Suno.com", href: "https://suno.com/" },
+  { label: "Eleven Labs", href: "https://elevenlabs.io/" },
+  { label: "Google Flow", href: "https://labs.google/fx/tools/flow" },
+];
+
 const recommendedResources: Resource[] = [
-  {
-    id: "list-aiwr-reading",
-    title: "AIWR Reading List",
-    href: "https://aiwritersretreat.com/reading-list",
-    type: "Reading List",
-    description:
-      "Our curated list of essential books on writing, creativity, and the craft.",
-  },
   {
     id: "podcast-wow",
     title: "Writers on Writing",
@@ -31,6 +37,14 @@ const recommendedResources: Resource[] = [
     type: "Podcast",
     description:
       "An insightful podcast featuring interviews with authors about their craft, process, and journey.",
+  },
+  {
+    id: "podcast-everyday-ai",
+    title: "Everyday AI Podcast",
+    href: "https://www.youreverydayai.com/episodes",
+    type: "Podcast",
+    description:
+      "A practical podcast covering real-world AI trends, tools, and workflows you can apply right away.",
   },
   {
     id: "tool-reedsy",
@@ -41,14 +55,6 @@ const recommendedResources: Resource[] = [
       "A marketplace for publishing professionals (editors, designers) and writing tools.",
   },
   {
-    id: "resource-lithub",
-    title: "Literary Hub",
-    href: "https://lithub.com/",
-    type: "Website",
-    description:
-      "A central hub for literary news, essays, criticism, and excerpts.",
-  },
-  {
     id: "tool-scrivener",
     title: "Scrivener",
     href: "https://www.literatureandlatte.com/",
@@ -56,16 +62,27 @@ const recommendedResources: Resource[] = [
     description:
       "A powerful writing app for authors, designed for long-form projects.",
   },
+  {
+    id: "tool-ai-suite",
+    title: "AI Tools",
+    type: "Tool",
+    description:
+      "A grouped collection of AI tools for research, video, audio, and story development.",
+    links: aiTools,
+  },
+  {
+    id: "resource-lithub",
+    title: "Literary Hub",
+    href: "https://lithub.com/",
+    type: "Website",
+    description:
+      "A central hub for literary news, essays, criticism, and excerpts.",
+  },
 ];
 
-function ResourceCard({ title, href, type, description }: Resource) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex h-full flex-col rounded-2xl border border-ink/10 bg-canvas p-6 shadow-sm transition hover:-translate-y-1 hover:border-glow/60 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-glow dark:border-canvas/15 dark:bg-canvasDark"
-    >
+function ResourceCard({ title, href, type, description, links }: Resource) {
+  const CardContent = (
+    <>
       <span className="inline-flex w-fit items-center gap-2 rounded-full bg-glow/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-glow">
         <List className="h-3.5 w-3.5" aria-hidden="true" />
         {type}
@@ -76,6 +93,41 @@ function ResourceCard({ title, href, type, description }: Resource) {
       <p className="mt-2 font-body text-sm text-ink/70 dark:text-text/70">
         {description}
       </p>
+      {links && links.length > 0 ? (
+        <ul className="mt-4 space-y-1 text-sm text-ink/80 dark:text-text/80">
+          {links.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-glow/60 underline-offset-2 hover:text-glow"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </>
+  );
+
+  if (!href) {
+    return (
+      <article className="group flex h-full flex-col rounded-2xl border border-ink/10 bg-canvas p-6 shadow-sm transition hover:-translate-y-1 hover:border-glow/60 hover:shadow-lg dark:border-canvas/15 dark:bg-canvasDark">
+        {CardContent}
+      </article>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex h-full flex-col rounded-2xl border border-ink/10 bg-canvas p-6 shadow-sm transition hover:-translate-y-1 hover:border-glow/60 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-glow dark:border-canvas/15 dark:bg-canvasDark"
+    >
+      {CardContent}
     </a>
   );
 }
@@ -116,6 +168,16 @@ export default function ResourcesPage() {
               These are the resources we reference most often during workshops and coaching sessions. Each one pairs well with our DIY MFA lessons.
             </p>
           </header>
+
+          <div className="mb-8 rounded-2xl border border-ink/10 bg-canvasDark/5 p-6 dark:border-canvas/15 dark:bg-canvasDark/40">
+            <h3 className="font-display text-xl font-semibold text-ink dark:text-text">Tools</h3>
+            <h4 className="mt-3 text-sm font-semibold uppercase tracking-wider text-glow">AI Tools</h4>
+            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink/80 dark:text-text/80">
+              {aiTools.map((tool) => (
+                <li key={tool.label}>• {tool.label}</li>
+              ))}
+            </ul>
+          </div>
 
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {recommendedResources.map((resource) => (
