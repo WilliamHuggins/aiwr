@@ -20,7 +20,7 @@ export type GrammarBlock = {
 };
 export type ReadingListBlock = {
   type: "readingList";
-  items: { number: string; title: string; href: string; author: string; note: string; badge: "Purchase" | "Free Online" | "Free / Purchase" | "Purchase / Library" }[];
+  items: { number: string; title: string; href: string; author: string; note: string; badge: "Purchase" | "Free Online" | "Free / Purchase" | "Purchase / Library" | "Required" }[];
 };
 export type ExerciseBlock = { type: "exercise"; paragraphs: string[]; target: string };
 export type AiBlock = { type: "ai"; tool: string; intro: string; prompt: string; questions: string[]; note: string };

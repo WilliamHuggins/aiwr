@@ -153,7 +153,7 @@ export const week14Data: WeekData = {
               author: "Baldwin, Didion, Morrison, Sedaris, Woolf, or your choice",
               href: "https://www.theparisreview.org/interviews",
               note: "Free online or purchase. Choose a writer whose voice you can identify from a single paragraph — someone whose prose is so distinctively their own that it cannot be confused with anyone else's. Read one essay or interview with a single analytical question: what specific formal features make this voice recognizable? Not themes or subjects — sentence length and variation, imagery types, relationship to the reader, syntactic habits, stance toward the subject. Write two paragraphs of analysis before the Voice Inventory exercise. The analysis trains the analytical eye you will turn on your own prose.",
-              badge: "Free Online / Purchase",
+              badge: "Free / Purchase",
             },
             {
               number: "03",
