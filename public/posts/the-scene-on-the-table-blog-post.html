@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Scene on the Table | AI Writers Retreat</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '⟳';
+    position: absolute;
+    font-size: 400px;
+    color: rgba(0,0,0,0.025);
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--faded);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .post-date {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--faded);
+    margin-top: 16px;
+    display: block;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: '\201D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  /* ── Session steps ── */
+  .session {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    counter-reset: session-step;
+  }
+
+  .step {
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .step-header:hover { background: rgba(0,0,0,0.02); }
+
+  .step.open .step-header { background: var(--ink); color: var(--parchment); }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    background: var(--rust);
+    color: white;
+    padding: 18px 16px;
+    min-width: 52px;
+    text-align: center;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+  }
+
+  .step.open .step-num { background: var(--gold); }
+
+  .step-label-wrap {
+    flex: 1;
+    padding: 18px 20px;
+  }
+
+  .step-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 4px;
+  }
+
+  .step.open .step-tag { color: var(--gold); }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .step-toggle {
+    font-size: 22px;
+    font-family: 'Courier Prime', monospace;
+    color: var(--faded);
+    padding: 18px 20px;
+    transition: transform 0.2s;
+    align-self: flex-start;
+  }
+
+  .step.open .step-toggle {
+    transform: rotate(45deg);
+    color: var(--gold);
+  }
+
+  .step-body {
+    display: none;
+    padding: 28px 28px 32px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    background: white;
+  }
+
+  .step.open .step-body { display: block; }
+
+  .step-explanation {
+    font-size: 17px;
+    line-height: 1.75;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  /* ── Scene and prompt blocks ── */
+  .scene-block {
+    background: var(--parchment);
+    border: 1px solid rgba(0,0,0,0.12);
+    padding: 20px 24px;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.85;
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+
+  .block-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 10px;
+  }
+
+  .prompt-block {
+    background: white;
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--ink);
+    white-space: pre-wrap;
+    margin-bottom: 16px;
+  }
+
+  .response-block {
+    background: #f0f4f0;
+    border-left: 4px solid #5a7a4a;
+    padding: 16px 20px;
+    font-size: 16px;
+    line-height: 1.8;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .writer-note {
+    background: var(--highlight);
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 16px;
+    font-family: 'Courier Prime', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .writer-note strong {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    display: block;
+    margin-bottom: 6px;
+    font-family: 'Courier Prime', monospace;
+  }
+
+  .copy-btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 2px solid var(--ink);
+    background: var(--parchment);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  .copy-btn:hover { background: var(--ink); color: var(--parchment); }
+  .copy-btn.copied { background: var(--gold); border-color: var(--gold); color: white; }
+
+  /* ── Session progress bar ── */
+  .progress-bar {
+    display: flex;
+    margin: 2.5em 0 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    overflow: hidden;
+  }
+
+  .progress-step {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--parchment);
+    color: var(--faded);
+    border-right: 2px solid var(--ink);
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+
+  .progress-step:last-child { border-right: none; }
+
+  .progress-step.done {
+    background: var(--ink);
+    color: var(--gold);
+  }
+
+  .progress-step:hover { background: rgba(0,0,0,0.05); }
+  .progress-step.done:hover { background: var(--ink); }
+
+  /* ── Compare boxes ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 2em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .compare-col { padding: 24px; }
+
+  .compare-col:first-child {
+    border-right: 2px solid var(--ink);
+    background: var(--parchment);
+  }
+
+  .compare-col:last-child {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  .compare-col h4 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--gold);
+  }
+
+  .compare-col p { font-size: 16px; line-height: 1.7; margin-bottom: 0; }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+    .pull-quote { margin: 2.5em 0; }
+    .progress-bar { flex-wrap: wrap; }
+    .progress-step { flex: none; width: 50%; border-bottom: 2px solid var(--ink); }
+    .progress-step:nth-child(2n) { border-right: none; }
+    .progress-step:nth-last-child(-n+2) { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI & The Craft &nbsp;·&nbsp; Revision in Practice</div>
+
+<div class="hero">
+  <span class="issue-tag">Revision in Practice</span>
+  <h1>The Scene<br>on the <em>Table.</em></h1>
+  <p class="deck">A complete, step-by-step walkthrough of how to take a stuck scene into an AI revision session — from the first brief to the final decision about what to keep.</p>
+  <span class="byline">A Practical Guide to Scene Revision with AI</span>
+  <span class="post-date">March 1, 2026</span>
+</div>
+
+<div class="article-wrapper">
+
+  <p class="drop-cap">Most guides to using AI for writing tell you what's possible. This one shows you what it actually looks like — the full arc of a revision session, from a scene that isn't working to a set of concrete decisions about how to fix it. We'll use a fictional scene, written deliberately to have a specific problem. You'll see the brief, the prompts, the AI's responses, and — most importantly — the writer's thinking at each step.</p>
+
+  <p>Because that's the part nobody shows you. Not just what to ask, but what to do when the answer comes back.</p>
+
+  <p>The scene we're working with involves two characters — an adult daughter, Maya, and her father, who has just told her he's selling the family home. It has a clear dramatic situation. It has dialogue. It moves. And it has a problem: it resolves too cleanly. The daughter's resistance collapses too quickly, and the emotional cost of that moment never lands. The scene does its plot work and nothing more.</p>
+
+  <p>Let's take it into a session.</p>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>The Scene — Before Revision</h2>
+
+  <div class="scene-block">
+    <p style="margin-bottom:1em;">"You're selling it," Maya said. Not a question.</p>
+    <p style="margin-bottom:1em;">"The offer was good." Her father set his coffee cup down on the counter — the same counter where she had stood on a step stool to reach the sink, thirty years ago. "It would be foolish to wait."</p>
+    <p style="margin-bottom:1em;">"I know." She looked out the window at the garden. Her mother had planted those roses. They were overgrown now, pink and faintly embarrassing, the way things get when no one is tending to them. "I know it makes sense."</p>
+    <p style="margin-bottom:1em;">"I can't maintain it alone."</p>
+    <p style="margin-bottom:0;">"I know, Dad." She turned back to him. He looked old, suddenly. Older than she'd let herself notice. "It's okay."</p>
+  </div>
+
+  <p>The scene is competent. The detail of the step stool works. The overgrown roses earn their place. But Maya gives in — <em>"It's okay"</em> — without a fight, without cost, and the reader has no reason to feel the weight of that surrender. Something is missing between her resistance and her concession.</p>
+
+  <div class="pull-quote">
+    A scene that resolves without cost has done its plot work. It has not done its emotional work.
+  </div>
+
+  <h2>The Session — Step by Step</h2>
+
+  <p>A revision session has a shape. It is not a single question fired at an AI. It is a conversation with a direction — and the writer is responsible for steering it. The five steps below show that shape in full. Click each one to see how it unfolds.</p>
+
+  <div class="progress-bar" id="progress-bar">
+    <div class="progress-step" onclick="markStep(0)">1. The Brief</div>
+    <div class="progress-step" onclick="markStep(1)">2. The Diagnosis</div>
+    <div class="progress-step" onclick="markStep(2)">3. The Follow-Up</div>
+    <div class="progress-step" onclick="markStep(3)">4. The Push</div>
+    <div class="progress-step" onclick="markStep(4)">5. The Decision</div>
+  </div>
+
+  <div class="session">
+
+    <!-- Step 1 -->
+    <div class="step" id="step0">
+      <div class="step-header" onclick="toggleStep(0)">
+        <div class="step-num">01</div>
+        <div class="step-label-wrap">
+          <div class="step-tag">Before you ask anything</div>
+          <div class="step-title">Write the Brief</div>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <div class="step-explanation">The brief comes before the prompt. It is the context that shapes everything the AI will offer. A brief has three parts: what the scene is, what it is trying to do, and what you suspect is going wrong. Write it before you open the conversation — not in response to the AI, but in response to your own instincts about the draft.</div>
+        <div class="block-label">The Brief (written by the writer before opening the session)</div>
+        <div class="prompt-block" id="brief-text">SCENE BRIEF
+
+This is a scene from a novel-in-progress about a woman in her late thirties navigating her father's decision to sell the house she grew up in. Her mother died two years ago. The sale feels like a second loss — but she can't quite say that, even to herself.
+
+My intention: the reader should feel the weight of Maya's concession — the cost of saying "It's okay" when it is not okay. The surrender should feel like something, not like resolution.
+
+My concern: Maya gives in too quickly. The scene moves from resistance to acceptance in three exchanges and I haven't earned that shift. The emotional work isn't on the page — I've described the feeling without creating it.
+
+I am working only on this scene today. Please do not suggest structural changes to the larger narrative. Read only for what is happening in these five exchanges.</div>
+        <button class="copy-btn" onclick="copyBlock('brief-text')">Copy Brief</button>
+        <div class="writer-note">
+          <strong>Writer's note</strong>
+          Writing the brief first clarifies the problem before the AI has said a word. Halfway through writing "the emotional work isn't on the page," the writer has already begun to diagnose the scene. The brief is not just for the AI — it is for you.
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step" id="step1">
+      <div class="step-header" onclick="toggleStep(1)">
+        <div class="step-num">02</div>
+        <div class="step-label-wrap">
+          <div class="step-tag">The opening ask</div>
+          <div class="step-title">The Diagnosis Prompt</div>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <div class="step-explanation">The first prompt is not "fix this." It is "tell me what you see." You want a diagnosis before a prescription. Ask the AI to read for the specific problem you've named in the brief — not for everything that could be improved, but for the one thing that isn't working.</div>
+        <div class="block-label">Prompt sent to AI (after pasting the scene and brief)</div>
+        <div class="prompt-block" id="diag-text">Read the scene above with the brief in mind. I want to understand where the emotional cost of Maya's concession disappears from the page. Don't give me general feedback. Tell me specifically: at which moment does the reader lose access to what this costs her, and what is happening on the page at that moment that causes the loss?</div>
+        <button class="copy-btn" onclick="copyBlock('diag-text')">Copy Prompt</button>
+        <div class="block-label" style="margin-top:20px;">AI Response</div>
+        <div class="response-block">"The loss happens at 'I know it makes sense.' That line is Maya doing the father's emotional work for him — she's the one who articulates the logic of the decision before he has to defend it. The reader loses access to her resistance at exactly the moment she abandons it, because she doesn't abandon it under pressure. She abandons it voluntarily, preemptively, before the scene has created any real cost. The 'I know' that follows — 'I know, Dad' — compounds this. By the third 'I know,' the reader has no purchase on what the concession is costing her, because Maya herself has stopped feeling it on the page. The roses are doing the work you want the character to do."</div>
+        <div class="writer-note">
+          <strong>Writer's note</strong>
+          "The roses are doing the work you want the character to do" — that's the line that lands. The AI has identified the displacement: the grief is in the setting detail, not in Maya. That's the diagnosis. Now comes the follow-up.
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step" id="step2">
+      <div class="step-header" onclick="toggleStep(2)">
+        <div class="step-num">03</div>
+        <div class="step-label-wrap">
+          <div class="step-tag">Digging deeper</div>
+          <div class="step-title">The Follow-Up Prompt</div>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <div class="step-explanation">The first response gave you a diagnosis. The follow-up goes one level deeper. You're not asking for solutions yet — you're asking the AI to stay in the problem a little longer, to be more specific about where the failure is and what is already working. This is the step most writers skip, and it's often where the most useful material surfaces.</div>
+        <div class="block-label">Follow-Up Prompt</div>
+        <div class="prompt-block" id="followup-text">You said "the roses are doing the work you want the character to do." I want to stay with that for a moment before we talk about solutions. Tell me: what specifically is the rose detail communicating that Maya is not? And is there anything in Maya's dialogue or action — any word or gesture — that is already doing the emotional work I need, even faintly? I want to know what I have before I decide what's missing.</div>
+        <button class="copy-btn" onclick="copyBlock('followup-text')">Copy Prompt</button>
+        <div class="block-label" style="margin-top:20px;">AI Response</div>
+        <div class="response-block">"The roses are communicating abandonment and the particular sadness of something alive but untended — which is precisely what Maya can't say about herself or her grief. The detail is doing the emotional work because it has permission to be sad in a way Maya doesn't give herself. As for what's already working in Maya: the word 'faintly' — 'pink and faintly embarrassing' — is interesting because it belongs to Maya's interiority, not to the objective scene. That self-consciousness about the roses, the slight shame in 'embarrassing,' suggests a character who is managing how things appear even in private thought. That's a more specific and less clichéd version of grief than the scene gives her elsewhere. That word is doing something."</div>
+        <div class="writer-note">
+          <strong>Writer's note</strong>
+          "Faintly embarrassing" — the writer put that word in without consciously knowing why. The AI has surfaced what it was already doing. This is the value of asking what's already working before asking what's missing. Now the writer has something to build toward, not just something to fix.
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step" id="step3">
+      <div class="step-header" onclick="toggleStep(3)">
+        <div class="step-num">04</div>
+        <div class="step-label-wrap">
+          <div class="step-tag">Testing a direction</div>
+          <div class="step-title">The Push Prompt</div>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <div class="step-explanation">Now you have a diagnosis and a thread. The push prompt tests a specific direction — not a rewrite, but a hypothesis. You're asking the AI to pressure-test an idea before you invest revision time in it. This keeps you in control of the creative decision while using the AI to stress-test your thinking.</div>
+        <div class="block-label">Push Prompt</div>
+        <div class="prompt-block" id="push-text">Here's a hypothesis I want you to test: the problem is that Maya manages her grief on behalf of her father — she does his emotional work by conceding before he has to defend himself. If I let her resist longer — not dramatically, but quietly — and let the "It's okay" come later and cost more, the scene might earn its ending. Does that diagnosis hold based on what's on the page? And is there a risk I'm not seeing — a way that extending her resistance could tip into sentimentality or make the father unsympathetic?</div>
+        <button class="copy-btn" onclick="copyBlock('push-text')">Copy Prompt</button>
+        <div class="block-label" style="margin-top:20px;">AI Response</div>
+        <div class="response-block">"The diagnosis holds. Maya's concession arrives before the scene has built any resistance for it to overcome — so the surrender has no weight. Extending the resistance is the right direction. The risk you're right to name is sentimentality: if the resistance becomes explicitly emotional — if she says something about her mother, if she cries, if the scene announces its own grief — it will tip. The version that works is probably one where Maya's resistance is practical, even stubborn, rather than openly sad. Let her argue the logistics. Let her push back on the offer price, the timeline, something concrete. The grief lives underneath the practicality, not instead of it. The father's sympathy isn't at risk as long as he's not made to defend the decision — he already gave his reason; it holds."</div>
+        <div class="writer-note">
+          <strong>Writer's note</strong>
+          "Let her argue the logistics." That's the line. The writer didn't think of that — they were imagining a more emotionally legible resistance. The AI has found the oblique version: grief that hides in practicality. That's the note to take into revision.
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step" id="step4">
+      <div class="step-header" onclick="toggleStep(4)">
+        <div class="step-num">05</div>
+        <div class="step-label-wrap">
+          <div class="step-tag">Before you close the tab</div>
+          <div class="step-title">The Decision</div>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <div class="step-explanation">Before you close the session, take five minutes to write — in your own words, not the AI's — what you've decided. Not a summary of the conversation. A decision about the revision. This is your filing cabinet step: extract what's useful, in language that belongs to you, before the context window clears.</div>
+        <div class="block-label">The writer's revision notes (written before closing the session)</div>
+        <div class="scene-block" style="font-style:normal; font-size:16px;">
+          <p style="margin-bottom:0.8em;"><strong>What the session confirmed:</strong> Maya concedes too early. The "I know" lines are doing the giving-up before the scene has earned it. The emotional cost is in the roses, not in Maya — I've displaced the grief into the setting.</p>
+          <p style="margin-bottom:0.8em;"><strong>What the session found:</strong> "Faintly embarrassing" is already doing something — Maya's tendency to manage appearances even in private thought. Build toward that, not away from it.</p>
+          <p style="margin-bottom:0.8em;"><strong>The direction:</strong> Let Maya resist through logistics, not emotion. She argues the offer, the timeline, the practicalities. The grief lives underneath. Don't announce it.</p>
+          <p style="margin-bottom:0;"><strong>What to protect:</strong> The step stool detail. The roses. The father's single line of defense — it's enough and it holds.</p>
+        </div>
+        <div class="writer-note">
+          <strong>Writer's note</strong>
+          The revision notes are the product of the session, not the AI's responses. The AI gave observations. The writer made decisions. Those decisions belong to the writer — and they will still belong to the writer when the context window clears and the AI has forgotten everything.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>What the Session Did — and Didn't Do</h2>
+
+  <p>The session did not rewrite the scene. It did not suggest new dialogue. It did not fix anything. What it did was this: it read closely, named the specific location of the failure, surfaced a detail the writer had put in without knowing why, and pressure-tested a revision direction before the writer spent time on it.</p>
+
+  <div class="compare-grid">
+    <div class="compare-col">
+      <h4>What the AI contributed</h4>
+      <p>A specific diagnosis. The observation about displacement — grief in the roses, not in Maya. The surfacing of "faintly embarrassing" as already-working. The practical resistance direction as an alternative to announced grief.</p>
+    </div>
+    <div class="compare-col">
+      <h4>What the writer contributed</h4>
+      <p>Every creative decision. The original scene. The hypothesis to test. The judgment about which notes to take. The revision plan. The knowledge of what to protect. Everything that will make the revision version good.</p>
+    </div>
+  </div>
+
+  <p>This is the right division of labor. The AI is a close, tireless, immediate reader with no ego investment in the draft. The writer is the person who knows what the scene is for and what it needs to become. Between the two, the revision gets clearer — faster than it would in isolation, and more precisely than general feedback from a workshop that hasn't read the whole novel.</p>
+
+  <div class="insight">
+    The session is not the revision. It is the thinking that makes the revision possible. You still have to go write.
+  </div>
+
+  <h2>The Shape of a Good Session</h2>
+
+  <p>Every scene revision session has the same underlying shape, regardless of what the scene is or what the problem is. Brief first. Diagnosis second. Follow-up to go deeper. Push to test a direction. Decision before you close. That arc — five moves, in order — keeps the session focused and keeps the writer in charge of where it goes.</p>
+
+  <p>The most common mistake is skipping from the brief straight to the push: pasting the scene, stating the problem, and asking how to fix it in a single message. This works sometimes, but it skips the steps where the most useful material surfaces — the close diagnosis, the "what's already working" question, the tested hypothesis. Those middle steps are where the session earns its time.</p>
+
+  <p>Take the scene that's been bothering you. The one you've read so many times you can no longer see it. Write the brief before you open the tab — just three sentences: what the scene is, what it's trying to do, and what you think is wrong. Then follow the shape. The scene has the answer in it. The session is how you find it.</p>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">REVISION IN PRACTICE — AI WRITERS RETREAT</p>
+
+</div>
+
+<footer>
+  <p>AI & THE CRAFT &nbsp;·&nbsp; REVISION IN PRACTICE</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  // ── Session step accordions ──
+  function toggleStep(idx) {
+    const el = document.getElementById('step' + idx);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('open'));
+    if (!isOpen) {
+      el.classList.add('open');
+      markStep(idx);
+    }
+  }
+
+  // ── Progress bar ──
+  function markStep(idx) {
+    document.querySelectorAll('.progress-step').forEach((s, i) => {
+      s.classList.toggle('done', i <= idx);
+    });
+  }
+
+  // ── Copy blocks ──
+  function copyBlock(id) {
+    const el = document.getElementById(id);
+    const text = el.innerText || el.textContent;
+    const btn = el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+    });
+  }
+</script>
+
+</body>
+</html>
