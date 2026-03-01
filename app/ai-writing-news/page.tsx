@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -20,6 +19,14 @@ type ArticleGroup = {
   id: string;
   label: string;
   articles: Article[];
+};
+
+type SortOption = "newest" | "oldest" | "title";
+
+type ArticleRecord = {
+  groupId: string;
+  groupLabel: string;
+  article: Article;
 };
 
 const ARTICLE_GROUPS: ArticleGroup[] = [
@@ -101,6 +108,11 @@ function normalizeQuery(value: string) {
   return value.trim().toLowerCase();
 }
 
+function parseDate(value: string) {
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? 0 : parsed.getTime();
+}
+
 function articleMatches(article: Article, query: string) {
   if (!query) {
     return true;
@@ -127,30 +139,74 @@ function getSourceName(article: Article) {
   try {
     const hostname = new URL(article.url).hostname.replace(/^www\./, "");
     return hostname.split(".")[0]?.replace(/^./, (char) => char.toUpperCase()) ?? "Source";
-  } catch (error) {
+  } catch (_error) {
     return "Source";
   }
 }
 
 export default function AIWritingNewsPage() {
   const [query, setQuery] = useState("");
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<SortOption>("newest");
+
+  const allArticles = useMemo<ArticleRecord[]>(
+    () =>
+      ARTICLE_GROUPS.flatMap((group) =>
+        group.articles.map((article) => ({
+          groupId: group.id,
+          groupLabel: group.label,
+          article,
+        }))
+      ),
+    []
+  );
+
+  const allTags = useMemo(
+    () => Array.from(new Set(allArticles.flatMap((entry) => entry.article.keywords))).sort(),
+    [allArticles]
+  );
 
   const filteredGroups = useMemo(() => {
     const normalized = normalizeQuery(query);
 
-    if (!normalized) {
-      return ARTICLE_GROUPS;
-    }
+    const filtered = allArticles.filter(({ article }) => {
+      const matchesQuery = articleMatches(article, normalized);
+      const matchesTag =
+        selectedTags.length === 0 || selectedTags.some((tag) => article.keywords.includes(tag));
 
-    return ARTICLE_GROUPS.map((group) => ({
-      ...group,
-      articles: group.articles.filter((article) => articleMatches(article, normalized)),
-    })).filter((group) => group.articles.length > 0);
-  }, [query]);
+      return matchesQuery && matchesTag;
+    });
+
+    const sorted = [...filtered].sort((a, b) => {
+      if (sortBy === "title") {
+        return a.article.title.localeCompare(b.article.title);
+      }
+
+      const dateDifference = parseDate(b.article.date) - parseDate(a.article.date);
+      return sortBy === "newest" ? dateDifference : -dateDifference;
+    });
+
+    return sorted.reduce<ArticleGroup[]>((acc, entry) => {
+      const existing = acc.find((group) => group.id === entry.groupId);
+
+      if (existing) {
+        existing.articles.push(entry.article);
+      } else {
+        acc.push({ id: entry.groupId, label: entry.groupLabel, articles: [entry.article] });
+      }
+
+      return acc;
+    }, []);
+  }, [allArticles, query, selectedTags, sortBy]);
 
   const hasResults = filteredGroups.length > 0;
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags((current) =>
+      current.includes(tag) ? current.filter((item) => item !== tag) : [...current, tag]
+    );
+  };
 
   useEffect(() => {
     if (activeArticle) {
@@ -163,169 +219,166 @@ export default function AIWritingNewsPage() {
   }, [activeArticle]);
 
   return (
-    <div className="relative bg-canvas text-ink dark:bg-canvasDark dark:text-text">
-      <div className="flex min-h-screen">
-        {/* Sidebar */}
-        <aside
-          className={cn(
-            "fixed inset-y-0 left-0 z-30 w-72 transform border-r border-ink/10 bg-canvas/90 p-6 transition-transform duration-300 ease-in-out backdrop-blur-lg dark:border-canvas/10 dark:bg-canvasDark/90", 
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full", 
-            "lg:translate-x-0"
-          )}
-          aria-label="Archive navigation"
-        >
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-glow">AI Writing News</h2>
-            <button
-              type="button"
-              className="rounded-md p-2 text-ink focus:outline-none focus:ring-2 focus:ring-glow dark:text-text lg:hidden"
-              onClick={() => setSidebarOpen(false)}
-            >
-              <span className="sr-only">Close menu</span>
-              ×
-            </button>
-          </div>
+    <div className="bg-gradient-to-b from-canvas to-canvas/60 pb-16 dark:from-canvasDark dark:to-canvasDark/80">
+      <div className="mx-auto w-full max-w-6xl px-4 pt-12 md:px-6 md:pt-16">
+        <section className="rounded-3xl border border-ink/10 bg-canvas/80 p-8 shadow-sm dark:border-canvas/15 dark:bg-canvasDark/70">
+          <span className="inline-flex w-fit items-center rounded-full bg-glow/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-glow">
+            Editorial Feed
+          </span>
+          <h1 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink dark:text-text sm:text-4xl md:text-5xl">
+            AI + Writing in the News
+          </h1>
+          <p className="mt-3 max-w-3xl text-base text-ink/75 dark:text-text/80 sm:text-lg">
+            Search curated coverage and filter by subject tags to quickly scan how AI is shaping writing, publishing, and creative practice.
+          </p>
 
-          <div className="relative mt-8">
-            <label htmlFor="news-search" className="sr-only">
-              Search articles
+          <div className="mt-8 grid gap-4 md:grid-cols-[2fr_1fr]">
+            <label className="block">
+              <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.2em] text-ink/60 dark:text-text/70">
+                Search
+              </span>
+              <input
+                id="news-search"
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search titles, authors, summaries, and tags"
+                className="w-full rounded-xl border border-ink/15 bg-white/90 px-4 py-3 text-sm text-ink placeholder:text-ink/50 focus:border-glow focus:outline-none focus:ring-2 focus:ring-glow dark:border-canvas/20 dark:bg-canvasDark/80 dark:text-text dark:placeholder:text-text/50"
+              />
             </label>
-            <input
-              id="news-search"
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search articles..."
-              className="w-full rounded-lg border border-ink/15 bg-ink/5 px-4 py-2 text-sm text-ink placeholder:text-ink/50 focus:border-glow focus:outline-none focus:ring-2 focus:ring-glow dark:border-canvas/10 dark:bg-canvas/10 dark:text-text dark:placeholder:text-text/50"
-            />
+
+            <label className="block">
+              <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.2em] text-ink/60 dark:text-text/70">
+                Sort
+              </span>
+              <select
+                value={sortBy}
+                onChange={(event) => setSortBy(event.target.value as SortOption)}
+                className="w-full rounded-xl border border-ink/15 bg-white/90 px-4 py-3 text-sm text-ink focus:border-glow focus:outline-none focus:ring-2 focus:ring-glow dark:border-canvas/20 dark:bg-canvasDark/80 dark:text-text"
+              >
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="title">Title (A-Z)</option>
+              </select>
+            </label>
           </div>
 
-          <nav className="mt-10">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/60 dark:text-text/60">
-              Archives
-            </h3>
-            <ul className="mt-4 space-y-3 text-sm font-medium">
-              {ARTICLE_GROUPS.map((group) => (
-                <li key={group.id}>
-                  <a
-                    href={`#${group.id}`}
-                    className="block rounded-md px-2 py-1 text-ink/80 transition-colors hover:text-glow focus:outline-none focus:ring-2 focus:ring-glow dark:text-text/80"
-                    onClick={() => setSidebarOpen(false)}
+          <div className="mt-6">
+            <div className="mb-3 flex items-center justify-between gap-4">
+              <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/60 dark:text-text/70">
+                Filter by subject tags
+              </h2>
+              {selectedTags.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => setSelectedTags([])}
+                  className="text-xs font-semibold text-glow transition-colors hover:text-mint"
+                >
+                  Clear filters
+                </button>
+              ) : null}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {allTags.map((tag) => {
+                const isActive = selectedTags.includes(tag);
+
+                return (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => toggleTag(tag)}
+                    className={cn(
+                      "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                      isActive
+                        ? "border-glow bg-glow/20 text-glow"
+                        : "border-ink/15 bg-white/80 text-ink/75 hover:border-glow/50 hover:text-glow dark:border-canvas/20 dark:bg-canvasDark/70 dark:text-text/75"
+                    )}
                   >
-                    {group.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          className="fixed left-4 top-28 z-20 rounded-md bg-canvas/90 px-3 py-2 text-sm font-semibold text-ink shadow-md focus:outline-none focus:ring-2 focus:ring-glow dark:bg-canvasDark/90 dark:text-text lg:hidden"
-          onClick={() => setSidebarOpen(true)}
-        >
-          Open Archive
-        </button>
-
-        <div className="flex w-full flex-col lg:pl-72">
-          {/* Hero Section */}
-          <section className="relative h-[320px] w-full overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-              alt="Abstract mountain landscape"
-              fill
-              priority
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-ink/70" />
-            <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-              <h1 className="text-4xl font-bold text-canvas md:text-5xl">AI & Writing in the News</h1>
-              <p className="mt-4 max-w-2xl text-base text-canvas/80 md:text-lg">
-                Stay current with curated reporting on how artificial intelligence is reshaping the craft, culture, and business of writing.
+        <section className="mt-10">
+          {!hasResults ? (
+            <div className="rounded-2xl border border-ink/10 bg-canvas p-8 text-center dark:border-canvas/15 dark:bg-canvasDark/70">
+              <h2 className="text-2xl font-semibold text-ink dark:text-text">No articles found</h2>
+              <p className="mt-2 text-base text-ink/65 dark:text-text/70">
+                Try a different search term or remove one of the active subject filters.
               </p>
             </div>
-          </section>
+          ) : null}
 
-          <section className="px-6 py-12 md:px-10 lg:px-12">
-            {!hasResults && (
-              <div className="rounded-lg border border-ink/10 bg-ink/5 p-8 text-center dark:border-canvas/10 dark:bg-canvas/10">
-                <h2 className="text-2xl font-semibold text-ink/80 dark:text-text/80">No articles found</h2>
-                <p className="mt-2 text-base text-ink/60 dark:text-text/60">
-                  Try adjusting your search terms to find another story.
-                </p>
+          {filteredGroups.map((group) => (
+            <section key={group.id} id={group.id} className="mt-12 first:mt-0">
+              <div className="border-b border-ink/10 pb-4 dark:border-canvas/15">
+                <h2 className="text-2xl font-semibold text-ink dark:text-text md:text-3xl">{group.label}</h2>
               </div>
-            )}
 
-            {filteredGroups.map((group) => (
-              <section key={group.id} id={group.id} className="article-group mt-12 first:mt-0">
-                <div className="border-b border-ink/10 pb-4 dark:border-canvas/10">
-                  <h2 className="text-3xl font-bold text-ink dark:text-text">{group.label}</h2>
-                </div>
+              <div className="mt-7 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {group.articles.map((article) => (
+                  <article
+                    key={article.url}
+                    className="flex h-full flex-col rounded-2xl border border-ink/10 bg-canvas p-6 shadow-sm transition hover:-translate-y-1 hover:border-glow/50 hover:shadow-lg dark:border-canvas/15 dark:bg-canvasDark"
+                  >
+                    <span className="text-xs font-semibold uppercase tracking-wide text-coral">{article.date}</span>
+                    <h3 className="mt-3 text-xl font-semibold text-ink dark:text-text">
+                      <a
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors hover:text-glow"
+                      >
+                        {article.title}
+                      </a>
+                    </h3>
+                    <p className="mt-2 text-sm font-medium text-ink/60 dark:text-text/70">By {article.author}</p>
+                    <p className="mt-4 text-sm leading-relaxed text-ink/70 dark:text-text/80">{article.summary}</p>
 
-                <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-                  {group.articles.map((article) => (
-                    <article
-                      key={article.url}
-                      className="flex h-full flex-col rounded-xl border border-ink/10 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-canvas/10 dark:bg-ink/40"
-                    >
-                      <span className="text-xs font-semibold uppercase tracking-wide text-coral">
-                        {article.date}
-                      </span>
-                      <h3 className="mt-3 text-xl font-semibold text-ink dark:text-text">
-                        <a
-                          href={article.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="transition-colors hover:text-glow"
-                        >
-                          {article.title}
-                        </a>
-                      </h3>
-                      <p className="mt-2 text-sm font-medium text-ink/60 dark:text-text/70">By {article.author}</p>
-                      <p className="mt-4 text-sm leading-relaxed text-ink/70 dark:text-text/80">{article.summary}</p>
-
-                      <div className="mt-4">
-                        <h4 className="text-xs font-semibold uppercase tracking-wide text-ink/50 dark:text-text/60">
-                          Subjects
-                        </h4>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {article.keywords.map((keyword) => (
-                            <span
-                              key={keyword}
-                              className="rounded-full bg-ink/10 px-2 py-1 text-xs font-medium text-ink/70 dark:bg-canvas/20 dark:text-text/70"
-                            >
-                              {keyword}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="mt-6 flex items-center justify-between">
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {article.keywords.map((keyword) => (
                         <button
+                          key={keyword}
                           type="button"
-                          onClick={() => setActiveArticle(article)}
-                          className="text-sm font-semibold text-glow transition-colors hover:text-mint focus:outline-none focus:ring-2 focus:ring-glow"
+                          onClick={() => toggleTag(keyword)}
+                          className={cn(
+                            "rounded-full border px-2.5 py-1 text-xs font-medium transition-colors",
+                            selectedTags.includes(keyword)
+                              ? "border-glow bg-glow/20 text-glow"
+                              : "border-ink/15 bg-white/80 text-ink/70 hover:border-glow/50 hover:text-glow dark:border-canvas/20 dark:bg-canvasDark/80 dark:text-text/70"
+                          )}
                         >
-                          Read full abstract →
+                          {keyword}
                         </button>
-                        <a
-                          href={article.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm font-semibold text-ink/70 underline-offset-4 transition-colors hover:text-glow dark:text-text/70"
-                        >
-                          Visit source
-                        </a>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </section>
-        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 flex items-center justify-between">
+                      <button
+                        type="button"
+                        onClick={() => setActiveArticle(article)}
+                        className="text-sm font-semibold text-glow transition-colors hover:text-mint focus:outline-none focus:ring-2 focus:ring-glow"
+                      >
+                        Read full abstract →
+                      </button>
+                      <a
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-semibold text-ink/70 underline-offset-4 transition-colors hover:text-glow dark:text-text/70"
+                      >
+                        Visit source
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))}
+        </section>
       </div>
 
       {activeArticle && (
@@ -350,8 +403,7 @@ export default function AIWritingNewsPage() {
                 className="ml-4 rounded-md p-2 text-ink/60 transition hover:text-coral focus:outline-none focus:ring-2 focus:ring-glow dark:text-text/60"
                 onClick={() => setActiveArticle(null)}
               >
-                <span className="sr-only">Close modal</span>
-                ×
+                <span className="sr-only">Close modal</span>×
               </button>
             </div>
             <div className="max-h-[60vh] overflow-y-auto px-6 py-6 text-sm leading-relaxed text-ink/80 dark:text-text/80">
