@@ -142,7 +142,7 @@ export const week6Data: WeekData = {
               author: "Your genre's masters",
               href: "",
               note: "Use books already on your reading list or books you admire in your genre. Read only the first page of each — the first 200 to 350 words. For each, identify: the contract it makes (voice, governing question, tonal register, narrative mode), where the story actually begins (is there preamble before the real opening moment?), and what the first sentence promises. After reading all ten, identify the three openings whose contracts feel most like the contract your thesis is trying to make — and analyze specifically what they are doing that yours might learn from.",
-              badge: "Free",
+              badge: "Free Online",
             },
             {
               number: "02",
