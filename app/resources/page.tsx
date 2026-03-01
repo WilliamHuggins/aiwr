@@ -17,20 +17,20 @@ type Resource = {
 
 const recommendedResources: Resource[] = [
   {
-    id: "list-aiwr-reading",
-    title: "AIWR Reading List",
-    href: "https://aiwritersretreat.com/reading-list",
-    type: "Reading List",
-    description:
-      "Our curated list of essential books on writing, creativity, and the craft.",
-  },
-  {
     id: "podcast-wow",
     title: "Writers on Writing",
     href: "https://www.writers-on-writing.com/",
     type: "Podcast",
     description:
       "An insightful podcast featuring interviews with authors about their craft, process, and journey.",
+  },
+  {
+    id: "podcast-everyday-ai",
+    title: "Everyday AI Podcast",
+    href: "https://www.youreverydayai.com/episodes",
+    type: "Podcast",
+    description:
+      "A practical podcast covering real-world AI trends, tools, and workflows you can apply right away.",
   },
   {
     id: "tool-reedsy",
@@ -56,6 +56,54 @@ const recommendedResources: Resource[] = [
     description:
       "A powerful writing app for authors, designed for long-form projects.",
   },
+  {
+    id: "tool-notebooklm",
+    title: "NotebookLM",
+    href: "https://notebooklm.google.com/",
+    type: "AI Tool",
+    description:
+      "A source-grounded AI notebook for summarizing, synthesizing, and querying your writing materials.",
+  },
+  {
+    id: "tool-google-vids",
+    title: "Google Vids",
+    href: "https://workspace.google.com/products/vids/",
+    type: "AI Tool",
+    description:
+      "Google's AI-assisted video creation tool for scripting, storyboarding, and presentation-style videos.",
+  },
+  {
+    id: "tool-suno",
+    title: "Suno.com",
+    href: "https://suno.com/",
+    type: "AI Tool",
+    description:
+      "Generate original music and audio tracks from text prompts for trailers, mood boards, and creative projects.",
+  },
+  {
+    id: "tool-elevenlabs",
+    title: "Eleven Labs",
+    href: "https://elevenlabs.io/",
+    type: "AI Tool",
+    description:
+      "AI voice, narration, and audio production tools for polished read-alouds and voiceover workflows.",
+  },
+  {
+    id: "tool-google-flow",
+    title: "Google Flow",
+    href: "https://labs.google/fx/tools/flow",
+    type: "AI Tool",
+    description:
+      "An AI filmmaking workflow for turning visual ingredients into scenes and story-driven video sequences.",
+  },
+];
+
+const aiTools = [
+  "NotebookLM",
+  "Google Vids",
+  "Suno.com",
+  "Eleven Labs",
+  "Google Flow",
 ];
 
 function ResourceCard({ title, href, type, description }: Resource) {
@@ -116,6 +164,16 @@ export default function ResourcesPage() {
               These are the resources we reference most often during workshops and coaching sessions. Each one pairs well with our DIY MFA lessons.
             </p>
           </header>
+
+          <div className="mb-8 rounded-2xl border border-ink/10 bg-canvasDark/5 p-6 dark:border-canvas/15 dark:bg-canvasDark/40">
+            <h3 className="font-display text-xl font-semibold text-ink dark:text-text">Tools</h3>
+            <h4 className="mt-3 text-sm font-semibold uppercase tracking-wider text-glow">AI Tools</h4>
+            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink/80 dark:text-text/80">
+              {aiTools.map((tool) => (
+                <li key={tool}>• {tool}</li>
+              ))}
+            </ul>
+          </div>
 
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {recommendedResources.map((resource) => (
