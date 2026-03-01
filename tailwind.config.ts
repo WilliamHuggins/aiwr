@@ -1,6 +1,27 @@
 import type { Config } from "tailwindcss";
 import typography from "@tailwindcss/typography";
 
+const semanticColors = {
+  bg: "rgb(var(--bg) / <alpha-value>)",
+  "surface-1": "rgb(var(--surface-1) / <alpha-value>)",
+  "surface-2": "rgb(var(--surface-2) / <alpha-value>)",
+  text: "rgb(var(--text) / <alpha-value>)",
+  muted: "rgb(var(--muted) / <alpha-value>)",
+  border: "rgb(var(--border) / <alpha-value>)",
+  accent: "rgb(var(--accent) / <alpha-value>)",
+  accent2: "rgb(var(--accent2) / <alpha-value>)",
+  success: "rgb(var(--success) / <alpha-value>)",
+  // Writer's Circle scoped palette tokens.
+  panel: "rgb(var(--panel) / <alpha-value>)",
+  primary: "rgb(var(--primary) / <alpha-value>)",
+  primaryText: "rgb(var(--primaryText) / <alpha-value>)",
+  ink: "rgb(var(--text) / <alpha-value>)",
+  glow: "rgb(var(--accent) / <alpha-value>)",
+  mint: "rgb(var(--success) / <alpha-value>)",
+  canvas: "rgb(var(--bg) / <alpha-value>)",
+  canvasDark: "rgb(var(--bg) / <alpha-value>)",
+} as const;
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,22 +31,7 @@ const config: Config = {
   darkMode: "class",
   theme: {
     extend: {
-      colors: {
-        bg: "rgb(var(--bg) / <alpha-value>)",
-        "surface-1": "rgb(var(--surface-1) / <alpha-value>)",
-        "surface-2": "rgb(var(--surface-2) / <alpha-value>)",
-        text: "rgb(var(--text) / <alpha-value>)",
-        muted: "rgb(var(--muted) / <alpha-value>)",
-        border: "rgb(var(--border) / <alpha-value>)",
-        accent: "rgb(var(--accent) / <alpha-value>)",
-        accent2: "rgb(var(--accent2) / <alpha-value>)",
-        success: "rgb(var(--success) / <alpha-value>)",
-        ink: "rgb(var(--text) / <alpha-value>)",
-        glow: "rgb(var(--accent) / <alpha-value>)",
-        mint: "rgb(var(--success) / <alpha-value>)",
-        canvas: "rgb(var(--bg) / <alpha-value>)",
-        canvasDark: "rgb(var(--bg) / <alpha-value>)",
-      },
+      colors: semanticColors,
       fontFamily: {
         ui: ["var(--font-ui)", "sans-serif"],
         body: ["var(--font-body)", "serif"],
