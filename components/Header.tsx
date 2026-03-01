@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 const primaryNavLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/writers-circle", label: "Writer's Circle" },
 ];
 
 export default function Header() {

@@ -11,7 +11,7 @@ export default function RequireVerifiedAndAccepted({ children }: { children: Rea
 
   useEffect(() => {
     if (user && profile && !profile.acceptedTermsAt) {
-      router.replace(`/terms?next=${encodeURIComponent(pathname || "/app")}`);
+      router.replace(`/writers-circle/terms?next=${encodeURIComponent(pathname || "/writers-circle/app")}`);
     }
   }, [user, profile, pathname, router]);
 

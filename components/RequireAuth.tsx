@@ -11,7 +11,7 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!loading && !user) {
-      router.replace(`/login?next=${encodeURIComponent(pathname || "/app")}`);
+      router.replace(`/writers-circle/login?next=${encodeURIComponent(pathname || "/writers-circle/app")}`);
     }
   }, [loading, user, router, pathname]);
 

@@ -11,7 +11,7 @@ export default function PostCard({ post, showStatus = false }: { post: Post; sho
       </div>
       {post.title && <h3 className="font-serif text-xl">{post.title}</h3>}
       <p className="mt-2 whitespace-pre-wrap text-sm">{post.body}</p>
-      <Link className="mt-4 inline-block text-sm no-underline" href={`/app/posts/${post.id}`}>Read discussion →</Link>
+      <Link className="mt-4 inline-block text-sm no-underline" href={`/writers-circle/app/posts/${post.id}`}>Read discussion →</Link>
     </article>
   );
 }
