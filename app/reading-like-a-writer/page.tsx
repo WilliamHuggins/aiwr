@@ -410,6 +410,75 @@ const bookLectures: BookLecture[] = [
       ],
     },
   },
+  {
+    id: "the-pillowman",
+    title: "The Pillowman",
+    author: "Martin McDonagh",
+    purchaseUrl: "https://bookshop.org/p/books/the-pillowman-martin-mcdonagh/10255195",
+    imageUrl: "https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/The%20Pillowman.jpg",
+    category: "Playwriting Mechanics",
+    summary:
+      "A study in embedding stories inside interrogation drama so structure, suspense, and theme all move as one engine.",
+    content: {
+      writersCase: [
+        "The Pillowman is essential study for any writer trying to fuse story-within-story structure with sustained suspense while keeping tonal control under extreme material.",
+        "McDonagh solves a difficult craft problem: how to let embedded fiction (Katurian’s fairy tales) function simultaneously as (1) character revelation, (2) plot evidence in a procedural frame, and (3) a thematic argument about art’s complicity—without collapsing into didacticism or anthology drift.",
+        "The play is also a clinic in writing interrogation scenes that don’t stall: every exchange escalates stakes, reassigns power, and forces the audience to reinterpret what they thought they knew two minutes earlier.",
+      ],
+      technicalBreakdown: [
+        {
+          heading: "Structural braiding: procedural frame + embedded tales as engine, not decoration",
+          body: [
+            "McDonagh doesn’t ‘pause’ the plot to tell stories; he uses the stories as active turns in the investigation.",
+            "Mechanically, each tale is positioned at a moment where the police need leverage and Katurian needs identity.",
+            "That alignment makes every story perform double duty: it is text (a thing that can be quoted, misread, weaponized) and action (a move that changes how the interrogators behave).",
+            "The crucial craft move is that the embedded stories arrive with consequences in the room—a shift in what evidence ‘means,’ a change in who is believed, a new threat vector.",
+          ],
+          takeaway:
+            "Writerly takeaway: the difference between inset material as atmosphere and inset material as plot torque is immediate scene consequence.",
+        },
+        {
+          heading: "Controlled unreliability via confession logic, not POV tricks",
+          body: [
+            "The play achieves unreliability without gimmicky narration because it’s built on confession economics: who benefits from telling which version, at what moment, to which listener.",
+            "In interrogation writing, the ‘truth’ is never just information; it’s a bargaining chip.",
+            "McDonagh structures revelations as transactional offers (I’ll give you X if you give me Y), then repeatedly invalidates those offers when a new fact reframes the prior bargain.",
+            "This produces a rolling recalibration of narrative distance: we are close to Katurian when he defends art, then yanked back when the play exposes what that defense costs.",
+          ],
+          takeaway:
+            "Writerly takeaway: steer audience sympathy scene-by-scene through incentives and exchanged leverage, not explanatory monologue.",
+        },
+        {
+          heading: "Tonal counterpoint: deadpan comedy as pacing regulator under atrocity",
+          body: [
+            "The play’s humor isn’t there to ‘relieve’ tension; it’s a metering device that keeps the audience inside scenes that would otherwise numb them.",
+            "McDonagh writes comedic beats with hard timing: short clauses, blunt vocabulary, quick reversals, and deliberately banal objections inside horrific contexts.",
+            "He also uses the double-act dynamic between interrogators to create rhythmic alternation: one voice escalates threat, the other punctures it with procedure, sarcasm, or casual cruelty.",
+            "This alternation is a practical technique for writers handling high-intensity material: comedy becomes tempo control, preventing a monotone of dread.",
+          ],
+          takeaway:
+            "Writerly takeaway: comedy can function as tempo architecture, keeping scenes legible and propulsive without lowering stakes.",
+        },
+      ],
+      criticalVerification: [
+        {
+          label:
+            "Michael Billington (The Guardian) on the play as an argument about the dangerous power of literature",
+          url: "https://www.theguardian.com/stage/2003/nov/14/theatre",
+        },
+        {
+          label:
+            "Kelley Shermeyer (De Gruyter) on children, futurity, tragedy, and fairy-tale pressure in The Pillowman",
+          url: "https://www.degruyterbrill.com/document/doi/10.1515/jcde-2019-0026/html",
+        },
+      ],
+      readingDirective: [
+        "Buy a physical copy and read it with one narrow lens: track every moment an embedded story changes the power balance in the interrogation room.",
+        "Mark (a) what the interrogators gain by hearing the story, (b) what Katurian is trying to buy with it, and (c) what immediate behavioral shift follows.",
+        "You’re studying how to make backstory and theme operate as scene actions—the core skill that makes this play a practical craft investment rather than a mere provocation.",
+      ],
+    },
+  },
 ];
 
 export default function ReadingLikeAWriterPage() {
