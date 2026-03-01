@@ -13,8 +13,8 @@ export default function YearTwoWeek2Page() {
     <WeekShell
       week={week2Data}
       prevHref="/diy-mfa/year-two/week-1"
-      nextHref="/diy-mfa/year-two/week-4"
-      nextLabel="Week 4: Advanced Structure II — Braided Narrative & the Logic of Juxtaposition"
+      nextHref="/diy-mfa/year-two/week-3"
+      nextLabel="Week 3: Advanced Structure I — Nonlinear, Fragmented & Modular Narratives"
       yearLabel="Year Two"
     />
   );
