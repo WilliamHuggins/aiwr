@@ -4,6 +4,14 @@ import { Card } from "@/components/ui/Card";
 
 const tutorials = [
   {
+    title: "AI Storyboarding & Promo Videos for Writers",
+    description:
+      "Build a writer-first workflow for storyboards, image continuity, video generation, and trailer-ready audio using modern AI tools.",
+    href: "/ai-basics/ai-storyboarding-promo-videos-for-writers",
+    source: "AIWR Lesson Module",
+    updated: "Updated February 2026",
+  },
+  {
     title: "The Writer's Complete Guide to NotebookLM in 2026",
     description:
       "A comprehensive, source-grounded walkthrough of NotebookLM for fiction, nonfiction, screenwriting, and journalism workflows.",
