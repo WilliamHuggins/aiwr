@@ -7,13 +7,27 @@ export const metadata = {
     "A curated list of podcasts, books, tools, and resources for creative writers.",
 };
 
+type ResourceLink = {
+  label: string;
+  href: string;
+};
+
 type Resource = {
   id: string;
   title: string;
-  href: string;
+  href?: string;
   type: string;
   description: string;
+  links?: ResourceLink[];
 };
+
+const aiTools: ResourceLink[] = [
+  { label: "NotebookLM", href: "https://notebooklm.google.com/" },
+  { label: "Google Vids", href: "https://workspace.google.com/products/vids/" },
+  { label: "Suno.com", href: "https://suno.com/" },
+  { label: "Eleven Labs", href: "https://elevenlabs.io/" },
+  { label: "Google Flow", href: "https://labs.google/fx/tools/flow" },
+];
 
 const recommendedResources: Resource[] = [
   {
@@ -41,14 +55,6 @@ const recommendedResources: Resource[] = [
       "A marketplace for publishing professionals (editors, designers) and writing tools.",
   },
   {
-    id: "resource-lithub",
-    title: "Literary Hub",
-    href: "https://lithub.com/",
-    type: "Website",
-    description:
-      "A central hub for literary news, essays, criticism, and excerpts.",
-  },
-  {
     id: "tool-scrivener",
     title: "Scrivener",
     href: "https://www.literatureandlatte.com/",
@@ -57,63 +63,26 @@ const recommendedResources: Resource[] = [
       "A powerful writing app for authors, designed for long-form projects.",
   },
   {
-    id: "tool-notebooklm",
-    title: "NotebookLM",
-    href: "https://notebooklm.google.com/",
-    type: "AI Tool",
+    id: "tool-ai-suite",
+    title: "AI Tools",
+    type: "Tool",
     description:
-      "A source-grounded AI notebook for summarizing, synthesizing, and querying your writing materials.",
+      "A grouped collection of AI tools for research, video, audio, and story development.",
+    links: aiTools,
   },
   {
-    id: "tool-google-vids",
-    title: "Google Vids",
-    href: "https://workspace.google.com/products/vids/",
-    type: "AI Tool",
+    id: "resource-lithub",
+    title: "Literary Hub",
+    href: "https://lithub.com/",
+    type: "Website",
     description:
-      "Google's AI-assisted video creation tool for scripting, storyboarding, and presentation-style videos.",
-  },
-  {
-    id: "tool-suno",
-    title: "Suno.com",
-    href: "https://suno.com/",
-    type: "AI Tool",
-    description:
-      "Generate original music and audio tracks from text prompts for trailers, mood boards, and creative projects.",
-  },
-  {
-    id: "tool-elevenlabs",
-    title: "Eleven Labs",
-    href: "https://elevenlabs.io/",
-    type: "AI Tool",
-    description:
-      "AI voice, narration, and audio production tools for polished read-alouds and voiceover workflows.",
-  },
-  {
-    id: "tool-google-flow",
-    title: "Google Flow",
-    href: "https://labs.google/fx/tools/flow",
-    type: "AI Tool",
-    description:
-      "An AI filmmaking workflow for turning visual ingredients into scenes and story-driven video sequences.",
+      "A central hub for literary news, essays, criticism, and excerpts.",
   },
 ];
 
-const aiTools = [
-  "NotebookLM",
-  "Google Vids",
-  "Suno.com",
-  "Eleven Labs",
-  "Google Flow",
-];
-
-function ResourceCard({ title, href, type, description }: Resource) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex h-full flex-col rounded-2xl border border-ink/10 bg-canvas p-6 shadow-sm transition hover:-translate-y-1 hover:border-glow/60 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-glow dark:border-canvas/15 dark:bg-canvasDark"
-    >
+function ResourceCard({ title, href, type, description, links }: Resource) {
+  const CardContent = (
+    <>
       <span className="inline-flex w-fit items-center gap-2 rounded-full bg-glow/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-glow">
         <List className="h-3.5 w-3.5" aria-hidden="true" />
         {type}
@@ -124,6 +93,41 @@ function ResourceCard({ title, href, type, description }: Resource) {
       <p className="mt-2 font-body text-sm text-ink/70 dark:text-text/70">
         {description}
       </p>
+      {links && links.length > 0 ? (
+        <ul className="mt-4 space-y-1 text-sm text-ink/80 dark:text-text/80">
+          {links.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-glow/60 underline-offset-2 hover:text-glow"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </>
+  );
+
+  if (!href) {
+    return (
+      <article className="group flex h-full flex-col rounded-2xl border border-ink/10 bg-canvas p-6 shadow-sm transition hover:-translate-y-1 hover:border-glow/60 hover:shadow-lg dark:border-canvas/15 dark:bg-canvasDark">
+        {CardContent}
+      </article>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex h-full flex-col rounded-2xl border border-ink/10 bg-canvas p-6 shadow-sm transition hover:-translate-y-1 hover:border-glow/60 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-glow dark:border-canvas/15 dark:bg-canvasDark"
+    >
+      {CardContent}
     </a>
   );
 }
@@ -170,7 +174,7 @@ export default function ResourcesPage() {
             <h4 className="mt-3 text-sm font-semibold uppercase tracking-wider text-glow">AI Tools</h4>
             <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink/80 dark:text-text/80">
               {aiTools.map((tool) => (
-                <li key={tool}>• {tool}</li>
+                <li key={tool.label}>• {tool.label}</li>
               ))}
             </ul>
           </div>
