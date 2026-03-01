@@ -4,6 +4,14 @@ import { Card } from "@/components/ui/Card";
 
 const tutorials = [
   {
+    title: "Canvas Mode for Writers",
+    description:
+      "A split-screen writing tutorial covering ChatGPT Canvas and Gemini Canvas workflows, editing controls, and export strategies.",
+    href: "/ai-basics/canvas-mode-for-writers",
+    source: "AIWR Lesson Module",
+    updated: "Updated March 2026",
+  },
+  {
     title: "AI Storyboarding & Promo Videos for Writers",
     description:
       "Build a writer-first workflow for storyboards, image continuity, video generation, and trailer-ready audio using modern AI tools.",

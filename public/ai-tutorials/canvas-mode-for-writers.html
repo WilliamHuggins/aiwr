@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Canvas Mode for Writers — AI Writers Retreat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────────────── */
+:root {
+  --accent:    27 54 93;
+  --accent2:   122 46 59;
+  --success:   91 140 106;
+  --bg:        250 250 247;
+  --surface-1: 255 255 252;
+  --surface-2: 244 244 240;
+  --text:      45 45 45;
+  --muted:     107 114 128;
+  --border:    229 231 235;
+  --mfa-rust:  160 64 42;
+  --mfa-gold:  184 147 42;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent:    107 140 204;
+    --accent2:   170 88 106;
+    --success:   75 118 88;
+    --bg:        20 20 18;
+    --surface-1: 26 26 24;
+    --surface-2: 34 34 30;
+    --text:      228 225 215;
+    --muted:     148 155 165;
+    --border:    52 52 48;
+    --mfa-rust:  194 96 68;
+    --mfa-gold:  208 170 64;
+  }
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 17px;
+  line-height: 1.76;
+  transition: background .25s, color .25s;
+}
+a { color: rgb(var(--accent)); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: rgb(var(--accent2)); }
+
+/* ─── NAV ─── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(var(--surface-1) / .93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgb(var(--border));
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 54px;
+}
+.nav-logo { font-family: 'Lora', serif; font-size: .92rem; font-weight: 600; color: rgb(var(--accent)); text-decoration: none; }
+.nav-eyebrow { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgb(var(--muted)); }
+.nav-links { display: flex; gap: 1.4rem; list-style: none; }
+.nav-links a { color: rgb(var(--muted)); font-size: .7rem; font-weight: 600; text-decoration: none; letter-spacing: .07em; text-transform: uppercase; transition: color .15s; }
+.nav-links a:hover { color: rgb(var(--accent)); }
+@media (max-width: 720px) { .nav-links { display: none; } }
+
+/* ─── HERO ─── */
+.hero {
+  max-width: 860px; margin: 0 auto;
+  padding: 5.5rem 1.5rem 4rem;
+  text-align: center;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem;
+  border: 1px solid rgba(var(--accent) / .3);
+  background: rgba(var(--accent) / .06);
+  color: rgb(var(--accent));
+  font-size: .67rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  padding: .28rem .9rem; border-radius: 100px;
+  margin-bottom: 1.4rem;
+  animation: fadeUp .45s ease both;
+}
+.hero h1 {
+  font-family: 'Lora', serif;
+  font-size: clamp(2rem, 5.2vw, 3.4rem);
+  font-weight: 700; line-height: 1.14;
+  color: rgb(var(--text));
+  margin-bottom: 1.2rem;
+  animation: fadeUp .5s .07s ease both;
+}
+.hero h1 em { font-style: italic; color: rgb(var(--accent2)); }
+.hero-sub {
+  font-size: 1.05rem; color: rgb(var(--muted));
+  max-width: 620px; margin: 0 auto 2.2rem; line-height: 1.65;
+  animation: fadeUp .5s .14s ease both;
+}
+.hero-meta {
+  display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 0;
+  animation: fadeUp .5s .2s ease both;
+}
+.hero-meta-item { display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: rgb(var(--muted)); }
+.hero-meta-item strong { color: rgb(var(--text)); font-weight: 600; }
+.hero-rule { width: 44px; height: 3px; background: rgb(var(--accent)); border-radius: 2px; margin: 3rem auto 0; }
+
+/* ─── LAYOUT ─── */
+.wrapper { max-width: 820px; margin: 0 auto; padding: 0 1.5rem; }
+section { padding: 4rem 0; border-top: 1px solid rgb(var(--border)); }
+
+/* ─── TYPOGRAPHY ─── */
+.section-label { font-size: .67rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgb(var(--muted)); margin-bottom: .85rem; }
+h2 { font-family: 'Lora', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1.22; color: rgb(var(--text)); margin-bottom: 1.15rem; }
+h3 { font-family: 'Lora', serif; font-size: 1.17rem; font-weight: 600; color: rgb(var(--text)); margin: 2.2rem 0 .6rem; }
+h4 { font-size: .96rem; font-weight: 700; color: rgb(var(--text)); margin-bottom: .3rem; }
+p { color: rgb(var(--text)); margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+
+/* ─── STEP HEADER ─── */
+.step-header { display: flex; align-items: flex-start; gap: 1.2rem; margin-bottom: 1.4rem; }
+.step-num {
+  flex-shrink: 0; width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  background: rgb(var(--accent)); color: #fff;
+  font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: .15rem;
+}
+/* Platform-colored step nums */
+.step-num.gpt  { background: rgb(var(--success)); }
+.step-num.gem  { background: rgb(var(--mfa-rust)); }
+.step-header h2 { margin-bottom: 0; }
+
+/* ─── PLATFORM SPLIT ─── */
+/* Two-column platform comparison */
+.platform-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+  margin: 2rem 0;
+}
+@media (max-width: 620px) { .platform-split { grid-template-columns: 1fr; } }
+
+.platform-card {
+  background: rgb(var(--surface-1));
+  border: 1px solid rgb(var(--border));
+  border-top: 3px solid rgb(var(--border));
+  border-radius: 8px;
+  padding: 1.4rem;
+}
+.platform-card.gpt  { border-top-color: rgb(var(--success)); }
+.platform-card.gem  { border-top-color: rgb(var(--mfa-rust)); }
+
+.platform-label {
+  font-size: .63rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  margin-bottom: .5rem;
+}
+.platform-card.gpt .platform-label { color: rgb(var(--success)); }
+.platform-card.gem .platform-label { color: rgb(var(--mfa-rust)); }
+
+.platform-card h3 { margin: 0 0 .6rem; font-size: 1.05rem; }
+.platform-card p  { font-size: .87rem; color: rgb(var(--muted)); line-height: 1.6; margin: 0; }
+.platform-card ul { padding-left: 1.1rem; margin-top: .5rem; }
+.platform-card li { font-size: .87rem; color: rgb(var(--muted)); line-height: 1.65; margin-bottom: .2rem; }
+
+/* ─── SHORTCUT ROW ─── */
+.shortcut-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: .85rem;
+  margin: 1.6rem 0;
+}
+.shortcut-item {
+  background: rgb(var(--surface-1));
+  border: 1px solid rgb(var(--border));
+  border-radius: 7px;
+  padding: .95rem 1.1rem;
+}
+.shortcut-item.gpt { border-left: 3px solid rgb(var(--success)); }
+.shortcut-item.gem { border-left: 3px solid rgb(var(--mfa-rust)); }
+.shortcut-item.both { border-left: 3px solid rgb(var(--accent)); }
+
+.shortcut-name {
+  font-weight: 700; font-size: .88rem; color: rgb(var(--text));
+  margin-bottom: .2rem;
+  display: flex; align-items: center; gap: .4rem;
+}
+.shortcut-badge {
+  font-size: .58rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: .15rem .45rem; border-radius: 100px;
+}
+.badge-gpt  { background: rgba(var(--success)/.1); color: rgb(var(--success)); border: 1px solid rgba(var(--success)/.25); }
+.badge-gem  { background: rgba(var(--mfa-rust)/.09); color: rgb(var(--mfa-rust)); border: 1px solid rgba(var(--mfa-rust)/.22); }
+.badge-both { background: rgba(var(--accent)/.08); color: rgb(var(--accent)); border: 1px solid rgba(var(--accent)/.22); }
+.shortcut-desc { font-size: .82rem; color: rgb(var(--muted)); line-height: 1.55; }
+
+/* ─── WORKFLOW STEPS ─── */
+.workflow { display: flex; flex-direction: column; margin: 1.6rem 0; }
+.workflow-step { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid rgb(var(--border)); }
+.workflow-step:last-child { border-bottom: none; }
+.workflow-n {
+  flex-shrink: 0; width: 1.75rem; height: 1.75rem;
+  border-radius: 50%;
+  color: rgb(var(--accent)); font-size: .82rem; font-weight: 700;
+  border: 2px solid rgba(var(--accent)/.4);
+  display: flex; align-items: center; justify-content: center; margin-top: .15rem;
+}
+.workflow-n.gpt { color: rgb(var(--success)); border-color: rgba(var(--success)/.4); }
+.workflow-n.gem { color: rgb(var(--mfa-rust)); border-color: rgba(var(--mfa-rust)/.4); }
+.workflow-content h4 { margin-bottom: .18rem; }
+.workflow-content p { font-size: .87rem; color: rgb(var(--muted)); line-height: 1.55; margin: 0; }
+
+/* ─── CALLOUT ─── */
+.callout {
+  background: rgb(var(--surface-2));
+  border-left: 3px solid rgb(var(--accent));
+  border-radius: 0 7px 7px 0;
+  padding: 1.15rem 1.35rem; margin: 1.8rem 0;
+}
+.callout.warn   { border-left-color: rgb(var(--mfa-rust)); }
+.callout.success { border-left-color: rgb(var(--success)); }
+.callout.gold   { border-left-color: rgb(var(--mfa-gold)); }
+.callout.gpt    { border-left-color: rgb(var(--success)); }
+.callout.gem    { border-left-color: rgb(var(--mfa-rust)); }
+.callout-label {
+  font-size: .63rem; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: rgb(var(--accent)); margin-bottom: .42rem;
+}
+.callout.warn   .callout-label { color: rgb(var(--mfa-rust)); }
+.callout.success .callout-label, .callout.gpt .callout-label { color: rgb(var(--success)); }
+.callout.gold   .callout-label { color: rgb(var(--mfa-gold)); }
+.callout.gem    .callout-label { color: rgb(var(--mfa-rust)); }
+.callout p { font-size: .92rem; margin: 0; }
+.callout p + p { margin-top: .55rem; }
+
+/* ─── PROMPT BOX ─── */
+.prompt-box {
+  background: rgb(var(--surface-2));
+  border: 1px solid rgb(var(--border));
+  border-left: 3px solid #4A7A6A;
+  border-radius: 0 6px 6px 0;
+  padding: .95rem 1.1rem .95rem 2.1rem;
+  margin: 1.15rem 0; position: relative;
+}
+.prompt-box::before { content: '›'; position: absolute; top: .88rem; left: .8rem; color: #4A7A6A; font-size: 1.1rem; line-height: 1; }
+.prompt-box pre {
+  font-family: 'Source Code Pro', monospace; font-size: .8rem;
+  color: rgb(var(--text)); line-height: 1.65; margin: 0;
+  white-space: pre-wrap; overflow-x: auto;
+}
+
+/* ─── PULL QUOTE ─── */
+.pull-quote {
+  margin: 2.6rem 0; padding: 1.8rem 1.5rem;
+  background: rgb(var(--surface-2)); border-radius: 7px;
+  border-top: 2px solid rgb(var(--border)); border-bottom: 2px solid rgb(var(--border));
+  text-align: center;
+}
+.pull-quote blockquote {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: clamp(1.02rem, 2.2vw, 1.22rem); line-height: 1.62;
+  color: rgb(var(--text)); margin-bottom: .6rem;
+}
+.pull-quote cite { font-size: .77rem; color: rgb(var(--muted)); font-style: normal; }
+
+/* ─── COMPARISON TABLE ─── */
+.compare-table { width: 100%; border-collapse: collapse; margin: 1.8rem 0; font-size: .87rem; }
+.compare-table th {
+  padding: .7rem 1rem; text-align: left;
+  font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: rgb(var(--muted)); border-bottom: 1px solid rgb(var(--border));
+  background: rgb(var(--surface-2));
+}
+.compare-table th.gpt-col { color: rgb(var(--success)); }
+.compare-table th.gem-col { color: rgb(var(--mfa-rust)); }
+.compare-table td {
+  padding: .75rem 1rem; border-bottom: 1px solid rgb(var(--border));
+  color: rgb(var(--text)); vertical-align: top; line-height: 1.55;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { font-weight: 600; font-size: .84rem; color: rgb(var(--muted)); white-space: nowrap; }
+.compare-table tr:hover td { background: rgb(var(--surface-2)); }
+.check { color: rgb(var(--success)); font-weight: 700; }
+.cross { color: rgb(var(--mfa-rust)); }
+.partial { color: rgb(var(--mfa-gold)); }
+
+/* ─── RESOURCE GROUP ─── */
+.resource-group { margin: 1.5rem 0; }
+.resource-group-label {
+  font-size: .66rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  color: rgb(var(--muted)); margin-bottom: .6rem;
+  padding-bottom: .4rem; border-bottom: 1px solid rgb(var(--border));
+}
+.resource-link {
+  display: flex; align-items: baseline; gap: .6rem;
+  padding: .45rem 0; border-bottom: 1px solid rgb(var(--border)); font-size: .87rem;
+}
+.resource-link:last-child { border-bottom: none; }
+.resource-link-name { color: rgb(var(--text)); font-weight: 500; flex-shrink: 0; min-width: 210px; }
+.resource-link a { font-size: .8rem; color: rgb(var(--muted)); word-break: break-all; }
+
+/* ─── TAGS ─── */
+.tag {
+  display: inline-block;
+  background: rgba(var(--accent) / .07); border: 1px solid rgba(var(--accent) / .22);
+  color: rgb(var(--accent)); font-size: .67rem; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase;
+  padding: .2rem .65rem; border-radius: 100px; margin: .2rem .12rem;
+}
+.tag.gpt { background: rgba(var(--success)/.07); border-color: rgba(var(--success)/.28); color: rgb(var(--success)); }
+.tag.gem { background: rgba(var(--mfa-rust)/.07); border-color: rgba(var(--mfa-rust)/.28); color: rgb(var(--mfa-rust)); }
+
+/* ─── SECTION DIVIDER LABEL ─── */
+.platform-section-header {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 2.8rem 0 1.4rem;
+}
+.platform-section-header::before,
+.platform-section-header::after {
+  content: ''; flex: 1; height: 1px; background: rgb(var(--border));
+}
+.platform-section-pill {
+  flex-shrink: 0;
+  font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  padding: .3rem 1rem; border-radius: 100px;
+  white-space: nowrap;
+}
+.platform-section-pill.gpt { background: rgba(var(--success)/.1); color: rgb(var(--success)); border: 1px solid rgba(var(--success)/.3); }
+.platform-section-pill.gem { background: rgba(var(--mfa-rust)/.09); color: rgb(var(--mfa-rust)); border: 1px solid rgba(var(--mfa-rust)/.25); }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid rgb(var(--border));
+  padding: 2.4rem 1.5rem; text-align: center;
+  color: rgb(var(--muted)); font-size: .79rem;
+  background: rgb(var(--surface-2));
+}
+footer a { color: rgb(var(--muted)); }
+footer p + p { margin-top: .4rem; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div>
+    <div class="nav-eyebrow">AI Writers Retreat</div>
+    <a class="nav-logo" href="#">Canvas Mode for Writers</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#what-is">What Is Canvas</a></li>
+    <li><a href="#chatgpt">ChatGPT Canvas</a></li>
+    <li><a href="#gemini">Gemini Canvas</a></li>
+    <li><a href="#writing-workflows">Writing Workflows</a></li>
+    <li><a href="#compare">Compare</a></li>
+    <li><a href="#resources">Resources</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">AI Writers Retreat · Lesson Module</div>
+  <h1>Canvas Mode for<br/><em>Writers</em></h1>
+  <p class="hero-sub">Both ChatGPT and Gemini have a Canvas mode — a split-screen workspace where you can draft, revise, and refine directly inside the AI, without the copy-paste loop. This lesson shows writers exactly how to use both.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">🛠 <strong>Tools:</strong> ChatGPT Canvas &amp; Gemini Canvas</div>
+    <div class="hero-meta-item">🆓 <strong>Cost:</strong> Both free for all users</div>
+    <div class="hero-meta-item">💻 <strong>Platform:</strong> Web &amp; desktop (mobile limited)</div>
+  </div>
+  <div class="hero-rule"></div>
+</div>
+
+<!-- WHAT IS CANVAS -->
+<section id="what-is">
+  <div class="wrapper">
+    <div class="section-label">The Concept</div>
+    <h2>What is Canvas mode — and why do writers need it?</h2>
+
+    <p>The standard AI chat interface has a friction problem for writers: you prompt, you get a block of text, you copy it into your document, you spot a problem, you go back to chat to fix it, you copy again. The document you're building lives in a separate window from the AI helping you build it. That context gap adds up.</p>
+
+    <p>Canvas mode solves this by giving you a <strong>persistent, editable document pane sitting right next to the chat.</strong> You're not extracting outputs — you're working <em>inside</em> a shared artifact. Highlight a weak paragraph and ask for a rewrite. Use one-click shortcuts to adjust reading level. Accept or reject inline suggestions. Roll back to a previous version. Export directly to Google Docs or as a Word file. None of this requires leaving the interface.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Canvas introduces spatial reasoning into the workflow. Users can work on a document the way they would in Google Docs or VS Code, but with an AI collaborator that understands the full context of what's on screen."</blockquote>
+      <cite>— WebProNews, on Canvas as a shift in the AI interaction model</cite>
+    </div>
+
+    <div class="platform-split">
+      <div class="platform-card gpt">
+        <div class="platform-label">ChatGPT Canvas</div>
+        <h3>Chat left · Document right</h3>
+        <p>OpenAI's Canvas splits the screen into a conversation pane and an editor pane. Launched October 2024. Now free for all users. Available on web, Windows, and macOS.</p>
+      </div>
+      <div class="platform-card gem">
+        <div class="platform-label">Gemini Canvas</div>
+        <h3>Chat left · Canvas right</h3>
+        <p>Google's Canvas launched March 18, 2025. Free for all Gemini users. Available on web at gemini.google.com; mobile via the + icon. Auto-saves everything.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Same name, different tools</div>
+      <p>Both platforms independently arrived at the name "Canvas." The concepts are similar — split-screen AI collaboration on a document — but the shortcuts, editing controls, and export options work differently. This lesson covers both so you can use whichever fits your workflow, or switch between them deliberately.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHATGPT CANVAS -->
+<section id="chatgpt">
+  <div class="wrapper">
+    <div class="section-label">Platform One</div>
+    <div class="step-header">
+      <div class="step-num gpt">1</div>
+      <h2>ChatGPT Canvas — the full walkthrough</h2>
+    </div>
+
+    <h3>How to open it</h3>
+    <p>Per <a href="https://help.openai.com/en/articles/9930697-what-is-the-canvas-feature-in-chatgpt-and-how-do-i-use-it" target="_blank">OpenAI's official Canvas help page</a>, Canvas is available on the web app, Windows app, and macOS app. Three ways to open it:</p>
+
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="workflow-n gpt">A</div>
+        <div class="workflow-content">
+          <h4>Let it open automatically</h4>
+          <p>ChatGPT opens Canvas automatically when it detects a scenario that benefits from an editor — typically any output over 10 lines, or writing/drafting tasks it recognises as iterative work.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n gpt">B</div>
+        <div class="workflow-content">
+          <h4>Ask for it in your prompt</h4>
+          <p>Include "use canvas" anywhere in your prompt, or type a backslash <code>/</code> and select "canvas" from the command menu. You can also say "open a canvas" or "open a coding canvas" to start blank.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n gpt">C</div>
+        <div class="workflow-content">
+          <h4>Paste existing work into a blank canvas</h4>
+          <p>Click the <code>+</code> icon next to the input box and select Canvas to open a blank workspace, then paste in a draft you've already written. This is how you bring existing manuscripts into the Canvas workflow.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>The interface</h3>
+    <p>When Canvas opens, your screen splits into two panes. The <strong>Chat Pane (left)</strong> is your familiar ChatGPT conversation — type prompts, ask for revisions, see the history of your requests. The <strong>Editor Pane (right)</strong> holds your document. You can click directly into the text and type, just as you would in any word processor. Both panes stay in sync.</p>
+
+    <div style="background:rgb(var(--surface-1));border:1px solid rgb(var(--border));border-radius:9px;overflow:hidden;margin:1.6rem 0;box-shadow:0 3px 18px rgba(var(--text)/.07);">
+      <img src="https://i.postimg.cc/vmRjkgjs/Screenshot-2026-03-01-at-11-54-08-AM.png" style="width:100%;display:block;" alt="ChatGPT Canvas showing the split-screen layout: chat pane on the left, editable document on the right" />
+      <div style="padding:.58rem 1.1rem;font-size:.76rem;color:rgb(var(--muted));border-top:1px solid rgb(var(--border));font-style:italic;"><strong>ChatGPT Canvas:</strong> conversation on the left, editable document on the right. Click anywhere in the document to type directly, or use the chat pane to request changes.</div>
+    </div>
+
+    <h3>Writing shortcuts — the toolbar menu</h3>
+    <p>Hover over the shortcuts menu at the bottom-right of the editor. Per <a href="https://openai.com/index/introducing-canvas/" target="_blank">OpenAI's official Canvas announcement</a> and the <a href="https://help.openai.com/en/articles/9930697-what-is-the-canvas-feature-in-chatgpt-and-how-do-i-use-it" target="_blank">Help Center article</a>, writing shortcuts include:</p>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item gpt">
+        <div class="shortcut-name">Suggest edits <span class="shortcut-badge badge-gpt">ChatGPT</span></div>
+        <div class="shortcut-desc">ChatGPT adds inline comment bubbles with specific suggestions. Click the bubble to see the suggestion, then <strong>Apply</strong> to accept or dismiss it. Works like having a copy-editor in the margin.</div>
+      </div>
+      <div class="shortcut-item gpt">
+        <div class="shortcut-name">Adjust length <span class="shortcut-badge badge-gpt">ChatGPT</span></div>
+        <div class="shortcut-desc">A slider from Shortest to Longest. Drag and release — ChatGPT rewrites the document at the selected length. Apply to the whole doc or just a highlighted selection.</div>
+      </div>
+      <div class="shortcut-item gpt">
+        <div class="shortcut-name">Change reading level <span class="shortcut-badge badge-gpt">ChatGPT</span></div>
+        <div class="shortcut-desc">A slider from Kindergarten to Graduate School. Essential for writers calibrating voice for a specific audience — blog posts read very differently than literary essays.</div>
+      </div>
+      <div class="shortcut-item gpt">
+        <div class="shortcut-name">Add final polish <span class="shortcut-badge badge-gpt">ChatGPT</span></div>
+        <div class="shortcut-desc">One-click grammar, clarity, and consistency pass across the whole document. Good last step before exporting or sharing.</div>
+      </div>
+      <div class="shortcut-item gpt">
+        <div class="shortcut-name">Add emojis <span class="shortcut-badge badge-gpt">ChatGPT</span></div>
+        <div class="shortcut-desc">Adds contextually relevant emojis for emphasis and tone — most useful for social media copy, newsletters, or casual content. Skip for literary or formal work.</div>
+      </div>
+    </div>
+
+    <h3>Highlight-to-edit — the most powerful writing move</h3>
+    <p>Select any portion of text in the editor pane. A small input box appears. Type your instruction directly — "make this paragraph punchier," "cut this to two sentences," "rewrite for a sceptical reader," "give me three alternative versions of this opening line." ChatGPT edits only the highlighted section, leaving the rest of the document untouched. This scoped editing is what separates Canvas from standard chat: you're not regenerating the whole piece, you're doing surgery on the sentence that's not working.</p>
+
+    <div class="prompt-box">
+      <pre>Highlight a paragraph → type: "This is too passive. Rewrite it with a stronger, more direct voice — keep the same information but cut the hedging language."</pre>
+    </div>
+
+    <div class="prompt-box">
+      <pre>Highlight your opening line → type: "Give me five alternative opening lines. Keep the same stakes but vary the approach — try one question, one statement of fact, one sensory detail, one provocation, one confession."</pre>
+    </div>
+
+    <h3>Version history</h3>
+    <p>The top toolbar has back and forward arrows to navigate through every version of your document, plus a <strong>Show changes</strong> button that highlights additions and deletions — the same track-changes view you'd use in Google Docs or Word. This makes it safe to experiment: try a complete tone overhaul, see if you like it, and roll back to the previous version in one click if you don't.</p>
+
+    <h3>Exporting your work</h3>
+    <p>From the same top toolbar, export as <strong>PDF, Markdown (.md), or Word (.docx)</strong>. The Word export is particularly useful for writers who then take drafts into manuscript formatting workflows. Code projects export to the appropriate language file extension.</p>
+
+    <div class="callout gpt">
+      <div class="callout-label">ChatGPT Canvas — Formatting limits</div>
+      <p>Canvas supports basic markdown: bold, italic, H1/H2/H3 headers, bullet points, numbered lists. Per <a href="https://help.openai.com/en/articles/9930697-what-is-the-canvas-feature-in-chatgpt-and-how-do-i-use-it" target="_blank">OpenAI's Help Center</a>: "We don't currently offer more advanced formatting options in canvas." Tables, footnotes, and advanced layout are not available — for those, export to Word or Google Docs and finish there.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Mobile not yet available</div>
+      <p>Per OpenAI's Help Center, Canvas is currently available on Web, Windows, and macOS only. Mobile (iOS, Android) is listed as "coming soon." Use the web app on your phone's browser as a workaround, but full functionality is desktop-first for now.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GEMINI CANVAS -->
+<section id="gemini">
+  <div class="wrapper">
+    <div class="section-label">Platform Two</div>
+    <div class="step-header">
+      <div class="step-num gem">2</div>
+      <h2>Gemini Canvas — the full walkthrough</h2>
+    </div>
+
+    <h3>How to open it</h3>
+    <p>Per <a href="https://support.google.com/gemini/answer/16047321?hl=en" target="_blank">Google's official "Create docs, apps &amp; more with Canvas" help page</a> and the <a href="https://gemini.google/overview/canvas/" target="_blank">Gemini Canvas product page</a>:</p>
+
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="workflow-n gem">A</div>
+        <div class="workflow-content">
+          <h4>Click Canvas in the prompt bar (desktop)</h4>
+          <p>At gemini.google.com, click <strong>Canvas</strong> in the input bar below the text field, then type your prompt. Or go directly to <strong>gemini.google.com/canvas</strong> to land in Canvas immediately.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n gem">B</div>
+        <div class="workflow-content">
+          <h4>Tap + → Canvas (mobile)</h4>
+          <p>On mobile, tap the <code>+</code> icon and select Canvas. Note: editing text style and formatting is only fully available on the web app on desktop — mobile is view and basic-edit only.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-n gem">C</div>
+        <div class="workflow-content">
+          <h4>Upload a file as a starting point</h4>
+          <p>Click <strong>Add files</strong> with your prompt to upload a document or image. Gemini uses it as source material and opens a Canvas with the draft. Useful for workshopping existing manuscripts or rewriting research notes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout gem">
+      <div class="callout-label">Gemini Canvas — model modes</div>
+      <p>Canvas runs on <strong>Gemini 3</strong>. The model picker in the prompt bar lets you choose between three modes: <strong>Fast</strong> (answers quickly — good for most writing tasks), <strong>Thinking</strong> (solves complex problems — useful for structural rewrites or research-heavy drafts), and <strong>Pro</strong> (thinks longer, best for advanced tasks — available to paid subscribers). If Canvas isn't showing up, visit <a href="https://gemini.google.com/canvas" target="_blank">gemini.google.com/canvas</a> directly and click Try Canvas.</p>
+    </div>
+
+    <div style="background:rgb(var(--surface-1));border:1px solid rgb(var(--border));border-radius:9px;overflow:hidden;margin:1.6rem 0;box-shadow:0 3px 18px rgba(var(--text)/.07);">
+      <img src="https://i.postimg.cc/hGkSCt8B/Screenshot-2026-03-01-at-11-51-50-AM.png" style="width:100%;display:block;" alt="Gemini Canvas workspace: chat pane on the left, editable Canvas document on the right" />
+      <div style="padding:.58rem 1.1rem;font-size:.76rem;color:rgb(var(--muted));border-top:1px solid rgb(var(--border));font-style:italic;"><strong>Gemini Canvas:</strong> conversation on the left, editable Canvas document on the right. Use the toolbar for tone, length, and suggest-edits controls.</div>
+    </div>
+
+    <h3>Writing editing controls</h3>
+    <p>The Gemini Canvas editing controls are accessed from the Canvas panel toolbar on the right. Per <a href="https://support.google.com/gemini/answer/16047321?hl=en" target="_blank">Google's official help documentation</a>:</p>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item gem">
+        <div class="shortcut-name">Change tone <span class="shortcut-badge badge-gem">Gemini</span></div>
+        <div class="shortcut-desc">Opens a vertical scale from <strong>Very casual</strong> to <strong>Very formal</strong>. Click a point on the scale and Gemini rewrites the entire document — or just the selected section — at that tone register.</div>
+      </div>
+      <div class="shortcut-item gem">
+        <div class="shortcut-name">Change length <span class="shortcut-badge badge-gem">Gemini</span></div>
+        <div class="shortcut-desc">Click and select your desired length. Gemini compresses or expands the document, preserving key information while adjusting density.</div>
+      </div>
+      <div class="shortcut-item gem">
+        <div class="shortcut-name">Suggest edits <span class="shortcut-badge badge-gem">Gemini</span></div>
+        <div class="shortcut-desc">Triggers Gemini to scrutinise the document and post suggestions as <strong>notecards along the right side</strong>, with the relevant text highlighted. Click Apply on any notecard to accept it. Per Computerworld's hands-on: the card layout makes it very easy to scan and accept/reject selectively.</div>
+      </div>
+      <div class="shortcut-item both">
+        <div class="shortcut-name">Select &amp; ask <span class="shortcut-badge badge-both">Both</span></div>
+        <div class="shortcut-desc">Click <strong>Select &amp; ask</strong> at the bottom-right of the Canvas panel, highlight a section, then type your instruction. Gemini edits only the selection — same scoped surgery as ChatGPT's highlight-to-edit.</div>
+      </div>
+    </div>
+
+    <h3>Direct text editing</h3>
+    <p>Like ChatGPT Canvas, you can click directly into the Gemini Canvas and type. The toolbar at the top of the Canvas panel offers: <strong>bold, italic, bulleted lists, numbered lists.</strong> Gemini Canvas also supports <strong>LaTeX</strong> for mathematical notation — useful for academic or technical writers. All changes auto-save.</p>
+
+    <h3>Version history</h3>
+    <p>Use the <strong>Previous Version</strong> and <strong>Next Version</strong> buttons at the top of the Canvas panel to navigate your edit history. This is the same safe experimentation model as ChatGPT — try a complete rewrite of the opening, see if it works, step back if not.</p>
+
+    <h3>The Create button — Canvas's superpower for writers</h3>
+    <p>This is where Gemini Canvas diverges most interestingly from ChatGPT Canvas. Once you have a document, click <strong>Create</strong> at the top-right of the Canvas panel. A dropdown offers:</p>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item gem">
+        <div class="shortcut-name">Audio Overview <span class="shortcut-badge badge-gem">Gemini</span></div>
+        <div class="shortcut-desc">Transforms your Canvas document into a podcast-style discussion between two AI hosts — the same feature as NotebookLM's Audio Overview, now applied to your own writing draft.</div>
+      </div>
+      <div class="shortcut-item gem">
+        <div class="shortcut-name">Quiz <span class="shortcut-badge badge-gem">Gemini</span></div>
+        <div class="shortcut-desc">Generates an interactive quiz from your document's content. Useful for writers creating educational content, study materials, or testing reader comprehension of complex nonfiction.</div>
+      </div>
+      <div class="shortcut-item gem">
+        <div class="shortcut-name">Infographic <span class="shortcut-badge badge-gem">Gemini</span></div>
+        <div class="shortcut-desc">Converts key information from your document into a visual infographic — useful for newsletter writers, nonfiction authors creating accompanying visuals, or repurposing research.</div>
+      </div>
+      <div class="shortcut-item gem">
+        <div class="shortcut-name">Web page <span class="shortcut-badge badge-gem">Gemini</span></div>
+        <div class="shortcut-desc">Turns your Canvas document into a shareable web page with a g.co/gemini/share link. A fast way to publish a draft for feedback without needing any web infrastructure.</div>
+      </div>
+    </div>
+
+    <div class="callout gem">
+      <div class="callout-label">Deep Research → Canvas pipeline</div>
+      <p>Per <a href="https://gemini.google/overview/canvas/" target="_blank">Google's Canvas product page</a>: you can run a Deep Research report and then convert it into an interactive visual, quiz, web page, or audio overview — all inside Canvas. For nonfiction writers and journalists, this means your research and your draft can live in one uninterrupted workflow.</p>
+    </div>
+
+    <h3>Exporting and sharing</h3>
+    <p>From <a href="https://support.google.com/gemini/answer/16047321?hl=en" target="_blank">Google's help documentation</a>: export to <strong>Google Docs</strong> with one click. You can also copy the contents directly. Shareable public links are available for Canvas apps and web pages — though <strong>if you are signed in to a work or school account, link sharing is not available;</strong> copy the contents instead.</p>
+
+    <div style="background:rgb(var(--surface-1));border:1px solid rgb(var(--border));border-radius:9px;overflow:hidden;margin:1.6rem 0;box-shadow:0 3px 18px rgba(var(--text)/.07);">
+      <img src="https://i.postimg.cc/kXBp5v3c/Screenshot-2026-03-01-at-11-55-03-AM.png" style="width:100%;display:block;" alt="Gemini Canvas export menu showing the option to export to Google Docs" />
+      <div style="padding:.58rem 1.1rem;font-size:.76rem;color:rgb(var(--muted));border-top:1px solid rgb(var(--border));font-style:italic;"><strong>Exporting to Google Docs:</strong> one click sends your Canvas document straight into Google Docs for further editing, sharing, or manuscript formatting.</div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-label">⚠ Work/school account sharing restriction</div>
+      <p>If you use Gemini through a Google Workspace for Education or Business account, you cannot share public Canvas links. Copy the contents and paste into Google Docs to share with others.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING WORKFLOWS -->
+<section id="writing-workflows">
+  <div class="wrapper">
+    <div class="section-label">In Practice</div>
+    <h2>Writing workflows — what to actually do in Canvas</h2>
+    <p>Canvas is most useful when you're working on a piece iteratively — not when you need a quick answer, and not when you need multi-source research. Here's how to use it for the writing tasks writers actually face.</p>
+
+    <!-- ─── DRAFTING FROM SCRATCH ─── -->
+    <div class="platform-section-header">
+      <div class="platform-section-pill both" style="background:rgba(var(--accent)/.08);color:rgb(var(--accent));border:1px solid rgba(var(--accent)/.25);">Both Platforms</div>
+    </div>
+
+    <h3>Drafting from a prompt</h3>
+    <p>The simplest workflow: describe what you want to write and let Canvas generate a first draft. The key is being specific about your audience, length, tone, and purpose from the start — so you spend iteration time refining, not redirecting.</p>
+    <div class="prompt-box">
+      <pre>Write a 600-word personal essay about the first time I realised I was a writer. Audience: literary magazine readers. Tone: reflective, slightly wry. Open with a specific sensory detail, not a statement about writing. Use Canvas.</pre>
+    </div>
+    <div class="prompt-box">
+      <pre>Draft the opening chapter of a memoir set in rural New Zealand in the 1980s. Third-person limited POV. Protagonist is a 12-year-old girl who has just found her mother's diary. Establish place, mood, and the central dramatic question within 800 words. Use Canvas.</pre>
+    </div>
+
+    <!-- ─── REVISION ─── -->
+    <h3>Bringing an existing draft in for revision</h3>
+    <p>Paste your existing draft into a blank Canvas. Then use targeted prompts on highlighted sections rather than asking for a full rewrite — preserve the parts that are working and fix only what isn't.</p>
+    <div class="prompt-box">
+      <pre>[Paste draft] 
+This is a draft of a short story opening. Don't rewrite it — instead, suggest edits. Flag: (1) any place where the pacing slows unnecessarily, (2) any description that tells rather than shows, (3) any dialogue that sounds unnatural. Add comments inline.</pre>
+    </div>
+
+    <!-- ─── CHATGPT SPECIFIC ─── -->
+    <div class="platform-section-header">
+      <div class="platform-section-pill gpt">ChatGPT-Specific Workflows</div>
+    </div>
+
+    <h3>Reading level calibration</h3>
+    <p>One of ChatGPT Canvas's most underused features for writers is the reading-level slider. Use it deliberately: draft at your natural level, then dial it to match your actual audience. A blog post for general readers should sit around a 7th–9th grade level. A literary essay for an MFA journal can go higher. A children's picture book: much lower.</p>
+    <div class="prompt-box">
+      <pre>[After generating a draft]
+Use the reading level shortcut → drag to 8th grade.
+Then highlight the opening paragraph → ask: "Does this still sound like my voice at this reading level, or has it become generic? If it sounds generic, rewrite it to preserve my voice while staying at this level."</pre>
+    </div>
+
+    <h3>Version control as a drafting strategy</h3>
+    <p>Use Canvas's version history deliberately, not just as a safety net. Try committing to a direction (e.g., "rewrite the whole piece in second person") and reviewing the result before deciding whether to keep it or roll back. This is a much faster version of the "radical revision" technique writing teachers use — you can try it without fear because rolling back is one click.</p>
+
+    <!-- ─── GEMINI SPECIFIC ─── -->
+    <div class="platform-section-header">
+      <div class="platform-section-pill gem">Gemini-Specific Workflows</div>
+    </div>
+
+    <h3>Tone calibration with the tone scale</h3>
+    <p>Gemini's tone scale (Very casual ↔ Very formal) is more immediately usable than ChatGPT's reading level for writers thinking about register. Try this: draft something at the level you'd naturally write, then use the tone scale to generate both a more casual and a more formal version, and compare all three. Often the right answer is somewhere between your instinct and the extremes.</p>
+
+    <h3>Deep Research → Canvas → essay</h3>
+    <p>This pipeline is unique to Gemini. Run a Deep Research report on your topic (e.g., "the history of the unreliable narrator in 20th-century fiction"). Once the report is complete, click Create → Web page (or open it in Canvas). You now have structured research in a Canvas you can edit and transform into an essay draft — with the original research still accessible in the chat pane on the left.</p>
+    <div class="prompt-box">
+      <pre>[In Canvas, after Deep Research]
+I want to turn this research report into a 1,200-word personal essay. The angle: I am a fiction writer who uses unreliable narrators, and I want to understand the tradition I'm writing in. Change the tone to personal and reflective. Restructure around 3 key moments in the history rather than a chronological survey. Keep all the citations as footnotes.</pre>
+    </div>
+
+    <h3>Audio Overview of your draft for self-editing</h3>
+    <p>Once you have a draft in Gemini Canvas, click Create → Audio Overview. Two AI hosts will discuss your draft — summarising its argument, identifying its themes, drawing connections, and offering perspectives. Listening to this while doing something else (walking, cooking) is a surprisingly effective way to hear how your piece is landing. What the hosts miss, oversimplify, or over-explain is diagnostic information about where your writing is unclear.</p>
+
+    <!-- ─── BOTH AGAIN ─── -->
+    <div class="platform-section-header">
+      <div class="platform-section-pill both" style="background:rgba(var(--accent)/.08);color:rgb(var(--accent));border:1px solid rgba(var(--accent)/.25);">Both Platforms</div>
+    </div>
+
+    <h3>Workshop simulation — the 360-degree feedback prompt</h3>
+    <p>Works in both platforms. Paste your draft and ask Canvas to simulate multiple perspectives in a single pass:</p>
+    <div class="prompt-box">
+      <pre>[Paste draft into Canvas]
+Read this as three different readers and give me feedback from each perspective in clearly labelled sections:
+1) A first reader who knows nothing about me — does the piece stand alone?
+2) A sceptical editor — what would they cut, and why?
+3) A reader who is exactly my target audience — what lands, and what loses them?
+Don't rewrite anything. Comments only. Be specific and cite the line or paragraph you're referring to.</pre>
+    </div>
+
+    <h3>Series and newsletter writing</h3>
+    <p>Canvas keeps your full document in context for the whole session. For writers producing regular content — newsletters, blog series, essay collections — this means you can paste your "house style" notes at the top of the canvas along with your new draft, and ask the AI to flag anywhere the new piece departs from your established voice or structure.</p>
+    <div class="prompt-box">
+      <pre>[At top of Canvas document]
+HOUSE STYLE NOTES: My newsletter uses a 3-part structure: (1) open with a question I can't answer, (2) explore it through a personal story, (3) land on a principle that generalises beyond my experience. Sentences are short. No jargon. Paragraphs are 1–3 lines. I never use the word "journey."
+
+[Paste new draft below]
+
+Check this draft against the house style. Flag any departure. Don't fix — just flag with a brief explanation of why it's off.</pre>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-label">When to skip Canvas and use regular chat</div>
+      <p>Canvas is for iterative project work. Use regular chat when you need a quick factual answer, a research summary, or a one-off creative prompt you won't be revising. Canvas adds overhead that's not worth it for short tasks. For multi-source research, use Gemini's Deep Research or NotebookLM instead.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="compare">
+  <div class="wrapper">
+    <div class="section-label">Side by Side</div>
+    <h2>ChatGPT Canvas vs. Gemini Canvas — what writers need to know</h2>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th class="gpt-col">ChatGPT Canvas</th>
+          <th class="gem-col">Gemini Canvas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Free tier access</td>
+          <td><span class="check">✓</span> Free for all users</td>
+          <td><span class="check">✓</span> Free for all Gemini users</td>
+        </tr>
+        <tr>
+          <td>How to open</td>
+          <td>Auto-opens or say "use canvas" / <code>/canvas</code></td>
+          <td>Click Canvas in prompt bar; or go to gemini.google.com/canvas</td>
+        </tr>
+        <tr>
+          <td>Tone adjustment</td>
+          <td><span class="partial">~</span> Via prompt ("make this more formal")</td>
+          <td><span class="check">✓</span> Dedicated tone scale (Very casual → Very formal)</td>
+        </tr>
+        <tr>
+          <td>Reading level control</td>
+          <td><span class="check">✓</span> Slider: Kindergarten → Graduate School</td>
+          <td><span class="cross">–</span> Not a dedicated shortcut</td>
+        </tr>
+        <tr>
+          <td>Inline suggestions</td>
+          <td><span class="check">✓</span> Comment bubbles, accept/dismiss per suggestion</td>
+          <td><span class="check">✓</span> Notecards along the right margin, click Apply</td>
+        </tr>
+        <tr>
+          <td>Highlight-to-edit</td>
+          <td><span class="check">✓</span> Select text → inline prompt box</td>
+          <td><span class="check">✓</span> Select &amp; ask button at bottom-right</td>
+        </tr>
+        <tr>
+          <td>Version history</td>
+          <td><span class="check">✓</span> Arrow navigation + Show changes diff</td>
+          <td><span class="check">✓</span> Previous / Next version buttons</td>
+        </tr>
+        <tr>
+          <td>Auto-save</td>
+          <td><span class="partial">~</span> Saves within session</td>
+          <td><span class="check">✓</span> Always auto-saved</td>
+        </tr>
+        <tr>
+          <td>Export options</td>
+          <td>PDF, Markdown (.md), Word (.docx)</td>
+          <td>Export to Google Docs; copy contents; shareable link</td>
+        </tr>
+        <tr>
+          <td>Create from document</td>
+          <td><span class="cross">–</span> Not available</td>
+          <td><span class="check">✓</span> Audio Overview, Quiz, Infographic, Web page</td>
+        </tr>
+        <tr>
+          <td>Deep Research pipeline</td>
+          <td><span class="cross">–</span> Separate from Canvas</td>
+          <td><span class="check">✓</span> Deep Research → Canvas in one flow</td>
+        </tr>
+        <tr>
+          <td>LaTeX support</td>
+          <td><span class="cross">–</span> Not in Canvas</td>
+          <td><span class="check">✓</span> LaTeX rendering for academic/technical writers</td>
+        </tr>
+        <tr>
+          <td>Context window (paid)</td>
+          <td>Varies by plan / model</td>
+          <td>1M tokens (Gemini 3 Pro mode, paid subscribers) — full novels</td>
+        </tr>
+        <tr>
+          <td>Mobile availability</td>
+          <td><span class="cross">–</span> Coming soon (web, Windows, macOS only)</td>
+          <td><span class="partial">~</span> Available via + menu; full editing desktop-only</td>
+        </tr>
+        <tr>
+          <td>Google Workspace integration</td>
+          <td><span class="cross">–</span> Not native</td>
+          <td><span class="check">✓</span> One-click export to Google Docs</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout success">
+      <div class="callout-label">Practical Recommendation for Writers</div>
+      <p><strong>For calibrating voice and audience</strong> — ChatGPT Canvas's reading-level slider has no equivalent in Gemini and is worth learning. <strong>For writers already in Google Workspace</strong> — Gemini's one-click export to Docs and the Deep Research pipeline make it the more integrated choice. <strong>For nonfiction writers</strong> — Gemini's Create menu (Audio Overview, Infographic, Quiz) turns a finished draft into multiple formats without leaving the interface. <strong>Use both</strong> if you produce different kinds of writing — there's no cost to having both in your toolkit.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="wrapper">
+    <div class="section-label">Reference</div>
+    <h2>Official resources &amp; platform learning materials</h2>
+    <p>Everything below links to official documentation from OpenAI or Google — primary sources you can return to as these tools evolve.</p>
+
+    <div class="resource-group">
+      <div class="resource-group-label" style="color:rgb(var(--success));">ChatGPT Canvas — Official OpenAI Resources</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Introducing Canvas (OpenAI)</span>
+        <a href="https://openai.com/index/introducing-canvas/" target="_blank">openai.com/index/introducing-canvas</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Canvas Help Center article (OpenAI)</span>
+        <a href="https://help.openai.com/en/articles/9930697-what-is-the-canvas-feature-in-chatgpt-and-how-do-i-use-it" target="_blank">help.openai.com — What is the canvas feature in ChatGPT?</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">ChatGPT Release Notes (OpenAI)</span>
+        <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank">help.openai.com — ChatGPT Release Notes</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Open ChatGPT Canvas</span>
+        <a href="https://chatgpt.com" target="_blank">chatgpt.com</a>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <div class="resource-group-label" style="color:rgb(var(--mfa-rust));">Gemini Canvas — Official Google Resources</div>
+      <div class="resource-link">
+        <span class="resource-link-name">Gemini Canvas product page (Google)</span>
+        <a href="https://gemini.google/overview/canvas/" target="_blank">gemini.google/overview/canvas</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Create docs, apps &amp; more with Canvas (Google Help)</span>
+        <a href="https://support.google.com/gemini/answer/16047321?hl=en" target="_blank">support.google.com/gemini/answer/16047321</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">New Gemini features: Canvas and Audio Overview (Google Blog)</span>
+        <a href="https://blog.google/products-and-platforms/products/gemini/gemini-collaboration-features/" target="_blank">blog.google — Gemini Canvas &amp; Audio Overview announcement</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Try Canvas, a new way to collaborate (Google Workspace Updates)</span>
+        <a href="https://workspaceupdates.googleblog.com/2025/03/introducing-canvas-for-the-gemini-app.html" target="_blank">workspaceupdates.googleblog.com — March 2025</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Gemini App release notes (Google)</span>
+        <a href="https://gemini.google/release-notes/" target="_blank">gemini.google/release-notes</a>
+      </div>
+      <div class="resource-link">
+        <span class="resource-link-name">Open Gemini Canvas</span>
+        <a href="https://gemini.google.com/canvas" target="_blank">gemini.google.com/canvas</a>
+      </div>
+    </div>
+
+    <div class="pull-quote" style="margin-top:3rem;">
+      <blockquote>"Canvas isn't just another feature — it's a fundamental change in how we create with AI. Forget the copy-paste dance. It's time to collaborate."</blockquote>
+      <cite>The shift Canvas makes: from extracting outputs to working inside a shared document</cite>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>AI Writers Retreat · Lesson Module · March 2026</p>
+  <p>All features and documentation sourced from <a href="https://openai.com/index/introducing-canvas/" target="_blank">OpenAI</a> and <a href="https://support.google.com/gemini/answer/16047321" target="_blank">Google</a> official pages. Features evolve rapidly — check release notes for updates.</p>
+</footer>
+
+</body>
+</html>
