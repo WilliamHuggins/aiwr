@@ -7,8 +7,8 @@ const ui = Inter({ subsets: ["latin"], variable: "--font-ui" });
 const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif" });
 
 export const metadata: Metadata = {
-  title: "AIWR Writer's Circle",
-  description: "A moderated, members-only writing community.",
+  title: "AI Writers' Retreat",
+  description: "The writer's studio for the AI era.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
