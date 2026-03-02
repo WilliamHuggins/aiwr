@@ -139,7 +139,7 @@ export const week35Data: WeekData = {
               author: "Your choice",
               href: "",
               note: "This week's reading time is spent revisiting rather than encountering. Choose three texts from the year's reading that produced the strongest response — that you have thought about since reading, that have changed how you think about your own work, that keep coming back to you. Reread them now with the portfolio review in mind: what is it about these three texts that speaks to what your own work is becoming? What do they do formally or thematically that you find yourself reaching toward? The rereading is a form of triangulation: the texts you keep returning to are telling you something about the writer you are becoming.",
-              badge: "Free",
+              badge: "Free Online",
             },
             {
               number: "02",
@@ -147,7 +147,7 @@ export const week35Data: WeekData = {
               author: "You",
               href: "",
               note: "Read the full year's output in one sitting if possible — all thirty-five weeks of exercises, journal entries, and portfolio pieces. Read it the way you would read someone else's work: with attention, with a pencil, marking what surprises you, what seems most fully inhabited, what recurs. Do not edit while you read. The read-through is a diagnostic, not a revision session. What you notice in this reading is the primary material for the portfolio curation exercise and the artist's statement.",
-              badge: "Free",
+              badge: "Free Online",
             },
           ],
         },
