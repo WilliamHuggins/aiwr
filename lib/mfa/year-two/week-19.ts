@@ -147,7 +147,7 @@ export const week19Data: WeekData = {
               author: "Your choice",
               href: "",
               note: "Required — return reading. Choose a text already on the program's reading list that is formally closest to your thesis project — the text whose structure, voice, or relationship between form and material most resembles what you are trying to do. Reread it with fresh eyes, now that you have eighteen sessions of your own draft to compare it to. What is it doing at book length that you are not yet doing? What has the fall draft learned from it already? What remains to be learned? Read with the session log open: the specific observations made during this return reading belong in the log as a record of what the model text is teaching now, as opposed to what it taught when you first read it.",
-              badge: "Required — Return Reading",
+              badge: "Required",
             },
           ],
         },
