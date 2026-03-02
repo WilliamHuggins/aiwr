@@ -2,7 +2,8 @@ import Link from "next/link";
 
 const semesterOneWeeks = Array.from({ length: 18 }, (_, index) => index + 1);
 const semesterTwoWeeks = Array.from({ length: 18 }, (_, index) => index + 19);
-const yearTwoWeeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+const yearTwoSemesterOneWeeks = Array.from({ length: 18 }, (_, index) => index + 1);
+const yearTwoSemesterTwoWeeks = [19];
 
 export default function DiyMfaHome() {
   return (
@@ -39,13 +40,25 @@ export default function DiyMfaHome() {
       <div className="mt-10 text-left">
         <h3 className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Semester One</h3>
         <div className="mt-4 flex flex-wrap gap-4">
-          {yearTwoWeeks.map((weekNumber) => (
+          {yearTwoSemesterOneWeeks.map((weekNumber) => (
             <Link key={weekNumber} href={`/diy-mfa/year-two/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
               Enter Week {weekNumber}
             </Link>
           ))}
         </div>
       </div>
+
+      <div className="mt-10 text-left">
+        <h3 className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Semester Two</h3>
+        <div className="mt-4 flex flex-wrap gap-4">
+          {yearTwoSemesterTwoWeeks.map((weekNumber) => (
+            <Link key={weekNumber} href={`/diy-mfa/year-two/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
+              Enter Week {weekNumber}
+            </Link>
+          ))}
+        </div>
+      </div>
+
     </section>
   );
 }
