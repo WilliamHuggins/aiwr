@@ -3,13 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebaseClient";
 import { useAuth } from "@/components/AuthProvider";
 import { TERMS_VERSION } from "@/lib/constants";
 
 export default function TermsPage() {
   const [checked, setChecked] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
   const router = useRouter();
 
@@ -45,16 +46,22 @@ export default function TermsPage() {
           className="mt-4 rounded-xl bg-primary px-5 py-3 text-primaryText disabled:opacity-50"
           onClick={async () => {
             if (!user) return;
-            await updateDoc(doc(db, "users", user.uid), {
-              acceptedTermsAt: serverTimestamp(),
-              acceptedTermsVersion: TERMS_VERSION,
-            });
-            const next = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("next") : null;
-            router.push(next || "/writers-circle/app");
+            setError(null);
+            try {
+              await setDoc(doc(db, "users", user.uid), {
+                acceptedTermsAt: serverTimestamp(),
+                acceptedTermsVersion: TERMS_VERSION,
+              }, { merge: true });
+              const next = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("next") : null;
+              router.push(next || "/writers-circle/app");
+            } catch (err) {
+              setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+            }
           }}
         >
           Agree and Continue
         </button>
+        {error && <p className="mt-4 rounded-lg border border-rose-300 bg-rose-50 p-2 text-sm text-rose-800">{error}</p>}
         <p className="mt-6 text-sm text-muted"><Link href="/">Back to home</Link></p>
       </div>
     </div>
