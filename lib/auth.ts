@@ -3,9 +3,15 @@ import {
   sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
+  type ActionCodeSettings,
 } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db, firebaseConfigError, isFirebaseConfigured } from "@/lib/firebaseClient";
+
+export function getVerificationSettings(): ActionCodeSettings {
+  const base = typeof window !== "undefined" ? window.location.origin : "https://aiwritersretreat.com";
+  return { url: `${base}/writers-circle/app`, handleCodeInApp: false };
+}
 
 function getClientAuth() {
   if (!isFirebaseConfigured) {
@@ -20,7 +26,7 @@ function getClientAuth() {
 export async function signup(email: string, password: string, displayName: string) {
   const clientAuth = getClientAuth();
   const credential = await createUserWithEmailAndPassword(clientAuth, email, password);
-  await sendEmailVerification(credential.user);
+  await sendEmailVerification(credential.user, getVerificationSettings());
 
   try {
     await setDoc(
@@ -36,6 +42,9 @@ export async function signup(email: string, password: string, displayName: strin
         goals: "",
         role: "USER",
         emailVerified: credential.user.emailVerified,
+        showEmail: false,
+        location: "",
+        showLocation: false,
         acceptedTermsAt: null,
         acceptedTermsVersion: null,
         createdAt: serverTimestamp(),

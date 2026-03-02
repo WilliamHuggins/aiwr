@@ -22,6 +22,9 @@ export interface UserProfile {
   goals: string;
   role: UserRole;
   emailVerified: boolean;
+  showEmail: boolean;
+  location: string;
+  showLocation: boolean;
   acceptedTermsAt: unknown | null;
   acceptedTermsVersion: string | null;
   createdAt?: unknown;
@@ -36,6 +39,7 @@ export interface Post {
   authorAvatarUrl: string;
   title?: string;
   body: string;
+  tags: string[];
   status: PostStatus;
   moderation: {
     reviewedBy: string | null;

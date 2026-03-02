@@ -12,10 +12,15 @@ export default function CommentComposer({ postId }: { postId: string }) {
   if (!user || !profile) return null;
 
   return (
-    <div className="rounded-xl border border-border bg-panel p-4">
-      <textarea value={body} onChange={(e) => setBody(e.target.value)} className="min-h-24 w-full rounded-xl border border-border bg-bg p-3" placeholder="Offer constructive feedback..." />
+    <div className="directory-card p-4">
+      <textarea
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+        className="min-h-24 w-full rounded-md border border-border bg-bg p-3 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+        placeholder="Offer constructive feedback..."
+      />
       <button
-        className="mt-3 rounded-xl bg-primary px-4 py-2 text-primaryText"
+        className="mt-3 rounded-md bg-accent px-4 py-2 text-sm font-medium text-bg transition-colors hover:bg-accent/90"
         onClick={async () => {
           await addDoc(collection(db, "posts", postId, "comments"), {
             authorId: user.uid,

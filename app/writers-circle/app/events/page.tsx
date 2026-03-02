@@ -14,7 +14,8 @@ export default function EventsPage() {
 
   return (
     <section className="space-y-4">
-      <h1 className="font-serif text-3xl">Events</h1>
+      <h1 className="font-display text-3xl font-semibold">Events</h1>
+      {events.length === 0 && <p className="py-8 text-center text-sm text-muted">No upcoming events yet.</p>}
       {events.map((event) => <EventCard key={event.id} event={event} />)}
     </section>
   );
