@@ -14,6 +14,10 @@
     --accent2: 176 174 165;
     --success: 176 174 165;
 
+    --panel: 255 253 248;
+    --primary: 217 119 87;
+    --primaryText: 250 249 245;
+
     --selection-bg: 217 119 87;
     --selection-text: 250 249 245;
 
@@ -36,6 +40,10 @@
     --accent: 217 119 87;
     --accent2: 176 174 165;
     --success: 176 174 165;
+
+    --panel: 30 30 28;
+    --primary: 217 119 87;
+    --primaryText: 20 20 19;
 
     --selection-bg: 217 119 87;
     --selection-text: 250 249 245;

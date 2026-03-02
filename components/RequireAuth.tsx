@@ -15,6 +15,6 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
     }
   }, [loading, user, router, pathname]);
 
-  if (loading || !user) return <div className="p-8 text-center text-muted">Loading your circle...</div>;
+  if (loading || !user) return <div className="py-16 text-center text-sm text-muted">Loading your circle...</div>;
   return <>{children}</>;
 }

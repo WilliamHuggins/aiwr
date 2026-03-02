@@ -32,14 +32,16 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-16">
-      <form onSubmit={onSubmit} className="rounded-2xl border border-border bg-panel p-6">
-        <h1 className="font-serif text-3xl">Welcome back</h1>
+      <form onSubmit={onSubmit} className="rounded-2xl border border-border bg-surface-1 p-6 shadow-editorial">
+        <h1 className="font-display text-3xl">Welcome back</h1>
+        <p className="mt-1 text-sm text-muted">Sign in to the Writer&apos;s Circle</p>
         {firebaseConfigError && <p className="mt-3 rounded-lg border border-rose-300 bg-rose-50 p-2 text-sm text-rose-800">{firebaseConfigError}</p>}
-        <input className="mt-4 w-full rounded-xl border border-border bg-bg p-3" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input className="mt-3 w-full rounded-xl border border-border bg-bg p-3" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <input className="mt-4 w-full rounded-md border border-border bg-bg p-3 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input className="mt-3 w-full rounded-md border border-border bg-bg p-3 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         {error && <p className="mt-2 text-sm text-rose-700">{error}</p>}
-        <button disabled={submitting} className="mt-4 w-full rounded-xl bg-primary py-3 text-primaryText disabled:cursor-not-allowed disabled:opacity-60">{submitting ? "Signing in..." : "Log in"}</button>
+        <button disabled={submitting} className="mt-4 w-full rounded-md bg-accent py-3 text-sm font-medium text-bg transition-colors hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-60">{submitting ? "Signing in..." : "Log in"}</button>
         <p className="mt-4 text-sm text-muted">Need an account? <Link href="/writers-circle/signup">Sign up</Link></p>
+        <p className="mt-2 text-sm text-muted"><Link href="/">Back to AI Writers&apos; Retreat home</Link></p>
       </form>
     </div>
   );

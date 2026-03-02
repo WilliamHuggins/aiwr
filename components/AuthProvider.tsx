@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { onAuthStateChanged, sendEmailVerification, User } from "firebase/auth";
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebaseClient";
+import { getVerificationSettings } from "@/lib/auth";
 import type { UserProfile } from "@/lib/types";
 
 type AuthContextValue = {
@@ -54,6 +55,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             goals: "",
             role: "USER",
             emailVerified: currentUser.emailVerified,
+            showEmail: false,
+            location: "",
+            showLocation: false,
             acceptedTermsAt: null,
             acceptedTermsVersion: null,
             createdAt: serverTimestamp(),
@@ -86,7 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       loading,
       isAdminOrMod: profile?.role === "ADMIN" || profile?.role === "MOD",
       resendVerification: async () => {
-        if (user) await sendEmailVerification(user);
+        if (user) await sendEmailVerification(user, getVerificationSettings());
       },
       refreshStatus: async () => {
         if (!user) return;

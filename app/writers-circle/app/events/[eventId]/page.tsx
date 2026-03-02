@@ -19,7 +19,7 @@ export default function EventDetailPage() {
     });
   }, [eventId]);
 
-  if (!event) return <p>Loading event...</p>;
+  if (!event) return <p className="py-8 text-center text-sm text-muted">Loading event...</p>;
 
   async function rsvp(status: RsvpStatus) {
     if (!user) return;
@@ -31,14 +31,14 @@ export default function EventDetailPage() {
   }
 
   return (
-    <section className="rounded-2xl border border-border bg-panel p-6">
-      <h1 className="font-serif text-3xl">{event.title}</h1>
+    <section className="directory-card p-6">
+      <h1 className="font-display text-3xl font-semibold">{event.title}</h1>
       <p className="mt-3 text-muted">{event.description}</p>
       <RequireVerifiedAndAccepted>
         <div className="mt-6 flex gap-2">
-          <button className="rounded-xl bg-primary px-4 py-2 text-primaryText" onClick={() => rsvp("GOING")}>Going</button>
-          <button className="rounded-xl border border-border px-4 py-2" onClick={() => rsvp("INTERESTED")}>Interested</button>
-          <button className="rounded-xl border border-border px-4 py-2" onClick={() => rsvp("NOT_GOING")}>Not going</button>
+          <button className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-bg transition-colors hover:bg-accent/90" onClick={() => rsvp("GOING")}>Going</button>
+          <button className="rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-surface-2" onClick={() => rsvp("INTERESTED")}>Interested</button>
+          <button className="rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-surface-2" onClick={() => rsvp("NOT_GOING")}>Not going</button>
         </div>
       </RequireVerifiedAndAccepted>
     </section>

@@ -10,7 +10,7 @@ export default function AvatarUpload() {
   if (!user) return null;
 
   return (
-    <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-border px-3 py-2 text-sm">
+    <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-border px-3 py-2 text-sm transition-colors hover:bg-surface-2">
       Upload avatar
       <input
         type="file"
