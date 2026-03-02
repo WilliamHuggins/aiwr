@@ -152,7 +152,7 @@ export const week17Data: WeekData = {
               author: "Various",
               href: "https://www.chronicle.com",
               note: "Free online (some paywalled) or library. Read current articles on the academic job market for creative writing positions — specifically the MFA job market as it currently exists, not as it existed a decade ago. The market has contracted significantly since 2008 and contracted further since 2020; the writer who enters the job market with accurate information about what is available and what is required makes better preparation decisions than the writer who operates on outdated assumptions. The Chronicle's 'Vitae' section and Poets & Writers' academic market coverage are both useful.",
-              badge: "Free Online / Library",
+              badge: "Free Online",
             },
             {
               number: "03",
