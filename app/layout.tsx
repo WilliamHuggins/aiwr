@@ -1,20 +1,39 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import { Inter, Playfair_Display, Source_Serif_4 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import "@/styles/globals.css";
+import "./globals.css";
 
-const ui = Inter({ subsets: ["latin"], variable: "--font-ui" });
-const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif" });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-ui",
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
-  title: "AIWR Writer's Circle",
-  description: "A moderated, members-only writing community.",
+  title: "AI Writers' Retreat",
+  description: "Master the Craft. Command the Code.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${ui.variable} ${serif.variable} bg-bg text-text`}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`min-h-screen bg-bg text-text font-body transition-colors duration-300 ${inter.variable} ${sourceSerif.variable} ${playfair.variable}`}
+      >
         {children}
         <Analytics />
       </body>
