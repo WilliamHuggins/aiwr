@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading AI Feedback Like a Writer | AI & The Craft</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '«';
+    position: absolute;
+    font-size: 480px;
+    color: rgba(0,0,0,0.025);
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--faded);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .post-date {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--faded);
+    margin-top: 16px;
+    display: block;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: 'C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: 'D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    background: var(--parchment);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--rust);
+  }
+
+  /* ── Signal / Noise sorter ── */
+  .sorter {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    background: white;
+  }
+
+  .sorter-top {
+    padding: 24px 28px 20px;
+    border-bottom: 2px solid var(--ink);
+    background: var(--parchment);
+  }
+
+  .demo-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 12px;
+  }
+
+  .sorter-response {
+    font-size: 17px;
+    line-height: 1.85;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .sorter-response .highlight-signal {
+    background: rgba(90, 122, 74, 0.15);
+    border-bottom: 2px solid #5a7a4a;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+
+  .sorter-response .highlight-noise {
+    background: rgba(192, 57, 43, 0.1);
+    border-bottom: 2px dashed var(--rust);
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+
+  .sorter-response .highlight-signal:hover { background: rgba(90, 122, 74, 0.28); }
+  .sorter-response .highlight-noise:hover { background: rgba(192, 57, 43, 0.2); }
+
+  .sorter-bottom {
+    padding: 20px 28px;
+  }
+
+  .sorter-legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+  }
+
+  .legend-swatch {
+    width: 24px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  .swatch-signal { background: rgba(90, 122, 74, 0.3); border-bottom: 2px solid #5a7a4a; }
+  .swatch-noise { background: rgba(192, 57, 43, 0.15); border-bottom: 2px dashed var(--rust); }
+
+  .sorter-annotation {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+    background: var(--parchment);
+    padding: 14px 18px;
+    border-left: 3px solid var(--gold);
+    min-height: 52px;
+    transition: opacity 0.2s;
+  }
+
+  /* ── The four moves ── */
+  .moves {
+    margin: 2.5em 0;
+  }
+
+  .move-card {
+    border: 2px solid var(--ink);
+    margin-bottom: -2px;
+    position: relative;
+  }
+
+  .move-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .move-header:hover { background: rgba(0,0,0,0.02); }
+  .move-card.open .move-header { background: var(--ink); color: var(--parchment); }
+
+  .move-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 900;
+    background: var(--rust);
+    color: white;
+    padding: 20px 16px;
+    min-width: 52px;
+    text-align: center;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .move-card.open .move-num { background: var(--gold); }
+
+  .move-label-wrap {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .move-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 5px;
+  }
+
+  .move-card.open .move-tag { color: var(--gold); }
+
+  .move-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .move-toggle {
+    font-size: 22px;
+    font-family: 'Courier Prime', monospace;
+    color: var(--faded);
+    padding: 20px;
+    transition: transform 0.2s;
+  }
+
+  .move-card.open .move-toggle { transform: rotate(45deg); color: var(--gold); }
+
+  .move-body {
+    display: none;
+    padding: 28px 28px 32px 72px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    background: white;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .move-card.open .move-body { display: block; }
+
+  .move-example {
+    margin-top: 18px;
+    background: var(--parchment);
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+  }
+
+  .move-example-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 8px;
+  }
+
+  .copy-btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 2px solid var(--ink);
+    background: var(--parchment);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .copy-btn:hover { background: var(--ink); color: var(--parchment); }
+  .copy-btn.copied { background: var(--gold); border-color: var(--gold); color: white; }
+
+  /* ── Lens switcher ── */
+  .lens-demo {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .lens-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .lens-tab {
+    padding: 12px 8px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    background: var(--parchment);
+    border: none;
+    border-right: 1px solid var(--ink);
+    color: var(--faded);
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+
+  .lens-tab:last-child { border-right: none; }
+  .lens-tab.active { background: var(--ink); color: var(--gold); }
+  .lens-tab:hover:not(.active) { background: rgba(0,0,0,0.04); }
+
+  .lens-panel { display: none; padding: 28px 32px; background: white; }
+  .lens-panel.active { display: block; }
+
+  .lens-prompt {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    background: var(--parchment);
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+  }
+
+  .lens-response {
+    font-size: 16px;
+    line-height: 1.8;
+    font-style: italic;
+    border-left: 4px solid #5a7a4a;
+    background: #f0f4f0;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+
+  .lens-takeaway {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--faded);
+    padding: 10px 0 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .lens-takeaway strong {
+    color: var(--rust);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 10px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ── Compare grid ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 2em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .compare-col { padding: 24px; }
+
+  .compare-col:first-child {
+    border-right: 2px solid var(--ink);
+    background: var(--parchment);
+  }
+
+  .compare-col:last-child { background: var(--ink); color: var(--parchment); }
+
+  .compare-col h4 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--gold);
+  }
+
+  .compare-col p { font-size: 16px; line-height: 1.7; margin-bottom: 0; }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+
+  a { color: var(--rust); text-decoration: underline; }
+  a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .pull-quote { margin: 2.5em 0; }
+    .move-body { padding-left: 24px; }
+    .lens-tabs { grid-template-columns: repeat(2, 1fr); }
+    .lens-tab:nth-child(2) { border-right: none; }
+    .lens-tab:nth-child(1), .lens-tab:nth-child(2) { border-bottom: 1px solid var(--ink); }
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+    .sorter-legend { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI & The Craft &nbsp;·&nbsp; Revision in Practice</div>
+
+<div class="hero">
+  <span class="issue-tag">AI & The Craft</span>
+  <h1>Reading AI Feedback<br>Like a <em>Writer.</em></h1>
+  <p class="deck">An AI response is not a verdict. It is raw material. What you do in the thirty seconds after you read it determines whether revision gets sharper or just gets longer.</p>
+  <span class="byline">How to Sort Signal from Noise & Push Back Well</span>
+  <span class="post-date">March 2, 2026</span>
+</div>
+
+<div class="article-wrapper">
+
+  <p class="drop-cap">The feedback arrives and it is — fine. Coherent. Detailed, even. It names things in the draft. It suggests directions. It uses phrases like "the pacing slows here" and "consider deepening the emotional stakes" and "this transition could be smoother." You read it. You nod, maybe. You feel, briefly, like something has happened. And then you close the tab and go back to the draft and nothing has changed, because you didn't know what to do with what you read.</p>
+
+  <p>This is the most common failure mode in AI-assisted revision — not bad feedback, but unused feedback. The writer asks, the AI responds, and the response gets absorbed into a vague sense that the draft needs more work without producing a single concrete decision about what the work actually is.</p>
+
+  <p>Reading AI feedback is a skill. It has moves. It has a discipline. And it requires something most writers don't think to bring to the process: active skepticism, a willingness to push back, and the habit of running the same passage through more than one lens before deciding what to do.</p>
+
+  <p>This is what that looks like in practice.</p>
+
+  <div class="pull-quote">
+    The feedback is not the revision. It is the material you sort before the revision begins.
+  </div>
+
+  <h2>Signal and Noise</h2>
+
+  <p>Every AI response contains both. Signal is the observation that is specific, grounded in the text, and actionable — the kind of note that makes you look back at the draft and see something you couldn't see before. Noise is everything else: the generic, the hedged, the observations that could apply to any draft by any writer on any subject.</p>
+
+  <p>The trouble is that signal and noise arrive in the same confident tone. The AI does not flag its own hedging. A specific, precise observation and a vague platitude about emotional stakes will be delivered with identical fluency. The writer has to do the sorting.</p>
+
+  <div class="sorter">
+    <div class="sorter-top">
+      <div class="demo-label">Signal vs. Noise — Click any highlighted phrase to identify it</div>
+      <div class="sorter-response" id="sorter-text">
+        "This is a compelling scene with strong atmospheric detail. <span class="highlight-signal" onclick="annotate('s1')">The moment where she touches the counter rather than answering him is doing more work than any of the dialogue — it carries the scene's real argument.</span> <span class="highlight-noise" onclick="annotate('n1')">You might consider deepening the emotional stakes for the protagonist to help readers connect more fully with her experience.</span> <span class="highlight-signal" onclick="annotate('s2')">The father's silence after 'I can't maintain it alone' is the scene's pivot — but it currently lasts only one beat before Maya fills it. That silence wants more room.</span> <span class="highlight-noise" onclick="annotate('n2')">The pacing in the middle section could be tightened to maintain reader engagement throughout.</span> <span class="highlight-signal" onclick="annotate('s3')">The word 'faintly' in 'faintly embarrassing' belongs to Maya's interiority in a way none of her dialogue does — it's the only moment we're genuinely inside her.</span>"
+      </div>
+    </div>
+    <div class="sorter-bottom">
+      <div class="sorter-legend">
+        <div class="legend-item"><div class="legend-swatch swatch-signal"></div>Signal — specific, grounded</div>
+        <div class="legend-item"><div class="legend-swatch swatch-noise"></div>Noise — generic, unactionable</div>
+      </div>
+      <div class="sorter-annotation" id="sorter-annotation">Click a highlighted phrase to see what makes it signal or noise.</div>
+    </div>
+  </div>
+
+  <p>The test for signal is simple: <strong>can you find the exact line in the draft that prompted this observation?</strong> If yes, it's signal — the AI is reading your specific text. If the note could have been written without reading your draft at all, it's noise. Discard it without guilt.</p>
+
+  <h2>The Four Moves</h2>
+
+  <p>Once you've sorted the response, you have work to do. Signal doesn't automatically become revision — it becomes a set of decisions. These four moves turn a pile of observations into a clear direction.</p>
+
+  <div class="moves">
+
+    <div class="move-card" id="mv0">
+      <div class="move-header" onclick="toggleMove(0)">
+        <div class="move-num">1</div>
+        <div class="move-label-wrap">
+          <div class="move-tag">When the note surprises you</div>
+          <div class="move-title">Ask It to Show Its Work</div>
+        </div>
+        <div class="move-toggle">+</div>
+      </div>
+      <div class="move-body">
+        When a piece of feedback is surprising — or when you're not sure whether to trust it — don't accept or reject it yet. Ask the AI to show you the evidence. Where exactly in the text did this observation come from? What word, what sentence, what structural pattern led to this conclusion? An observation that can be grounded in specific evidence is worth taking seriously. One that can't be grounded is noise in disguise.
+        <div class="move-example-label" style="margin-top:18px;">The move in practice</div>
+        <div class="move-example" id="mv0-ex">"You said the pacing slows in the middle section. Show me the specific sentences where you felt that — quote them. I want to understand exactly where the slowdown is registering before I decide whether to address it."</div>
+        <button class="copy-btn" onclick="copyMove('mv0-ex')">Copy</button>
+      </div>
+    </div>
+
+    <div class="move-card" id="mv1">
+      <div class="move-header" onclick="toggleMove(1)">
+        <div class="move-num">2</div>
+        <div class="move-label-wrap">
+          <div class="move-tag">When the note is wrong — or is it?</div>
+          <div class="move-title">Push Back With the Intention</div>
+        </div>
+        <div class="move-toggle">+</div>
+      </div>
+      <div class="move-body">
+        When a note lands wrong — when the AI has flagged something you believe is working — don't just dismiss it. Push back with the intention behind the choice. Tell the AI what you were trying to do with the sentence or scene it questioned, and ask whether that intention is landing. This isn't defending the draft. It's testing whether the choice is succeeding on its own terms. Sometimes the pushback confirms you were right. Sometimes it reveals the note was right for the wrong reason.
+        <div class="move-example-label" style="margin-top:18px;">The move in practice</div>
+        <div class="move-example" id="mv1-ex">"You flagged the repetition of 'I know' as weakening the scene. My intention was that the repetition enacts Maya's self-management — each 'I know' is her talking herself into acceptance before she's ready. Is that intention legible in the scene, or is the repetition reading as a mistake rather than a device?"</div>
+        <button class="copy-btn" onclick="copyMove('mv1-ex')">Copy</button>
+      </div>
+    </div>
+
+    <div class="move-card" id="mv2">
+      <div class="move-header" onclick="toggleMove(2)">
+        <div class="move-num">3</div>
+        <div class="move-label-wrap">
+          <div class="move-tag">When you agree but don't know what to do</div>
+          <div class="move-title">Ask for the Diagnosis, Not the Prescription</div>
+        </div>
+        <div class="move-toggle">+</div>
+      </div>
+      <div class="move-body">
+        AI feedback often jumps to solutions before you're ready for them. When a note lands — when you feel the accuracy of it — resist the impulse to ask "how do I fix this?" Instead, ask the AI to stay in the diagnosis a little longer. What specifically is causing the problem? What is the passage doing that it shouldn't, or failing to do that it should? The more precisely you understand the problem, the more the solution becomes obvious without being handed to you.
+        <div class="move-example-label" style="margin-top:18px;">The move in practice</div>
+        <div class="move-example" id="mv2-ex">"I think you're right that the scene resolves too quickly. Before we talk about how to fix it — stay with the problem. What specifically is happening on the page in the final three exchanges that produces the feeling of premature resolution? I want to understand the mechanism before I try to change it."</div>
+        <button class="copy-btn" onclick="copyMove('mv2-ex')">Copy</button>
+      </div>
+    </div>
+
+    <div class="move-card" id="mv3">
+      <div class="move-header" onclick="toggleMove(3)">
+        <div class="move-num">4</div>
+        <div class="move-label-wrap">
+          <div class="move-tag">When you're not sure what to trust</div>
+          <div class="move-title">Run It Through a Second Lens</div>
+        </div>
+        <div class="move-toggle">+</div>
+      </div>
+      <div class="move-body">
+        A single reading produces a single perspective. When the feedback feels partial — when it's zeroing in on one aspect of the scene while missing something you know matters — ask for a different lens. What does the scene look like read purely for structure? For voice? For what the reader is likely to assume about the character? Multiple readings of the same passage produce a more complete picture than one thorough reading, and the differences between the readings are often as useful as the readings themselves.
+        <div class="move-example-label" style="margin-top:18px;">The move in practice</div>
+        <div class="move-example" id="mv3-ex">"You've read this scene for pacing. Now read it again — same passage, different lens. Read only for what it reveals about the father as a character. What does a reader learn about him from this scene, and is it what I need them to learn? Set aside everything you said in the first reading."</div>
+        <button class="copy-btn" onclick="copyMove('mv3-ex')">Copy</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>The Multiple Lens Approach</h2>
+
+  <p>The same passage, read through different lenses, will yield different observations — and the gap between those observations is often where the most useful insight lives. A scene that reads as structurally sound might read as emotionally flat under a different question. A piece of dialogue that seems to reveal character might, under a voice lens, be indistinguishable from every other character in the piece.</p>
+
+  <p>Below is the same short passage read through four different lenses. The passage doesn't change. The question does.</p>
+
+  <div class="lens-demo">
+    <div class="lens-tabs">
+      <button class="lens-tab active" onclick="switchLens(0)">Structure</button>
+      <button class="lens-tab" onclick="switchLens(1)">Voice</button>
+      <button class="lens-tab" onclick="switchLens(2)">Character</button>
+      <button class="lens-tab" onclick="switchLens(3)">Reader's Eye</button>
+    </div>
+
+    <div class="lens-panel active" id="lens-0">
+      <div class="move-example-label">The Prompt</div>
+      <div class="lens-prompt">"Read this scene only for structure. Does it have a clear turn — a moment where something changes for one of the characters? Where is the turn, and does it land with enough weight?"</div>
+      <div class="move-example-label">The Response</div>
+      <div class="lens-response">"The structural turn is Maya's 'It's okay' — but it arrives without the scene having built resistance for it to overcome. The turn is technically present but dramatically weightless. A structurally sound scene would have the turn cost something; here it arrives as relief rather than surrender."</div>
+      <div class="lens-takeaway"><strong>What this lens surfaces</strong>The turn exists but is unearned. The structure is there; the weight isn't.</div>
+    </div>
+
+    <div class="lens-panel" id="lens-1">
+      <div class="move-example-label">The Prompt</div>
+      <div class="lens-prompt">"Read this scene only for voice. Set aside what happens. Tell me: could you identify the narrator of this scene from the prose alone — is there a distinctive sensibility in the language? Or could this scene have been written by anyone?"</div>
+      <div class="move-example-label">The Response</div>
+      <div class="lens-response">"The prose is clean but largely anonymous — until 'faintly embarrassing,' which belongs to a specific sensibility: someone who monitors appearances even in private. That phrase has a voice. The rest of the scene could have been written by a competent default narrator. The specificity arrives once and then retreats."</div>
+      <div class="lens-takeaway"><strong>What this lens surfaces</strong>The voice exists in one word and disappears. That word is the thread to pull the revision toward.</div>
+    </div>
+
+    <div class="lens-panel" id="lens-2">
+      <div class="move-example-label">The Prompt</div>
+      <div class="lens-prompt">"Read this scene only for character. What does a reader learn about Maya from this scene — not from what she says, but from how she says it, what she notices, and what she does? Is that consistent with a character worth following?"</div>
+      <div class="move-example-label">The Response</div>
+      <div class="lens-response">"A reader learns that Maya manages other people's discomfort before her own — she volunteers the logic of the decision before her father has to defend it. She notices the step stool and the roses but keeps both observations to herself. She is a person who observes sharply and concedes quietly. That's interesting. But the scene doesn't let her be interesting for long — she settles into compliance before the reader has fully registered who she is."</div>
+      <div class="lens-takeaway"><strong>What this lens surfaces</strong>The character is present and specific. The scene closes her down before the reader can inhabit her.</div>
+    </div>
+
+    <div class="lens-panel" id="lens-3">
+      <div class="move-example-label">The Prompt</div>
+      <div class="lens-prompt">"Read this scene as a resistant reader — someone who is alert to sentiment and quick to disengage. Where do you lose trust in the scene? Where does it feel like it's telling you how to feel rather than giving you something to feel?"</div>
+      <div class="move-example-label">The Response</div>
+      <div class="lens-response">"The step stool detail earns its place — it's specific enough to feel discovered rather than placed. The roses are close to the line: 'pink and faintly embarrassing' holds, but 'the way things get when no one is tending to them' is the scene explaining its own metaphor. A resistant reader loses trust there — the image was doing its job; the gloss is the writer not trusting them to receive it."</div>
+      <div class="lens-takeaway"><strong>What this lens surfaces</strong>One clause is over-explained. The scene is telling the reader what the image means instead of letting them carry it.</div>
+    </div>
+
+  </div>
+
+  <p>Four lenses, four different observations, all from the same five exchanges. None of them contradicts the others — they are reading for different things. Together they produce a more complete picture of what the scene is doing and what it needs than any single comprehensive reading could.</p>
+
+  <h2>What Active Reading Looks Like</h2>
+
+  <p>Put all of this together and active reading of AI feedback has a shape. It is not passive absorption. It is a sequence of small decisions — made quickly, in the margins of the response — that determine what you carry into revision and what you leave behind.</p>
+
+  <div class="compare-grid">
+    <div class="compare-col">
+      <h4>Passive reading</h4>
+      <p>Read the response. Note that it mentioned pacing and emotional stakes. Feel vaguely like the draft needs work. Return to the draft with no clearer sense of what the work is. Write some new sentences. Not sure if they're better.</p>
+    </div>
+    <div class="compare-col">
+      <h4>Active reading</h4>
+      <p>Sort signal from noise in thirty seconds. Identify the two specific observations worth pursuing. Push back on one to test it. Ask for the diagnosis on the other before asking for solutions. Run a second lens to find what the first reading missed. Sit down to revise with three concrete decisions already made.</p>
+    </div>
+  </div>
+
+  <p>The difference in time between those two approaches is maybe ten minutes. The difference in what you bring to the revision is everything.</p>
+
+  <div class="insight">
+    The conversation is not over when the AI responds. It is over when you have made a decision. Everything between the response and the decision is your work.
+  </div>
+
+  <h2>One Practice to Build Right Now</h2>
+
+  <p>After your next AI revision session, before you close the tab, write three sentences in your own words:</p>
+
+  <p><strong>The note I'm taking:</strong> the single most specific, grounded observation from the response — in your language, not the AI's.</p>
+
+  <p><strong>The note I'm leaving:</strong> the piece of feedback that was generic, hedged, or ungroundable — named and dismissed deliberately, not just ignored.</p>
+
+  <p><strong>The decision I've made:</strong> one concrete thing you now know about the revision that you didn't know before you opened the session.</p>
+
+  <p>Three sentences. Sixty seconds. It forces the sorting, closes the session with intention, and gives you something to bring to the draft instead of a vague accumulated sense that it needs more work.</p>
+
+  <p>The feedback is raw material. You are the one who decides what to build.</p>
+
+  <div class="pull-quote">
+    You are not looking for permission to revise. You are looking for clarity about where.
+  </div>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">AI & THE CRAFT — REVISION IN PRACTICE</p>
+
+</div>
+
+<footer>
+  <p>AI & THE CRAFT &nbsp;·&nbsp; REVISION IN PRACTICE</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  // ── Signal/Noise sorter ──
+  const annotations = {
+    s1: { type: 'signal', text: 'Signal — grounded in a specific action in the text ("she touches the counter"). Points to an exact moment. You can find this in the draft.' },
+    s2: { type: 'signal', text: 'Signal — names a specific beat ("the silence after 'I can't maintain it alone'") and describes what it needs. Immediately actionable.' },
+    s3: { type: 'signal', text: 'Signal — identifies a single word ("faintly") and explains precisely what it is doing. This is close reading. Trust it.' },
+    n1: { type: 'noise', text: 'Noise — "deepening emotional stakes" could appear in feedback on any scene ever written. There is no specific observation here. Discard it.' },
+    n2: { type: 'noise', text: 'Noise — "tighten the middle section" is a direction without a location. What sentences? Why? This note cannot be acted on. Discard it.' },
+  };
+
+  function annotate(key) {
+    const a = annotations[key];
+    const box = document.getElementById('sorter-annotation');
+    box.style.opacity = '0';
+    setTimeout(() => {
+      box.style.borderLeftColor = a.type === 'signal' ? '#5a7a4a' : 'var(--rust)';
+      box.style.background = a.type === 'signal' ? 'rgba(90,122,74,0.08)' : 'rgba(192,57,43,0.06)';
+      box.textContent = a.text;
+      box.style.opacity = '1';
+    }, 150);
+  }
+
+  // ── Four moves accordions ──
+  function toggleMove(idx) {
+    const el = document.getElementById('mv' + idx);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.move-card').forEach(m => m.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  // ── Lens tabs ──
+  function switchLens(idx) {
+    document.querySelectorAll('.lens-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('.lens-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // ── Copy buttons ──
+  function copyMove(id) {
+    const el = document.getElementById(id);
+    const text = el.innerText || el.textContent;
+    const btn = el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+    });
+  }
+</script>
+
+</body>
+</html>
