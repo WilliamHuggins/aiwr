@@ -9,22 +9,12 @@ export default function AboutPage() {
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start">
           <div className="md:col-span-1">
-            <div className="aspect-square bg-gray-200 dark:bg-gray-800 rounded-lg flex items-center justify-center">
-              {/* Placeholder for a profile picture. You can replace this with an <Image> component later. */}
-              <svg
-                className="w-16 h-16 text-gray-400 dark:text-gray-500"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                />
-              </svg>
+            <div className="aspect-square overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800">
+              <img
+                src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/ChatGPT%20Image%20Mar%202%2C%202026%2C%2010_39_41%20PM.png"
+                alt="Portrait illustration of Will"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
           <div className="md:col-span-2 font-body text-lg leading-relaxed space-y-6 text-ink/90 dark:text-text/90">
