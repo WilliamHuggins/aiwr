@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Readers, One Scene | AI & The Craft</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+    --reader-a: #2c4a6e;
+    --reader-a-light: #e8f0f8;
+    --reader-b: #4a2c2c;
+    --reader-b-light: #f8e8e8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '≠';
+    position: absolute;
+    font-size: 460px;
+    color: rgba(0,0,0,0.025);
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--faded);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .post-date {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--faded);
+    margin-top: 16px;
+    display: block;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: '\201D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    background: var(--parchment);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--rust);
+  }
+
+  /* ── The scene ── */
+  .scene-block {
+    margin: 2em 0;
+    background: var(--parchment);
+    border: 2px solid var(--ink);
+    padding: 28px 32px;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.9;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .block-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 14px;
+    font-style: normal;
+  }
+
+  /* ── Reader personas ── */
+  .reader-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .reader-card {
+    padding: 28px 24px;
+  }
+
+  .reader-card:first-child {
+    border-right: 2px solid var(--ink);
+    background: var(--reader-a-light);
+  }
+
+  .reader-card:last-child {
+    background: var(--reader-b-light);
+  }
+
+  .reader-name {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .reader-card:first-child .reader-name { color: var(--reader-a); }
+  .reader-card:last-child .reader-name { color: var(--reader-b); }
+
+  .reader-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .reader-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--faded);
+  }
+
+  .reader-prompt-box {
+    margin-top: 14px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    padding: 10px 14px;
+    border-left: 3px solid;
+  }
+
+  .reader-card:first-child .reader-prompt-box {
+    border-color: var(--reader-a);
+    background: rgba(44, 74, 110, 0.06);
+    color: var(--reader-a);
+  }
+
+  .reader-card:last-child .reader-prompt-box {
+    border-color: var(--reader-b);
+    background: rgba(74, 44, 44, 0.06);
+    color: var(--reader-b);
+  }
+
+  /* ── Side-by-side responses ── */
+  .response-grid {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    overflow: hidden;
+  }
+
+  .response-header-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .response-header {
+    padding: 14px 20px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .response-header.a {
+    background: var(--reader-a);
+    color: white;
+    border-right: 1px solid var(--ink);
+  }
+
+  .response-header.b {
+    background: var(--reader-b);
+    color: white;
+  }
+
+  .response-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .response-row:last-child { border-bottom: none; }
+
+  .response-cell {
+    padding: 20px 22px;
+    font-size: 16px;
+    line-height: 1.75;
+    font-style: italic;
+    vertical-align: top;
+  }
+
+  .response-cell.a {
+    background: var(--reader-a-light);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    color: var(--ink);
+  }
+
+  .response-cell.b {
+    background: var(--reader-b-light);
+    color: var(--ink);
+  }
+
+  .response-topic {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 8px;
+    font-style: normal;
+  }
+
+  /* ── Agreement / Disagreement map ── */
+  .map-demo {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    background: white;
+  }
+
+  .map-top {
+    padding: 20px 28px;
+    border-bottom: 2px solid var(--ink);
+    background: var(--parchment);
+  }
+
+  .demo-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 0;
+  }
+
+  .map-items {
+    padding: 8px 0;
+  }
+
+  .map-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .map-item:last-child { border-bottom: none; }
+  .map-item:hover { background: rgba(0,0,0,0.02); }
+  .map-item.active { background: var(--highlight); }
+
+  .map-indicator {
+    min-width: 48px;
+    padding: 14px 0;
+    text-align: center;
+    font-size: 18px;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .map-text-wrap {
+    flex: 1;
+    padding: 14px 20px 14px 0;
+  }
+
+  .map-observation {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .map-detail {
+    display: none;
+    margin-top: 10px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--faded);
+    padding-top: 10px;
+    border-top: 1px dashed rgba(0,0,0,0.15);
+  }
+
+  .map-item.active .map-detail { display: block; }
+
+  .map-legend {
+    display: flex;
+    gap: 24px;
+    padding: 16px 28px;
+    border-top: 2px solid var(--ink);
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--faded);
+  }
+
+  /* ── The prompts ── */
+  .prompt-pair {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .prompt-pair-header {
+    padding: 16px 24px;
+    background: var(--ink);
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .prompt-half {
+    padding: 24px 28px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .prompt-half:last-child { border-bottom: none; }
+
+  .prompt-half-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .prompt-half:first-child .prompt-half-label { color: var(--reader-a); }
+  .prompt-half:last-child .prompt-half-label { color: var(--reader-b); }
+
+  .prompt-text {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    background: var(--parchment);
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    white-space: pre-wrap;
+    color: var(--ink);
+  }
+
+  .copy-btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 2px solid var(--ink);
+    background: var(--parchment);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .copy-btn:hover { background: var(--ink); color: var(--parchment); }
+  .copy-btn.copied { background: var(--gold); border-color: var(--gold); color: white; }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+
+  a { color: var(--rust); text-decoration: underline; }
+  a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .pull-quote { margin: 2.5em 0; }
+    .reader-intro { grid-template-columns: 1fr; }
+    .reader-card:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+    .response-header-row { grid-template-columns: 1fr; }
+    .response-header.a { border-right: none; border-bottom: 1px solid var(--ink); }
+    .response-row { grid-template-columns: 1fr; }
+    .response-cell.a { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .map-legend { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI & The Craft &nbsp;·&nbsp; Advanced Revision</div>
+
+<div class="hero">
+  <span class="issue-tag">AI & The Craft</span>
+  <h1>Two Readers,<br><em>One Scene.</em></h1>
+  <p class="deck">Run the same passage through two completely different AI readers. Where they agree, you have a problem. Where they disagree, you have a decision. The gap between them is the most useful place in the draft.</p>
+  <span class="byline">A Technique for Getting Unstuck — Fast</span>
+  <span class="post-date">March 3, 2026</span>
+</div>
+
+<div class="article-wrapper">
+
+  <p class="drop-cap">Every workshop has that moment. Two readers, same passage, completely opposite reactions. One finds the ending too abrupt. The other says the ending is the only thing that works. One wants more interiority. The other says the interiority is already slowing the scene down. You sit there, the writer, and you realize: the conflict between their responses is more useful than either response on its own. The disagreement is where the real information lives.</p>
+
+  <p>You can engineer that experience deliberately — with AI, in twenty minutes, on any scene in your current draft. No workshop required. No waiting for a Tuesday evening. Just two prompts, two readers, and the willingness to sit with what the disagreement reveals.</p>
+
+  <p>Here is exactly how to do it.</p>
+
+  <div class="pull-quote">
+    Where two readers agree, you have a problem to solve. Where they disagree, you have a choice to make. Both are information. Only one requires a verdict.
+  </div>
+
+  <h2>The Two Readers</h2>
+
+  <p>The technique works because the two readers are not interchangeable. They come to the scene with different priors, different concerns, different definitions of what good looks like. One is inside the craft. The other is inside the experience. And those two things — craft and experience — are not always pointing in the same direction.</p>
+
+  <div class="reader-intro">
+    <div class="reader-card">
+      <div class="reader-name">Reader A</div>
+      <div class="reader-title">The Developmental Editor</div>
+      <div class="reader-desc">A structural, craft-focused reader. Reads for architecture — scene function, narrative purpose, character consistency, pacing mechanics. Asks: is this doing its job in the larger work? Cares about what the scene is for.</div>
+      <div class="reader-prompt-box">Reads for: structure, function, craft, coherence</div>
+    </div>
+    <div class="reader-card">
+      <div class="reader-name">Reader B</div>
+      <div class="reader-title">The Resistant First Reader</div>
+      <div class="reader-desc">An impatient, unsentimental reader with no investment in the project. Reads for experience — what it feels like on the page, moment to moment. Asks: am I still here? Does this earn my attention? Cares about what the scene does to them.</div>
+      <div class="reader-prompt-box">Reads for: engagement, experience, felt momentum, trust</div>
+    </div>
+  </div>
+
+  <p>The developmental editor will find things the resistant reader never notices. The resistant reader will lose the thread exactly where the developmental editor is most impressed. These are not competing failures — they are different instruments measuring different things. You need both readings to know what the scene actually is.</p>
+
+  <h2>The Scene</h2>
+
+  <p>We'll use the Maya scene that's been running through several recent posts — the conversation between an adult daughter and her father about selling the family home. By now it's in its revised form, with Maya's resistance expressed through logistics rather than emotion. A stronger scene — but not a finished one.</p>
+
+  <div class="scene-block">
+    <div class="block-label">The Scene — Revised Draft</div>
+    <p style="margin-bottom:1em;">"You're selling it," Maya said. Not a question.</p>
+    <p style="margin-bottom:1em;">"The offer was good." Her father set his coffee cup down on the counter. "It would be foolish to wait."</p>
+    <p style="margin-bottom:1em;">"What did they offer?" She kept her voice neutral. "Per square foot."</p>
+    <p style="margin-bottom:1em;">He told her. She did the math in her head — the same math she'd been doing, privately, for the three weeks since he'd mentioned the realtor. It was a good offer. It was, objectively, a very good offer.</p>
+    <p style="margin-bottom:1em;">"The market could go higher." She looked out the window. Her mother's roses were overgrown — pink and faintly embarrassing, the way things get when no one is tending to them. "If you wait until spring."</p>
+    <p style="margin-bottom:1em;">"I've waited long enough." He said it quietly, and she understood he wasn't talking about the market.</p>
+    <p style="margin-bottom:0;">"I know." She turned back to him. He looked old, suddenly. "It's okay, Dad."</p>
+  </div>
+
+  <h2>The Two Readings</h2>
+
+  <p>Below are the actual responses from both readers to the same scene. Read them side by side — and pay close attention to where they diverge.</p>
+
+  <div class="response-grid">
+    <div class="response-header-row">
+      <div class="response-header a">Reader A — Developmental Editor</div>
+      <div class="response-header b">Reader B — Resistant First Reader</div>
+    </div>
+
+    <div class="response-row">
+      <div class="response-cell a">
+        <div class="response-topic">On Structure</div>
+        "The scene has a clear structural turn — 'I've waited long enough' — and the pivot is earned because the reader now understands the father is talking about grief, not logistics. The scene does its narrative work: it advances the sale, deepens the father's interiority, and closes Maya's resistance arc."
+      </div>
+      <div class="response-cell b">
+        <div class="response-topic">On Momentum</div>
+        "I'm with the scene until 'It was a good offer. It was, objectively, a very good offer.' That repetition stopped me — I wasn't sure if it was intentional rhythm or a draft artifact. I lost momentum there and had to re-enter the scene."
+      </div>
+    </div>
+
+    <div class="response-row">
+      <div class="response-cell a">
+        <div class="response-topic">On Character</div>
+        "Maya's logistics resistance is doing exactly what you need — the grief lives underneath the numbers, which is more specific and less sentimental than direct emotional expression. The three weeks of private math is the best character detail in the scene."
+      </div>
+      <div class="response-cell b">
+        <div class="response-topic">On Character</div>
+        "Maya is interesting but I don't fully trust her yet. 'She kept her voice neutral' — who is she keeping it neutral for? Her father is right there. That line made me feel managed rather than witnessed. I wanted more of her actual face."
+      </div>
+    </div>
+
+    <div class="response-row">
+      <div class="response-cell a">
+        <div class="response-topic">On the Ending</div>
+        "The ending works. 'It's okay, Dad' lands with the right weight because the scene has built resistance for it to overcome. The 'suddenly old' observation is the correct final beat — she sees him rather than arguing with him."
+      </div>
+      <div class="response-cell b">
+        <div class="response-topic">On the Ending</div>
+        "The ending almost works. 'He looked old, suddenly' felt slightly explained — I'd already felt his age in 'I've waited long enough.' By the time you name it, I'd been there for two lines. Trust me to have noticed."
+      </div>
+    </div>
+
+    <div class="response-row">
+      <div class="response-cell a">
+        <div class="response-topic">On the Roses</div>
+        "'Pink and faintly embarrassing' is the strongest image in the scene. The displacement of grief into the setting is controlled and earns its place."
+      </div>
+      <div class="response-cell b">
+        <div class="response-topic">On the Roses</div>
+        "I loved 'faintly embarrassing.' I wanted to stay there longer. The scene moved past it before I'd fully received it."
+      </div>
+    </div>
+
+  </div>
+
+  <h2>Reading the Gap</h2>
+
+  <p>Now comes the work. You have two sets of observations. Some overlap. Some contradict. Each point of agreement or disagreement tells you something different about the scene — and carries a different kind of weight. Click any item below to see what the gap is actually saying.</p>
+
+  <div class="map-demo">
+    <div class="map-top">
+      <div class="demo-label">The Agreement & Disagreement Map — Click any item</div>
+    </div>
+    <div class="map-items">
+
+      <div class="map-item" id="mi0" onclick="toggleMapItem(0)">
+        <div class="map-indicator">✓</div>
+        <div class="map-text-wrap">
+          <div class="map-observation"><strong>Both agree:</strong> "Faintly embarrassing" is the strongest image in the scene.</div>
+          <div class="map-detail">When both readers independently surface the same detail, that detail is load-bearing. Protect it absolutely. Consider whether the rest of the scene is earning the standard this image sets.</div>
+        </div>
+      </div>
+
+      <div class="map-item" id="mi1" onclick="toggleMapItem(1)">
+        <div class="map-indicator">✓</div>
+        <div class="map-text-wrap">
+          <div class="map-observation"><strong>Both agree:</strong> "I've waited long enough" is the scene's real pivot.</div>
+          <div class="map-detail">Agreement on the turn means the structural spine is sound. The scene knows where it's going. What's left is making sure everything before that line is building toward it — and everything after it is landing with the right weight.</div>
+        </div>
+      </div>
+
+      <div class="map-item" id="mi2" onclick="toggleMapItem(2)">
+        <div class="map-indicator" style="color:var(--rust);">≠</div>
+        <div class="map-text-wrap">
+          <div class="map-observation"><strong>They disagree:</strong> The ending. Reader A says it works. Reader B says it's over-explained by one sentence.</div>
+          <div class="map-detail">This is the most useful disagreement in the map. Reader A is satisfied structurally — the arc completes. Reader B arrived at the emotional destination two lines early and felt the scene explaining something they'd already felt. This is a precision problem, not a structural one. The question is not whether to keep the ending — it's whether "He looked old, suddenly" is doing work or restating work already done.</div>
+        </div>
+      </div>
+
+      <div class="map-item" id="mi3" onclick="toggleMapItem(3)">
+        <div class="map-indicator" style="color:var(--rust);">≠</div>
+        <div class="map-text-wrap">
+          <div class="map-observation"><strong>They disagree:</strong> The repeated sentence. Reader A doesn't flag it. Reader B lost momentum there.</div>
+          <div class="map-detail">Reader A was reading for function — the repetition is purposeful, and structurally it holds. Reader B experienced it as a speed bump. Neither is wrong. This is a question of who your reader is. If you're writing for a patient, craft-aware audience, the repetition stays. If you're writing for the resistant reader you want to keep, it needs a beat more intention — a rhythm so deliberate that even the impatient reader feels it was chosen.</div>
+        </div>
+      </div>
+
+      <div class="map-item" id="mi4" onclick="toggleMapItem(4)">
+        <div class="map-indicator" style="color:var(--rust);">≠</div>
+        <div class="map-text-wrap">
+          <div class="map-observation"><strong>They diverge:</strong> "She kept her voice neutral." Reader A doesn't mention it. Reader B felt managed by it.</div>
+          <div class="map-detail">Reader A skipped past it because it's structurally invisible — it performs no function that the editor needs. Reader B caught it because it broke the experience of inhabiting Maya. "Kept her voice neutral" is the narrator telling us what Maya is doing to herself — but it names the performance rather than showing it. The resistant reader wants to be in the room, not watching from outside. This line is a small but real distance-creator.</div>
+        </div>
+      </div>
+
+      <div class="map-item" id="mi5" onclick="toggleMapItem(5)">
+        <div class="map-indicator">✓</div>
+        <div class="map-text-wrap">
+          <div class="map-observation"><strong>Both agree (differently):</strong> The roses need more room.</div>
+          <div class="map-detail">Reader A calls the image "controlled and earns its place." Reader B wanted to stay longer. This is agreement from two directions: the image is working, but it may be undersupported. The scene moves past it. A single additional beat — not an explanation, just a breath — might let the image land the way Reader B needs without disturbing the structure Reader A approves of.</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="map-legend">
+      <div class="legend-item"><span style="font-size:16px; color:#5a7a4a;">✓</span>&nbsp; Agreement — confirms or complicates</div>
+      <div class="legend-item"><span style="font-size:16px; color:var(--rust);">≠</span>&nbsp; Disagreement — reveals a decision</div>
+    </div>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>The Prompts — Ready to Use</h2>
+
+  <p>Here are the two prompts that produced these readings. Use them as written on any scene. The only rule: send them in separate conversations, with no memory of each other. The readers should not know what the other said.</p>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">The Two Prompts — Paste Your Scene Before Each One</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Reader A — Developmental Editor</div>
+      <div class="prompt-text" id="prompt-a">[Paste your scene here]
+
+Read this scene as a developmental editor — someone whose job is to assess whether the scene is doing its structural work in the larger piece. I'll give you context: <span style="color:var(--rust);">[one sentence describing what the scene needs to accomplish in the story]</span>.
+
+Tell me: does the scene do that job? Where is it working at the craft level — structure, character function, pacing mechanics? Where is it not? Be specific and quote the text when you make an observation. Do not give me line edits. I want the structural and craft read only.</div>
+      <button class="copy-btn" onclick="copyPromptBlock('prompt-a')">Copy Prompt A</button>
+    </div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Reader B — Resistant First Reader</div>
+      <div class="prompt-text" id="prompt-b">[Paste your scene here]
+
+Read this as a resistant first reader — someone with no investment in the project, no patience for slow passages, and no obligation to be kind. You've agreed to read one scene cold and tell me honestly what happens to your attention.
+
+Tell me: where are you fully in it? Where do you lose the thread — even briefly? Where does the scene feel like it's working for your attention rather than earning it? I don't want craft analysis. I want the lived experience of reading this, moment to moment. Be honest, even if honest is uncomfortable.</div>
+      <button class="copy-btn" onclick="copyPromptBlock('prompt-b')">Copy Prompt B</button>
+    </div>
+  </div>
+
+  <h2>What to Do With What You Find</h2>
+
+  <p>Once you have both readings, the map has three zones. Each requires a different response from you.</p>
+
+  <p><strong>Where they agree — there's a problem:</strong> Don't deliberate. Both readers, from completely different positions, arrived at the same observation. That convergence is as close to certainty as revision gets. Address it.</p>
+
+  <p><strong>Where they disagree — there's a decision:</strong> This is not a problem to solve. It is a choice to make. You must decide who you are writing for — the craft-aware reader who will appreciate the structural intention, or the resistant reader whose trust you cannot afford to lose. Neither answer is wrong. But you have to choose, and you have to choose consciously.</p>
+
+  <p><strong>Where only one notices something:</strong> This is the most interesting zone. An observation that appears in one reading and not the other tells you something about which layer of the scene that element lives on. If only the editor notices it, it's operating at the structural level — invisible to the reading experience but load-bearing underneath. If only the resistant reader notices it, it's a surface experience that the structure is absorbing — which means it might be a friction you can afford, or a small betrayal of trust you can't.</p>
+
+  <div class="insight">
+    You are not looking for the reading that is right. You are looking for the information each reading can only give you from where it stands.
+  </div>
+
+  <p>Two readers, one scene, twenty minutes. The disagreement tells you where the choices are. The choices tell you what the revision is. What you do with them is, as always, entirely yours.</p>
+
+  <div class="pull-quote">
+    The conflict between readers is not a problem. It is the draft telling you where it has not yet decided what it wants to be.
+  </div>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">AI & THE CRAFT — ADVANCED REVISION</p>
+
+</div>
+
+<footer>
+  <p>AI & THE CRAFT &nbsp;·&nbsp; ADVANCED REVISION</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  // ── Agreement map ──
+  function toggleMapItem(idx) {
+    const el = document.getElementById('mi' + idx);
+    const isOpen = el.classList.contains('active');
+    document.querySelectorAll('.map-item').forEach(m => m.classList.remove('active'));
+    if (!isOpen) el.classList.add('active');
+  }
+
+  // ── Copy prompts ──
+  function copyPromptBlock(id) {
+    const el = document.getElementById(id);
+    const text = el.innerText || el.textContent;
+    const btn = el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = id === 'prompt-a' ? 'Copy Prompt A' : 'Copy Prompt B'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+    });
+  }
+</script>
+
+</body>
+</html>
