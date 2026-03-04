@@ -10,22 +10,22 @@
     --text: 20 20 19;
     --muted: 97 95 90;
     --border: 232 230 220;
-    --accent: 217 119 87;
+    --accent: 192 57 43;
     --accent2: 176 174 165;
     --success: 176 174 165;
 
     --panel: 255 253 248;
-    --primary: 217 119 87;
+    --primary: 192 57 43;
     --primaryText: 250 249 245;
 
-    --selection-bg: 217 119 87;
+    --selection-bg: 192 57 43;
     --selection-text: 250 249 245;
 
     --code-bg: 243 238 228;
     --code-text: 55 50 45;
     --code-border: 228 218 204;
-    --code-accent: 194 97 66;
-    --code-selection-bg: 217 119 87;
+    --code-accent: 192 57 43;
+    --code-selection-bg: 192 57 43;
     --code-selection-text: 250 249 245;
     --inline-code-bg: 239 234 224;
   }
@@ -37,23 +37,23 @@
     --text: 250 249 245;
     --muted: 176 174 165;
     --border: 71 68 64;
-    --accent: 217 119 87;
+    --accent: 192 57 43;
     --accent2: 176 174 165;
     --success: 176 174 165;
 
     --panel: 30 30 28;
-    --primary: 217 119 87;
+    --primary: 192 57 43;
     --primaryText: 20 20 19;
 
-    --selection-bg: 217 119 87;
+    --selection-bg: 192 57 43;
     --selection-text: 250 249 245;
     --essay-inline-highlight: 138 168 227;
 
     --code-bg: 29 28 27;
     --code-text: 233 229 217;
     --code-border: 84 77 71;
-    --code-accent: 232 148 119;
-    --code-selection-bg: 217 119 87;
+    --code-accent: 192 57 43;
+    --code-selection-bg: 192 57 43;
     --code-selection-text: 250 249 245;
     --inline-code-bg: 46 42 39;
   }
@@ -201,7 +201,7 @@
 
 @layer components {
   .mfa-scope {
-    --mfa-rust: 160 64 42;
+    --mfa-rust: 192 57 43;
     --mfa-gold: 184 147 42;
     font-family: var(--font-mfa-body), serif;
   }
@@ -472,7 +472,7 @@
   .notebooklm-guide .hero-rule {
     width: 44px;
     height: 3px;
-    background: rgb(160 64 42);
+    background: rgb(192 57 43);
     border-radius: 2px;
     margin: 3.5rem auto 0;
   }
@@ -550,7 +550,7 @@
   }
 
   .notebooklm-guide .callout.warn {
-    border-left-color: rgb(160 64 42);
+    border-left-color: rgb(192 57 43);
   }
 
   .notebooklm-guide .callout-label {
@@ -563,7 +563,7 @@
   }
 
   .notebooklm-guide .callout.warn .callout-label {
-    color: rgb(160 64 42);
+    color: rgb(192 57 43);
   }
 
   .notebooklm-guide .callout p {
@@ -621,7 +621,7 @@
   }
 
   .notebooklm-guide .card.lf {
-    border-top-color: rgb(160 64 42);
+    border-top-color: rgb(192 57 43);
   }
 
   .notebooklm-guide .card.sp {
@@ -641,7 +641,7 @@
   }
 
   .notebooklm-guide .card.lf .card-genre {
-    color: rgb(160 64 42);
+    color: rgb(192 57 43);
   }
 
   .notebooklm-guide .card.sp .card-genre {
@@ -712,9 +712,9 @@
   }
 
   .notebooklm-guide .tag.new {
-    background: rgb(160 64 42 / 0.07);
-    border-color: rgb(160 64 42 / 0.28);
-    color: rgb(160 64 42);
+    background: rgb(192 57 43 / 0.07);
+    border-color: rgb(192 57 43 / 0.28);
+    color: rgb(192 57 43);
   }
 
   .notebooklm-guide .studio-grid {
