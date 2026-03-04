@@ -24,6 +24,10 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "AI Writers' Retreat",
   description: "Master the Craft. Command the Code.",
+  icons: {
+    icon: "https://qhdrtygre7pnc3mj.public.blob.vercel-storage.com/favicon/apple-touch-icon.png",
+    apple: "https://qhdrtygre7pnc3mj.public.blob.vercel-storage.com/favicon/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
