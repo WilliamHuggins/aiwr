@@ -85,7 +85,7 @@ export default function HomePage() {
               Begin in the DIY MFA, then bring in focused AI partners when you need research, critique, and revision support.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <Card className="directory-card flex flex-col p-8">
               <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">Featured Path</p>
               <h3 className="mt-3 font-display text-3xl font-semibold text-text">Lessons &amp; DIY MFA</h3>
@@ -94,6 +94,17 @@ export default function HomePage() {
               </p>
               <Link href="/diy-mfa" className="mt-7 inline-flex self-start no-underline">
                 <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Explore DIY MFA</Button>
+              </Link>
+            </Card>
+            <Card className="directory-card flex flex-col p-8">
+              <p className="font-ui text-xs uppercase tracking-[0.16em] text-accent">New Course</p>
+              <h3 className="mt-3 font-display text-3xl font-semibold text-text">The Cinema Writing Studio</h3>
+              <p className="mt-1 font-ui text-xs uppercase tracking-[0.14em] text-muted">With AI as a Thought Partner</p>
+              <p className="mt-4 flex-grow text-sm leading-relaxed text-muted">
+                Start Week 1 of a 36-week studio focused on film language, beat journaling, and practical craft analysis.
+              </p>
+              <Link href="/cinema-writing-studio" className="mt-7 inline-flex self-start no-underline">
+                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Open Week 1</Button>
               </Link>
             </Card>
             <Card className="directory-card flex flex-col p-8">
