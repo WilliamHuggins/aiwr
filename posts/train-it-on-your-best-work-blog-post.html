@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Train It On Your Best Work | AI & The Craft</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: 'V';
+    position: absolute;
+    font-size: 480px;
+    color: rgba(0,0,0,0.025);
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-style: italic;
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--faded);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .post-date {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--faded);
+    margin-top: 16px;
+    display: block;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: '\201D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    background: var(--parchment);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--rust);
+  }
+
+  /* ── Style document builder ── */
+  .style-builder {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    background: white;
+  }
+
+  .builder-header {
+    background: var(--ink);
+    padding: 18px 28px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .builder-section {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 24px 28px;
+  }
+
+  .builder-section:last-child { border-bottom: none; }
+
+  .builder-section-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 10px;
+  }
+
+  .builder-section-question {
+    font-size: 17px;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .builder-section-hint {
+    font-size: 15px;
+    color: var(--faded);
+    font-style: italic;
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .builder-example {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    background: var(--parchment);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    color: var(--ink);
+  }
+
+  /* ── Before / After with style doc ── */
+  .ba-tabs-row {
+    display: flex;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .ba-tab {
+    flex: 1;
+    padding: 13px 16px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: var(--parchment);
+    border: none;
+    text-align: center;
+    transition: all 0.15s;
+    color: var(--faded);
+    border-right: 1px solid var(--ink);
+  }
+
+  .ba-tab:last-child { border-right: none; }
+  .ba-tab.active { background: var(--ink); color: var(--gold); }
+
+  .ba-panel { display: none; padding: 28px 32px; background: white; }
+  .ba-panel.active { display: block; }
+
+  .ba-demo {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .feedback-block {
+    font-size: 16px;
+    line-height: 1.8;
+    font-style: italic;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-radius: 2px;
+  }
+
+  .feedback-generic {
+    background: rgba(192, 57, 43, 0.06);
+    border-left: 4px solid var(--rust);
+  }
+
+  .feedback-voiced {
+    background: rgba(90, 122, 74, 0.08);
+    border-left: 4px solid #5a7a4a;
+  }
+
+  .feedback-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 8px;
+    font-style: normal;
+  }
+
+  .draft-text {
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.85;
+    background: var(--parchment);
+    border: 1px solid rgba(0,0,0,0.12);
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
+
+  /* ── The five sections accordion ── */
+  .sections-list {
+    margin: 2.5em 0;
+  }
+
+  .doc-section {
+    border: 2px solid var(--ink);
+    margin-bottom: -2px;
+  }
+
+  .doc-section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .doc-section-header:hover { background: rgba(0,0,0,0.02); }
+  .doc-section.open .doc-section-header { background: var(--ink); color: var(--parchment); }
+
+  .doc-section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 900;
+    background: var(--rust);
+    color: white;
+    padding: 20px 16px;
+    min-width: 52px;
+    text-align: center;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .doc-section.open .doc-section-num { background: var(--gold); }
+
+  .doc-section-label-wrap {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .doc-section-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 5px;
+  }
+
+  .doc-section.open .doc-section-tag { color: var(--gold); }
+
+  .doc-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .doc-section-toggle {
+    font-size: 22px;
+    font-family: 'Courier Prime', monospace;
+    color: var(--faded);
+    padding: 20px;
+    transition: transform 0.2s;
+  }
+
+  .doc-section.open .doc-section-toggle { transform: rotate(45deg); color: var(--gold); }
+
+  .doc-section-body {
+    display: none;
+    padding: 26px 28px 30px 72px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    background: white;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .doc-section.open .doc-section-body { display: block; }
+
+  .doc-section-example {
+    margin-top: 16px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    background: var(--parchment);
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    white-space: pre-wrap;
+    color: var(--ink);
+  }
+
+  .doc-section-example-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 8px;
+  }
+
+  /* ── The master prompt ── */
+  .master-prompt {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .master-prompt-header {
+    background: var(--ink);
+    padding: 18px 28px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .master-prompt-body {
+    padding: 28px 32px;
+    background: white;
+  }
+
+  .prompt-text {
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    line-height: 1.9;
+    background: var(--parchment);
+    border-left: 4px solid var(--gold);
+    padding: 18px 22px;
+    white-space: pre-wrap;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  .prompt-fill { color: var(--rust); font-style: italic; }
+
+  .copy-btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 2px solid var(--ink);
+    background: var(--parchment);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  .copy-btn:hover { background: var(--ink); color: var(--parchment); }
+  .copy-btn.copied { background: var(--gold); border-color: var(--gold); color: white; }
+
+  /* ── Sample style doc ── */
+  .sample-doc {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    background: var(--parchment);
+  }
+
+  .sample-doc-header {
+    background: var(--ink);
+    padding: 14px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .sample-doc-body {
+    padding: 28px 32px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    line-height: 2;
+    color: var(--ink);
+  }
+
+  .sample-doc-body h4 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin: 20px 0 6px;
+  }
+
+  .sample-doc-body h4:first-child { margin-top: 0; }
+
+  .sample-doc-body p {
+    font-size: 14px;
+    font-family: 'Courier Prime', monospace;
+    margin-bottom: 0.5em;
+    line-height: 1.8;
+  }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+
+  a { color: var(--rust); text-decoration: underline; }
+  a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .pull-quote { margin: 2.5em 0; }
+    .doc-section-body { padding-left: 24px; }
+    .ba-tab { font-size: 9px; letter-spacing: 1px; padding: 12px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI & The Craft &nbsp;·&nbsp; Voice & Revision</div>
+
+<div class="hero">
+  <span class="issue-tag">AI & The Craft</span>
+  <h1>Train It On<br><em>Your Best Work.</em></h1>
+  <p class="deck">The AI doesn't know your voice. But you can teach it — in about twenty minutes — by building a personal style document that makes every revision session feel like working with a reader who has actually read you.</p>
+  <span class="byline">Building Your Personal Style Document</span>
+  <span class="post-date">March 5, 2026</span>
+</div>
+
+<div class="article-wrapper">
+
+  <p class="drop-cap">A few posts back we talked about the flattening problem — the way AI feedback can quietly nudge your writing toward the statistical average, one reasonable-sounding suggestion at a time. That post was about defense: how to protect your voice once you're already in a revision session. This one is about offense. It's about arriving at the session with your voice already on the table — documented, named, and handed to the AI before it reads a single line of your current draft.</p>
+
+  <p>The mechanism is a <strong>personal style document.</strong> A short, precise file — two pages at most — that describes your writing in your own terms: your sentence habits, your tonal tendencies, the devices you use intentionally, the things you never do, the two or three sentences from your best work that represent what you're capable of. You paste it into every revision session before you paste the draft. The AI now has a different calibration. It is no longer reading your work against the average. It is reading it against you.</p>
+
+  <p>This is not a workaround or a hack. It is the application of something we've covered repeatedly in this series: context shapes everything the AI can offer. Hand it better context, get better feedback. The style document is simply the most intentional version of that principle.</p>
+
+  <div class="pull-quote">
+    You are not asking the AI to imitate your voice. You are asking it to read your draft knowing what your voice actually is.
+  </div>
+
+  <h2>What the Document Does</h2>
+
+  <p>Without a style document, the AI brings its own priors to your draft — priors formed from an enormous statistical average of all the writing it has processed. When it reads your long, accumulative sentences, it reads them against a norm of shorter ones. When it reads your sparse dialogue, it reads it against a norm of more expository alternatives. When it reads your particular way of ending a scene without resolution, it reads it against a norm of scenes that close.</p>
+
+  <p>With a style document, the AI has a different reference point. Now it knows that long sentences are intentional. That sparse dialogue is a choice. That open endings are the house style. The feedback shifts from "this deviates from the norm" to "does this succeed on its own terms?"</p>
+
+  <div class="ba-demo">
+    <div class="ba-tabs-row">
+      <button class="ba-tab active" onclick="switchBA(0)">Without Style Document</button>
+      <button class="ba-tab" onclick="switchBA(1)">With Style Document</button>
+    </div>
+
+    <div class="ba-panel active" id="ba-0">
+      <div class="feedback-label">Draft passage</div>
+      <div class="draft-text">"He drove home the long way. Not for any reason. The city at night had a particular quality of indifference that he found, on bad days, almost comforting."</div>
+      <div class="feedback-label">AI feedback — no context</div>
+      <div class="feedback-block feedback-generic">"Consider tightening this passage. 'Not for any reason' could be cut — the sentence reads more cleanly without it. 'A particular quality of indifference' is slightly abstract; a more concrete sensory detail might help ground the reader in the scene."</div>
+      <p style="font-family:'Courier Prime',monospace; font-size:12px; color:var(--faded); margin-bottom:0;">Reading against the average. "Not for any reason" is flagged as redundant. But it's the voice.</p>
+    </div>
+
+    <div class="ba-panel" id="ba-1">
+      <div class="feedback-label">Draft passage</div>
+      <div class="draft-text">"He drove home the long way. Not for any reason. The city at night had a particular quality of indifference that he found, on bad days, almost comforting."</div>
+      <div class="feedback-label">AI feedback — with style document establishing that the writer uses short declarative non-sequiturs as a voice signature and deliberately withholds concrete sensory grounding</div>
+      <div class="feedback-block feedback-voiced">"'Not for any reason' is doing its signature work here — the short declarative that doesn't explain is consistent with the voice document you've provided. The question is whether 'almost comforting' earns its weight at the end of this particular sequence. The first two sentences strip away motivation; the third adds emotional content. That's the right direction. Whether 'almost' is doing useful hedging or is a slight retreat from the observation is worth considering."</div>
+      <p style="font-family:'Courier Prime',monospace; font-size:12px; color:var(--faded); margin-bottom:0;">Reading against the writer. The voice signature is protected. The feedback lands on the actual question.</p>
+    </div>
+  </div>
+
+  <p>The draft didn't change. The AI didn't change. The context did. That's the entire technique.</p>
+
+  <h2>How to Build It — Five Sections</h2>
+
+  <p>The document has five sections. Each one is short — three to five sentences at most. It is not a comprehensive description of your writing. It is a precise one: the specific things an AI needs to know to read your work correctly. Click each section to see what it contains and how to write it.</p>
+
+  <div class="sections-list">
+
+    <div class="doc-section" id="ds0">
+      <div class="doc-section-header" onclick="toggleSection(0)">
+        <div class="doc-section-num">1</div>
+        <div class="doc-section-label-wrap">
+          <div class="doc-section-tag">The foundation</div>
+          <div class="doc-section-title">Three Sentences From Your Best Work</div>
+        </div>
+        <div class="doc-section-toggle">+</div>
+      </div>
+      <div class="doc-section-body">
+        Find three sentences — or very short passages — from your writing that you believe are unambiguously good. Not your favorite subject matter. Not the scenes you're most proud of. The sentences where the language itself is doing exactly what you want it to do. These become the AI's reference point for your voice. Every piece of feedback will now be implicitly calibrated against them.
+        <p style="margin-top:1em; margin-bottom:0;">Choose sentences that represent different things your voice can do: one that shows your syntax at its most characteristic, one that shows your tonal range, one that shows the kind of image or observation only you would make.</p>
+        <div class="doc-section-example-label" style="margin-top:16px;">What this section looks like</div>
+        <div class="doc-section-example">"VOICE SAMPLES — sentences that represent my writing at its best:
+
+1. 'She had the particular patience of someone who had stopped expecting anything good and was no longer disappointed by this.' [Shows tonal register and sentence rhythm]
+
+2. 'The dog had learned to wait at the door. So had he.' [Shows compression and juxtaposition]
+
+3. 'It was not grief exactly. It was the place grief had been, which was its own thing.' [Shows how I handle abstraction]"</div>
+      </div>
+    </div>
+
+    <div class="doc-section" id="ds1">
+      <div class="doc-section-header" onclick="toggleSection(1)">
+        <div class="doc-section-num">2</div>
+        <div class="doc-section-label-wrap">
+          <div class="doc-section-tag">Your syntax</div>
+          <div class="doc-section-title">Sentence Habits — What You Do and Why</div>
+        </div>
+        <div class="doc-section-toggle">+</div>
+      </div>
+      <div class="doc-section-body">
+        Describe your sentence-level habits: length, rhythm, structure. Are your sentences long and accumulative, or short and declarative, or both in a particular pattern? Do you favor fragments? Comma splices used for pace? Sentences that begin with conjunctions? Name these as intentional devices, not as stylistic tendencies you're neutral about. The AI needs to know what is choice and what might be error.
+        <p style="margin-top:1em; margin-bottom:0;">Be specific enough that the AI could recognize these patterns when it encounters them — and know not to flag them as problems.</p>
+        <div class="doc-section-example-label" style="margin-top:16px;">What this section looks like</div>
+        <div class="doc-section-example">"SENTENCE HABITS:
+
+— I use short declarative sentences as punctuation, often after a longer accumulative one. These are intentional rhythm breaks, not incomplete thoughts.
+— I use comma splices deliberately to create a breathless or associative quality. Do not flag these as errors.
+— My sentences frequently withhold explanation. 'He left. Nobody mentioned it.' is a complete statement in my prose, not an ellipsis."</div>
+      </div>
+    </div>
+
+    <div class="doc-section" id="ds2">
+      <div class="doc-section-header" onclick="toggleSection(2)">
+        <div class="doc-section-num">3</div>
+        <div class="doc-section-label-wrap">
+          <div class="doc-section-tag">Your register</div>
+          <div class="doc-section-title">Tone — The Specific Temperature of Your Work</div>
+        </div>
+        <div class="doc-section-toggle">+</div>
+      </div>
+      <div class="doc-section-body">
+        Don't write "my tone is melancholy" or "my tone is dark with moments of humor." These are too broad to be useful. Instead, describe the specific register with enough precision that a reader who encountered your prose for the first time could recognize it in a lineup. What does it feel like to be inside your sentences? What emotional temperature do they run at? What does the narrator's relationship to the material tend to be?
+        <p style="margin-top:1em; margin-bottom:0;">The more specific you are, the more precisely the AI can read against it — and flag moments where the current draft has drifted away from where you actually live.</p>
+        <div class="doc-section-example-label" style="margin-top:16px;">What this section looks like</div>
+        <div class="doc-section-example">"TONAL REGISTER:
+
+My prose runs at a temperature of dry precision with grief underneath it — the narrator observes carefully and comments rarely, and when emotion surfaces it does so indirectly, through behavior or image rather than statement. Warmth is present but never announced. Sentimentality is the thing I most want to avoid — if a passage reads as sentimental, that is a failure, not a tonal choice."</div>
+      </div>
+    </div>
+
+    <div class="doc-section" id="ds3">
+      <div class="doc-section-header" onclick="toggleSection(3)">
+        <div class="doc-section-num">4</div>
+        <div class="doc-section-label-wrap">
+          <div class="doc-section-tag">Your negatives</div>
+          <div class="doc-section-title">What I Never Do — The Exclusion List</div>
+        </div>
+        <div class="doc-section-toggle">+</div>
+      </div>
+      <div class="doc-section-body">
+        This is often the most powerful section in the document. Name the things your voice refuses to do — the devices, the moves, the sentence patterns that are not yours. These exclusions tell the AI where the edges of your voice are, and they prevent the most common form of flattening: suggestions that drift your work toward the average by adding something your voice specifically doesn't want.
+        <p style="margin-top:1em; margin-bottom:0;">Be candid. This is not a statement of aesthetic principle — it is a functional description of your actual practice. Not "I avoid purple prose" but "I never use weather to establish mood."</p>
+        <div class="doc-section-example-label" style="margin-top:16px;">What this section looks like</div>
+        <div class="doc-section-example">"WHAT I NEVER DO:
+
+— I do not use weather to open a scene or establish mood.
+— I do not explain metaphors after I've made them.
+— I do not use adverbs to modify dialogue tags. Ever.
+— I do not end scenes on an epiphany or a moment of explicit understanding. Scenes end on images or actions, not realizations.
+— If a piece of feedback suggests adding any of the above, disregard it."</div>
+      </div>
+    </div>
+
+    <div class="doc-section" id="ds4">
+      <div class="doc-section-header" onclick="toggleSection(4)">
+        <div class="doc-section-num">5</div>
+        <div class="doc-section-label-wrap">
+          <div class="doc-section-tag">The ask</div>
+          <div class="doc-section-title">How to Use This Document</div>
+        </div>
+        <div class="doc-section-toggle">+</div>
+      </div>
+      <div class="doc-section-body">
+        End the document with a single paragraph that tells the AI explicitly how to apply what it has just read. Don't assume it will know. This paragraph closes the loop: you have described your voice, and now you are telling the AI what to do with that description when it encounters your draft. Be direct. Treat it as an instruction set, not a suggestion.
+        <div class="doc-section-example-label" style="margin-top:16px;">What this section looks like</div>
+        <div class="doc-section-example">"HOW TO USE THIS DOCUMENT:
+
+When you read the draft I am about to share, use the voice samples and habits above as your reference point — not general notions of good prose. If you encounter something that deviates from standard practice but is consistent with the patterns above, note it as a choice and assess whether it is succeeding, rather than flagging it as a problem. Your job is to tell me where the current draft fails to reach the standard set by my own best work — not where it deviates from someone else's."</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>A Sample Document — Complete</h2>
+
+  <p>Here is what a finished style document looks like assembled. This one is fictional — written to demonstrate the format — but it is built at the level of specificity the technique requires.</p>
+
+  <div class="sample-doc">
+    <div class="sample-doc-header">Sample Personal Style Document</div>
+    <div class="sample-doc-body">
+      <h4>Voice Samples</h4>
+      <p>"She had the particular patience of someone who had stopped expecting anything good and was no longer disappointed by this."</p>
+      <p>"The dog had learned to wait at the door. So had he."</p>
+      <p>"It was not grief exactly. It was the place grief had been, which was its own thing."</p>
+
+      <h4>Sentence Habits</h4>
+      <p>I use short declarative sentences as rhythm breaks after longer accumulative ones — intentional, not incomplete. I use comma splices for pace and association. My sentences often withhold explanation: the narrator observes and does not comment. This is a choice, not a gap.</p>
+
+      <h4>Tonal Register</h4>
+      <p>Dry precision with grief underneath. The narrator observes carefully and rarely editorializes. Emotion surfaces through behavior and image, not statement. Warmth is present but never announced. Sentimentality is a failure mode, not a tonal option.</p>
+
+      <h4>What I Never Do</h4>
+      <p>I do not use weather to open a scene. I do not explain a metaphor after making it. I do not use adverbs on dialogue tags. I do not end scenes on realizations — only on images or actions. If feedback suggests any of these, disregard it.</p>
+
+      <h4>How to Use This Document</h4>
+      <p>Read my draft against the voice samples above, not against general good practice. Flag places where the draft fails to reach the standard set by my own best work. Note intentional devices as choices and assess whether they are succeeding. Your reference point is me, not the average.</p>
+    </div>
+  </div>
+
+  <h2>The Prompt That Activates It</h2>
+
+  <p>The document does nothing on its own — it needs a prompt that tells the AI to use it. Here is the prompt that opens a revision session with the style document in place.</p>
+
+  <div class="master-prompt">
+    <div class="master-prompt-header">The Opening Prompt — Paste This With Your Style Document and Draft</div>
+    <div class="master-prompt-body">
+      <div class="prompt-text" id="master-prompt-text">[Paste your Personal Style Document here]
+
+---
+
+[Paste the draft passage you want to revise here]
+
+---
+
+You have just read my personal style document and a draft passage. Before you give me any feedback, confirm that you understand the voice I have described — summarize it back to me in two sentences, in your own words.
+
+Then read the draft passage against that voice — not against general standards of good prose. Tell me: where is the draft reaching the standard set by my own best work? Where is it falling short of it? Where has it drifted away from the voice described above?
+
+<span class="prompt-fill">[Optional: add your specific concern or revision question here]</span></div>
+      <button class="copy-btn" onclick="copyMasterPrompt()">Copy Prompt</button>
+      <div style="margin-top:16px; font-family:'Courier Prime',monospace; font-size:12px; color:var(--faded); line-height:1.7;">The confirmation step — asking the AI to summarize the voice before it reads — is not ceremonial. It tells you immediately whether the document has landed. If the summary is off, you know to clarify before asking for feedback.</div>
+    </div>
+  </div>
+
+  <h2>One Thing to Do Before the Next Session</h2>
+
+  <p>The document takes about twenty minutes to write, and you only write it once — then refine it over time as your sense of your own voice sharpens. The first draft of the style document is like the first draft of anything: it gets clearer with each revision.</p>
+
+  <p>Start with the voice samples. Find the three sentences. That step alone — the act of identifying your own best work and saying <em>this, specifically, is what I'm capable of</em> — is worth the exercise regardless of whether you use the document in a single AI session. It is, in the most literal sense, knowing your own voice well enough to defend it.</p>
+
+  <p>The flattening problem is real. But it only has power over writers who arrive at the revision session without their voice already in the room. Bring the document. The AI will read differently. The feedback will land differently. The revision will be faster, sharper, and — crucially — still yours.</p>
+
+  <div class="insight">
+    The style document is not a shield against AI feedback. It is an invitation for better feedback — feedback that knows what it's reading before it starts.
+  </div>
+
+  <div class="pull-quote">
+    The AI doesn't know your voice. But twenty minutes from now, it can.
+  </div>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">AI & THE CRAFT — VOICE & REVISION</p>
+
+</div>
+
+<footer>
+  <p>AI & THE CRAFT &nbsp;·&nbsp; VOICE & REVISION</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  // ── Before/After tabs ──
+  function switchBA(idx) {
+    document.querySelectorAll('.ba-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('.ba-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // ── Five sections accordions ──
+  function toggleSection(idx) {
+    const el = document.getElementById('ds' + idx);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  // ── Copy master prompt ──
+  function copyMasterPrompt() {
+    const el = document.getElementById('master-prompt-text');
+    const text = el.innerText || el.textContent;
+    const btn = el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy Prompt'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+    });
+  }
+</script>
+
+</body>
+</html>
