@@ -3,7 +3,7 @@ import Link from "next/link";
 const semesterOneWeeks = Array.from({ length: 18 }, (_, index) => index + 1);
 const semesterTwoWeeks = Array.from({ length: 18 }, (_, index) => index + 19);
 const yearTwoSemesterOneWeeks = Array.from({ length: 18 }, (_, index) => index + 1);
-const yearTwoSemesterTwoWeeks = Array.from({ length: 16 }, (_, index) => index + 19);
+const yearTwoSemesterTwoWeeks = Array.from({ length: 18 }, (_, index) => index + 19);
 
 export default function DiyMfaHome() {
   return (
