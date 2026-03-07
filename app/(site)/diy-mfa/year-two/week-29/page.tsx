@@ -13,8 +13,8 @@ export default function YearTwoWeek29Page() {
     <WeekShell
       week={week29Data}
       prevHref="/diy-mfa/year-two/week-28"
-      nextHref="/diy-mfa/year-two/week-30"
-      nextLabel="Week 30: The Ethics of Nonfiction — Truth, Memory, and the Limits of Reconstruction"
+      nextHref="/diy-mfa"
+      nextLabel="Return to Program Overview"
       yearLabel="Year Two"
     />
   );
