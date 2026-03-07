@@ -161,7 +161,6 @@ export const week30Data: WeekData = {
             "Part Two — Spring Thesis Session 12 (1,500–2,000 words): Write the next section of the thesis, incorporating the Phase 5 punctuation synthesis into the session's attention. The session log should note whether the ethics position paper has surfaced any material in the thesis that requires ethical reconsideration — any scene, any character, any reconstruction that the position paper's standards reveal as uncertain.",
           ],
           target: "600 words (position paper) + 1,500–2,000 words (thesis session)",
-          badge: "Key Deliverable",
         },
       ],
     },
