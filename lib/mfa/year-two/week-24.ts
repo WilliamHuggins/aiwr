@@ -156,7 +156,7 @@ export const week24Data: WeekData = {
               author: "Toni Morrison / James Baldwin",
               href: "https://www.youtube.com/results?search_query=toni+morrison+reading+beloved",
               note: "Free on YouTube. Search for a recording of Morrison reading from *Beloved* and a recording of Baldwin reading from his essays — both are widely available. Listen specifically to sentence rhythm: how Morrison's sentences breathe, where they slow and where they accelerate, how the pause at the end of each sentence is itself a formal instrument. Then listen to Baldwin for the different rhythm: longer sentences, more complex syntactic structures, the rhythm of argument building through accumulation. The comparison is instructive — two of the great American prose stylists of the twentieth century, producing radically different music from the same language. Listen without reading the text on the page: hear the rhythm before you see it.",
-              badge: "Free on YouTube",
+              badge: "Free Online",
             },
           ],
         },
