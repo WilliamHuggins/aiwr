@@ -4,7 +4,7 @@ const semesterOneWeeks = Array.from({ length: 18 }, (_, index) => index + 1);
 const semesterTwoWeeks = Array.from({ length: 18 }, (_, index) => index + 19);
 const yearTwoSemesterOneWeeks = Array.from({ length: 18 }, (_, index) => index + 1);
 const yearTwoSemesterTwoWeeks = Array.from({ length: 18 }, (_, index) => index + 19);
-const yearThreeSemesterOneWeeks = [1, 2, 3, 4, 5];
+const yearThreeSemesterOneWeeks = [1, 2, 3, 4, 5, 6, 7];
 
 export default function DiyMfaHome() {
   return (
