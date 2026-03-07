@@ -150,7 +150,6 @@ export const week34Data: WeekData = {
             "The fifth question is the most important and the hardest. The gap between what the writer intended the thesis to be about and what it is actually about — what it has become in the drafting — is one of the most reliable signs of a manuscript that has grown beyond its original conception. A manuscript that is still exactly about what the writer said it was about in the proposal is either a manuscript that has followed its plan very faithfully, or a manuscript that has not yet discovered what it is. The read-through report's answer to question five is the foundation of the Year Three revision plan.",
           ],
           target: "700-word Read-Through Report (Key Deliverable)",
-          badge: "Key Deliverable",
         },
       ],
     },
