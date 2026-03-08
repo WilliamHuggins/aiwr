@@ -13,8 +13,8 @@ export default function YearThreeWeek14Page() {
     <WeekShell
       week={yearThreeWeek14Data}
       prevHref="/diy-mfa/year-three/week-13"
-      nextHref="/diy-mfa"
-      nextLabel="Return to Program Overview"
+      nextHref="/diy-mfa/year-three/week-15"
+      nextLabel="Continue to Week 15"
       yearLabel="Year Three"
     />
   );
