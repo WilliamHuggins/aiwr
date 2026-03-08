@@ -14,7 +14,7 @@ export default function YearThreeWeek20Page() {
       week={yearThreeWeek20Data}
       prevHref="/diy-mfa/year-three/week-19"
       nextHref="/diy-mfa/year-three/week-21"
-      nextLabel="Week 21: Master Passage Analysis"
+      nextLabel="Week 21: Intensive Final Draft Production I"
       yearLabel="Year Three"
     />
   );
