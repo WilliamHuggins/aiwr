@@ -1,14 +1,11 @@
 import Link from "next/link";
 
-const semesterOneWeeks = Array.from({ length: 18 }, (_, index) => index + 1);
-const semesterTwoWeeks = Array.from({ length: 18 }, (_, index) => index + 19);
-const yearTwoSemesterOneWeeks = Array.from({ length: 18 }, (_, index) => index + 1);
-const yearTwoSemesterTwoWeeks = Array.from({ length: 18 }, (_, index) => index + 19);
 const yearThreeSemesterOneWeeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const diyMfaCurriculum = [
   {
     year: "Year One: The Foundations",
+    slug: "year-one",
     semesters: [
       {
         title: "Semester One: The Architecture of the Sentence and the Scene",
@@ -60,6 +57,7 @@ const diyMfaCurriculum = [
   },
   {
     year: "Year Two: The Specialization",
+    slug: "year-two",
     semesters: [
       {
         title: "Semester One: Advanced Structure and the Thesis Proposal",
@@ -245,52 +243,38 @@ export default function DiyMfaHome() {
         </div>
       </div>
 
-      <div className="mt-16 space-y-10 text-left">
-        <div>
-          <h2 className="font-mfa-display text-5xl">Year One</h2>
-          <h3 className="mt-6 font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Semester One</h3>
-          <div className="mt-4 flex flex-wrap gap-4">
-            {semesterOneWeeks.map((weekNumber) => (
-              <Link key={weekNumber} href={`/diy-mfa/year-one/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
-                Enter Week {weekNumber}
-              </Link>
-            ))}
-          </div>
-        </div>
+      <div className="mt-16 grid gap-10 text-left lg:grid-cols-2">
+        {diyMfaCurriculum.map((yearGroup) => (
+          <article key={yearGroup.year} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+            <h2 className="font-mfa-display text-4xl text-slate-900 md:text-5xl">{yearGroup.year}</h2>
 
-        <div>
-          <h3 className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Semester 2</h3>
-          <div className="mt-4 flex flex-wrap gap-4">
-            {semesterTwoWeeks.map((weekNumber) => (
-              <Link key={weekNumber} href={`/diy-mfa/year-one/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
-                Enter Week {weekNumber}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+            <div className="mt-6 space-y-8">
+              {yearGroup.semesters.map((semester) => (
+                <section key={semester.title} className="border-t border-slate-200 pt-6 first:border-t-0 first:pt-0">
+                  <h3 className="font-mfa-mono text-xs uppercase tracking-[0.2em] text-slate-500">{semester.title}</h3>
 
-      <div className="mt-16 text-left">
-        <h2 className="font-mfa-display text-5xl">Year Two</h2>
-        <h3 className="mt-6 font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Semester One</h3>
-        <div className="mt-4 flex flex-wrap gap-4">
-          {yearTwoSemesterOneWeeks.map((weekNumber) => (
-            <Link key={weekNumber} href={`/diy-mfa/year-two/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
-              Enter Week {weekNumber}
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-10 text-left">
-        <h3 className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Semester Two</h3>
-        <div className="mt-4 flex flex-wrap gap-4">
-          {yearTwoSemesterTwoWeeks.map((weekNumber) => (
-            <Link key={weekNumber} href={`/diy-mfa/year-two/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
-              Enter Week {weekNumber}
-            </Link>
-          ))}
-        </div>
+                  <div className="mt-4 space-y-2">
+                    {semester.weeks.map(([weekNumber, title, synopsis]) => (
+                      <details key={`${semester.title}-${weekNumber}-${title}`} className="group rounded-md border border-slate-200 bg-slate-50 px-4 py-3">
+                        <summary className="cursor-pointer list-none text-base font-medium text-slate-800 transition group-hover:text-indigo-700">
+                          <span>Week {weekNumber}: </span>
+                          <span>{title}</span>
+                        </summary>
+                        <p className="mt-3 border-t border-slate-200 pt-3 text-sm leading-7 text-slate-700">{synopsis}</p>
+                        <Link
+                          href={`/diy-mfa/${yearGroup.slug}/week-${weekNumber}`}
+                          className="mt-3 inline-flex text-sm font-medium text-indigo-700 no-underline transition hover:text-indigo-500"
+                        >
+                          Enter Week {weekNumber}
+                        </Link>
+                      </details>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </article>
+        ))}
       </div>
 
       <div className="mt-16 text-left">
@@ -305,41 +289,7 @@ export default function DiyMfaHome() {
         </div>
       </div>
 
-      <div className="mt-24 border-t border-slate-200 pt-12 text-left">
-        <p className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-slate-500">Program Snapshot</p>
-        <h2 className="mt-4 font-mfa-display text-4xl text-slate-900 md:text-5xl">DIY MFA Curriculum</h2>
-        <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-700">
-          Explore the first two years of the curriculum by semester and week. Tap any week title to expand the synopsis.
-        </p>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-2">
-          {diyMfaCurriculum.map((yearGroup) => (
-            <article key={yearGroup.year} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-              <h3 className="font-mfa-display text-3xl text-slate-900">{yearGroup.year}</h3>
-
-              <div className="mt-6 space-y-8">
-                {yearGroup.semesters.map((semester) => (
-                  <section key={semester.title} className="border-t border-slate-200 pt-6 first:border-t-0 first:pt-0">
-                    <h4 className="font-mfa-mono text-xs uppercase tracking-[0.2em] text-slate-500">{semester.title}</h4>
-
-                    <div className="mt-4 space-y-2">
-                      {semester.weeks.map(([weekNumber, title, synopsis]) => (
-                        <details key={`${semester.title}-${weekNumber}-${title}`} className="group rounded-md border border-slate-200 bg-slate-50 px-4 py-3">
-                          <summary className="cursor-pointer list-none text-base font-medium text-slate-800 transition group-hover:text-indigo-700">
-                            <span>Week {weekNumber}: </span>
-                            <span>{title}</span>
-                          </summary>
-                          <p className="mt-3 border-t border-slate-200 pt-3 text-sm leading-7 text-slate-700">{synopsis}</p>
-                        </details>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }
