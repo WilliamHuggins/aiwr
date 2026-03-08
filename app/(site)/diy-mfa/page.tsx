@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-const yearThreeSemesterOneWeeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
 const diyMfaCurriculum = [
   {
     year: "Year One: The Foundations",
@@ -103,6 +101,30 @@ const diyMfaCurriculum = [
           [34, "The Read-Through", "Read your draft as a complete reader for the first time to reveal structural gaps and the manuscript's true nature."],
           [35, "The Revision Plan", "Transform your read-through findings into a prioritized, sequenced revision plan for the final year."],
           [36, "Year Two Synthesis", "Synthesize two years of growth and celebrate the manuscript that only you could write."],
+        ],
+      },
+    ],
+  },
+  {
+    year: "Year Three: The Completion",
+    slug: "year-three",
+    semesters: [
+      {
+        title: "Semester One: Intensive Revision and the Genre-Specific Final Pass",
+        weeks: [
+          [1, "Entering Revision", "Begin the final year with the cold eye and the willing hand, assessing your draft honestly before the systematic revision sequence."],
+          [2, "The Structural Revision", "Build the scene map to understand the architecture of the whole before touching a single sentence."],
+          [3, "The Character Revision", "Interrogate every character in the manuscript to ensure each earns their place and does work no other character does."],
+          [4, "The Thematic Revision", "Make the governing question more precise, auditing every passage for thematic contribution and over-explanation."],
+          [5, "The Voice Revision", "Conduct the voice audit for consistency, depth, and the signature sentence that defines the manuscript's sound."],
+          [6, "Line-Level Revision I", "Begin the sentence pass — the first systematic line-level revision of every sentence in the manuscript."],
+          [7, "Line-Level Revision II", "Focus the second sentence pass on dialogue and interiority, the two elements that most directly carry character."],
+          [8, "The Image Revision", "Find and deepen the governing metaphors — the images that recur, accumulate meaning, and carry the work's deepest weight."],
+          [9, "Pacing Revision", "Manage the reader's experience of time across the full manuscript, calibrating compression and expansion at scale."],
+          [10, "The Opening Revision", "Determine whether the thesis begins where it must — at the last possible moment before the story must begin."],
+          [11, "The Ending Revision", "Earn the arrival: revise the ending to answer the opening's question and make the final image resonate backward through the manuscript."],
+          [12, "The Full Manuscript Read-Through", "Perform the second full read-through to assess structural integrity after all revision passes and determine what remains."],
+          [13, "Genre-Specific Final Pass", "Apply the genre-specific final revision protocols — continuity, format, or ethics review — to complete the formal revision sequence."],
         ],
       },
     ],
@@ -277,17 +299,6 @@ export default function DiyMfaHome() {
         ))}
       </div>
 
-      <div className="mt-16 text-left">
-        <h2 className="font-mfa-display text-5xl">Year Three</h2>
-        <h3 className="mt-6 font-mfa-mono text-xs uppercase tracking-[0.22em] text-muted">Semester One</h3>
-        <div className="mt-4 flex flex-wrap gap-4">
-          {yearThreeSemesterOneWeeks.map((weekNumber) => (
-            <Link key={weekNumber} href={`/diy-mfa/year-three/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
-              Enter Week {weekNumber}
-            </Link>
-          ))}
-        </div>
-      </div>
 
 
     </section>
