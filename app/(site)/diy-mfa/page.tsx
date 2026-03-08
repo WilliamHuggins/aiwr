@@ -127,6 +127,8 @@ const diyMfaCurriculum = [
           [13, "Genre-Specific Final Pass", "Apply the genre-specific final revision protocols — continuity, format, or ethics review — to complete the formal revision sequence."],
           [14, "Professional Preparation I", "Build the full submission package: query or pitch, synopsis, comparables, author bio, and first ten polished pages."],
           [15, "Professional Preparation II", "Develop the teaching portfolio: statement of teaching philosophy, course description, and culminating master sentence analysis."],
+          [16, "The Writer's Reading Life", "Establish a sustainable reading ecosystem that keeps your prose in active conversation with contemporary craft and influence."],
+          [17, "The Literary Community", "Build and sustain the professional literary community that will support your writing life after the program."],
         ],
       },
     ],
