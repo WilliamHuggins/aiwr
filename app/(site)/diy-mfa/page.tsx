@@ -6,6 +6,111 @@ const yearTwoSemesterOneWeeks = Array.from({ length: 18 }, (_, index) => index +
 const yearTwoSemesterTwoWeeks = Array.from({ length: 18 }, (_, index) => index + 19);
 const yearThreeSemesterOneWeeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+const diyMfaCurriculum = [
+  {
+    year: "Year One: The Foundations",
+    semesters: [
+      {
+        title: "Semester One: The Architecture of the Sentence and the Scene",
+        weeks: [
+          [1, "The Writing Process & Creative Practice", "Establish the infrastructure of a serious writing life and learn why volume precedes quality in your creative practice."],
+          [2, "Image & Sensory Detail", "Discover the \"triggering subject\" and learn to unlock your writing through the power of concrete sensory detail."],
+          [3, "Showing vs. Telling & Narrative Mode", "Master the delicate balance between scene and summary to create a narrative that is both vivid and efficient."],
+          [4, "Scene Construction & The Turn", "Learn to identify and execute the \"turn\"—the essential moment in every scene where the ground shifts and everything changes."],
+          [5, "The Concrete World", "Deepen your reliance on physical grounding, replacing abstract placeholders with images that make your readers feel."],
+          [6, "Subtext & Implication", "Explore the gap between what characters say and what they mean to build tension and intimacy through subtext."],
+          [7, "Point of View & The Filter", "Move beyond pronoun choice to understand POV as the filter of consciousness that determines what the reader can know."],
+          [8, "Characterization & Indirect Revelation", "Stop describing your characters and start revealing them through the steady pressure of specific, inhabited detail."],
+          [9, "Round, Flat & the Convincing Surprise", "Distinguish between flat and round characters to understand when your story needs a single note or a complex instrument."],
+          [10, "Desire, Need & the Gap", "Map the generative gap between what a character consciously wants and what they unconsciously need."],
+          [11, "Dialogue I: Realism & Subtext", "Learn to write dialogue that sounds like real speech while performing the structural work that actual conversation never does."],
+          [12, "Dialogue II: Voice & Dialect", "Differentiate character voices through rhythm, vocabulary, and silence to create a scene of two distinct consciousnesses."],
+          [13, "Setting I: Place as Character", "Treat setting as a participant rather than a backdrop, allowing place to shape psychology and carry thematic weight."],
+          [14, "Setting II: World-Building & Research", "Build the \"iceberg\" of your world through research and invisible knowledge that makes your visible world feel real."],
+          [15, "Cross-Genre Week: Space & Place", "Step across genre lines to see how different forms solve the problem of placing a reader in physical space."],
+          [16, "Sustaining a Practice: The Middle Distance", "Navigate the \"messy middle\" of long projects and build the return-based practice required to finish what you start."],
+          [17, "Interiority: FID & Psychic Distance", "Harness the novel's unique power of interiority through free indirect discourse and the calibration of psychic distance."],
+          [18, "Fall Synthesis", "Synthesize your foundational skills to write the first 1,000 words of the project you most want to pursue."],
+        ],
+      },
+      {
+        title: "Semester Two: Perspective, Structure, and Syntax",
+        weeks: [
+          [19, "POV I: First Person", "Enter the \"intimate prison\" of first-person narration and explore the inherent unreliability of a single mind."],
+          [20, "POV II: Third-Person Limited", "Master third-person limited, the dominant mode of contemporary fiction, to balance intimacy with authorial mobility."],
+          [21, "POV III: The Unconventional", "Broaden your repertoire with second person and omniscience to understand the ethical claims of knowing."],
+          [22, "The Unreliable Narrator", "Use unreliability not as a trick, but as a structural engine that honors the partiality of all perception."],
+          [23, "Psychic Distance: The Variable Lens", "Learn to use psychic distance as a variable dial to control pacing and emotional revelation within a scene."],
+          [24, "Conflict, Crisis & Resolution", "Ignite the engine of narrative by moving from simple situation to conflict, crisis, and resolution."],
+          [25, "Plot & Structure II", "Study Freytag's Pyramid and its contemporary subversions to understand how experience actually moves."],
+          [26, "Plot & Structure III", "Explore alternative architectures like braided, reverse, and modular structures to find the best container for your story."],
+          [27, "Voice & Tone", "Identify and inhabit your unique voice—the sum of every stylistic choice you make on the page."],
+          [28, "Voice in CNF", "Distinguish between the narrator and the memoirist to manage the ethics and authority of the \"I\" on the page."],
+          [29, "Syntax & Sentence-Level Craft", "Integrate syntax and craft to treat the sentence as an artistic medium in the tradition of the masters."],
+          [30, "Comparison & Metaphor", "Use the metaphor not as decoration, but as a cognitive mode that creates new understanding through comparison."],
+          [31, "Symbol & the Objective Correlative", "Discover how objects accumulate meaning through placement and recurrence to become powerful symbols."],
+          [32, "Pacing & Rhythm", "Control the reader's experience of time by dilating significant moments and compressing connective tissue."],
+          [33, "The Short Story", "Explore the special laws of the short story, where every element must produce a single, concentrated effect."],
+          [34, "Tone, Comedy & Laughter", "Study how tone and comedy function as rhetorical instruments to create your reader's fundamental relationship to the work."],
+          [35, "Spring Portfolio Review", "Look retrospectively at your body of work to see the manuscript, themes, and concerns beginning to emerge."],
+          [36, "Year One Synthesis", "Articulate the core question of your project and declare your intent for the thesis years ahead."],
+        ],
+      },
+    ],
+  },
+  {
+    year: "Year Two: The Specialization",
+    semesters: [
+      {
+        title: "Semester One: Advanced Structure and the Thesis Proposal",
+        weeks: [
+          [1, "Scene as Architectural Craft", "Transition from intuition to architecture by studying scenes as structures designed for depth and intensity."],
+          [2, "The Iceberg Theory", "Apply Hemingway's theory to earn your omissions and create power through what is left unsaid."],
+          [3, "Advanced Structure I", "Deepen your structural range with nonlinear, fragmented, and modular narratives that emerge from your content."],
+          [4, "Advanced Structure II", "Interweave storylines and registers in a braided narrative to generate meaning in the seams between strands."],
+          [5, "Time Manipulation", "Master flashback, flash-forward, and compression as structural decisions that manage narrative meaning."],
+          [6, "Opening Strategies", "Treat your first page as a contract with the reader, establishing the voice and governing question of the work."],
+          [7, "Pressure & Consequence", "Build strong scenes that earn their place through pressure, movement, and structural consequence."],
+          [8, "Theme & Meaning", "Identify the governing question your work is asking rather than the argument it is trying to make."],
+          [9, "Revision I", "Distinguish between generative drafting and the revisionary mode to see your work for what it actually is."],
+          [10, "Revision II", "Develop a workshop mindset to read your own work with craft-trained eyes and without authorial attachment."],
+          [11, "Long-Form Problems", "Solve the special problems of long-form projects, from managing scale to sustaining reader investment."],
+          [12, "The Thesis Proposal", "Use the thesis proposal as a thinking instrument to articulate your intent and accelerate your work."],
+          [13, "Writing the Other", "Engage with the ethics and craft of imaginative inhabitation when writing across lines of difference."],
+          [14, "Voice Development", "Move from habit to vision as you consciously develop the vocal frequency only you can transmit."],
+          [15, "Cross-Genre Ethics", "Examine the ethical responsibilities of representation across literary fiction, screenwriting, and memoir."],
+          [16, "Professional Development I", "Map the contemporary publishing landscape and understand how the market serves as your work's destination."],
+          [17, "Professional Development II", "Consider the long arc of a writing career, from sustainability and community to the meaning of success."],
+          [18, "Fall Portfolio Review", "Confirm your direction and decide if your thesis is the project that most urgently requires your attention."],
+        ],
+      },
+      {
+        title: "Semester Two: Intensive Thesis Production",
+        weeks: [
+          [19, "Entering the Thesis", "Shift your focus toward sustained production as you begin the intensive drafting of your manuscript."],
+          [20, "Hybrid Forms", "Use experimental and hybrid forms as diagnostic tools when conventional structures fail your material."],
+          [21, "The Lyric Essay", "Build coherence through pattern and juxtaposition, letting image and pressure lead the associative leap."],
+          [22, "Narrative Time Control", "Align your page-time with story pressure using a practical system for pacing, duration, and sequence."],
+          [23, "Character Transformation", "Audit your manuscript for true transformation to ensure your characters have changed by the final page."],
+          [24, "The Sentence as Music", "Train your ear to recognize the musicality of prose, using rhythm and sound to create a listening experience."],
+          [25, "Minimalism vs. Maximalism", "Compare governing syntactic philosophies to decide which stylistic path your material requires."],
+          [26, "Master Sentence Analysis", "Learn the discipline of \"reading like a technician\" through close, analytical study of master prose."],
+          [27, "Advanced Characterization", "Tackle advanced challenges, from the character who resists to the narrator who doesn't know what they show."],
+          [28, "Voice Synthesis", "Reflect on two years of syntactic development to finalize the voice and style of your emerging manuscript."],
+          [29, "Professional Development III", "Prepare the thesis for its life after the program, from query packages to literary magazine submissions."],
+          [30, "Ethics of Nonfiction", "Navigate the ethics of creative nonfiction and the irreducible tension between artistic rendering and truth."],
+          [31, "Intensive Production I", "Dive into the first push of intensive production, focusing on internal logic and the paragraph as a unit."],
+          [32, "The Red Pen", "Apply radical compression to your draft to learn the discipline of white space and linguistic efficiency."],
+          [33, "Transitions & Surprise", "Study the architecture of transitions to move seamlessly between scenes without losing momentum."],
+          [34, "The Read-Through", "Read your draft as a complete reader for the first time to reveal structural gaps and the manuscript's true nature."],
+          [35, "The Revision Plan", "Transform your read-through findings into a prioritized, sequenced revision plan for the final year."],
+          [36, "Year Two Synthesis", "Synthesize two years of growth and celebrate the manuscript that only you could write."],
+        ],
+      },
+    ],
+  },
+] as const;
+
 export default function DiyMfaHome() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-16">
@@ -196,6 +301,42 @@ export default function DiyMfaHome() {
             <Link key={weekNumber} href={`/diy-mfa/year-three/week-${weekNumber}`} className="rounded-sm border border-border px-4 py-2 no-underline">
               Enter Week {weekNumber}
             </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-24 border-t border-slate-200 pt-12 text-left">
+        <p className="font-mfa-mono text-xs uppercase tracking-[0.22em] text-slate-500">Program Snapshot</p>
+        <h2 className="mt-4 font-mfa-display text-4xl text-slate-900 md:text-5xl">DIY MFA Curriculum</h2>
+        <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-700">
+          Explore the first two years of the curriculum by semester and week. Tap any week title to expand the synopsis.
+        </p>
+
+        <div className="mt-10 grid gap-10 lg:grid-cols-2">
+          {diyMfaCurriculum.map((yearGroup) => (
+            <article key={yearGroup.year} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+              <h3 className="font-mfa-display text-3xl text-slate-900">{yearGroup.year}</h3>
+
+              <div className="mt-6 space-y-8">
+                {yearGroup.semesters.map((semester) => (
+                  <section key={semester.title} className="border-t border-slate-200 pt-6 first:border-t-0 first:pt-0">
+                    <h4 className="font-mfa-mono text-xs uppercase tracking-[0.2em] text-slate-500">{semester.title}</h4>
+
+                    <div className="mt-4 space-y-2">
+                      {semester.weeks.map(([weekNumber, title, synopsis]) => (
+                        <details key={`${semester.title}-${weekNumber}-${title}`} className="group rounded-md border border-slate-200 bg-slate-50 px-4 py-3">
+                          <summary className="cursor-pointer list-none text-base font-medium text-slate-800 transition group-hover:text-indigo-700">
+                            <span>Week {weekNumber}: </span>
+                            <span>{title}</span>
+                          </summary>
+                          <p className="mt-3 border-t border-slate-200 pt-3 text-sm leading-7 text-slate-700">{synopsis}</p>
+                        </details>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            </article>
           ))}
         </div>
       </div>
