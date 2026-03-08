@@ -125,6 +125,7 @@ const diyMfaCurriculum = [
           [11, "The Ending Revision", "Earn the arrival: revise the ending to answer the opening's question and make the final image resonate backward through the manuscript."],
           [12, "The Full Manuscript Read-Through", "Perform the second full read-through to assess structural integrity after all revision passes and determine what remains."],
           [13, "Genre-Specific Final Pass", "Apply the genre-specific final revision protocols — continuity, format, or ethics review — to complete the formal revision sequence."],
+          [14, "Professional Preparation I", "Build the full submission package: query or pitch, synopsis, comparables, author bio, and first ten polished pages."],
         ],
       },
     ],
