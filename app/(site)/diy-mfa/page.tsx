@@ -131,6 +131,15 @@ const diyMfaCurriculum = [
           [17, "The Literary Community", "Build and sustain the professional literary community that will support your writing life after the program."],
         ],
       },
+      {
+        title: "Semester Two: Final Draft Production, Defense, and Next-Stage Submission",
+        weeks: [
+          [18, "Fall Semester Synthesis: The Thesis Enters Final Drafting", "Complete the final fall diagnostic and begin spring with a clear production target, revision hierarchy, and thesis-ready process."],
+          [19, "The Final Draft — Producing the Thesis-Ready Manuscript", "Shift from revision mode into sustained final-draft generation, producing polished manuscript pages at publication-level standards."],
+          [20, "Revising for the Reader You Want", "Calibrate prose, structure, and pacing for the intended reader by identifying where the manuscript is over-explaining, under-signaling, or misdirecting attention."],
+          [21, "Intensive Final Draft Production I", "Launch the first full production sprint by generating 2,000–3,000 words of final-draft prose while protecting momentum and voice consistency."],
+        ],
+      },
     ],
   },
 ] as const;
