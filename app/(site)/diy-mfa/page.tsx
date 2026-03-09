@@ -138,6 +138,8 @@ const diyMfaCurriculum = [
           [19, "The Final Draft — Producing the Thesis-Ready Manuscript", "Shift from revision mode into sustained final-draft generation, producing polished manuscript pages at publication-level standards."],
           [20, "Revising for the Reader You Want", "Calibrate prose, structure, and pacing for the intended reader by identifying where the manuscript is over-explaining, under-signaling, or misdirecting attention."],
           [21, "Intensive Final Draft Production I", "Launch the first full production sprint by generating 2,000–3,000 words of final-draft prose while protecting momentum and voice consistency."],
+          [22, "Intensive Final Draft Production II", "Complete all major structural revisions, produce 2,000–3,000 words, and write the thesis's most concentrated voice passage in place."],
+          [23, "Intensive Final Draft Production III", "Finish all five line-level passes, produce 1,500–2,000 words, and read the full manuscript aloud to mark every stumble."],
         ],
       },
     ],
