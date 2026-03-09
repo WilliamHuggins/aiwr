@@ -142,6 +142,8 @@ const diyMfaCurriculum = [
           [23, "Intensive Final Draft Production III", "Finish all five line-level passes, produce 1,500–2,000 words, and read the full manuscript aloud to mark every stumble."],
           [24, "Intensive Final Draft Production IV", "Complete all remaining new prose, begin the oral-reading revision pass, and transition the manuscript from making to finishing."],
           [25, "Preparing for the Public Reading", "Select and rehearse a 12–15 minute reading script with a spoken introduction and performance-ready pacing."],
+          [26, "The Thesis Defense — Articulating the Work", "Write, rehearse, and AI stress-test a six-part defense presentation while completing the final grammar reflection."],
+          [27, "The Thesis Submitted — What Happens After Completion", "Process completion, establish ten benchmark thesis sentences, and write the letter to your Year One self."],
         ],
       },
     ],
