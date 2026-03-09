@@ -129,7 +129,7 @@ export const yearThreeWeek36Data: WeekData = {
               author: "Read whatever you want",
               href: "",
               note: "You have earned the unassigned hour. Read whatever you want — the book you most want to read, the book you've been saving, the book you started last year and set aside. Read without a craft agenda, without annotating for technique, without taking notes on what you might apply. Read because you are a reader, and readers read, and the reading life is the primary classroom of the writing life and it continues without the program's structure to organize it. This is what all the reading was for: the capacity to read with full attention, for pleasure and for the deep pleasure that is indistinguishable from learning, for the rest of the writing life.",
-              badge: "Nothing assigned",
+              badge: "Recommended",
             },
           ],
         },
