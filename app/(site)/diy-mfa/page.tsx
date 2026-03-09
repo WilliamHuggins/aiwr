@@ -144,6 +144,8 @@ const diyMfaCurriculum = [
           [25, "Preparing for the Public Reading", "Select and rehearse a 12–15 minute reading script with a spoken introduction and performance-ready pacing."],
           [26, "The Thesis Defense — Articulating the Work", "Write, rehearse, and AI stress-test a six-part defense presentation while completing the final grammar reflection."],
           [27, "The Thesis Submitted — What Happens After Completion", "Process completion, establish ten benchmark thesis sentences, and write the letter to your Year One self."],
+          [28, "Final Preparation for the Public Reading", "Complete three timed rehearsals, finalize the author's note, and confirm all event logistics for the public reading."],
+          [29, "The Public Reading", "Give the public reading, revisit Week One documents, and write one page of post-reading notes while the event is fresh."],
         ],
       },
     ],
