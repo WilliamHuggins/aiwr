@@ -140,6 +140,8 @@ const diyMfaCurriculum = [
           [21, "Intensive Final Draft Production I", "Launch the first full production sprint by generating 2,000–3,000 words of final-draft prose while protecting momentum and voice consistency."],
           [22, "Intensive Final Draft Production II", "Complete all major structural revisions, produce 2,000–3,000 words, and write the thesis's most concentrated voice passage in place."],
           [23, "Intensive Final Draft Production III", "Finish all five line-level passes, produce 1,500–2,000 words, and read the full manuscript aloud to mark every stumble."],
+          [24, "Intensive Final Draft Production IV", "Complete all remaining new prose, begin the oral-reading revision pass, and transition the manuscript from making to finishing."],
+          [25, "Preparing for the Public Reading", "Select and rehearse a 12–15 minute reading script with a spoken introduction and performance-ready pacing."],
         ],
       },
     ],
