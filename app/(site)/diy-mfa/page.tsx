@@ -152,6 +152,7 @@ const diyMfaCurriculum = [
           [33, "Experimental Form as Permanent Practice", "Use experimental structures as ongoing tools, generating new seed material and identifying your durable formal instincts."],
           [34, "The Writing Retreat as Practice", "Build the conditions for sustained work through residency research, realistic routines, and a submit-ready proposal."],
           [35, "Teaching Craft — The Writer as Teacher", "Complete the teaching portfolio centerpiece documents and articulate the craft knowledge you can teach with authority."],
+          [36, "The Completion — What the Program Has Made", "Conclude the program with a final reckoning, Year Three synthesis statement, and the last sentence that sets your next beginning."],
         ],
       },
     ],
