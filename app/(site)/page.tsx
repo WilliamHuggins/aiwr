@@ -45,7 +45,7 @@ export default function HomePage() {
         <div className="heroVideoWrap" aria-label="Decorative ambient alpine night video background">
           <video
             className="heroVideo"
-            src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/AIWR%20Hero%20Vid.mp4"
+            src="https://drive.usercontent.google.com/download?id=12FE6jGHrJ5PB3lsH2ZGBR8sEdoNk3ks9&export=download"
             autoPlay
             muted
             loop
@@ -60,7 +60,6 @@ export default function HomePage() {
           </video>
           <div className="heroVideoShield" aria-hidden="true" />
         </div>
-        <div className="hero-studio__overlay" aria-hidden="true" />
         <Container className="hero-studio__container">
           <header className="hero-studio__inner">
             <h1 id="hero-studio-title" className="hero-studio__headline">
