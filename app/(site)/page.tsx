@@ -43,7 +43,7 @@ export default function HomePage() {
     <>
       <section className="hero-studio" aria-labelledby="hero-studio-title">
         <div className="heroVideoWrap" aria-label="Decorative ambient alpine night video background">
-          <video
+          <iframe
             className="heroVideo"
             autoPlay
             muted
