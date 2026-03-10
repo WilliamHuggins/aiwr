@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Has a Research Brain | AI & The Craft</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --cream: #faf7f2;
+    --rust: #c0392b;
+    --gold: #b8860b;
+    --faded: #7a6f5e;
+    --highlight: #fff3cd;
+    --chatgpt: #10a37f;
+    --chatgpt-light: #e8f5f1;
+    --gemini: #4285f4;
+    --gemini-light: #e8f0fe;
+    --claude: #c0392b;
+    --claude-light: #fdf0ee;
+    --notebooklm: #e37400;
+    --notebooklm-light: #fff4e5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 16px 24px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-bottom: 3px double var(--gold);
+  }
+
+  .hero {
+    background: var(--parchment);
+    border-bottom: 3px double var(--ink);
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '§';
+    position: absolute;
+    font-size: 500px;
+    color: rgba(0,0,0,0.022);
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    pointer-events: none;
+  }
+
+  .issue-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6.5vw, 76px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .deck {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 23px);
+    color: var(--faded);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+  }
+
+  .byline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    border-top: 1px solid var(--faded);
+    border-bottom: 1px solid var(--faded);
+    display: inline-block;
+    padding: 8px 24px;
+  }
+
+  .post-date {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--faded);
+    margin-top: 16px;
+    display: block;
+  }
+
+  .article-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 92px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 -4px;
+    color: var(--rust);
+  }
+
+  p { margin-bottom: 1.5em; font-size: 19px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 2.5em 0 0.8em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .pull-quote {
+    margin: 2.5em -32px;
+    padding: 32px 48px;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before, .pull-quote::after {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    position: absolute;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .pull-quote::before { top: 12px; left: 16px; }
+  .pull-quote::after { content: '\201D'; bottom: -16px; right: 16px; }
+
+  .insight {
+    margin: 2.5em 0;
+    padding: 28px 32px;
+    background: var(--highlight);
+    border-left: 5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 28px;
+    margin: 2.5em 0;
+    letter-spacing: 12px;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+  code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 16px;
+    background: var(--parchment);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--rust);
+  }
+
+  /* ── Tool cards ── */
+  .tool-card {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    overflow: hidden;
+  }
+
+  .tool-card-header {
+    padding: 22px 28px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 2px solid var(--ink);
+    flex-wrap: wrap;
+  }
+
+  .tool-card.chatgpt    .tool-card-header { background: var(--chatgpt-light); }
+  .tool-card.gemini     .tool-card-header { background: var(--gemini-light); }
+  .tool-card.claude-c   .tool-card-header { background: var(--claude-light); }
+  .tool-card.notebooklm .tool-card-header { background: var(--notebooklm-light); }
+
+  .tool-badge {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .tool-card.chatgpt    .tool-badge { background: var(--chatgpt);    color: white; }
+  .tool-card.gemini     .tool-badge { background: var(--gemini);     color: white; }
+  .tool-card.claude-c   .tool-badge { background: var(--claude);     color: white; }
+  .tool-card.notebooklm .tool-badge { background: var(--notebooklm); color: white; }
+
+  .tool-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .tool-tagline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-left: auto;
+  }
+
+  .tool-body {
+    padding: 26px 28px 0;
+    background: white;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .tool-body p { font-size: 17px; margin-bottom: 1.2em; }
+
+  .tool-specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-top: 6px;
+  }
+
+  .spec {
+    padding: 14px 16px;
+    border-right: 1px solid rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .spec:last-child { border-right: none; }
+
+  .spec-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 5px;
+  }
+
+  .spec-value {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .tool-card.chatgpt    .spec-value { color: var(--chatgpt);    }
+  .tool-card.gemini     .spec-value { color: var(--gemini);     }
+  .tool-card.claude-c   .spec-value { color: var(--claude);     }
+  .tool-card.notebooklm .spec-value { color: var(--notebooklm); }
+
+  .tool-screenshot {
+    border-top: 2px solid var(--ink);
+    background: var(--parchment);
+  }
+
+  .tool-screenshot img {
+    width: 100%;
+    display: block;
+  }
+
+  .screenshot-caption {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--faded);
+    padding: 8px 16px 10px;
+    text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  /* ── Use case table ── */
+  .use-case-grid {
+    margin: 2.5em 0;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    overflow-x: auto;
+  }
+
+  .use-case-header {
+    background: var(--ink);
+    padding: 16px 20px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .use-case-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+    background: white;
+  }
+
+  .use-case-table th {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faded);
+    padding: 11px 12px;
+    background: var(--parchment);
+    border-bottom: 2px solid var(--ink);
+    border-right: 1px solid rgba(0,0,0,0.08);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .use-case-table th:first-child,
+  .use-case-table th:nth-child(2) { text-align: left; }
+
+  .use-case-table td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-right: 1px solid rgba(0,0,0,0.06);
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .use-case-table td:first-child { text-align: left; font-weight: 600; font-size: 14px; }
+  .use-case-table td:nth-child(2) { text-align: left; font-style: italic; color: var(--faded); font-size: 13px; }
+  .use-case-table tr:last-child td { border-bottom: none; }
+  .use-case-table td:last-child,
+  .use-case-table th:last-child { border-right: none; }
+
+  /* ── Hallucination causes ── */
+  .causes-list { margin: 1.5em 0; }
+
+  .cause-item {
+    border: 2px solid var(--ink);
+    margin-bottom: -2px;
+  }
+
+  .cause-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .cause-header:hover { background: rgba(0,0,0,0.02); }
+  .cause-item.open .cause-header { background: var(--ink); color: var(--parchment); }
+
+  .cause-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    background: var(--rust);
+    color: white;
+    padding: 18px 16px;
+    min-width: 50px;
+    text-align: center;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cause-item.open .cause-num { background: var(--gold); }
+
+  .cause-label-wrap { flex: 1; padding: 18px 20px; }
+
+  .cause-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .cause-toggle {
+    font-size: 22px;
+    color: var(--faded);
+    padding: 18px;
+    transition: transform 0.2s;
+  }
+
+  .cause-item.open .cause-toggle { transform: rotate(45deg); color: var(--gold); }
+
+  .cause-body {
+    display: none;
+    padding: 22px 24px 26px 66px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    background: white;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .cause-item.open .cause-body { display: block; }
+  .cause-body p { font-size: 17px; margin-bottom: 1em; }
+  .cause-body p:last-child { margin-bottom: 0; }
+
+  /* ── Prompts ── */
+  .prompt-stack { margin: 2.5em 0; }
+
+  .prompt-item {
+    border: 2px solid var(--ink);
+    margin-bottom: -2px;
+  }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .prompt-header:hover { background: rgba(0,0,0,0.02); }
+  .prompt-item.open .prompt-header { background: var(--ink); color: var(--parchment); }
+
+  .prompt-tool-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 20px 12px;
+    min-width: 68px;
+    text-align: center;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .prompt-item.chatgpt    .prompt-tool-tag { background: var(--chatgpt);    }
+  .prompt-item.gemini     .prompt-tool-tag { background: var(--gemini);     }
+  .prompt-item.claude-p   .prompt-tool-tag { background: var(--claude);     }
+  .prompt-item.notebooklm .prompt-tool-tag { background: var(--notebooklm); }
+
+  .prompt-label-wrap { flex: 1; padding: 18px 20px; }
+
+  .prompt-scenario {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 4px;
+  }
+
+  .prompt-item.open .prompt-scenario { color: var(--gold); }
+
+  .prompt-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .prompt-toggle {
+    font-size: 22px;
+    color: var(--faded);
+    padding: 18px;
+    transition: transform 0.2s;
+  }
+
+  .prompt-item.open .prompt-toggle { transform: rotate(45deg); color: var(--gold); }
+
+  .prompt-body {
+    display: none;
+    padding: 24px 28px 28px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    background: white;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .prompt-item.open .prompt-body { display: block; }
+
+  .prompt-context {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--faded);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    line-height: 1.6;
+    border-bottom: 1px dashed rgba(0,0,0,0.12);
+  }
+
+  .prompt-text-block {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    background: var(--parchment);
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    white-space: pre-wrap;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .copy-btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 2px solid var(--ink);
+    background: var(--parchment);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .copy-btn:hover { background: var(--ink); color: var(--parchment); }
+  .copy-btn.copied { background: var(--gold); border-color: var(--gold); color: white; }
+
+  .prompt-writer-note {
+    margin-top: 14px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--faded);
+    padding: 12px 16px;
+    border-left: 3px solid rgba(0,0,0,0.12);
+  }
+
+  /* ── Warning box ── */
+  .warning-box {
+    margin: 2.5em 0;
+    border: 2px solid var(--rust);
+    padding: 26px 30px;
+    background: var(--claude-light);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .warning-box-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-top: 3px double var(--gold);
+  }
+
+  footer p { margin-bottom: 0; font-size: 12px; }
+  a { color: var(--rust); text-decoration: underline; }
+  a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .pull-quote { margin: 2.5em 0; }
+    .tool-tagline { display: none; }
+    .tool-specs { grid-template-columns: 1fr 1fr; }
+    .spec:nth-child(2) { border-right: none; }
+    .spec:nth-child(3) { border-top: 1px solid rgba(0,0,0,0.1); grid-column: 1 / -1; }
+    .cause-body { padding-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">AI & The Craft &nbsp;·&nbsp; Tools for Writers</div>
+
+<div class="hero">
+  <span class="issue-tag">AI & The Craft</span>
+  <h1>AI Has a<br><em>Research Brain.</em></h1>
+  <p class="deck">ChatGPT, Gemini, Claude, and NotebookLM all offer modes that browse sources and produce a structured report. Here is what writers actually need to know — including what these tools get wrong and why.</p>
+  <span class="byline">Deep Research, Explained for Writers</span>
+  <span class="post-date">March 9, 2026</span>
+</div>
+
+<div class="article-wrapper">
+
+  <p class="drop-cap">For most of writing history, research meant time. You sat in libraries, made phone calls, mailed letters, read books that were themselves the product of years of reading other books. The accumulation was the point — the research didn't just inform the writing, it shaped the mind doing the writing. Something happened in the twenty minutes you spent waiting for a microfilm spool that you can't replicate in a search result, and we should be honest with ourselves about what's lost when that is compressed away.</p>
+
+  <p>That said: the compression has arrived. All four of the major AI tools writers are likely to use now offer dedicated research modes that do something qualitatively different from the standard chat interface. They browse the web autonomously, read dozens or hundreds of sources, and produce a structured report with citations while you go do something else. The reports take anywhere from a few minutes to nearly an hour. They are often surprisingly good. And they raise a set of questions particular to writers — not to analysts or product managers, the people these tools were largely built for.</p>
+
+  <p>This post covers what each tool does, how they differ, why they sometimes get things badly wrong, and what writers specifically can and can't use them for.</p>
+
+  <div class="pull-quote">
+    These tools were built to save the analyst hours. A writer needs to think carefully about which hours they actually want saved.
+  </div>
+
+  <h2>What "Deep Research" Actually Means</h2>
+
+  <p>In a regular AI conversation, you ask a question and the model draws on what it learned during training. The answer is fast but limited to what the model already knows — a cutoff date, a training scope shaped by decisions made well before you sat down to write.</p>
+
+  <p>Deep Research changes this by making the AI an active agent. You give it a question. It breaks that question into sub-questions, goes to the web, reads actual pages and PDFs, synthesizes what it finds, and returns a report with citations you can follow. It is closer to "send an intern to the library for an afternoon" than "ask a knowledgeable friend." The intern can cover ground fast. Like any intern, they can also come back with confidently stated errors.</p>
+
+  <p>Here is what each of the four tools offers.</p>
+
+  <!-- ── ChatGPT ── -->
+  <div class="tool-card chatgpt">
+    <div class="tool-card-header">
+      <span class="tool-badge">ChatGPT</span>
+      <span class="tool-name">Deep Research</span>
+      <span class="tool-tagline">The Analyst</span>
+    </div>
+    <div class="tool-body">
+      <p>ChatGPT's Deep Research is the most explicitly "analyst" of the group — built for structured, comprehensive reports of the kind a consultant would produce. It breaks your query into sub-questions, browses multiple sources, and assembles a cited report that can run many pages. It shows its reasoning steps as it runs and allows you to interrupt mid-research to redirect. You can restrict it to specific websites or domains, which is useful if you want to limit research to particular publications or source types.</p>
+      <p>For a writer, the most useful features are source control and structured output. Reports include inline citations with links, section headers, and occasionally data visualizations. Coverage depth is impressive on broad, well-documented topics. On niche, contested, or primarily oral topics, it is more likely to produce plausible-sounding gaps. Available on paid plans; a lighter version is available to free users.</p>
+      <div class="tool-specs">
+        <div class="spec"><div class="spec-label">Run time</div><div class="spec-value">5 – 30 min</div></div>
+        <div class="spec"><div class="spec-label">Access</div><div class="spec-value">Plus / Pro / Free (limited)</div></div>
+        <div class="spec"><div class="spec-label">Best for writers</div><div class="spec-value">Comprehensive background on documented topics</div></div>
+      </div>
+    </div>
+    <div class="tool-screenshot">
+      <img src="https://i.postimg.cc/RVyxNnQJ/Screenshot-2026-03-09-at-6-13-59-PM.png" alt="ChatGPT Deep Research toggle in the message composer">
+      <div class="screenshot-caption">ChatGPT — Deep Research toggle in the message composer</div>
+    </div>
+  </div>
+
+  <!-- ── Gemini ── -->
+  <div class="tool-card gemini">
+    <div class="tool-card-header">
+      <span class="tool-badge">Gemini</span>
+      <span class="tool-name">Deep Research</span>
+      <span class="tool-tagline">The Connector</span>
+    </div>
+    <div class="tool-body">
+      <p>Gemini Deep Research is the best-integrated of the group if you live inside Google's ecosystem. It can pull from your Google Drive, Gmail, and Docs in addition to the open web — for writers using Google Docs as their primary workspace, this is genuinely useful. You can feed it your own drafts, notes, and reference files and let it synthesize across all of them alongside external sources. Reports export directly to Google Docs, which is the smoothest output-to-draft pipeline of the four tools.</p>
+      <p>It shows you its research plan before it begins — you can review and modify it before the first search runs. A lighter version is available to free users. For writers already deep in Google's ecosystem, this is the version most likely to fit naturally into an existing workflow.</p>
+      <div class="tool-specs">
+        <div class="spec"><div class="spec-label">Run time</div><div class="spec-value">5 – 15 min</div></div>
+        <div class="spec"><div class="spec-label">Access</div><div class="spec-value">Gemini Advanced / Free (lighter)</div></div>
+        <div class="spec"><div class="spec-label">Best for writers</div><div class="spec-value">Synthesizing Drive notes alongside the web</div></div>
+      </div>
+    </div>
+    <div class="tool-screenshot">
+      <img src="https://i.postimg.cc/vmWyRHn1/Screenshot-2026-03-09-at-6-12-50-PM.png" alt="Gemini Deep Research interface">
+      <div class="screenshot-caption">Gemini — Deep Research interface</div>
+    </div>
+  </div>
+
+  <!-- ── Claude ── -->
+  <div class="tool-card claude-c">
+    <div class="tool-card-header">
+      <span class="tool-badge">Claude</span>
+      <span class="tool-name">Research</span>
+      <span class="tool-tagline">The Reader</span>
+    </div>
+    <div class="tool-body">
+      <p>Claude's version — called simply Research, without "Deep" — positions itself somewhat differently. It breaks your question into components, gathers sources, and produces a cited report, but the character of the output tends toward synthesis and nuanced reasoning rather than maximum coverage. Where ChatGPT's reports can feel like analyst briefs, Claude's tend to feel more like a thoughtful summary with a point of view — which is often exactly what a writer needs from background research.</p>
+      <p>Claude Research can incorporate uploaded documents alongside web sources and connects to external services via integrations. The relevant advantage for writers is the same quality that makes Claude useful in revision sessions: it is more likely to acknowledge uncertainty, flag where sources disagree, and note the limits of what it found. Available on paid plans.</p>
+      <div class="tool-specs">
+        <div class="spec"><div class="spec-label">Run time</div><div class="spec-value">5 – 45 min</div></div>
+        <div class="spec"><div class="spec-label">Access</div><div class="spec-value">Pro / Max / Team / Enterprise</div></div>
+        <div class="spec"><div class="spec-label">Best for writers</div><div class="spec-value">Nuanced synthesis; contested terrain; uploaded docs</div></div>
+      </div>
+    </div>
+    <div class="tool-screenshot">
+      <img src="https://i.postimg.cc/br686Cnz/Screenshot-2026-03-09-at-6-11-24-PM.png" alt="Claude Research mode">
+      <div class="screenshot-caption">Claude — Research mode</div>
+    </div>
+  </div>
+
+  <!-- ── NotebookLM ── -->
+  <div class="tool-card notebooklm">
+    <div class="tool-card-header">
+      <span class="tool-badge">NotebookLM</span>
+      <span class="tool-name">Fast &amp; Deep Research</span>
+      <span class="tool-tagline">The Archivist</span>
+    </div>
+    <div class="tool-body">
+      <p>NotebookLM works differently from the other three and is worth understanding on its own terms. While ChatGPT, Gemini, and Claude Research all start from the open web, NotebookLM starts from <em>your</em> sources. You upload documents — PDFs, articles, notes, transcripts, Google Docs — and it builds a knowledge base from them. Its answers are grounded in what you've given it, not in what it can find online.</p>
+      <p>It offers two research modes: Fast Research synthesizes quickly across your uploaded sources; Deep Research reasons more extensively across them. The key distinction for writers is that NotebookLM is unlikely to hallucinate facts that weren't in your source material — it will tell you when it can't find something rather than inventing a plausible answer. The tradeoff is that it cannot discover new material. It is an excellent tool for the phase when you've done the gathering and need the synthesis. Its Audio Overview feature — which turns a set of sources into a conversational summary — is also a surprisingly useful way to quickly absorb a body of material. Available with a free tier; NotebookLM Plus offers expanded limits.</p>
+      <div class="tool-specs">
+        <div class="spec"><div class="spec-label">Run time</div><div class="spec-value">Seconds – minutes</div></div>
+        <div class="spec"><div class="spec-label">Access</div><div class="spec-value">Free / NotebookLM Plus</div></div>
+        <div class="spec"><div class="spec-label">Best for writers</div><div class="spec-value">Synthesizing sources you've already gathered</div></div>
+      </div>
+    </div>
+    <div class="tool-screenshot">
+      <img src="https://i.postimg.cc/rss7p8dT/Screenshot-2026-03-09-at-6-15-22-PM.png" alt="NotebookLM research interface">
+      <div class="screenshot-caption">NotebookLM — Research within your uploaded sources</div>
+    </div>
+  </div>
+
+  <h2>What Writers Can Actually Use This For</h2>
+
+  <p>The three web-based tools were built with the analyst in mind. They work best for questions that have answers findable on the open web and that benefit from breadth. NotebookLM is the exception: it works best once you've already done the gathering.</p>
+
+  <div class="use-case-grid">
+    <div class="use-case-header">Writer Use Cases — How Well Each Tool Serves Them</div>
+    <table class="use-case-table">
+      <thead>
+        <tr>
+          <th>The need</th>
+          <th>What it looks like</th>
+          <th>ChatGPT</th>
+          <th>Gemini</th>
+          <th>Claude</th>
+          <th>NbkLM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Period &amp; setting</td>
+          <td>What did a 1940s Chicago jazz club actually look, sound, smell like?</td>
+          <td>◉◉◉</td><td>◉◉◎</td><td>◉◉◎</td><td>◎◎◎</td>
+        </tr>
+        <tr>
+          <td>Technical accuracy</td>
+          <td>Your character is a cardiologist. What would she say and know?</td>
+          <td>◉◉◉</td><td>◉◉◉</td><td>◉◉◉</td><td>◉◉◉†</td>
+        </tr>
+        <tr>
+          <td>Synthesizing your notes</td>
+          <td>You have thirty tabs and six notebooks. Help.</td>
+          <td>◉◉◎</td><td>◉◉◉</td><td>◉◉◎</td><td>◉◉◉</td>
+        </tr>
+        <tr>
+          <td>Contested history</td>
+          <td>A real event with disputed accounts or moral complexity.</td>
+          <td>◉◉◎</td><td>◉◉◎</td><td>◉◉◉</td><td>◉◉◎†</td>
+        </tr>
+        <tr>
+          <td>World-building science</td>
+          <td>The real physics underlying your speculative premise.</td>
+          <td>◉◉◉</td><td>◉◉◉</td><td>◉◉◎</td><td>◎◎◎</td>
+        </tr>
+        <tr>
+          <td>Culture you don't know</td>
+          <td>The texture of a community you're writing about from outside.</td>
+          <td>◉◎◎</td><td>◉◎◎</td><td>◉◎◎</td><td>◎◎◎</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:12px; color:var(--faded); margin-top:-1em; line-height:1.9;">◉◉◉ = strong fit &nbsp; ◉◉◎ = useful &nbsp; ◉◎◎ = proceed carefully &nbsp; ◎◎◎ = wrong tool &nbsp; † = only with relevant sources uploaded</p>
+
+  <p>The last row deserves more than a rating. These tools are excellent at describing cultures from the outside — they will give you a thorough, organized overview of a community you don't belong to. What they cannot give you is interiority. The experience of being inside a culture, the texture of its humor and its silences, the things that don't get written down — none of that is on the web in a form these tools can find. For that research, you need people.</p>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>Why These Tools Get Things Wrong</h2>
+
+  <p>Every AI research tool will eventually hand you a report containing a confident error. Some are small and catchable — a wrong date, a misattributed quote. Others are structural: a synthesis built on a misread source, or a claim grounded in nothing at all. Understanding the specific ways these tools fail is not optional for a writer who intends to use them responsibly.</p>
+
+  <div class="causes-list">
+
+    <div class="cause-item" id="ci0">
+      <div class="cause-header" onclick="toggleCause(0)">
+        <div class="cause-num">1</div>
+        <div class="cause-label-wrap"><div class="cause-title">The door was locked — robots.txt and blocked sources</div></div>
+        <div class="cause-toggle">+</div>
+      </div>
+      <div class="cause-body">
+        <p>Every website can include a file called <code>robots.txt</code> that tells automated crawlers — including AI research agents — which pages they are and aren't allowed to access. Many publishers, newspapers, academic journals, archives, and specialized databases have either partially or fully blocked AI crawlers. The AI doesn't flag when a source is blocked. It simply can't read it.</p>
+        <p>The consequence: when you ask about a topic where the best sources have blocked access, the AI substitutes whatever it <em>can</em> reach — secondary sources, aggregators, SEO-optimized summaries, or older cached material. The report looks comprehensive. The citations are just the ones that happened to leave the door open, not the ones that are most authoritative. For writers researching anything where primary sources are behind paywalls or in restricted archives — literary criticism, medical research, legal records, newspaper archives — this is a significant and largely invisible problem.</p>
+        <p><strong>What to do:</strong> Read the citations critically. If the report cites aggregators and summaries rather than primary sources, that's a signal the best material wasn't accessible. Use the tools' source-restriction features to specify preferred domains, and assume that paywalled or institutional sources are largely unavailable to the agent.</p>
+      </div>
+    </div>
+
+    <div class="cause-item" id="ci1">
+      <div class="cause-header" onclick="toggleCause(1)">
+        <div class="cause-num">2</div>
+        <div class="cause-label-wrap"><div class="cause-title">Mixing sources that don't belong together</div></div>
+        <div class="cause-toggle">+</div>
+      </div>
+      <div class="cause-body">
+        <p>Deep Research tools synthesize across many sources simultaneously. When those sources represent different eras, different national perspectives, or different sides of a scholarly debate, the synthesis can flatten those differences into a single coherent-sounding narrative that none of the individual sources would actually endorse.</p>
+        <p>A nineteenth-century primary account of an event might be stitched together with a twenty-first-century revisionist history and a Wikipedia summary, all presented as unified "what happened." A medical finding from a 2019 study might be blended with the more cautious conclusions of a 2024 follow-up that partially contradicted it. The report reads smoothly. The underlying incoherence is invisible.</p>
+        <p><strong>What to do:</strong> Look at the citations as a set, not just individually. Do these sources belong in the same account? Are they from compatible eras and perspectives? For contested or evolving topics, explicitly ask the tool to keep sources separated by period or perspective rather than synthesizing them into a single narrative.</p>
+      </div>
+    </div>
+
+    <div class="cause-item" id="ci2">
+      <div class="cause-header" onclick="toggleCause(2)">
+        <div class="cause-num">3</div>
+        <div class="cause-label-wrap"><div class="cause-title">Confident claims about things that aren't documented</div></div>
+        <div class="cause-toggle">+</div>
+      </div>
+      <div class="cause-body">
+        <p>AI models are trained to produce fluent, helpful text. That training creates a systematic pressure against saying "I don't know" or "I couldn't find this." When a research question touches on something underdocumented — the daily experience of ordinary people in a historical period, the texture of a place before it was widely written about — the model may generate plausible-sounding details rather than acknowledging the gap.</p>
+        <p>These invented details are the most dangerous kind of error for writers, because they are exactly the kind of specific, textured information that makes fiction feel real. A fabricated detail about what a particular neighborhood smelled like in 1932 is not obviously wrong the way a fabricated date is. It sounds like something a researcher found. You put it in the book. A reader who knows the neighborhood finds it.</p>
+        <p><strong>What to do:</strong> Be especially skeptical of specific sensory details, quotations, and statistics on underdocumented topics. Ask the tool explicitly: "Are you confident this is documented, or are you inferring?" A well-designed tool should acknowledge when it's extrapolating. If it doesn't, treat the detail as unverified until you can confirm it elsewhere.</p>
+      </div>
+    </div>
+
+    <div class="cause-item" id="ci3">
+      <div class="cause-header" onclick="toggleCause(3)">
+        <div class="cause-num">4</div>
+        <div class="cause-label-wrap"><div class="cause-title">The web rewards what gets published, not what's true</div></div>
+        <div class="cause-toggle">+</div>
+      </div>
+      <div class="cause-body">
+        <p>Deep Research tools read the open web, which has a particular shape: a lot of marketing content, a lot of SEO-optimized summaries, a lot of confident second-hand claims amplified through repetition, and relatively little slow, careful primary scholarship. The AI doesn't reliably distinguish between a peer-reviewed paper and a well-ranking blog post that summarizes it — sometimes incorrectly.</p>
+        <p>This creates a systematic bias toward consensus and popular accounts. Minority perspectives, recent revisions to established accounts, and topics that are actively debated in academic literature but settled in popular coverage will tend to be underrepresented or misrepresented.</p>
+        <p><strong>What to do:</strong> Use source-restriction features to prioritize reputable domains where possible. After reading a report on any topic with historical or scholarly complexity, ask: "What would a skeptic or revisionist say about this account?" That follow-up question reliably surfaces the parts of the topic the initial sweep flattened.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-box-label">The rule before you rely on a report</div>
+    <p>Always follow the citations for any claim that matters to your story. Not spot-check — follow. Open the source. Read the relevant passage. Confirm it says what the report claims. This is not counsel of paranoia. It is the minimum standard of verification that has always applied to research. What AI has changed is how easy it is to skip this step because the report looks so complete.</p>
+    <p style="margin-bottom:0;">A wrong date in a historical novel is a different kind of failure than a wrong date in a news article, but it is still a failure. And the readers who know the period will find it.</p>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <h2>Four Prompts for Writers — One for Each Tool</h2>
+
+  <p>These prompts are built to get the most from each tool's particular strengths. Adjust the subject matter to your project, but keep the framing — it's doing important work in each case.</p>
+
+  <div class="prompt-stack">
+
+    <div class="prompt-item chatgpt" id="pi0">
+      <div class="prompt-header" onclick="togglePrompt(0)">
+        <div class="prompt-tool-tag">ChatGPT</div>
+        <div class="prompt-label-wrap">
+          <div class="prompt-scenario">Period research</div>
+          <div class="prompt-title">Building a historically grounded setting</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-context">Use when: You're writing a scene set in a specific time and place and need the texture of daily life, not just the headline events.</div>
+        <div class="prompt-text-block" id="pp0">I'm writing a novel set in [city], [year]. I need a research report covering the texture of daily life — not the major political events, but the ordinary experience of someone living there. Specifically: what neighborhoods looked and felt like, what people ate and drank, the sounds and rhythms of a typical day, what was fashionable or embarrassing, what technology was present and conspicuously absent, and what the relationship between different social classes looked like on the ground.
+
+Please focus on primary and eyewitness sources where possible. I want the details that historians overlook because they seemed obvious to contemporaries. When you're uncertain whether something is documented or inferred, say so explicitly. If you're drawing from aggregators or summaries rather than primary sources, note that too.</div>
+        <button class="copy-btn" onclick="copyPrompt('pp0', this)">Copy Prompt</button>
+        <div class="prompt-writer-note">Writer's note: Asking it to flag the difference between documented and inferred details forces honesty about where its confidence is real — and flags where robots.txt may have blocked the better sources.</div>
+      </div>
+    </div>
+
+    <div class="prompt-item gemini" id="pi1">
+      <div class="prompt-header" onclick="togglePrompt(1)">
+        <div class="prompt-tool-tag">Gemini</div>
+        <div class="prompt-label-wrap">
+          <div class="prompt-scenario">Synthesizing your own research</div>
+          <div class="prompt-title">Making sense of what you've already gathered</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-context">Use when: You've been researching a topic for weeks and have accumulated more than you can hold. Gemini's Drive integration means you can point it at your own documents alongside the web.</div>
+        <div class="prompt-text-block" id="pp1">I've been researching [topic] for my current project and I have documents in my Drive folder "[folder name]" containing notes, clippings, and source material. I also want you to search the web for anything significant I may have missed.
+
+Please read everything in that folder, supplement with current web sources, and produce a synthesis report organized around these questions: [list 3–5 specific questions your project needs answered].
+
+For each question: tell me what my existing notes say, what the web adds or contradicts, and flag any gaps or contradictions I should follow up on. If your web sources are aggregators or summaries rather than primary sources, note that explicitly.</div>
+        <button class="copy-btn" onclick="copyPrompt('pp1', this)">Copy Prompt</button>
+        <div class="prompt-writer-note">Writer's note: Asking it to flag aggregators versus primary sources addresses the robots.txt problem directly — you'll know when the tool reached secondary summaries because the primary sources were walled off.</div>
+      </div>
+    </div>
+
+    <div class="prompt-item claude-p" id="pi2">
+      <div class="prompt-header" onclick="togglePrompt(2)">
+        <div class="prompt-tool-tag">Claude</div>
+        <div class="prompt-label-wrap">
+          <div class="prompt-scenario">Contested terrain</div>
+          <div class="prompt-title">Understanding a topic where the accounts disagree</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-context">Use when: You're writing about a historical event, social issue, or situation where different sources tell different stories. Claude's tendency to acknowledge complexity makes it the right tool here.</div>
+        <div class="prompt-text-block" id="pp2">I'm researching [event, issue, or situation] for a piece of fiction that needs to treat it honestly. I don't want a single synthesized narrative — I want to understand the shape of the disagreement.
+
+Please research this topic and produce a report that:
+(1) describes what is actually agreed upon across sources
+(2) maps the major points of dispute — where accounts differ, who disputes what, and why
+(3) identifies which aspects are genuinely unresolved versus contested for political or ideological reasons
+(4) keeps sources from different eras or perspectives separated rather than blending them into a single account
+(5) flags any sources I should read in full rather than through a summary
+
+I'm a writer, not a scholar. I need to understand this well enough to write about it honestly, without inadvertently flattening something that deserves its complexity.</div>
+        <button class="copy-btn" onclick="copyPrompt('pp2', this)">Copy Prompt</button>
+        <div class="prompt-writer-note">Writer's note: Instruction (4) directly addresses the source-mixing problem. Asking it to keep perspectives separated prevents the synthesis from producing a false consensus that none of the individual sources would endorse.</div>
+      </div>
+    </div>
+
+    <div class="prompt-item notebooklm" id="pi3">
+      <div class="prompt-header" onclick="togglePrompt(3)">
+        <div class="prompt-tool-tag">NotebookLM</div>
+        <div class="prompt-label-wrap">
+          <div class="prompt-scenario">Synthesis from gathered sources</div>
+          <div class="prompt-title">Finding what your research is actually saying</div>
+        </div>
+        <div class="prompt-toggle">+</div>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-context">Use when: You've uploaded your sources — articles, PDFs, notes, transcripts — and want to understand what they collectively say before you start writing. NotebookLM works from your sources only, which dramatically reduces hallucination risk.</div>
+        <div class="prompt-text-block" id="pp3">I've uploaded [number] sources about [topic] to this notebook. They include [brief description: e.g., "three academic articles, two primary documents, and my own research notes"].
+
+Please read across all of them and answer:
+(1) What do these sources collectively agree on?
+(2) Where do they contradict or complicate each other?
+(3) What questions do they raise that none of them fully answers?
+(4) Which source is doing the most work — carrying claims the others don't support?
+
+For each answer, cite the specific source you're drawing from. If something I'm asking about isn't addressed in the uploaded material, tell me rather than drawing from outside knowledge.</div>
+        <button class="copy-btn" onclick="copyPrompt('pp3', this)">Copy Prompt</button>
+        <div class="prompt-writer-note">Writer's note: The final instruction is the most important. It asks NotebookLM to stay inside your sources and flag gaps rather than fill them — which is what makes it the lowest-risk tool for factual accuracy.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2>The Things These Tools Cannot Do</h2>
+
+  <p>These tools are excellent at the horizontal sweep — broad coverage, many sources, synthesized quickly. They are much less good at vertical depth: the insight that comes from following one thread a very long way, the serendipitous discovery that happens when you're looking for something else. And they are essentially useless for research that doesn't exist in published form.</p>
+
+  <p>A medical report about a procedure is not the same as sitting with someone who has had it. A historical account of a migration is not the same as reading the letters that migrants wrote. A profile of a profession is not the same as a conversation with someone who hates their job and has never told anyone why. These tools give you the report. The letter, the conversation, the afternoon in the archive — that's still on you.</p>
+
+  <div class="insight">
+    Use these tools to arrive at the documented research faster. That means you have more time for the research that can't be automated — and that research is where the writing actually lives.
+  </div>
+
+  <div class="pull-quote">
+    The tool can read the history. You have to feel it.
+  </div>
+
+  <div class="ornament">✦</div>
+
+  <p style="font-family:'Courier Prime',monospace; font-size:13px; color:var(--faded); text-align:center; letter-spacing:1px;">AI & THE CRAFT — TOOLS FOR WRITERS</p>
+
+</div>
+
+<footer>
+  <p>AI & THE CRAFT &nbsp;·&nbsp; TOOLS FOR WRITERS</p>
+  <p style="margin-top:8px; opacity:0.5;">Demystifying AI for people who love language.</p>
+</footer>
+
+<script>
+  function togglePrompt(idx) {
+    const el = document.getElementById('pi' + idx);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.prompt-item').forEach(p => p.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  function toggleCause(idx) {
+    const el = document.getElementById('ci' + idx);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.cause-item').forEach(c => c.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  function copyPrompt(id, btn) {
+    const el = document.getElementById(id);
+    const text = el.innerText || el.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy Prompt'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+    });
+  }
+</script>
+
+</body>
+</html>
