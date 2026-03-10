@@ -45,13 +45,19 @@ export default function HomePage() {
         <div className="heroVideoWrap" aria-label="Decorative ambient alpine night video background">
           <iframe
             className="heroVideo"
-            src="https://drive.google.com/file/d/12FE6jGHrJ5PB3lsH2ZGBR8sEdoNk3ks9/preview"
-            title="Decorative ambient alpine night video background"
-            allow="autoplay; fullscreen"
-            loading="eager"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            controlsList="nodownload noplaybackrate noremoteplayback"
             tabIndex={-1}
-            aria-hidden="true"
-          />
+          >
+            <source src="https://i.imgur.com/ZCoy6Wi.mp4" type="video/mp4" />
+            <source src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/AIWR%20Hero%20Vid.mp4" type="video/mp4" />
+            Calm nighttime alpine landscape used as a decorative background video.
+          </video>
           <div className="heroVideoShield" aria-hidden="true" />
         </div>
         <Container className="hero-studio__container">
