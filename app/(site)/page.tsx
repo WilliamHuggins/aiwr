@@ -49,7 +49,7 @@ export default function HomePage() {
       <section className="hero-studio" aria-labelledby="hero-studio-title">
         {/* Keep this as a native <video> background (not an <iframe>) to avoid JSX mismatch regressions and embedded play UI. */}
         <div className="heroVideoWrap" aria-label="Decorative ambient alpine night video background">
-          <iframe
+          <video
             className="heroVideo"
             autoPlay
             muted
