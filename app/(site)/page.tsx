@@ -43,7 +43,7 @@ export default function HomePage() {
     <>
       <section className="hero-studio" aria-labelledby="hero-studio-title">
         <div className="heroVideoWrap" aria-label="Decorative ambient alpine night video background">
-          <iframe
+          <video
             className="heroVideo"
             autoPlay
             muted
@@ -100,10 +100,10 @@ export default function HomePage() {
               <h3 className="mt-3 font-display text-3xl font-semibold text-text">The Cinema Writing Studio</h3>
               <p className="mt-1 font-ui text-xs uppercase tracking-[0.14em] text-muted">With AI as a Thought Partner</p>
               <p className="mt-4 flex-grow text-sm leading-relaxed text-muted">
-                Start Week 1 of a 36-week studio focused on film language, beat journaling, and practical craft analysis.
+                Enter a dedicated screenwriting track with a new landing page, then open Week 1 on film language, beats, and turns.
               </p>
               <Link href="/cinema-writing-studio" className="mt-7 inline-flex self-start no-underline">
-                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Open Week 1</Button>
+                <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Open Course</Button>
               </Link>
             </Card>
             <Card className="directory-card flex flex-col p-8">
