@@ -53,6 +53,7 @@ export default function HomePage() {
             disablePictureInPicture
             controlsList="nodownload noplaybackrate noremoteplayback"
             tabIndex={-1}
+            aria-hidden="true"
           >
             <source src="https://i.imgur.com/ZCoy6Wi.mp4" type="video/mp4" />
             <source src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/AIWR%20Hero%20Vid.mp4" type="video/mp4" />
