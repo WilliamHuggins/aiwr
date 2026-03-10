@@ -45,7 +45,7 @@ export default function HomePage() {
         <div className="heroVideoWrap" aria-label="Decorative ambient alpine night video background">
           <video
             className="heroVideo"
-            src="https://drive.google.com/file/d/12FE6jGHrJ5PB3lsH2ZGBR8sEdoNk3ks9/preview"
+            src="https://drive.usercontent.google.com/download?id=12FE6jGHrJ5PB3lsH2ZGBR8sEdoNk3ks9&export=download"
             autoPlay
             muted
             loop
