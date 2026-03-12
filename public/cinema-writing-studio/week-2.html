@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Movie on the Page — Week 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1208; --parchment:#f5f0e8; --cream:#faf7f2;
+    --rust:#c0392b; --gold:#b8860b; --faded:#7a6f5e; --highlight:#fff3cd;
+    --reader-a:#2c4a6e; --reader-a-light:#e8f0f8;
+    --reader-b:#4a2c2c; --reader-b-light:#f8e8e8;
+    --check-green:#2d6a4f; --check-bg:#e8f5e9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:'Source Serif 4',serif;font-size:19px;line-height:1.8;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  .masthead{background:var(--ink);color:var(--parchment);text-align:center;padding:16px 24px 12px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;border-bottom:3px double var(--gold);}
+  .hero{background:var(--parchment);border-bottom:3px double var(--ink);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'≠';position:absolute;font-size:460px;color:rgba(0,0,0,0.025);top:-60px;left:50%;transform:translateX(-50%);
+    font-family:'Playfair Display',serif;font-weight:900;pointer-events:none;}
+  .issue-tag{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:block;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:16px;}
+  h1 em{font-style:italic;color:var(--rust);}
+  .deck{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:var(--faded);max-width:620px;margin:0 auto 28px;line-height:1.5;}
+  .byline{font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--faded);
+    border-top:1px solid var(--faded);border-bottom:1px solid var(--faded);display:inline-block;padding:8px 24px;}
+  .post-date{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:var(--faded);margin-top:16px;display:block;}
+  .article-wrapper{max-width:760px;margin:0 auto;padding:50px 32px 90px;}
+  .drop-cap::first-letter{font-family:'Playfair Display',serif;font-size:92px;font-weight:900;float:left;line-height:0.75;margin:8px 12px 0 -4px;color:var(--rust);}
+  p{margin-bottom:1.2em;}
+  h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin:2.2em 0 0.8em;line-height:1.2;}
+  .pull-quote{margin:2.2em -32px;padding:32px 48px;background:var(--ink);color:var(--parchment);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:26px;line-height:1.4;text-align:center;position:relative;}
+  .pull-quote::before,.pull-quote::after{content:'\201C';font-size:80px;color:var(--gold);position:absolute;line-height:1;font-style:normal;}
+  .pull-quote::before{top:12px;left:16px;} .pull-quote::after{content:'\201D';bottom:-16px;right:16px;}
+  .ornament{text-align:center;color:var(--gold);font-size:28px;margin:2.2em 0;letter-spacing:12px;}
+  .block{margin:2em 0;background:var(--parchment);border:2px solid var(--ink);padding:26px 30px;box-shadow:6px 6px 0 var(--ink);}
+  .block-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden;margin:2em 0;}
+  .meta-cell{padding:16px 18px;background:var(--parchment);border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .meta-cell:nth-child(3n){border-right:none;}
+  .meta-key{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:6px;}
+  .meta-val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.2;}
+  .principle{margin:2em 0;padding:22px 26px;background:var(--highlight);border-left:5px solid var(--gold);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.6;}
+  .mini-example{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.85;background:white;border:2px dashed rgba(0,0,0,0.18);
+    padding:14px 16px;margin:1.2em 0;white-space:pre-wrap;}
+  .reader-intro{display:grid;grid-template-columns:1fr 1fr;margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .reader-card{padding:24px;}
+  .reader-card:first-child{border-right:2px solid var(--ink);background:var(--reader-a-light);}
+  .reader-card:last-child{background:var(--reader-b-light);}
+  .reader-name{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .reader-card:first-child .reader-name{color:var(--reader-a);} .reader-card:last-child .reader-name{color:var(--reader-b);}
+  .reader-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:10px;}
+  .reader-desc{font-size:15px;line-height:1.7;color:var(--faded);}
+  .prompt-pair{margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .prompt-pair-header{padding:16px 24px;background:var(--ink);font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:2px solid var(--ink);}
+  .prompt-half{padding:22px 26px;border-bottom:2px solid var(--ink);}
+  .prompt-half:last-child{border-bottom:none;}
+  .prompt-half-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+  .prompt-text{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.9;background:var(--parchment);border-left:4px solid var(--gold);
+    padding:14px 18px;white-space:pre-wrap;color:var(--ink);}
+  .copy-btn{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border:2px solid var(--ink);
+    background:var(--parchment);cursor:pointer;transition:all 0.15s;border-radius:2px;display:inline-block;margin-top:10px;}
+  .copy-btn:hover{background:var(--ink);color:var(--parchment);}
+  .copy-btn.copied{background:var(--gold);border-color:var(--gold);color:white;}
+  .self-check{margin:2em 0;background:var(--check-bg);border:2px solid var(--check-green);padding:26px 30px;box-shadow:6px 6px 0 var(--check-green);}
+  .self-check-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--check-green);margin-bottom:12px;}
+  .self-check-item{font-size:17px;line-height:1.7;margin-bottom:8px;padding-left:28px;position:relative;}
+  .self-check-item::before{content:'□';position:absolute;left:0;color:var(--check-green);font-weight:bold;}
+  .portfolio{margin:2em 0;background:var(--parchment);border:2px solid var(--faded);padding:26px 30px;}
+  .portfolio-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .portfolio-item{font-family:'Courier Prime',monospace;font-size:13px;line-height:2;color:var(--faded);}
+  .portfolio-item.done::before{content:'✓ ';color:var(--check-green);}
+  .portfolio-item.current{color:var(--ink);font-weight:bold;}
+  .portfolio-item.current::before{content:'→ ';color:var(--rust);}
+  .portfolio-item.upcoming::before{content:'○ ';color:var(--faded);}
+  .phase-gate{margin:2em 0;background:var(--ink);color:var(--parchment);border:3px double var(--gold);padding:30px 32px;}
+  .phase-gate-label{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer{background:var(--ink);color:var(--parchment);text-align:center;padding:40px 24px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;border-top:3px double var(--gold);}
+  footer p{margin-bottom:0;font-size:12px;}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr;} .meta-cell{border-right:none;} .reader-intro{grid-template-columns:1fr;}
+    .reader-card:first-child{border-right:none;border-bottom:2px solid var(--ink);} .pull-quote{margin:2.2em 0;}}
+</style>
+</head>
+
+<body>
+<div class="masthead">THE MOVIE ON THE PAGE · WEEK 2 OF 32 · CINEMA FOUNDATIONS</div>
+
+<div class="hero">
+  <span class="issue-tag">SCREENWRITING STUDIO</span>
+  <h1>Editing, Rhythm,<br><em>Scene Purpose</em></h1>
+  <p class="deck">A film is not a collection of scenes. It's an argument made in sequences — and every scene that can't justify its existence is evidence against you.</p>
+  <span class="byline">The Movie on the Page</span>
+  <span class="post-date">Phase 0 · Cinema Foundations · Week 2 of 4</span>
+</div>
+
+<div class="article-wrapper">
+
+  <div class="meta-grid">
+    <div class="meta-cell"><div class="meta-key">Commitment</div><div class="meta-val">6–8 hours</div></div>
+    <div class="meta-cell"><div class="meta-key">Craft Focus</div><div class="meta-val">Why scenes end when they end; scene-level rhythm</div></div>
+    <div class="meta-cell"><div class="meta-key">Cinema Lens</div><div class="meta-val">The cut as a storytelling decision</div></div>
+    <div class="meta-cell"><div class="meta-key">Page Craft</div><div class="meta-val">Action line economy: the 4-line rule</div></div>
+    <div class="meta-cell"><div class="meta-key">Exercise Output</div><div class="meta-val">2 scene purpose maps (10 scenes each) + rhythm notes</div></div>
+    <div class="meta-cell"><div class="meta-key">Budget Dial</div><div class="meta-val">All tiers (pre-project)</div></div>
+  </div>
+
+  <p class="drop-cap">Last week you learned to see beats — the micro-shifts of information, power, and emotion inside a single scene. This week you pull back. The question is no longer "what happens inside a scene" but "why does this scene exist at all?" Every scene in a finished film survived a brutal selection process: it was written, shot, edited, tested, re-edited, and — if it made it into the final cut — it earned its place by doing something no other scene in the film does. Your job this week is to figure out what that something is. Because when you start writing your own screenplay, you'll face the same tribunal. Every scene you write will have to answer one question: <em>what happens if I cut this?</em> If the answer is "nothing," the scene is dead.</p>
+
+  <div class="pull-quote">The audience doesn't know why a scene ends. They just feel, in the half-second after the cut, whether it ended at the right moment or the wrong one.</div>
+
+  <h2>Craft Lecture</h2>
+
+  <p>There's a common misunderstanding about what "scene purpose" means. Beginners hear the term and think it means "what happens in the scene." That's plot, not purpose. A scene where two characters argue about who forgot to lock the door — that's what happens. The <em>purpose</em> is the structural job the scene performs within the larger architecture. Does it establish a rule the audience will need later? Does it shift the power dynamic between two characters in a way that makes the next scene land differently? Does it slow the rhythm after a high-tension sequence so the audience can breathe before the next escalation? Purpose is about function, not content. Two scenes can have identical content — two people arguing — and serve completely different purposes depending on where they sit in the sequence.</p>
+
+  <p>Think of it this way: a scene is a brick. What happens in the scene is the shape of the brick. The purpose of the scene is where the brick sits in the wall and what load it bears. A brick can be beautiful, perfectly formed, and still be the wrong brick for the spot. This is why so many well-written scenes get cut in editing. The scene works on its own terms — the dialogue is sharp, the performances are good, the beats escalate — but it doesn't carry structural load. It doesn't change what the audience knows, feels, or expects in a way that makes the next scene different than it would have been without it.</p>
+
+  <p><strong>Scene purpose falls into a limited number of categories.</strong> Not every taxonomy is useful, but here's one that works at the drafting stage. Every scene in a feature film does at least one of the following — and strong scenes do two or three simultaneously:</p>
+
+  <p><strong>Establish:</strong> The scene introduces something the audience needs — a character, a relationship, a rule, a location, a ticking clock. Establishment scenes front-load information, and their danger is that they can feel expository. The craft challenge is to establish while also doing something else: establishing a character's competence by showing them solving a problem, for instance, rather than having someone say "she's the best surgeon in the state."</p>
+
+  <p><strong>Complicate:</strong> The scene makes the protagonist's situation harder, more layered, or more contradictory. The obstacle gets bigger, or a new obstacle appears, or an ally becomes unreliable, or a piece of information reframes everything the audience thought they knew. Complication is the engine of the middle of most films. The danger is repetition — complication without escalation is just the same problem restated at the same volume.</p>
+
+  <p><strong>Reveal:</strong> The scene delivers information that changes the audience's understanding of what came before. Reveals are retrospective — they don't just change the future of the story, they rewrite the past. A reveal scene works only if the audience had enough prior information to feel the shift. If you reveal that a character has been lying and the audience never had reason to believe the character was telling the truth, the reveal has no impact. It's just new information, not a reframing.</p>
+
+  <p><strong>Decide:</strong> The scene forces the protagonist (or another key character) to make a choice under pressure. Decision scenes are where character becomes visible. What a character does when all options are bad tells the audience who they actually are, as opposed to who they claim to be. The stronger the competing pressures, the more the decision reveals.</p>
+
+  <p><strong>Release:</strong> The scene relieves accumulated tension — through humor, tenderness, beauty, or stillness. Release scenes are often underestimated. They aren't filler. A well-placed release scene recalibrates the audience's emotional baseline so that the next escalation hits harder. A film that never releases is exhausting. A film that releases too often is slack.</p>
+
+  <p><strong>Now: rhythm.</strong> Scene-level rhythm is the pattern created by the lengths, intensities, and types of scenes in sequence. A ninety-minute film might contain fifty to seventy scenes. The order and duration of those scenes creates a felt experience — faster or slower, tighter or looser, more or less oppressive — that the audience registers without counting anything. They just feel it. When a film "drags in the middle," the problem is usually rhythmic: too many scenes of the same type and duration stacked in a row. Three complication scenes in a row, all running four minutes, all at medium intensity, will feel monotonous even if the content of each scene is different. Vary the type. Vary the length. Vary the intensity. A two-minute scene after a seven-minute scene feels fast. A seven-minute scene after a two-minute scene feels deliberate.</p>
+
+  <p><strong>When to end a scene.</strong> Most amateur screenwriters end scenes too late. They write past the turn. The scene does its job — the information lands, the power shifts, the decision is made — and then the writer adds three more lines of dialogue that restate what just happened, or a reaction shot described in action lines that tells the audience what to feel. The professional instinct is the opposite: end on the turn, or one beat after the turn. Let the audience carry the implication into the next scene. The cut is a storytelling tool. It says: <em>you know enough. Now come with me somewhere else.</em> The half-second of darkness between scenes — that's where the audience processes what just happened. If you over-explain before the cut, you steal that processing time, and the audience arrives at the next scene already bored.</p>
+
+  <div class="principle"><strong>Craft Principle:</strong> End every scene one beat after the thing that changes — the moment the audience has enough to feel the shift but not enough to stop thinking about it.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 1: SCENE PURPOSE — SAME CONTENT, DIFFERENT FUNCTION</strong>
+
+SCENE VERSION A — Purpose: ESTABLISH
+INT. PRECINCT BULLPEN - MORNING
+A detective pins a photo to a corkboard already crowded with
+faces. She steps back. Studies the pattern. Moves one photo
+from the left cluster to the right.
+
+Her partner watches from the doorway, coffee in hand. She
+doesn't acknowledge him. He doesn't enter.
+
+    → Purpose: Establishes her method (visual, pattern-based)
+    and the partnership dynamic (distance, observation).
+    The audience learns how she works and that something is
+    strained between them. No dialogue. No exposition.
+
+SCENE VERSION B — Purpose: REVEAL
+INT. PRECINCT BULLPEN - MORNING
+Same detective. Same corkboard. She pins a new photo — and
+freezes. She pulls a photo from the right cluster. Holds it
+next to the new one. Same face. Same man.
+
+She looks toward the doorway. Her partner is gone.
+
+    → Purpose: Reveals a connection the detective (and audience)
+    didn't have before. Same room, same corkboard, but now the
+    scene's job is retrospective — it changes what the audience
+    thinks about everything pinned to that board. Her partner's
+    absence takes on new weight.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 2: RHYTHM — SCENE LENGTH AS A PACING TOOL</strong>
+
+Consider this five-scene sequence:
+
+Scene 34: 4 pages — COMPLICATE. A landlord tells a family
+   they have 72 hours to vacate. Argument escalates. No
+   resolution.
+
+Scene 35: 1/2 page — RELEASE. The youngest daughter sits on
+   the porch steps, singing to herself, braiding grass.
+
+Scene 36: 6 pages — DECIDE. The parents sit at the kitchen
+   table after the kids are asleep. One wants to fight the
+   eviction. The other wants to call a relative three states
+   away. Neither option is good.
+
+Scene 37: 1/4 page — ESTABLISH. EXT. BUS STATION - DAWN.
+   A Greyhound idles. The family isn't in frame yet.
+
+Scene 38: 3 pages — COMPLICATE. The relative's house. The
+   relative's own family is already crowded in. The welcome
+   is genuine. The space is not.
+
+Note the rhythm: 4 – 1/2 – 6 – 1/4 – 3. The half-page
+scene (35) gives the audience air after conflict. The
+quarter-page scene (37) is a visual cut — location and
+mood, no dialogue, no beats. It works BECAUSE the six-page
+scene before it was dense and slow. Rhythm is contrast.</div>
+
+  <h2>Page Craft</h2>
+  <div class="block">
+    <div class="block-label">The Micro-Skill: Action Line Economy — The 4-Line Rule</div>
+    <p>Action lines (also called "description" or "business") are everything in a screenplay that isn't dialogue or a scene heading. They describe what the audience sees and hears. And they are where most amateur screenwriters lose readers — not because the description is bad, but because there's too much of it.</p>
+    <p>The 4-line rule is a formatting discipline, not a law of nature: no single block of action description should run longer than four lines on the page. When a reader sees a dense block of description — eight, ten, twelve lines of unbroken text — their eye skips ahead to the next dialogue block. They skim. They miss your carefully crafted imagery. The irony is that writing <em>more</em> description results in <em>less</em> of it being read.</p>
+    <p>Four lines is the maximum before you need a line break. Two to three lines is even better for most action. The break doesn't have to signal a new idea — it can simply be a visual rest for the reader's eye. But the best writers use line breaks to control emphasis. The last line of a short block gets extra weight. A single-line action paragraph lands like a punch.</p>
+
+    <div class="mini-example"><strong>BEFORE — one dense block (reader's eye skips):</strong>
+
+The warehouse door rolls open and ELENA steps inside. It's
+cavernous, dark except for a single fluorescent tube buzzing
+near the back wall. Pallets of shrink-wrapped boxes are stacked
+three high along the left wall. There's a chemical smell, sweet
+and sharp, like overripe fruit mixed with bleach. A forklift
+sits near the loading dock, keys still in the ignition. Elena's
+shoes crunch on broken glass. She pulls her jacket tighter and
+moves toward the light, stepping around a puddle of something
+dark that reflects the fluorescent flicker.
+
+<strong>AFTER — broken into purposeful blocks:</strong>
+
+The warehouse door rolls open. ELENA steps inside.
+
+Cavernous. Dark. A single fluorescent tube buzzes near the
+back wall. Pallets of shrink-wrapped boxes stacked three
+high along the left side. A chemical sweetness in the air —
+overripe fruit cut with bleach.
+
+A forklift near the loading dock, keys in the ignition.
+
+Elena's shoes crunch on glass. She moves toward the light,
+stepping around a dark puddle that catches the flicker.</div>
+
+    <p>The content is nearly identical. But the second version controls what the reader's eye lands on. The forklift gets its own line — it's a detail the writer wants the reader to register, possibly because it matters later. Elena's movement gets its own block — her body in space, sensory and specific. The reader's eye moves down the page the way a camera moves through the warehouse: in distinct visual beats.</p>
+    <p><strong>10-minute drill:</strong> Take any paragraph of prose you've written recently (a journal entry, an email, anything) and rewrite it as a screenplay action description. Constraint: no block longer than 4 lines. Break the content into visual beats — each block should describe one thing the camera would land on. Total output: 8–12 lines of action description, broken into at least 3 blocks. Time yourself. Stop at ten minutes.</p>
+  </div>
+
+  <h2>Core Reading</h2>
+  <div class="block">
+    <div class="block-label">Film Viewing — Week 2</div>
+    <p><strong>Assignment:</strong> Watch 2 more feature films from the curated list (choose films you didn't watch in Week 1). This time, bring a stopwatch or use the timestamp on your player. You're going to track scene boundaries and durations.</p>
+    <p><strong>Curated Film List (choose 2 you haven't seen yet):</strong> <em>Rear Window</em> (1954), <em>The Silence of the Lambs</em> (1991), <em>Moonlight</em> (2016), <em>Parasite</em> (2019), <em>No Country for Old Men</em> (2007), <em>Get Out</em> (2017), <em>The Apartment</em> (1960), <em>Arrival</em> (2016), <em>Do the Right Thing</em> (1989), <em>Pan's Labyrinth</em> (2006).</p>
+    <p><strong>Why this pairing approach:</strong> Whichever two films you choose, you're looking for contrasting approaches to scene rhythm. Some of these films have long, deliberate scenes that accumulate tension through duration. Others cut fast, using brevity and juxtaposition to create pace. The point isn't which approach is "better" — it's learning to identify the rhythmic strategy and evaluate whether it serves the story.</p>
+    <p><strong>Reading Lens</strong> (track these while watching):</p>
+    <p>1. For each of 10 key scenes, note the timestamp and approximate duration. Is it a short scene (under 2 minutes), medium (2–5 minutes), or long (over 5 minutes)? 2. What purpose does each scene serve — establish, complicate, reveal, decide, or release? Can you find scenes that serve two purposes simultaneously? 3. Where does the filmmaker end a scene? On the turn? One beat after the turn? Before the turn completes? 4. Find the longest scene in the film. Why does it earn that duration? What would be lost if it were cut in half? 5. Find the shortest scene. What structural work does it accomplish in such little space?</p>
+    <p><strong>Journal Prompts:</strong></p>
+    <p>1. Map the rhythm of one 20-minute stretch of the film: list each scene, its approximate duration, and its purpose. Do you see a pattern — alternating long/short, or clusters of similar lengths? 2. Identify a scene that the filmmaker could have cut entirely without losing plot. Why do you think it survived? What does it contribute that isn't plot? 3. Find a scene that ends abruptly — before you expected it to. Did the early cut make the transition stronger or weaker? Why? 4. Compare the scene rhythms of your two films. Which film uses more variation in scene length? Which has the more consistent pace? Which approach did you find more engaging, and why? 5. If you had to cut one scene from each film to tighten it, which scene would you choose? What's your justification — and what would you lose?</p>
+  </div>
+
+  <h2>Writing Exercise</h2>
+  <div class="block">
+    <div class="block-label">Your Project Progress</div>
+    <p><strong>Deliverable:</strong> 10-scene purpose map for each of your two films (20 total scene entries).</p>
+    <p><strong>Constraints:</strong> For each film, select 10 scenes that represent the film's structural skeleton — the scenes that, taken together, tell you the shape of the story. For each scene, record: (a) a one-sentence description of what happens; (b) the scene's primary purpose (establish / complicate / reveal / decide / release); (c) the approximate duration; (d) where the scene ends relative to its key beat or turn (before it, on it, or after it); (e) one sentence on what would be lost if this scene were cut. Format as a numbered list or table. Total output: 2–3 typed pages per film.</p>
+    <p><strong>Quality bar:</strong> No two scenes in your map should have identical purpose tags — if you've tagged five scenes as "complicate," at least two of them should serve a secondary purpose you can name. The "what would be lost" sentence must be specific: "the audience would lose the sense that time is running out" is better than "the scene is important to the story." Your scene selections should span the full runtime, not cluster in the first act.</p>
+    <p><strong>Estimated time:</strong> 2–3 hours per film (including viewing and mapping).</p>
+    <p><strong>Human Draft Reminder:</strong> You write the pages. AI helps you think, test, and decide.</p>
+  </div>
+
+  <h2>AI Workshop</h2>
+  <div class="block">
+    <div class="block-label">Phase 0: Learning to Ask</div>
+    <p>Same principle as Week 1: do your analysis first, then use AI to pressure-test it. This week's prompts focus on scene purpose and rhythm. You've built your scene maps — now see if your structural reading holds up under questioning.</p>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Observation Prompt 1: Scene Purpose Audit</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt1">I'm building a scene purpose map for [FILM TITLE]. Here are 10 scenes I selected as the film's structural skeleton, with the purpose I assigned to each:
+
+[Paste your 10-scene purpose map for one film.]
+
+Three questions:
+1. Did I miss a scene that belongs in the structural skeleton — a scene without which the story's shape would change?
+2. For any scene I tagged with a single purpose (e.g., just "complicate"), do you see a secondary purpose I missed?
+3. Are there any scenes where my purpose tag seems wrong — where the scene is actually doing different structural work than what I labeled?
+
+Don't rewrite my map. Point me to the gaps and misreads.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt1')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Observation Prompt 2: Scene Ending Analysis</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt2">I watched [FILM TITLE] and I'm studying where scenes end relative to their key beat or turn. Here are three scenes where the ending felt notable — either surprisingly early, surprisingly late, or perfectly timed:
+
+[Describe the three scenes briefly and explain where you think each one ends relative to its turn.]
+
+Two questions:
+1. For the scene I flagged as ending "early" (before the turn fully lands) — what information does the filmmaker trust the audience to carry into the next scene without being told? Is that trust earned or risky?
+2. For the scene I flagged as ending "late" — is the material after the turn doing structural work I might have missed (e.g., a quiet beat that sets up the next scene's emotional entry point), or is it genuinely slack?
+
+I want to understand the logic of the cut, not just notice it.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt2')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label">How to Use These Prompts</div>
+    <p>Complete your scene purpose maps and viewing notes before opening any AI tool. These prompts are diagnostic — they test whether your structural reading is accurate, not whether it exists. If you run the prompt before doing the work, you'll get a canned film analysis instead of a critique of <em>your</em> analysis, and you'll learn nothing. The value is in the disagreements: where the AI sees a purpose you missed, or where you defend a reading the AI questions. Record those disagreements in the margins of your map.</p>
+  </div>
+
+  <h2>Student Self-Check</h2>
+  <div class="self-check">
+    <div class="self-check-label">Before You Move On</div>
+    <div class="self-check-item">Does every scene in your purpose map have a specific structural tag (establish / complicate / reveal / decide / release) — not a vague label like "important scene" or "builds tension"?</div>
+    <div class="self-check-item">Can you identify at least two scenes per film that serve dual purposes — and name both?</div>
+    <div class="self-check-item">Did your "what would be lost" sentences name something concrete and specific, not just "the story wouldn't make sense"?</div>
+    <div class="self-check-item">Do your 10 selected scenes span the full runtime of each film, including scenes from the final 20 minutes?</div>
+    <div class="self-check-item">Can you describe the rhythmic pattern of at least one 20-minute stretch — not just the content, but the alternation of scene lengths and types?</div>
+  </div>
+
+  <h2>Budget Dial</h2>
+  <div class="block">
+    <div class="block-label">Production Reality Check</div>
+    <p><strong>Budget tier this week:</strong> All tiers (still pre-project). Keep building your production awareness.</p>
+    <p><strong>Top 3 cost drivers to notice this week:</strong> 1. Scene count — every new scene heading potentially means a new setup: new lighting, new camera position, new sound check. A film with 70 scenes costs more to shoot than a film with 40 scenes, all else being equal. 2. Scene duration — long single-location scenes (like a dinner table conversation) can be cheaper per page than short multi-location sequences, because the crew stays put. 3. Day-for-night — scenes scripted as night that are actually filmed during the day with filters and lighting adjustments. Writers don't control this, but writing an excessive number of night scenes signals to a producer that the shoot will be expensive.</p>
+    <p><strong>Cheaper equivalent:</strong> A five-scene chase through a city (five locations, five setups, crowd control, permits) can deliver the same narrative escalation as a two-scene pursuit through a single building — if the building's geography creates enough variety and the beats escalate through obstacles rather than locations.</p>
+    <p><strong>Worth-it spend:</strong> One extended scene that runs five or six pages without a cut, set in a single location, with two strong actors and escalating tension. These scenes are relatively cheap to shoot (one setup, one location) and disproportionately powerful on screen. They're also where great performances live — and great performances are the cheapest production value in cinema.</p>
+  </div>
+
+  <h2>Editorial Tip</h2>
+  <div class="block">
+    <div class="block-label">The Reader's Eye</div>
+    <p>Every scene in your screenplay should pass the "what if I cut this" test before you commit to it. But the test has a corollary that matters just as much: <em>what if I started this scene two lines later and ended it two lines earlier?</em> Most scenes begin too early (with an entrance, a greeting, a settling-in) and end too late (with a goodbye, a reaction, a summation). Cut the preamble. Cut the postscript. Start in the middle of the action and end on the shift. The reader will keep up.</p>
+  </div>
+
+  <h2>Journal Prompt</h2>
+  <div class="block">
+    <div class="block-label">Reflection</div>
+    <p>While mapping scene purposes, did you find yourself defending a scene that you loved — trying to justify its existence even though its structural contribution was thin? Write about that scene. What did it give you as a viewer that didn't show up in the structural map? Is there a category of scene purpose that your taxonomy missed — something a scene can do that isn't "establish," "complicate," "reveal," "decide," or "release"? If so, name it and defend it.</p>
+  </div>
+
+  <h2>Week Summary</h2>
+  <div class="block">
+    <div class="block-label">What You've Built</div>
+    <p>By the end of this week you should have:</p>
+    <p>• Watched 2 films from the curated list with a focus on scene boundaries, durations, and structural purpose<br>
+    • Completed a 10-scene purpose map for each film, with purpose tags, duration notes, scene-ending analysis, and "what would be lost" sentences<br>
+    • Mapped the rhythmic pattern of at least one 20-minute stretch per film<br>
+    • Completed the action line drill (prose rewritten as 4-line-max screenplay description, 10 minutes)<br>
+    • Used at least one AI observation prompt to audit your scene purpose analysis<br>
+    • Reflected on scene purpose categories and whether your taxonomy is complete</p>
+  </div>
+
+  <h2>Looking Ahead</h2>
+  <div class="block">
+    <div class="block-label">Next Week</div>
+    <p>Week 3 shifts from structure to contract: <strong>genre as a promise</strong>. You've been tracking what scenes do inside a film. Next week, you'll examine what the film's genre does to the audience <em>before</em> the story even begins — the set of expectations a genre creates and the specific pleasure it's obligated to deliver. You'll build a "genre promise list" for each of your films: the moments the audience paid to see, the conventions that must be honored, and the places where the filmmaker bent or broke genre rules. The question isn't whether to follow genre conventions. The question is whether you know which ones you're breaking and why.</p>
+  </div>
+
+  <!-- PORTFOLIO TRACKER -->
+  <div class="portfolio">
+    <div class="portfolio-label">Your Portfolio So Far</div>
+    <div class="portfolio-item done">Week 1: Beat journals (2 films) + promise of the premise notes</div>
+    <div class="portfolio-item current">Week 2: 10-scene purpose maps (2 films) + rhythm notes (THIS WEEK)</div>
+    <div class="portfolio-item upcoming">Week 3: Genre promise list + delivery scenes for 2 films</div>
+    <div class="portfolio-item upcoming">Week 4: Reverse-engineered pitch + budget-tier choice</div>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+</div>
+
+<footer>
+  <p>THE MOVIE ON THE PAGE · SCREENWRITING STUDIO</p>
+  <p style="margin-top:8px; opacity:0.5;">Cinema craft. Human pages. Clean decisions.</p>
+</footer>
+
+<script>
+  function copyPromptBlock(id){
+    const el=document.getElementById(id);
+    const text=el.innerText||el.textContent;
+    const btn=el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.textContent='Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=btn.dataset.label||'Copy';btn.classList.remove('copied');},2000);
+    });
+  }
+</script>
+</body>
+</html>
