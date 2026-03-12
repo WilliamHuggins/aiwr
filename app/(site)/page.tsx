@@ -5,6 +5,11 @@ import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
 import { LatestPostsTeaser } from "@/components/blog/BlogPostListings";
 
+const HERO_VIDEO_SOURCES = [
+  "https://i.imgur.com/ZCoy6Wi.mp4",
+  "https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/AIWR%20Hero%20Vid.mp4",
+] as const;
+
 const retreatMenu = [
   {
     title: "Meet Your AI Writing Partners",
@@ -42,6 +47,7 @@ export default function HomePage() {
   return (
     <>
       <section className="hero-studio" aria-labelledby="hero-studio-title">
+        {/* Keep this as a native <video> background (not an <iframe>) to avoid JSX mismatch regressions and embedded play UI. */}
         <div className="heroVideoWrap" aria-label="Decorative ambient alpine night video background">
           <video
             className="heroVideo"
@@ -53,9 +59,11 @@ export default function HomePage() {
             disablePictureInPicture
             controlsList="nodownload noplaybackrate noremoteplayback"
             tabIndex={-1}
+            aria-hidden="true"
           >
-            <source src="https://i.imgur.com/ZCoy6Wi.mp4" type="video/mp4" />
-            <source src="https://qhdrtygne7pnc3mj.public.blob.vercel-storage.com/AIWR%20Hero%20Vid.mp4" type="video/mp4" />
+            {HERO_VIDEO_SOURCES.map((sourceUrl) => (
+              <source key={sourceUrl} src={sourceUrl} type="video/mp4" />
+            ))}
             Calm nighttime alpine landscape used as a decorative background video.
           </video>
           <div className="heroVideoShield" aria-hidden="true" />
