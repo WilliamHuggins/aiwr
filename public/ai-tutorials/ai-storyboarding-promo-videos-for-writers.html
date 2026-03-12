@@ -134,7 +134,12 @@ nav {
   box-shadow: 0 4px 20px rgba(var(--text) / .07);
 }
 .video-block video { width: 100%; display: block; }
-.video-block iframe { width: 100%; display: block; border: 0; background: #000; aspect-ratio: 16 / 9; }
+.video-block iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  border: 0;
+}
 .video-block img { width: 100%; display: block; }
 .video-caption {
   padding: .58rem 1.1rem;
@@ -439,10 +444,7 @@ footer p + p { margin-top: .4rem; }
 
   <!-- Sample Finished Promo -->
   <div class="video-block" style="max-width:680px; margin: 0 auto;">
-    <video controls controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture playsinline poster="" style="background:#000;">
-      <source src="https://i.imgur.com/WJ09Kaa.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/cITFautG3Z4?si=Jfj2uVU-zfzkK-la" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     <div class="video-caption">Example finished promo — <em>The Vanishing Point</em> project, assembled using the workflow taught in this lesson</div>
   </div>
   <div class="hero-rule"></div>
@@ -1106,7 +1108,7 @@ Style: consistent with my character sheet style. No text.</pre></div>
       </div>
       <div class="resource-link">
         <span class="resource-link-name">Finished promo video — The Vanishing Point</span>
-        <a href="https://imgur.com/a/WJ09Kaa" target="_blank">Watch video ↗</a>
+        <a href="https://www.youtube.com/watch?v=cITFautG3Z4" target="_blank">Watch video ↗</a>
       </div>
     </div>
 
