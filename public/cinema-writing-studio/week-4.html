@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Movie on the Page — Week 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1208; --parchment:#f5f0e8; --cream:#faf7f2;
+    --rust:#c0392b; --gold:#b8860b; --faded:#7a6f5e; --highlight:#fff3cd;
+    --reader-a:#2c4a6e; --reader-a-light:#e8f0f8;
+    --reader-b:#4a2c2c; --reader-b-light:#f8e8e8;
+    --check-green:#2d6a4f; --check-bg:#e8f5e9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:'Source Serif 4',serif;font-size:19px;line-height:1.8;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  .masthead{background:var(--ink);color:var(--parchment);text-align:center;padding:16px 24px 12px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;border-bottom:3px double var(--gold);}
+  .hero{background:var(--parchment);border-bottom:3px double var(--ink);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'≠';position:absolute;font-size:460px;color:rgba(0,0,0,0.025);top:-60px;left:50%;transform:translateX(-50%);
+    font-family:'Playfair Display',serif;font-weight:900;pointer-events:none;}
+  .issue-tag{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:block;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:16px;}
+  h1 em{font-style:italic;color:var(--rust);}
+  .deck{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:var(--faded);max-width:620px;margin:0 auto 28px;line-height:1.5;}
+  .byline{font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--faded);
+    border-top:1px solid var(--faded);border-bottom:1px solid var(--faded);display:inline-block;padding:8px 24px;}
+  .post-date{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:var(--faded);margin-top:16px;display:block;}
+  .article-wrapper{max-width:760px;margin:0 auto;padding:50px 32px 90px;}
+  .drop-cap::first-letter{font-family:'Playfair Display',serif;font-size:92px;font-weight:900;float:left;line-height:0.75;margin:8px 12px 0 -4px;color:var(--rust);}
+  p{margin-bottom:1.2em;}
+  h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin:2.2em 0 0.8em;line-height:1.2;}
+  .pull-quote{margin:2.2em -32px;padding:32px 48px;background:var(--ink);color:var(--parchment);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:26px;line-height:1.4;text-align:center;position:relative;}
+  .pull-quote::before,.pull-quote::after{content:'\201C';font-size:80px;color:var(--gold);position:absolute;line-height:1;font-style:normal;}
+  .pull-quote::before{top:12px;left:16px;} .pull-quote::after{content:'\201D';bottom:-16px;right:16px;}
+  .ornament{text-align:center;color:var(--gold);font-size:28px;margin:2.2em 0;letter-spacing:12px;}
+  .block{margin:2em 0;background:var(--parchment);border:2px solid var(--ink);padding:26px 30px;box-shadow:6px 6px 0 var(--ink);}
+  .block-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden;margin:2em 0;}
+  .meta-cell{padding:16px 18px;background:var(--parchment);border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .meta-cell:nth-child(3n){border-right:none;}
+  .meta-key{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:6px;}
+  .meta-val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.2;}
+  .principle{margin:2em 0;padding:22px 26px;background:var(--highlight);border-left:5px solid var(--gold);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.6;}
+  .mini-example{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.85;background:white;border:2px dashed rgba(0,0,0,0.18);
+    padding:14px 16px;margin:1.2em 0;white-space:pre-wrap;}
+  .reader-intro{display:grid;grid-template-columns:1fr 1fr;margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .reader-card{padding:24px;}
+  .reader-card:first-child{border-right:2px solid var(--ink);background:var(--reader-a-light);}
+  .reader-card:last-child{background:var(--reader-b-light);}
+  .reader-name{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .reader-card:first-child .reader-name{color:var(--reader-a);} .reader-card:last-child .reader-name{color:var(--reader-b);}
+  .reader-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:10px;}
+  .reader-desc{font-size:15px;line-height:1.7;color:var(--faded);}
+  .prompt-pair{margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .prompt-pair-header{padding:16px 24px;background:var(--ink);font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:2px solid var(--ink);}
+  .prompt-half{padding:22px 26px;border-bottom:2px solid var(--ink);}
+  .prompt-half:last-child{border-bottom:none;}
+  .prompt-half-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+  .prompt-text{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.9;background:var(--parchment);border-left:4px solid var(--gold);
+    padding:14px 18px;white-space:pre-wrap;color:var(--ink);}
+  .copy-btn{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border:2px solid var(--ink);
+    background:var(--parchment);cursor:pointer;transition:all 0.15s;border-radius:2px;display:inline-block;margin-top:10px;}
+  .copy-btn:hover{background:var(--ink);color:var(--parchment);}
+  .copy-btn.copied{background:var(--gold);border-color:var(--gold);color:white;}
+  .self-check{margin:2em 0;background:var(--check-bg);border:2px solid var(--check-green);padding:26px 30px;box-shadow:6px 6px 0 var(--check-green);}
+  .self-check-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--check-green);margin-bottom:12px;}
+  .self-check-item{font-size:17px;line-height:1.7;margin-bottom:8px;padding-left:28px;position:relative;}
+  .self-check-item::before{content:'□';position:absolute;left:0;color:var(--check-green);font-weight:bold;}
+  .portfolio{margin:2em 0;background:var(--parchment);border:2px solid var(--faded);padding:26px 30px;}
+  .portfolio-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .portfolio-item{font-family:'Courier Prime',monospace;font-size:13px;line-height:2;color:var(--faded);}
+  .portfolio-item.done::before{content:'✓ ';color:var(--check-green);}
+  .portfolio-item.current{color:var(--ink);font-weight:bold;}
+  .portfolio-item.current::before{content:'→ ';color:var(--rust);}
+  .portfolio-item.upcoming::before{content:'○ ';color:var(--faded);}
+  .phase-gate{margin:2em 0;background:var(--ink);color:var(--parchment);border:3px double var(--gold);padding:30px 32px;}
+  .phase-gate-label{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer{background:var(--ink);color:var(--parchment);text-align:center;padding:40px 24px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;border-top:3px double var(--gold);}
+  footer p{margin-bottom:0;font-size:12px;}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr;} .meta-cell{border-right:none;} .reader-intro{grid-template-columns:1fr;}
+    .reader-card:first-child{border-right:none;border-bottom:2px solid var(--ink);} .pull-quote{margin:2.2em 0;}}
+</style>
+</head>
+
+<body>
+<div class="masthead">THE MOVIE ON THE PAGE · WEEK 4 OF 32 · CINEMA FOUNDATIONS</div>
+
+<div class="hero">
+  <span class="issue-tag">SCREENWRITING STUDIO</span>
+  <h1>Production Reality<br><em>for Writers</em></h1>
+  <p class="deck">A screenplay that ignores the camera, the clock, and the checkbook isn't bold — it's unfinished thinking. Constraints don't limit your movie. They reveal it.</p>
+  <span class="byline">The Movie on the Page</span>
+  <span class="post-date">Phase 0 · Cinema Foundations · Week 4 of 4 · ★ Phase Gate</span>
+</div>
+
+<div class="article-wrapper">
+
+  <div class="meta-grid">
+    <div class="meta-cell"><div class="meta-key">Commitment</div><div class="meta-val">7–9 hours</div></div>
+    <div class="meta-cell"><div class="meta-key">Craft Focus</div><div class="meta-val">Budget thinking as creative constraint</div></div>
+    <div class="meta-cell"><div class="meta-key">Cinema Lens</div><div class="meta-val">What the audience sees vs. what it costs to show them</div></div>
+    <div class="meta-cell"><div class="meta-key">Page Craft</div><div class="meta-val">White space on the page: what a reader's eye actually does</div></div>
+    <div class="meta-cell"><div class="meta-key">Exercise Output</div><div class="meta-val">Reverse-engineered pitch (2–3 pages) + budget-tier choice</div></div>
+    <div class="meta-cell"><div class="meta-key">Budget Dial</div><div class="meta-val">Micro / Indie / Studio — you choose this week</div></div>
+  </div>
+
+  <p class="drop-cap">For three weeks you've been watching films the way a writer watches — tracking beats, mapping scene purpose, dissecting genre contracts. You've built the perceptual foundation. Now it's time to add a layer most screenwriting courses delay or skip entirely: production reality. This isn't a filmmaking course. You're not going to learn to budget a shoot or schedule a crew. But you need to understand, at the level of <em>writing decisions</em>, what your words cost. Every scene heading is a location to secure. Every character name is an actor to hire. Every line that says "hundreds of people flood the square" is a crowd to wrangle, insure, and feed. A screenplay that pretends none of this exists is a fantasy document — and fantasies don't get produced. The goal this week isn't to make you think small. It's to make you think <em>specifically</em> about the relationship between what you imagine and what exists in physical space, on a clock, for a price.</p>
+
+  <div class="pull-quote">The budget doesn't constrain the story. It constrains the telling — and the telling is where craft lives.</div>
+
+  <h2>Craft Lecture</h2>
+
+  <p><strong>Why writers need to think about money.</strong> There's a persistent myth in screenwriting culture that the writer's job is to dream big and someone else's job is to figure out how to pay for it. This is true in exactly one scenario: you're an established screenwriter with a track record of profitable films, and a studio is bankrolling your next project on the strength of your name. For everyone else — which is everyone reading this — production reality is a creative tool, not someone else's problem. Here's why: when you understand what costs money, you can make intelligent substitutions. You can deliver the same narrative beat, the same emotional impact, the same genre obligation at a fraction of the cost — if you know where the money goes. A writer who doesn't understand production costs can't make those substitutions. They write the expensive version by default, not because it's better, but because they don't know a cheaper version exists.</p>
+
+  <p><strong>The three tiers.</strong> For the rest of this curriculum, your screenplay will operate within one of three budget tiers. These aren't real production budgets — they're creative constraint frameworks that shape the kinds of decisions you'll make on every page.</p>
+
+  <p><strong>MICRO</strong> (under $500K in real-world terms). One to three primary locations. A small cast — five or fewer speaking roles. Almost certainly contemporary (period is expensive). Minimal night exteriors. No crowd scenes. No visual effects. No stunts requiring coordination teams. The power of micro-budget filmmaking is <em>intimacy and control</em>. Every dollar goes to performance and story. The constraint forces you to write scenes that depend on actors in rooms saying things that matter, which — when done well — is the most compelling cinema there is. The risk: if your premise requires spectacle, micro will suffocate it.</p>
+
+  <p><strong>INDIE</strong> ($500K–$5M). More locations — possibly ten to fifteen distinct locations, though reuse is still important. A larger cast, up to a dozen speaking roles. Some period possibility if the period can be suggested rather than fully reconstructed. Night exteriors are feasible but should be chosen carefully. Small crowd scenes achievable. Limited practical effects. One or two modestly ambitious set pieces. The power of indie is <em>range</em> — enough resources to tell stories with scope and movement, but still constrained enough that every choice has to earn its place. The risk: indie budgets are the easiest to overshoot, because writers assume "indie" means "almost studio" and write accordingly.</p>
+
+  <p><strong>STUDIO</strong> ($5M+). Extended location lists. Large casts. Period settings fully dressed. Night work. Crowd scenes. Visual effects (practical or digital). Stunt sequences. Multiple set pieces with high production requirements. The power of studio is <em>scale</em> — the ability to put things on screen that cannot be achieved any other way. But studio-level writing has its own constraint: audience expectation. A studio film is expected to deliver spectacle, star moments, and high production value. A quiet, intimate character study produced at studio budget feels like a mismatch — not because the story is bad, but because the resources imply a different genre contract. The risk: confusing scale with quality. A studio budget gives you more tools. It doesn't give you a better story.</p>
+
+  <p><strong>What actually costs money on set.</strong> Four categories account for the vast majority of production expense, and all four are things you, the writer, control on the page:</p>
+
+  <p><strong>Locations.</strong> Every new scene heading that names a new location is a line item. The location must be scouted, secured (lease, permit, insurance), dressed (set decoration, props, signage), and restored afterward. Moving the crew between locations costs time, and time is the most expensive resource on any set. A script with forty distinct locations is dramatically more expensive than one with fifteen — even if the forty-location script is shorter.</p>
+
+  <p><strong>Cast.</strong> Every named character with dialogue triggers a day rate. The more speaking roles, the more actors on the call sheet, the more days of shooting required. Characters who appear in only one scene are particularly expensive per screen-minute — you're paying a full day rate for what might be thirty seconds of screen time. Before you write a single-scene character, ask: can this information be delivered by a character who's already in the film?</p>
+
+  <p><strong>Time of day.</strong> Day exteriors are cheapest: natural light, no generators, no overtime. Day interiors cost more: lighting rigs to control the look. Night interiors cost more still: all the lighting plus the time (evening and overnight shoots carry crew premiums). Night exteriors are the most expensive per hour: massive lighting setups, generators, overtime, and the fact that you lose the location at sunrise regardless of whether you finished the scene. Every time you write EXT. ANYWHERE - NIGHT, you're writing a check.</p>
+
+  <p><strong>Complexity.</strong> Stunts, effects, crowds, animals, children, water, fire, vehicles in motion, weather (rain, snow, wind machines) — these are all complexity multipliers. Each one requires specialized crew, insurance, safety protocols, and often additional shooting days. A scene where a car crashes through a storefront is not one scene — it's three days of prep, one day of shooting the crash, and one day of cleanup. A scene where two people sit in a parked car and talk about the crash they just survived delivers the same narrative information. The question is which scene your genre contract requires.</p>
+
+  <div class="principle"><strong>Craft Principle:</strong> Write every scene as if you're the one paying for it — not to make it cheaper, but to make every dollar visible on screen.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 1: THE SAME BEAT AT THREE BUDGET TIERS</strong>
+
+STORY BEAT: The protagonist discovers that the person she
+trusted most has been working against her.
+
+MICRO VERSION:
+INT. KITCHEN - NIGHT
+Elena finds a phone on the counter. It isn't hers. It
+buzzes. The screen lights up. She reads the message. Her
+hand goes still.
+    → 1 location (already established), 1 actor, 1 prop.
+    Cost: almost nothing. Power: intimacy. The audience
+    reads her face.
+
+INDIE VERSION:
+INT. RENTED OFFICE - DAY
+Elena sits at a desk, sorting through a box of files her
+partner left behind. A folder she's never seen. Inside:
+her own name, her own address, her own schedule — annotated
+in her partner's handwriting. Every entry timestamped.
+    → 1 new location, 1 actor, practical props. Cost:
+    moderate. Power: scope of betrayal becomes physical —
+    it's not one message, it's a system.
+
+STUDIO VERSION:
+INT. SURVEILLANCE VAN - NIGHT / INT. ELENA'S APARTMENT -
+INTERCUT
+Elena finds a frequency on an old radio scanner. Static
+clears. She hears her own voice — a conversation from last
+week, recorded. She moves through her apartment, looking
+for the microphone. She finds it inside a smoke detector
+her partner installed.
+    → 2 locations, intercut, tech props, sound design.
+    Cost: significant. Power: violation of space — the
+    betrayal is literally inside her walls.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 2: REVERSE-ENGINEERING A PITCH FROM CONSTRAINTS</strong>
+
+BUDGET TIER: MICRO
+CONSTRAINT SET:
+  - 2 locations maximum
+  - 3 speaking roles
+  - Contemporary setting
+  - No night exteriors
+  - No special effects
+
+REVERSE-ENGINEERED PITCH:
+A hospice nurse works a 48-hour shift covering for a
+colleague who never shows up. One patient — a former judge
+— is lucid and demanding, refusing medication until someone
+brings him a specific document from his car. The nurse
+can't leave (she's the only staff) and can't reach anyone
+to help. Over two days, the judge's requests become
+increasingly strange, and the nurse begins to realize the
+document he wants is evidence of something he did decades
+ago — something he needs destroyed before he dies.
+
+LOCATIONS: Hospice room, hallway/nurse's station
+CAST: Nurse, Judge, one phone voice (off-screen)
+GENRE: Contained thriller / moral drama
+GENRE CONTRACT: Escalating intellectual pressure between
+two people in a confined space, with a moral dilemma that
+has no clean answer.
+
+    → The constraints didn't limit the story. They
+    generated it. A contained setting + limited cast +
+    ticking clock (the judge is dying) = natural pressure
+    that the genre can exploit without spending a dollar
+    on spectacle.</div>
+
+  <h2>Page Craft</h2>
+  <div class="block">
+    <div class="block-label">The Micro-Skill: White Space — What a Reader's Eye Actually Does</div>
+    <p>Open any professionally formatted screenplay and hold it at arm's length. Don't read it — just look at it. What you see is a pattern of black and white: dense blocks (action description), narrow columns (dialogue), and white space (the empty parts of the page). The ratio of black to white tells a reader — before they've read a word — what kind of experience they're in for.</p>
+    <p>A page that's mostly white — short action lines, brisk dialogue exchanges, lots of line breaks — reads fast. The eye moves down the page quickly. The felt experience is pace, momentum, urgency. A page that's mostly black — long description blocks, extended monologues, minimal breaks — reads slowly. The eye gets stuck. The felt experience is density, weight, deliberation. Neither is inherently better. But the ratio should match the moment. An action sequence should look fast on the page. A contemplative scene can afford more density. If your car chase looks like a novel paragraph, something is wrong — not with the content, but with the visual presentation.</p>
+    <p>Professional script readers process roughly one page per minute. That's not a guess — it's the industry standard used for estimating run time (one page equals approximately one minute of screen time). A reader who picks up a 110-page screenplay is committing to nearly two hours. They will, consciously or not, track the visual density of each page. A run of dense pages in the middle of the script will feel like the film is slowing down — because, on the page, it is. White space is pacing made visible.</p>
+
+    <div class="mini-example"><strong>DENSE PAGE — visual weight slows the read:</strong>
+
+INT. ABANDONED MILL - DAY
+
+Marcus pushes through the rusted door and steps into what
+used to be the grinding floor. The ceiling is thirty feet
+above him, supported by iron beams that have buckled in
+places, bowing downward like the ribs of something dead.
+Pigeons scatter from the rafters. The floor is covered in a
+layer of powdered concrete and broken glass, with tire tracks
+cutting through it — someone has driven a vehicle through
+here recently. Against the far wall, a row of industrial
+grain hoppers stand like sentinels, their chutes pointing
+down at empty collection bins. There is a smell of diesel
+and wet stone. Marcus crosses the floor slowly, his boots
+crunching, and stops at the first hopper. He looks inside.
+
+<strong>OPEN PAGE — white space controls emphasis:</strong>
+
+INT. ABANDONED MILL - DAY
+
+Marcus pushes through the rusted door.
+
+Thirty-foot ceiling. Iron beams buckled like broken ribs.
+Pigeons scatter.
+
+Tire tracks in the dust. Fresh.
+
+He crosses the floor. Stops at the first grain hopper.
+Looks inside.</div>
+
+    <p>The open version loses some detail (the smell, the glass, the collection bins) but gains something more important: each visual beat gets its own moment. The tire tracks — "Fresh." — land as a discovery. The reader's eye stops on that word the way Marcus's eye stops on the tracks. White space creates emphasis by isolating information.</p>
+    <p><strong>10-minute drill:</strong> Find the densest page of action description you've encountered in any screenplay or in your own writing. Rewrite it with the following constraint: no action block longer than 3 lines, and at least two single-line paragraphs. You'll have to cut — that's the point. Decide what the reader <em>must</em> see and let the rest go. Total output: one reformatted page. Time yourself.</p>
+  </div>
+
+  <h2>Core Reading</h2>
+  <div class="block">
+    <div class="block-label">Film Viewing — Week 4</div>
+    <p><strong>Assignment:</strong> Watch your final 2 films from the curated list. This week, watch specifically through a production lens — you're no longer just tracking story structure. You're tracking what the story costs.</p>
+    <p><strong>Curated Film List (choose your final 2):</strong> <em>Rear Window</em> (1954), <em>The Silence of the Lambs</em> (1991), <em>Moonlight</em> (2016), <em>Parasite</em> (2019), <em>No Country for Old Men</em> (2007), <em>Get Out</em> (2017), <em>The Apartment</em> (1960), <em>Arrival</em> (2016), <em>Do the Right Thing</em> (1989), <em>Pan's Labyrinth</em> (2006).</p>
+    <p><strong>Why this pairing approach:</strong> Regardless of which two films you choose, watch them through the lens of constraint. Every film on this list — even the bigger-budget ones — made deliberate choices about where to spend and where to economize. A film set primarily in one apartment made different production decisions than a film that spans multiple countries and time periods. The question is: <em>where did the money go?</em> And more importantly: <em>which expensive choices were essential to the story, and which were aesthetic preferences the filmmaker could have achieved differently?</em></p>
+    <p><strong>Reading Lens</strong> (track these while watching):</p>
+    <p>1. Count the distinct locations. How many are used once versus repeatedly? 2. Count the speaking roles. How many appear in only one scene? 3. Identify the most expensive-looking scene in each film. What makes it expensive — locations, cast, time of day, complexity, or all four? 4. Identify a scene that accomplishes a lot with very little production cost. What craft strategies make it work — performance, sound, editing, framing? 5. Which budget tier would you assign each film? Where does the tier constrain the storytelling, if at all?</p>
+    <p><strong>Journal Prompts:</strong></p>
+    <p>1. If you had to cut one-third of the budget from either film, which scenes would you sacrifice? What would you lose narratively? 2. Identify a scene in each film where the production value <em>is</em> the storytelling — where you couldn't tell the same story cheaper without fundamentally changing the experience. 3. Find a scene where you suspect the filmmaker chose economy over spectacle. Did the constraint help the scene (by forcing intimacy, focus, simplicity) or hurt it (by making the film feel small at a moment that needed scale)? 4. If one of your films were remade at a lower budget tier, what would the screenplay have to change? Not just locations — what structural or character changes would the constraint require? 5. Which of the eight films you've watched across this phase would be the best model for a first-time screenwriter with no production budget? Why?</p>
+  </div>
+
+  <h2>Writing Exercise</h2>
+  <div class="block">
+    <div class="block-label">Your Project Progress</div>
+    <p><strong>Deliverable:</strong> Reverse-engineered pitch + budget-tier choice.</p>
+    <p><strong>Constraints:</strong> Produce: (a) Choose your budget tier — Micro, Indie, or Studio. Write a one-paragraph justification (100–150 words) explaining why this tier suits the kind of story you want to tell. Be specific about what the tier gives you and what it takes away. (b) Write a reverse-engineered pitch for a hypothetical film within your chosen tier. Start with the constraint set (max locations, max speaking roles, time-of-day limitations, complexity limitations). Then build a premise that <em>exploits</em> those constraints — a story that couldn't work as well without them. The pitch should include: premise (150–250 words), genre contract statement (50–100 words), constraint set (bulleted), and 3 delivery scenes (one sentence each describing what the audience came to experience). Total output: 2–3 typed pages.</p>
+    <p><strong>Quality bar:</strong> The pitch must demonstrate that the constraints generated creative opportunities, not just limitations. If your micro-budget pitch reads like a studio pitch with things removed, you haven't reverse-engineered — you've just economized. The premise should feel like it <em>needs</em> the tight constraint set. Your genre contract should be specific enough to name obligations. Your delivery scenes should be achievable within the tier.</p>
+    <p><strong>Estimated time:</strong> 3–4 hours (including viewing and pitch writing).</p>
+    <p><strong>Human Draft Reminder:</strong> You write the pages. AI helps you think, test, and decide.</p>
+  </div>
+
+  <h2>AI Workshop</h2>
+  <div class="block">
+    <div class="block-label">Phase 0: Learning to Ask</div>
+    <p>This is the last week of Phase 0. From next week forward, the AI Workshop shifts to the "Two Readers" model — you'll be working with AI as a developmental editor and a resistant first reader, testing your own creative documents against two different critical perspectives. This week, use these final observation prompts to pressure-test your budget-tier choice and your reverse-engineered pitch before you lock them in.</p>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Observation Prompt 1: Budget Tier Reality Check</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt1">I'm choosing my budget tier for a 32-week screenwriting curriculum where I'll write a feature screenplay. I've chosen [MICRO / INDIE / STUDIO] and here's my justification:
+
+[Paste your budget-tier justification paragraph.]
+
+Three questions:
+1. Am I being realistic about what this tier allows? Are there things I've assumed I can do within this tier that would actually push me into the next tier up?
+2. Am I thinking about the tier as a creative tool or just as a limitation? Point to anything in my justification that sounds like I'm apologizing for the constraints rather than exploiting them.
+3. Based on the kind of story I seem to want to tell, is this the right tier — or would a different tier actually serve the story better?
+
+Be direct. I'd rather switch tiers now than realize the mismatch at Week 15.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt1')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Observation Prompt 2: Reverse-Engineered Pitch Stress Test</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt2">I wrote a reverse-engineered pitch for a hypothetical film within the [MICRO / INDIE / STUDIO] tier. The pitch was built from constraints first, premise second. Here's the full pitch:
+
+[Paste your premise, genre contract, constraint set, and 3 delivery scenes.]
+
+Four questions:
+1. Does the premise genuinely exploit the constraints, or does it feel like a bigger story crammed into a smaller box? Be specific about where the fit is tight and where it's forced.
+2. Is my genre contract specific enough to create real obligations? What scenes or beats MUST exist for this contract to be honored?
+3. Are my 3 delivery scenes achievable within my constraint set? Flag any that would require resources I haven't accounted for.
+4. What's the biggest structural risk in this premise — the place where the story is most likely to stall or lose the audience?
+
+Don't pitch me a better version. Diagnose the one I wrote.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt2')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label">How to Use These Prompts</div>
+    <p>This pitch is hypothetical — it's not necessarily the screenplay you'll write starting in Week 5. Its purpose is to practice building from constraints and to lock in your budget tier. But the tier <em>is</em> binding. Whatever you choose this week carries forward into the feature you develop. So take the AI's feedback on tier fit seriously. If the feedback reveals a mismatch between the tier and the kind of story you gravitate toward, better to know now. You can always adjust the tier before Week 5. You can't easily adjust it at Week 15.</p>
+  </div>
+
+  <h2>Student Self-Check</h2>
+  <div class="self-check">
+    <div class="self-check-label">Before You Move On</div>
+    <div class="self-check-item">Does your budget-tier justification name specific creative advantages of the tier — not just what you're giving up?</div>
+    <div class="self-check-item">Did your reverse-engineered pitch start from constraints and build outward, or did you come up with a premise first and retrofit constraints onto it?</div>
+    <div class="self-check-item">Are your 3 delivery scenes achievable within your constraint set — or would at least one require resources you haven't listed?</div>
+    <div class="self-check-item">Can you explain, in plain language, the difference between a film that's cheap and a film that uses constraints creatively?</div>
+    <div class="self-check-item">Have you watched all 8 films (or your chosen subset) across the four weeks, and do you have journal entries for each viewing?</div>
+  </div>
+
+  <h2>Budget Dial</h2>
+  <div class="block">
+    <div class="block-label">Production Reality Check</div>
+    <p><strong>Budget tier this week:</strong> Your choice — Micro, Indie, or Studio. This is the week you commit.</p>
+    <p><strong>Top 3 cost drivers to internalize before you choose:</strong> 1. Location count is the single most reliable predictor of production cost. If your story requires twenty locations, it is not a micro-budget film regardless of cast size or complexity. 2. Your genre choice carries an implied cost floor. Horror can be done at micro. Period drama almost never can. Action requires stunts. Sci-fi requires visual effects. Know the floor before you pick the tier. 3. The number of night exterior scenes in your screenplay is often the difference between a budget that works and one that doesn't. Every EXT. NIGHT is a financial decision.</p>
+    <p><strong>Cheaper equivalent:</strong> A period film set in 1962 that requires accurate cars, costumes, signage, and set dressing across multiple locations can be replaced — narratively — by a film set in a single house that was built in 1962 and hasn't been updated since. The production design budget for one preserved interior is a fraction of dressing an entire street. The audience gets the same period texture through a single, deeply specific location.</p>
+    <p><strong>Worth-it spend:</strong> Casting. At every budget tier, the single best investment is the actors. A great performance in a bare room is cinema. A mediocre performance in a million-dollar set is furniture. If your budget forces a choice between more locations and better casting, choose casting every time.</p>
+  </div>
+
+  <h2>Editorial Tip</h2>
+  <div class="block">
+    <div class="block-label">The Reader's Eye</div>
+    <p>A script reader at a production company isn't just evaluating whether your story is good. They're running a silent, parallel calculation: <em>can this be made?</em> A reader who encounters a screenplay full of crowd scenes, period detail, international locations, and complex effects sequences will — even if the story is strong — flag it as expensive. That flag doesn't kill the script, but it raises the bar. An expensive script must be exceptional to justify the cost. A lean script that's merely very good can still get made. When you're choosing your tier, you're also choosing how high the quality bar will be for anyone who reads your pages. The lower the budget, the lower the production barrier — and the more your craft has to carry the weight.</p>
+  </div>
+
+  <h2>Journal Prompt</h2>
+  <div class="block">
+    <div class="block-label">Reflection</div>
+    <p>Across the last four weeks, you've been trained to see films through four lenses: beats and turns, scene purpose and rhythm, genre contracts, and production reality. Which of these lenses changed your viewing experience the most? Which one are you most resistant to — the one that feels like it reduces cinema to mechanics rather than illuminating the craft? Write about that resistance. It's telling you something about the kind of writer you are and the kind of instincts you'll have to manage.</p>
+  </div>
+
+  <h2>Week Summary</h2>
+  <div class="block">
+    <div class="block-label">What You've Built</div>
+    <p>By the end of this week you should have:</p>
+    <p>• Watched your final 2 films from the curated list with a production-cost lens<br>
+    • Chosen your budget tier (Micro / Indie / Studio) with a written justification<br>
+    • Written a reverse-engineered pitch built from constraints: premise, genre contract, constraint set, and 3 delivery scenes<br>
+    • Completed the white space drill (one dense page reformatted into open, paced description, 10 minutes)<br>
+    • Used at least one AI prompt to stress-test your tier choice and pitch<br>
+    • Reflected on which analytical lens from Phase 0 changed your perception the most</p>
+  </div>
+
+  <h2>Looking Ahead</h2>
+  <div class="block">
+    <div class="block-label">Next Week</div>
+    <p>Week 5 marks the beginning of <strong>Phase 1: Screenwriting Foundations</strong>. The film journals are behind you. From here forward, you're building <em>your</em> screenplay. Week 5 is <strong>The Premise Machine</strong> — you'll generate ten premises for a feature-length screenplay within your chosen budget tier, pressure-test each one against the structural and genre principles you've learned, and select the one that will carry you through the next twenty-four weeks of writing. The AI Workshop shifts to the "Two Readers" model: for the first time, you'll submit your own creative work — a premise document — to two simulated readers with opposing critical priorities. Choose your films for this phase carefully: starting Week 5, you'll be reading produced screenplays, not just watching films.</p>
+  </div>
+
+  <!-- PORTFOLIO TRACKER -->
+  <div class="portfolio">
+    <div class="portfolio-label">Your Portfolio So Far</div>
+    <div class="portfolio-item done">Week 1: Beat journals (2 films) + promise of the premise notes</div>
+    <div class="portfolio-item done">Week 2: 10-scene purpose maps (2 films) + rhythm notes</div>
+    <div class="portfolio-item done">Week 3: Genre promise lists + delivery scenes for 2 films</div>
+    <div class="portfolio-item current">Week 4: Reverse-engineered pitch + budget-tier choice (THIS WEEK) ★</div>
+    <div class="portfolio-item upcoming">Week 5: 10 premises → 1 chosen premise</div>
+    <div class="portfolio-item upcoming">Week 6: Theme sentence + 1-page concept doc</div>
+  </div>
+
+  <!-- PHASE GATE -->
+  <div class="phase-gate">
+    <div class="phase-gate-label">Phase Gate — Before Moving to Phase 1: Screenwriting Foundations</div>
+    <p><strong>Required artifacts to proceed:</strong></p>
+    <p>• 4 film journal entries (beat journals, scene purpose maps, genre promise lists — one per viewing week, covering all 8 films or your chosen subset)<br>
+    • Budget-tier choice (Micro / Indie / Studio) with written justification<br>
+    • Reverse-engineered pitch (premise + genre contract + constraint set + delivery scenes)</p>
+    <p style="margin-top:1.2em;"><strong>If you're behind:</strong> Compress to 2 film journal entries minimum — one from Weeks 1–2 (beats and scene purpose) and one from Weeks 3–4 (genre and production). You can combine observations from multiple viewings into a single entry. The budget-tier choice and justification paragraph cannot be compressed — you need a tier locked in before Week 5. The reverse-engineered pitch can be shortened to premise + constraint set only (skip the genre contract and delivery scenes), but it must exist as a document.</p>
+    <p style="margin-top:1.2em;"><strong>Non-negotiable:</strong> You must have chosen a budget tier. Everything in Phase 1 is built within that tier's constraints. If you haven't chosen, you can't start Week 5.</p>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+</div>
+
+<footer>
+  <p>THE MOVIE ON THE PAGE · SCREENWRITING STUDIO</p>
+  <p style="margin-top:8px; opacity:0.5;">Cinema craft. Human pages. Clean decisions.</p>
+</footer>
+
+<script>
+  function copyPromptBlock(id){
+    const el=document.getElementById(id);
+    const text=el.innerText||el.textContent;
+    const btn=el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.textContent='Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=btn.dataset.label||'Copy';btn.classList.remove('copied');},2000);
+    });
+  }
+</script>
+</body>
+</html>
