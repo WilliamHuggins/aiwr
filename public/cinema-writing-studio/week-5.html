@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Movie on the Page — Week 5</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1208; --parchment:#f5f0e8; --cream:#faf7f2;
+    --rust:#c0392b; --gold:#b8860b; --faded:#7a6f5e; --highlight:#fff3cd;
+    --reader-a:#2c4a6e; --reader-a-light:#e8f0f8;
+    --reader-b:#4a2c2c; --reader-b-light:#f8e8e8;
+    --check-green:#2d6a4f; --check-bg:#e8f5e9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:'Source Serif 4',serif;font-size:19px;line-height:1.8;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  .masthead{background:var(--ink);color:var(--parchment);text-align:center;padding:16px 24px 12px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;border-bottom:3px double var(--gold);}
+  .hero{background:var(--parchment);border-bottom:3px double var(--ink);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'≠';position:absolute;font-size:460px;color:rgba(0,0,0,0.025);top:-60px;left:50%;transform:translateX(-50%);
+    font-family:'Playfair Display',serif;font-weight:900;pointer-events:none;}
+  .issue-tag{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:block;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:16px;}
+  h1 em{font-style:italic;color:var(--rust);}
+  .deck{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:var(--faded);max-width:620px;margin:0 auto 28px;line-height:1.5;}
+  .byline{font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--faded);
+    border-top:1px solid var(--faded);border-bottom:1px solid var(--faded);display:inline-block;padding:8px 24px;}
+  .post-date{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:var(--faded);margin-top:16px;display:block;}
+  .article-wrapper{max-width:760px;margin:0 auto;padding:50px 32px 90px;}
+  .drop-cap::first-letter{font-family:'Playfair Display',serif;font-size:92px;font-weight:900;float:left;line-height:0.75;margin:8px 12px 0 -4px;color:var(--rust);}
+  p{margin-bottom:1.2em;}
+  h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin:2.2em 0 0.8em;line-height:1.2;}
+  .pull-quote{margin:2.2em -32px;padding:32px 48px;background:var(--ink);color:var(--parchment);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:26px;line-height:1.4;text-align:center;position:relative;}
+  .pull-quote::before,.pull-quote::after{content:'\201C';font-size:80px;color:var(--gold);position:absolute;line-height:1;font-style:normal;}
+  .pull-quote::before{top:12px;left:16px;} .pull-quote::after{content:'\201D';bottom:-16px;right:16px;}
+  .ornament{text-align:center;color:var(--gold);font-size:28px;margin:2.2em 0;letter-spacing:12px;}
+  .block{margin:2em 0;background:var(--parchment);border:2px solid var(--ink);padding:26px 30px;box-shadow:6px 6px 0 var(--ink);}
+  .block-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden;margin:2em 0;}
+  .meta-cell{padding:16px 18px;background:var(--parchment);border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .meta-cell:nth-child(3n){border-right:none;}
+  .meta-key{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:6px;}
+  .meta-val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.2;}
+  .principle{margin:2em 0;padding:22px 26px;background:var(--highlight);border-left:5px solid var(--gold);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.6;}
+  .mini-example{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.85;background:white;border:2px dashed rgba(0,0,0,0.18);
+    padding:14px 16px;margin:1.2em 0;white-space:pre-wrap;}
+  .reader-intro{display:grid;grid-template-columns:1fr 1fr;margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .reader-card{padding:24px;}
+  .reader-card:first-child{border-right:2px solid var(--ink);background:var(--reader-a-light);}
+  .reader-card:last-child{background:var(--reader-b-light);}
+  .reader-name{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .reader-card:first-child .reader-name{color:var(--reader-a);} .reader-card:last-child .reader-name{color:var(--reader-b);}
+  .reader-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:10px;}
+  .reader-desc{font-size:15px;line-height:1.7;color:var(--faded);}
+  .prompt-pair{margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .prompt-pair-header{padding:16px 24px;background:var(--ink);font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:2px solid var(--ink);}
+  .prompt-half{padding:22px 26px;border-bottom:2px solid var(--ink);}
+  .prompt-half:last-child{border-bottom:none;}
+  .prompt-half-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+  .prompt-text{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.9;background:var(--parchment);border-left:4px solid var(--gold);
+    padding:14px 18px;white-space:pre-wrap;color:var(--ink);}
+  .copy-btn{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border:2px solid var(--ink);
+    background:var(--parchment);cursor:pointer;transition:all 0.15s;border-radius:2px;display:inline-block;margin-top:10px;}
+  .copy-btn:hover{background:var(--ink);color:var(--parchment);}
+  .copy-btn.copied{background:var(--gold);border-color:var(--gold);color:white;}
+  .self-check{margin:2em 0;background:var(--check-bg);border:2px solid var(--check-green);padding:26px 30px;box-shadow:6px 6px 0 var(--check-green);}
+  .self-check-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--check-green);margin-bottom:12px;}
+  .self-check-item{font-size:17px;line-height:1.7;margin-bottom:8px;padding-left:28px;position:relative;}
+  .self-check-item::before{content:'□';position:absolute;left:0;color:var(--check-green);font-weight:bold;}
+  .portfolio{margin:2em 0;background:var(--parchment);border:2px solid var(--faded);padding:26px 30px;}
+  .portfolio-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .portfolio-item{font-family:'Courier Prime',monospace;font-size:13px;line-height:2;color:var(--faded);}
+  .portfolio-item.done::before{content:'✓ ';color:var(--check-green);}
+  .portfolio-item.current{color:var(--ink);font-weight:bold;}
+  .portfolio-item.current::before{content:'→ ';color:var(--rust);}
+  .portfolio-item.upcoming::before{content:'○ ';color:var(--faded);}
+  .phase-gate{margin:2em 0;background:var(--ink);color:var(--parchment);border:3px double var(--gold);padding:30px 32px;}
+  .phase-gate-label{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer{background:var(--ink);color:var(--parchment);text-align:center;padding:40px 24px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;border-top:3px double var(--gold);}
+  footer p{margin-bottom:0;font-size:12px;}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr;} .meta-cell{border-right:none;} .reader-intro{grid-template-columns:1fr;}
+    .reader-card:first-child{border-right:none;border-bottom:2px solid var(--ink);} .pull-quote{margin:2.2em 0;}}
+</style>
+</head>
+
+<body>
+<div class="masthead">THE MOVIE ON THE PAGE · WEEK 5 OF 32 · SCREENWRITING FOUNDATIONS</div>
+
+<div class="hero">
+  <span class="issue-tag">SCREENWRITING STUDIO</span>
+  <h1>The Premise<br><em>Machine</em></h1>
+  <p class="deck">A premise isn't an idea. It's a machine — a mechanism that generates conflict, demands decisions, and produces scenes. If your premise can't do all three, it's not ready.</p>
+  <span class="byline">The Movie on the Page</span>
+  <span class="post-date">Phase 1 · Screenwriting Foundations · Week 5 of 32</span>
+</div>
+
+<div class="article-wrapper">
+
+  <div class="meta-grid">
+    <div class="meta-cell"><div class="meta-key">Commitment</div><div class="meta-val">8–10 hours</div></div>
+    <div class="meta-cell"><div class="meta-key">Craft Focus</div><div class="meta-val">What makes a premise filmable</div></div>
+    <div class="meta-cell"><div class="meta-key">Cinema Lens</div><div class="meta-val">Can the camera show me this story, or only tell me about it?</div></div>
+    <div class="meta-cell"><div class="meta-key">Page Craft</div><div class="meta-val">Title page formatting (WGA standard)</div></div>
+    <div class="meta-cell"><div class="meta-key">Exercise Output</div><div class="meta-val">10 premises (1 paragraph each) → 1 chosen, with justification</div></div>
+    <div class="meta-cell"><div class="meta-key">Budget Dial</div><div class="meta-val">Your chosen tier from Week 4</div></div>
+  </div>
+
+  <p class="drop-cap">Phase 0 is behind you. You've watched eight films through four different analytical lenses: beats and turns, scene purpose and rhythm, genre contracts, and production reality. You've chosen a budget tier. You know, at least in principle, what a well-constructed story looks like from the inside. Now you build one. And the first thing you build — the load-bearing element that everything else rests on — is the premise. Not the theme (that's Week 6). Not the character (Week 7). Not the structure (Week 11). The premise. Because a premise isn't a summary of your movie. It's the <em>engine</em> of your movie — the mechanism that generates scenes, forces decisions, and produces conflict without you having to invent new problems every ten pages. A strong premise is a machine. You feed it characters and situations and it outputs story. A weak premise is a container — it holds ideas, but it doesn't generate anything. You have to push it uphill by hand.</p>
+
+  <div class="pull-quote">A filmable premise isn't one that sounds good in a pitch. It's one that produces scenes you can see — situations where a camera in the room captures something happening.</div>
+
+  <h2>Craft Lecture</h2>
+
+  <p><strong>What a premise actually is.</strong> Strip away the craft-book jargon and a premise is this: a specific person in a specific situation that generates escalating conflict. That's it. Three components. If any one is missing, you don't have a premise — you have a fragment. "A woman discovers her family's secret" is a fragment: there's a person and a hint of situation, but no mechanism for escalation. What secret? Why does discovering it create conflict that gets <em>worse</em>? What forces the situation to intensify rather than resolve? A premise must contain, implicitly or explicitly, the reason the problem can't be solved on page five.</p>
+
+  <p>Compare: "A forensic accountant hired to audit a failing hospital discovers the financial irregularities trace back to her own late father — and every answer she uncovers implicates her further in a fraud she didn't commit." Now there's a machine. The situation (auditing the hospital) generates scenes naturally — she has to interview people, review records, visit departments. The complication (her father's involvement) creates escalation — every step toward the truth is also a step toward her own destruction. And there's a built-in reason it can't be resolved easily: if she stops investigating, the fraud continues; if she keeps going, she becomes complicit. That's a premise with an engine.</p>
+
+  <p><strong>The five tests of a filmable premise.</strong> Before you commit twenty-four weeks to a premise, run it through these five tests. A premise doesn't need to pass all five perfectly — but it needs to pass at least four, and any complete failure is a structural risk.</p>
+
+  <p><strong>Test 1: Can the camera see it?</strong> Film is a visual medium. A premise about a character's internal philosophical crisis is literature. A premise about a character whose philosophical crisis forces her to <em>do things</em> — make choices, confront people, go places, take actions that a camera can record — is cinema. The test isn't whether the story has an internal dimension (it should). The test is whether the internal dimension expresses itself through external, filmable behavior. If your premise requires voiceover narration to be understood, it's not filmable yet.</p>
+
+  <p><strong>Test 2: Does it generate conflict that escalates?</strong> A premise with a single problem that stays at one intensity level will produce a flat screenplay. The situation must contain a mechanism for escalation — a reason the problem gets harder, more dangerous, more contradictory, or more costly as the story progresses. This is the "machine" quality. The forensic accountant's dilemma escalates because every document she reads implicates her more deeply. The escalation is <em>built into the premise</em>, not something the writer has to invent scene by scene.</p>
+
+  <p><strong>Test 3: Does it force decisions?</strong> A passive protagonist — someone things happen <em>to</em> rather than someone who <em>does</em> things — drains energy from any premise. Your premise should put a character in a position where they must choose, repeatedly, between competing pressures. Not just "should I do this?" but "I have to do one of these two things and both are costly." A premise that allows the protagonist to wait for circumstances to resolve isn't generating decisions. It's generating waiting scenes.</p>
+
+  <p><strong>Test 4: Does it fit your budget tier?</strong> You chose a tier in Week 4. Now your premise has to live within it. A micro-budget premise with twelve locations and a car chase has a tier mismatch. An indie premise that requires a single room and two actors isn't exploiting the tier — it's a micro-budget premise in disguise. The premise should <em>use</em> the resources available to it. If you chose indie, your premise should benefit from having ten or twelve locations, a cast of eight or ten, a modest set piece or two. The tier is a creative tool, not a ceiling to avoid bumping into.</p>
+
+  <p><strong>Test 5: Can you see the trailer?</strong> This isn't about commercialism. It's a test of whether your premise produces <em>moments</em> — specific, visible, emotionally charged scenes that an audience would want to watch. A film with a strong premise generates at least five or six scenes that could appear in a trailer: confrontations, discoveries, reversals, decisions under pressure, images that crystallize the premise in a single frame. If you can't imagine what those scenes look like, the premise may be too abstract or too internal to sustain a feature.</p>
+
+  <p><strong>Quantity first, selection second.</strong> This week's deliverable asks for ten premises. That's not a typo. Ten. The reason is simple: your first two or three ideas will almost certainly be the ones you've been carrying around for years — the ideas you're most attached to and least able to evaluate objectively. Ideas four through seven will be stranger, riskier, less comfortable. Ideas eight through ten will be desperate — and desperation sometimes produces the most interesting premises, because you've exhausted your defaults and have to think differently. Generate all ten before you evaluate any of them. Write each one as a single paragraph, 50–100 words, in the format: character + situation + escalation mechanism. Don't develop any of them yet. Don't fall in love yet. Just build ten machines and see which ones run.</p>
+
+  <div class="principle"><strong>Craft Principle:</strong> A premise is not what happens in the story — it's the reason the story can't stop happening.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 1: PREMISE AS MACHINE vs. PREMISE AS CONTAINER</strong>
+
+CONTAINER (holds ideas but doesn't generate story):
+A retired firefighter living alone struggles to reconnect
+with his estranged daughter while dealing with the onset
+of memory loss.
+
+    → Character: yes. Situation: sort of (estrangement +
+    illness). Escalation mechanism: none. Why does this get
+    WORSE? Why can't he call her on page 5 and apologize?
+    What forces the situation to intensify? The premise
+    describes a condition, not an engine.
+
+MACHINE (generates scenes and forces decisions):
+A retired firefighter with early-stage memory loss receives
+a letter from his estranged daughter asking him to testify
+in her custody hearing — but the testimony requires him to
+recount a night twenty years ago that he's spent his life
+trying to forget, and his memory is eroding the details
+he needs to get the story straight.
+
+    → Now there's an engine. The custody hearing creates a
+    deadline. The testimony requirement forces him to
+    revisit a specific event. The memory loss creates
+    escalation — the longer he waits, the less reliable
+    his account becomes. And the "night he's trying to
+    forget" implies a decision he made that he'll have to
+    confront. The premise generates scenes: meeting with
+    the daughter's lawyer, trying to reconstruct the night,
+    discovering discrepancies in his own memory, deciding
+    whether to testify truthfully or protectively.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 2: THE FIVE TESTS APPLIED</strong>
+
+PREMISE: A high school chemistry teacher discovers that the
+town's water supply is being contaminated by a chemical
+plant — and the plant is the school district's largest
+donor, funding the new science wing she personally
+campaigned for.
+
+TEST 1 — CAN THE CAMERA SEE IT?
+Yes. Testing water samples. Confronting plant officials.
+Walking through the construction of the science wing she
+fought for. Every internal conflict externalizes through
+visible action.
+
+TEST 2 — DOES IT ESCALATE?
+Yes. Each discovery deepens her complicity. If she goes
+public, the funding disappears. If she stays quiet, kids
+get sick. The plant has reason to escalate pressure on her.
+
+TEST 3 — DOES IT FORCE DECISIONS?
+Yes. Testify or stay silent. Accept the wing or reject it.
+Protect her students' health or protect their school.
+Every decision has costs on both sides.
+
+TEST 4 — BUDGET TIER?
+Strong indie fit. School, plant exterior, town hall,
+teacher's home, a few key locations. Cast of 8–12.
+No effects. One confrontation scene could serve as a
+modest set piece.
+
+TEST 5 — CAN YOU SEE THE TRAILER?
+Yes. Her alone in the lab with test results. Standing in
+front of the school board. Walking through the half-built
+science wing. Washing her students' hands under a faucet
+she no longer trusts.</div>
+
+  <h2>Page Craft</h2>
+  <div class="block">
+    <div class="block-label">The Micro-Skill: Title Page Formatting (WGA Standard)</div>
+    <p>You don't have a screenplay yet — but you'll have one by Week 22, and when you do, the first thing anyone sees is the title page. A correctly formatted title page signals professionalism. An incorrectly formatted one signals that the reader is about to waste their time. The standards are simple and non-negotiable.</p>
+    <p>The title page contains exactly four pieces of information, centered vertically and horizontally: the title of the screenplay (in all caps or title case, your preference, but be consistent), the word "by" (lowercase) on the line below, and your name on the line below that. In the lower right corner: your contact information (email, phone, or representation). In the lower left corner (optional): WGA registration number and/or draft number. Nothing else. No images, no taglines, no genre descriptions, no "based on a true story," no dates unless it's a draft number ("Second Draft — March 2026"). The title page is an index card, not a poster.</p>
+
+    <div class="mini-example"><strong>CORRECT TITLE PAGE FORMAT:</strong>
+
+
+
+                    THE QUIET SEASON
+
+                          by
+
+                    Jordan Ellery
+
+
+
+
+                                 Contact:
+                                 jordan@email.com
+                                 (555) 012-3456
+
+  WGA Registration #1234567
+  First Draft</div>
+
+    <p>Common mistakes: putting a copyright symbol on the title page (unnecessary — WGA registration or a Library of Congress registration is sufficient and less amateurish), including a logline or synopsis (this goes in a separate document), using decorative fonts (the title page should use Courier or Courier Prime, same as the rest of the script), and adding "A Feature Film" or "A Screenplay" (the reader knows what it is).</p>
+    <p><strong>10-minute drill:</strong> Create a title page for your reverse-engineered pitch from Week 4 — or, if you prefer, for a hypothetical screenplay title you're considering for this phase. Follow the format exactly. Use Courier Prime. Include title, byline, and contact info. Leave the registration number blank for now but note where it would go. Check your work against the format above. This should take less than five minutes. Use the remaining time to create a second title page for a different hypothetical title — practice choosing titles that are evocative without being explanatory. A title that tells the reader what the movie is about ("The Contaminated Water") is less compelling than one that creates a question ("The Quiet Season").</p>
+  </div>
+
+  <h2>Core Reading</h2>
+  <div class="block">
+    <div class="block-label">Screenplay Reading — Week 5</div>
+    <p><strong>Assignment:</strong> Read 2 produced feature screenplays. Starting this week — and for the next twenty-three weeks — you're reading scripts, not watching films. Read them as documents: on paper or on a screen, in Courier, one page per minute. Don't watch the films first (or again) this week. Read the screenplay cold.</p>
+    <p><strong>Script Pair Brief:</strong> Choose one screenplay widely regarded as having a razor-sharp premise — a film where the basic setup, described in a sentence, immediately generates anticipation — and one screenplay where the premise is less immediately grabby but the execution carries the film. The first shows you what a strong premise gives a writer for free (built-in tension, natural scene generation, audience buy-in from page one). The second shows you what happens when the premise doesn't do as much heavy lifting — how the writer has to work harder in scene construction, character, and structural invention to compensate.</p>
+    <p><strong>Where to find scripts legally:</strong> The Internet Movie Script Database (IMSDb), The Script Lab, SimplyScripts, and studio "For Your Consideration" releases during awards season. Many screenplays are also available through public library systems. Avoid pirated drafts with no provenance — you want shooting scripts or final drafts, not leaked early versions with uncredited rewrites.</p>
+    <p><strong>Why this pairing:</strong> Reading a strong-premise script alongside a weaker-premise script teaches you what you're building this week. A strong premise doesn't guarantee a strong screenplay, but it gives the writer a structural advantage that's visible on every page: scenes generate naturally from the situation, conflict escalates without the writer forcing it, and the audience's curiosity is maintained by the premise itself rather than by individual scene craft alone. The weaker-premise script shows the cost of starting without that advantage.</p>
+    <p><strong>Reading Lens</strong> (track these while reading):</p>
+    <p>1. Can you state each screenplay's premise in one sentence — character + situation + escalation mechanism? If you can't, where does the formulation break down? 2. How quickly does the premise become active — i.e., at what page does the central conflict begin generating scenes? 3. Does the premise contain a built-in reason for escalation, or does the writer have to manufacture new complications that don't flow from the premise itself? 4. Run each premise through the five tests (camera, escalation, decisions, budget, trailer). Where does each one score strongest and weakest? 5. How does the title page look? Note the format and any deviations from standard.</p>
+    <p><strong>Journal Prompts:</strong></p>
+    <p>1. State the premise of each screenplay in one sentence. Which one was easier to articulate? What does that tell you about the premise's clarity? 2. For the strong-premise script: identify three scenes that exist <em>because</em> of the premise — scenes that couldn't occur in any other story. 3. For the weaker-premise script: find a scene where the writer had to invent a complication that doesn't flow naturally from the setup. Was the scene still effective? What made it work (or not)? 4. If you could replace the weaker premise with a stronger one that kept the same characters and theme, what would you change? What would the stronger premise give the story that it currently lacks? 5. Which screenplay's premise is closer to the kind of story you want to tell? Why?</p>
+  </div>
+
+  <h2>Writing Exercise</h2>
+  <div class="block">
+    <div class="block-label">Your Project Progress</div>
+    <p><strong>Deliverable:</strong> 10 premises → choose 1.</p>
+    <p><strong>Constraints:</strong> Write 10 premises, each as a single paragraph of 50–100 words. Each premise must follow the format: a specific character in a specific situation with a named escalation mechanism. All 10 must be achievable within your chosen budget tier. Write all 10 before evaluating any of them. Then: run each premise through the five filmability tests (camera, escalation, decisions, budget, trailer). Score each test as Strong / Adequate / Weak. Select one premise to carry forward into Week 6. Write a 150–250 word justification for your choice, explaining which tests it passes, which risks it carries, and why you believe this premise can sustain 80–125 pages of screenplay. Total output: 10 premise paragraphs + scoring grid + 1 selection with justification.</p>
+    <p><strong>Quality bar:</strong> At least 7 of your 10 premises must have a named escalation mechanism — not just a situation, but a reason the situation intensifies. Your chosen premise must score Strong on at least three of the five tests and no Weak on any. If your chosen premise has a Weak score on any test, either fix the premise or choose a different one. Your justification must name the specific genre contract the premise creates and at least three types of scenes it generates.</p>
+    <p><strong>Estimated time:</strong> 4–5 hours (premise generation: 2 hours; testing and evaluation: 1.5 hours; selection and justification: 1 hour).</p>
+    <p><strong>Human Draft Reminder:</strong> You write the pages. AI helps you think, test, and decide.</p>
+  </div>
+
+  <h2>AI Workshop</h2>
+  <div class="block">
+    <div class="block-label">Phase 1: Two Readers — Foundation</div>
+    <p>Welcome to the Two Readers model. From this week through Week 28, every AI Workshop section will use two simulated readers with opposing critical priorities. These are not two "modes" of the same feedback. They're two different people with two different jobs, and they will frequently disagree. When they disagree, <em>you</em> decide who's right — and you record your reasoning. This is how you develop critical judgment: not by following one reader's advice, but by arbitrating between two legitimate perspectives.</p>
+  </div>
+
+  <div class="reader-intro">
+    <div class="reader-card">
+      <div class="reader-name">Reader A</div>
+      <div class="reader-title">The Developmental Editor</div>
+      <div class="reader-desc">Reader A cares about structure, logic, and craft. Does the premise generate conflict? Does it escalate? Is the character designed to produce decisions? Reader A looks at the architecture of what you're building and asks: will this hold weight? Reader A's weakness: can be so focused on structural soundness that they undervalue surprise, voice, and emotional risk.</div>
+    </div>
+    <div class="reader-card">
+      <div class="reader-name">Reader B</div>
+      <div class="reader-title">The Resistant First Reader</div>
+      <div class="reader-desc">Reader B is the audience member who picked up your script on a Friday night and has sixty others in the pile. Reader B cares about one thing: do I want to keep reading? Is this premise compelling on a gut level? Would I tell someone about this movie? Reader B's weakness: can be seduced by a flashy premise that doesn't hold up structurally, and may not notice architectural problems until the third act collapses.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label">How the Two Readers Work</div>
+    <p>You'll run two prompts — one for each reader. Each prompt asks the AI to adopt a specific critical perspective and evaluate your work from that angle. After receiving both responses, you'll compare them. Where they agree, the feedback is probably reliable. Where they disagree, you have a decision to make. Record the disagreement and your decision in a "Disagreement Log" — a running document you'll keep for the rest of the curriculum. The log format is simple: <em>What Reader A said. What Reader B said. What I decided. Why.</em> This log is one of the most valuable artifacts you'll produce, because it's a record of your developing taste and judgment.</p>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader A — Developmental Editor</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt1">You are Reader A — a developmental editor evaluating screenplay premises for structural soundness. I'm going to give you my chosen premise for a feature screenplay. Your job is to evaluate it as a MACHINE — a mechanism for generating story.
+
+Here's my premise:
+[Paste your chosen premise paragraph.]
+
+Here's my budget tier: [MICRO / INDIE / STUDIO]
+
+Evaluate along these lines:
+1. ESCALATION: Does this premise contain a built-in reason for the conflict to get worse? Or will I have to invent new complications every ten pages that don't flow from the setup?
+2. DECISIONS: What are the first three decisions this premise will force the protagonist to make? If you can't identify three, the premise may be too passive.
+3. SUSTAINABILITY: Can this premise sustain 80–125 pages? Where do you see it running out of story — the point where the engine stalls?
+4. TIER FIT: Does this premise use the resources of my budget tier, or is it a mismatch (too big or too small for the tier)?
+5. STRUCTURAL RISK: What's the single biggest structural danger in this premise — the thing most likely to cause problems at the outline or draft stage?
+
+Be rigorous. I'd rather hear problems now than at page 60.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt1')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader B — Resistant First Reader</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt2">You are Reader B — a resistant first reader. You have a pile of sixty screenplays to get through this weekend. You give each one ten pages to hook you. I'm going to give you my premise for a feature screenplay. Your job is to evaluate it as a READER — someone who needs a reason to care.
+
+Here's my premise:
+[Paste your chosen premise paragraph.]
+
+Evaluate along these lines:
+1. HOOK: If I read this premise on a coverage sheet, would I pick up the script or move to the next one? What makes me lean in — or not?
+2. ORIGINALITY: Have I seen this before? Not "is this completely new" (nothing is), but "does this feel like it has something to say that I haven't already heard?"
+3. EMOTIONAL ENTRY: Within the first ten pages, what am I feeling? Curious? Anxious? Amused? Moved? If you can't name an emotion, the premise may be intellectually interesting but emotionally inert.
+4. THE DINNER TEST: If I watched this movie and told a friend about it over dinner, what would I say? Can you give me that sentence? If the sentence is boring, the premise has a marketability problem.
+5. WHAT'S MISSING: What would make this premise irresistible to me — the one change or addition that would move it from "interesting" to "I need to read this"?
+
+Be honest. Politeness doesn't help me.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt2')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label">Disagreement → Decision</div>
+    <p>After running both prompts, compare the responses. Start your Disagreement Log — a separate document (digital or physical) with the following format for each entry:</p>
+    <p><strong>Date:</strong> [this week]<br>
+    <strong>Document evaluated:</strong> Chosen premise<br>
+    <strong>Reader A's position:</strong> [summarize in 1–2 sentences]<br>
+    <strong>Reader B's position:</strong> [summarize in 1–2 sentences]<br>
+    <strong>Point of conflict:</strong> [where they disagree]<br>
+    <strong>My decision:</strong> [what I'm going to do]<br>
+    <strong>My reasoning:</strong> [why — this is the most important line]</p>
+    <p>If the readers agree on everything, note that too — and ask yourself whether the feedback is too safe. Agreement can mean the readers are both right, or it can mean neither one pushed hard enough. Consensus is useful. Unanimity is suspicious.</p>
+  </div>
+
+  <h2>Student Self-Check</h2>
+  <div class="self-check">
+    <div class="self-check-label">Before You Move On</div>
+    <div class="self-check-item">Did you write all 10 premises before evaluating any of them — or did you start developing your favorite after premise 3?</div>
+    <div class="self-check-item">Does your chosen premise name a specific escalation mechanism — not just a situation, but a reason the situation gets worse?</div>
+    <div class="self-check-item">Does your chosen premise pass at least three of the five filmability tests at the "Strong" level, with no "Weak" scores?</div>
+    <div class="self-check-item">Can you list at least three types of scenes your premise generates — scenes that flow from the setup without being forced?</div>
+    <div class="self-check-item">Have you started your Disagreement Log with at least one entry from this week's Two Readers feedback?</div>
+  </div>
+
+  <h2>Budget Dial</h2>
+  <div class="block">
+    <div class="block-label">Production Reality Check</div>
+    <p><strong>Budget tier this week:</strong> Your chosen tier is now active. Every premise you generate must be evaluated against it.</p>
+    <p><strong>Top 3 cost drivers in premise selection:</strong> 1. Scope of the world — a premise set in a single building has a fundamentally different cost profile than one spanning a city, a country, or a decade. Match the scope to your tier. 2. Cast implied by the premise — count the speaking roles your premise requires. A courtroom drama implies a judge, attorneys, witnesses, defendant, and jury — that's potentially fifteen speaking roles before you've added personal relationships. 3. Complexity floor — some premises carry inherent production complexity. A premise involving a plane crash, a pandemic, a war, or a natural disaster has a complexity floor that no amount of clever writing can lower below a certain tier.</p>
+    <p><strong>Cheaper equivalent:</strong> A premise about a citywide blackout (dozens of locations, crowd scenes, emergency vehicles, practical effects) can deliver the same thematic core — how people behave when systems fail — through a premise set in a single apartment building during the same blackout. Fewer locations, smaller cast, same thematic engine. The constraint concentrates the story instead of dispersing it.</p>
+    <p><strong>Worth-it spend:</strong> One location that does double duty as both setting and metaphor. A hospital that's being shut down. A house that's being sold. A ship that's taking on water. When your primary location carries thematic weight, you get production value and symbolic resonance from the same budget line.</p>
+  </div>
+
+  <h2>Editorial Tip</h2>
+  <div class="block">
+    <div class="block-label">The Reader's Eye</div>
+    <p>The premise is the only part of your screenplay that needs to work <em>before</em> the reader opens the script. It appears in the logline, the query letter, the pitch, the coverage sheet. If the premise doesn't create curiosity — a specific, targeted feeling of "I want to know what happens" — the script never gets read. The best premise in the world, poorly described, dies in the query pile. The best description in the world can't save a premise that doesn't generate curiosity. This week, you're building the engine. Next week, you'll begin to describe it. Get the engine right first.</p>
+  </div>
+
+  <h2>Journal Prompt</h2>
+  <div class="block">
+    <div class="block-label">Reflection</div>
+    <p>Look at your list of ten premises. Which one surprised you — the one you didn't expect to write, that came from the later, more desperate part of the exercise? And which one is the idea you've been carrying for years, the one you were always going to write? Now ask yourself honestly: which one passed the five tests more convincingly? If the long-held idea scored lower than the surprise, write about what that means. Attachment to an idea and the idea's structural strength are two different things, and learning to tell them apart is one of the hardest skills in this craft.</p>
+  </div>
+
+  <h2>Week Summary</h2>
+  <div class="block">
+    <div class="block-label">What You've Built</div>
+    <p>By the end of this week you should have:</p>
+    <p>• Read 2 produced screenplays with a focus on premise strength and scene generation<br>
+    • Written 10 feature-length premises (50–100 words each) within your budget tier<br>
+    • Scored all 10 premises against the five filmability tests<br>
+    • Selected 1 premise with a written justification (150–250 words)<br>
+    • Completed the title page drill (2 formatted title pages, 10 minutes)<br>
+    • Run your chosen premise through both Reader A and Reader B prompts<br>
+    • Started your Disagreement Log with at least one entry</p>
+  </div>
+
+  <h2>Looking Ahead</h2>
+  <div class="block">
+    <div class="block-label">Next Week</div>
+    <p>Week 6 is <strong>Theme as Argument (Not a Slogan)</strong>. You have a premise — now you need to know what it's <em>about</em>. Not its plot (that's the premise). Not its message (a screenplay is not a fortune cookie). Its theme: the question the plot tests, the argument the story is conducting through action and consequence. You'll write a theme sentence and a one-page concept document that ties your premise, genre contract, budget tier, and thematic argument together into a single coherent blueprint. The concept doc becomes the reference document you'll return to every time you need to make a structural decision for the rest of this curriculum.</p>
+  </div>
+
+  <!-- PORTFOLIO TRACKER -->
+  <div class="portfolio">
+    <div class="portfolio-label">Your Portfolio So Far</div>
+    <div class="portfolio-item done">Week 1–4: Film journals (8 films) + budget-tier choice ✓ PHASE 0 COMPLETE</div>
+    <div class="portfolio-item current">Week 5: 10 premises → 1 chosen premise + Disagreement Log started (THIS WEEK)</div>
+    <div class="portfolio-item upcoming">Week 6: Theme sentence + 1-page concept doc</div>
+    <div class="portfolio-item upcoming">Week 7: Character dossier + pressure tests</div>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+</div>
+
+<footer>
+  <p>THE MOVIE ON THE PAGE · SCREENWRITING STUDIO</p>
+  <p style="margin-top:8px; opacity:0.5;">Cinema craft. Human pages. Clean decisions.</p>
+</footer>
+
+<script>
+  function copyPromptBlock(id){
+    const el=document.getElementById(id);
+    const text=el.innerText||el.textContent;
+    const btn=el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.textContent='Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=btn.dataset.label||'Copy';btn.classList.remove('copied');},2000);
+    });
+  }
+</script>
+</body>
+</html>
