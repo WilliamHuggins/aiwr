@@ -20,6 +20,7 @@ export const week14Data: WeekData = {
       label: "Craft Lecture",
       title: "The Iceberg of Knowledge",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1REcTIVqGf_H5ukarWV9VqlnyvBj73Agi/preview" },
         {
           type: "paragraph",
           content: [

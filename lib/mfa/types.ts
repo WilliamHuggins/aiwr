@@ -28,6 +28,7 @@ export type TipBlock = { type: "tip"; icon: string; name: string; paragraphs: st
 export type JournalBlock = { type: "journal"; title: string; question: string };
 export type GenreGridBlock = { type: "genreGrid"; items: { badge: string; variant: "lf" | "sp" | "cnf"; text: string }[] };
 export type DividerBlock = { type: "divider" };
+export type AudioEmbedBlock = { type: "audioEmbed"; title: string; src: string };
 
 export type WeekBlock =
   | ParagraphBlock
@@ -41,7 +42,8 @@ export type WeekBlock =
   | TipBlock
   | JournalBlock
   | GenreGridBlock
-  | DividerBlock;
+  | DividerBlock
+  | AudioEmbedBlock;
 
 export type WeekSection = { id: string; label: string; title: string; blocks: WeekBlock[] };
 

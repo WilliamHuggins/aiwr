@@ -20,6 +20,7 @@ export const week7Data: WeekData = {
       label: "Craft Lecture",
       title: "Whose Eyes, Whose Limits",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/13-KLqKf5Nl7k4i0VBaRNr-PUB2P5rD4e/preview" },
         {
           type: "paragraph",
           content: [
