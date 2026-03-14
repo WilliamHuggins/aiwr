@@ -4,6 +4,7 @@ const weeks = [
   { href: "/cinema-writing-studio/week-1", label: "Week 1", title: "The Movie on the Page", description: "Beat-by-beat reading and scene-level movement." },
   { href: "/cinema-writing-studio/week-2", label: "Week 2", title: "Editing, Rhythm, Scene Purpose", description: "Track scene purpose, cuts, and rhythm across full features." },
   { href: "/cinema-writing-studio/week-3", label: "Week 3", title: "Genre as a Promise", description: "Define genre contracts and identify delivery scenes." },
+  { href: "/cinema-writing-studio/week-6", label: "Week 6", title: "Theme as Argument (Not a Slogan)", description: "Build a thematic question and concept document that pressure-tests your premise." },
 ];
 
 export default function CinemaWritingStudioLandingPage() {
@@ -16,7 +17,7 @@ export default function CinemaWritingStudioLandingPage() {
         </h1>
         <p className="mt-4 font-ui text-lg uppercase tracking-[0.28em] text-black/60">With AI as a Thought Partner</p>
         <p className="mt-10 max-w-3xl text-2xl leading-relaxed text-black/65 md:text-[2rem]">
-          Continue through Weeks 1–3 of a 36-week studio focused on film language, structure, and practical craft analysis.
+          Continue through the Cinema Writing Studio curriculum with focused weekly modules on film language, structure, and practical craft analysis.
         </p>
 
         <div className="mt-12 grid gap-4 md:grid-cols-3">

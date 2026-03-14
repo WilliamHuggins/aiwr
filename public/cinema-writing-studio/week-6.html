@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Movie on the Page — Week 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1208; --parchment:#f5f0e8; --cream:#faf7f2;
+    --rust:#c0392b; --gold:#b8860b; --faded:#7a6f5e; --highlight:#fff3cd;
+    --reader-a:#2c4a6e; --reader-a-light:#e8f0f8;
+    --reader-b:#4a2c2c; --reader-b-light:#f8e8e8;
+    --check-green:#2d6a4f; --check-bg:#e8f5e9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:'Source Serif 4',serif;font-size:19px;line-height:1.8;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  .masthead{background:var(--ink);color:var(--parchment);text-align:center;padding:16px 24px 12px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;border-bottom:3px double var(--gold);}
+  .hero{background:var(--parchment);border-bottom:3px double var(--ink);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'≠';position:absolute;font-size:460px;color:rgba(0,0,0,0.025);top:-60px;left:50%;transform:translateX(-50%);
+    font-family:'Playfair Display',serif;font-weight:900;pointer-events:none;}
+  .issue-tag{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:block;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:16px;}
+  h1 em{font-style:italic;color:var(--rust);}
+  .deck{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:var(--faded);max-width:620px;margin:0 auto 28px;line-height:1.5;}
+  .byline{font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--faded);
+    border-top:1px solid var(--faded);border-bottom:1px solid var(--faded);display:inline-block;padding:8px 24px;}
+  .post-date{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:var(--faded);margin-top:16px;display:block;}
+  .article-wrapper{max-width:760px;margin:0 auto;padding:50px 32px 90px;}
+  .drop-cap::first-letter{font-family:'Playfair Display',serif;font-size:92px;font-weight:900;float:left;line-height:0.75;margin:8px 12px 0 -4px;color:var(--rust);}
+  p{margin-bottom:1.2em;}
+  h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin:2.2em 0 0.8em;line-height:1.2;}
+  .pull-quote{margin:2.2em -32px;padding:32px 48px;background:var(--ink);color:var(--parchment);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:26px;line-height:1.4;text-align:center;position:relative;}
+  .pull-quote::before,.pull-quote::after{content:'\201C';font-size:80px;color:var(--gold);position:absolute;line-height:1;font-style:normal;}
+  .pull-quote::before{top:12px;left:16px;} .pull-quote::after{content:'\201D';bottom:-16px;right:16px;}
+  .ornament{text-align:center;color:var(--gold);font-size:28px;margin:2.2em 0;letter-spacing:12px;}
+  .block{margin:2em 0;background:var(--parchment);border:2px solid var(--ink);padding:26px 30px;box-shadow:6px 6px 0 var(--ink);}
+  .block-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden;margin:2em 0;}
+  .meta-cell{padding:16px 18px;background:var(--parchment);border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .meta-cell:nth-child(3n){border-right:none;}
+  .meta-key{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:6px;}
+  .meta-val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.2;}
+  .principle{margin:2em 0;padding:22px 26px;background:var(--highlight);border-left:5px solid var(--gold);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.6;}
+  .mini-example{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.85;background:white;border:2px dashed rgba(0,0,0,0.18);
+    padding:14px 16px;margin:1.2em 0;white-space:pre-wrap;}
+  .reader-intro{display:grid;grid-template-columns:1fr 1fr;margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .reader-card{padding:24px;}
+  .reader-card:first-child{border-right:2px solid var(--ink);background:var(--reader-a-light);}
+  .reader-card:last-child{background:var(--reader-b-light);}
+  .reader-name{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .reader-card:first-child .reader-name{color:var(--reader-a);} .reader-card:last-child .reader-name{color:var(--reader-b);}
+  .reader-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:10px;}
+  .reader-desc{font-size:15px;line-height:1.7;color:var(--faded);}
+  .prompt-pair{margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .prompt-pair-header{padding:16px 24px;background:var(--ink);font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:2px solid var(--ink);}
+  .prompt-half{padding:22px 26px;border-bottom:2px solid var(--ink);}
+  .prompt-half:last-child{border-bottom:none;}
+  .prompt-half-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+  .prompt-text{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.9;background:var(--parchment);border-left:4px solid var(--gold);
+    padding:14px 18px;white-space:pre-wrap;color:var(--ink);}
+  .copy-btn{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border:2px solid var(--ink);
+    background:var(--parchment);cursor:pointer;transition:all 0.15s;border-radius:2px;display:inline-block;margin-top:10px;}
+  .copy-btn:hover{background:var(--ink);color:var(--parchment);}
+  .copy-btn.copied{background:var(--gold);border-color:var(--gold);color:white;}
+  .self-check{margin:2em 0;background:var(--check-bg);border:2px solid var(--check-green);padding:26px 30px;box-shadow:6px 6px 0 var(--check-green);}
+  .self-check-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--check-green);margin-bottom:12px;}
+  .self-check-item{font-size:17px;line-height:1.7;margin-bottom:8px;padding-left:28px;position:relative;}
+  .self-check-item::before{content:'□';position:absolute;left:0;color:var(--check-green);font-weight:bold;}
+  .portfolio{margin:2em 0;background:var(--parchment);border:2px solid var(--faded);padding:26px 30px;}
+  .portfolio-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .portfolio-item{font-family:'Courier Prime',monospace;font-size:13px;line-height:2;color:var(--faded);}
+  .portfolio-item.done::before{content:'✓ ';color:var(--check-green);}
+  .portfolio-item.current{color:var(--ink);font-weight:bold;}
+  .portfolio-item.current::before{content:'→ ';color:var(--rust);}
+  .portfolio-item.upcoming::before{content:'○ ';color:var(--faded);}
+  .phase-gate{margin:2em 0;background:var(--ink);color:var(--parchment);border:3px double var(--gold);padding:30px 32px;}
+  .phase-gate-label{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer{background:var(--ink);color:var(--parchment);text-align:center;padding:40px 24px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;border-top:3px double var(--gold);}
+  footer p{margin-bottom:0;font-size:12px;}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr;} .meta-cell{border-right:none;} .reader-intro{grid-template-columns:1fr;}
+    .reader-card:first-child{border-right:none;border-bottom:2px solid var(--ink);} .pull-quote{margin:2.2em 0;}}
+</style>
+</head>
+
+<body>
+<div class="masthead">THE MOVIE ON THE PAGE · WEEK 6 OF 32 · SCREENWRITING FOUNDATIONS</div>
+
+<div class="hero">
+  <span class="issue-tag">SCREENWRITING STUDIO</span>
+  <h1>Theme as Argument<br><em>(Not a Slogan)</em></h1>
+  <p class="deck">Your film doesn't have a message. It has a question — and the plot is the experiment that tests every possible answer.</p>
+  <span class="byline">The Movie on the Page</span>
+  <span class="post-date">Phase 1 · Screenwriting Foundations · Week 6 of 32</span>
+</div>
+
+<div class="article-wrapper">
+
+  <div class="meta-grid">
+    <div class="meta-cell"><div class="meta-key">Commitment</div><div class="meta-val">8–10 hours</div></div>
+    <div class="meta-cell"><div class="meta-key">Craft Focus</div><div class="meta-val">Theme as a question the plot tests</div></div>
+    <div class="meta-cell"><div class="meta-key">Cinema Lens</div><div class="meta-val">What the film argues through consequence, not dialogue</div></div>
+    <div class="meta-cell"><div class="meta-key">Page Craft</div><div class="meta-val">Scene transitions: CUT TO, hard cut, SMASH CUT</div></div>
+    <div class="meta-cell"><div class="meta-key">Exercise Output</div><div class="meta-val">Theme sentence + 1-page concept doc</div></div>
+    <div class="meta-cell"><div class="meta-key">Budget Dial</div><div class="meta-val">Your chosen tier</div></div>
+  </div>
+
+  <p class="drop-cap">You have a premise — a machine that generates conflict. Now you need to know what the machine is <em>for</em>. Not what it does (that's plot), and not what it means to you personally (that's private), but what question it puts before the audience and how the story's events constitute an argument about that question. This is theme. And the single most common mistake writers make with theme is treating it as a conclusion rather than an inquiry. "Love conquers all" is a bumper sticker. "Can love survive when the people who share it have incompatible definitions of loyalty?" is a theme — because it generates conflict, forces the characters into positions where they have to test their answers, and allows the ending to arrive at a conclusion that the audience has watched being <em>earned</em> through action and consequence. A theme sentence doesn't tell the audience what to believe. It tells you, the writer, what your plot is testing.</p>
+
+  <div class="pull-quote">Theme is not the moral of the story. It's the question the story puts on trial — with your characters as witnesses and your plot as evidence.</div>
+
+  <h2>Craft Lecture</h2>
+
+  <p><strong>The difference between theme and message.</strong> A message is a statement: greed is destructive, family matters, justice prevails. A theme is a contested proposition — a question that reasonable people could answer differently, explored through the specific actions and consequences of your plot. The distinction matters because messages produce <em>sermons</em> and themes produce <em>drama</em>. In a sermon, the conclusion is predetermined. The characters exist to illustrate it. The plot arranges events to confirm it. The audience sits passively while the writer delivers their wisdom. In a drama, the conclusion is uncertain until the final act. The characters hold different positions on the thematic question and test those positions through action. The plot puts each position under pressure and reveals its costs. The audience <em>participates</em> — they're forming their own answer as the evidence accumulates.</p>
+
+  <p>Here's the practical test: if your theme can be stated as a bumper sticker that nobody would argue with, it's a message, not a theme. "War is hell" is something everyone already agrees on. It generates no tension. There's nothing to test. "Is it possible to fight a just war without becoming the thing you're fighting against?" — that's contested terrain. People disagree about this. Your characters can disagree about this. And the plot can test different answers by putting characters in situations where their answer determines what they do — and what they do has consequences the audience can evaluate.</p>
+
+  <p><strong>How theme connects to premise.</strong> Your premise from Week 5 is the engine that generates conflict. Your theme is the <em>lens</em> through which that conflict becomes meaningful. The forensic accountant auditing a hospital (premise) becomes a different film depending on the thematic question. "Is institutional loyalty ever worth more than the truth?" produces a story about complicity and whistleblowing. "Does knowing the truth obligate you to act on it, even when action destroys your own life?" produces a story about moral courage and its costs. "Can you be guilty of a crime you didn't commit but chose not to prevent?" produces a legal and philosophical thriller. Same premise, three different films — because the theme determines which conflicts matter most, which decisions carry the most weight, and what the ending has to resolve.</p>
+
+  <p><strong>Theme as structural tool.</strong> This is the part most craft books skip. Theme isn't just a philosophical layer painted over the plot — it's a decision-making tool that solves structural problems. When you're outlining and you reach a fork where the plot could go two directions, theme tells you which direction to take: the one that tests the thematic question more rigorously. When you're drafting a scene and you have three possible versions of a confrontation, theme tells you which confrontation matters: the one where the characters' competing answers to the thematic question collide. When you're revising and a scene feels inert, theme diagnoses the problem: the scene isn't engaging the central question. It's doing plot work without thematic work, and plot without theme is a sequence of events that don't accumulate into meaning.</p>
+
+  <p><strong>The theme sentence.</strong> You're going to write one sentence this week. It may be the most important sentence in your entire project. The format is: <em>"My film asks whether [contested proposition], tested through [the specific mechanism of the premise]."</em> The sentence has two parts because theme without a testing mechanism is philosophy, and a testing mechanism without a thematic question is a plot summary. Both halves are required. The sentence should be precise enough that you could hand it to another writer and they could tell you what kinds of scenes the film needs — and blunt enough that you could tape it above your desk and consult it every time you make a structural decision for the next six months.</p>
+
+  <p><strong>Where theme lives in the screenplay.</strong> Theme is never stated directly in dialogue — or rather, if a character states the theme directly, the audience should have reason to doubt whether that character is right. The moment a character delivers the "theme speech" and the film confirms it, the drama collapses into a message. Theme lives in four places: in the protagonist's decisions (what they choose reveals what they believe about the thematic question), in the consequences of those decisions (the plot tests whether their belief holds up), in the antagonist's opposing position (the antagonist embodies a different answer to the same question), and in the ending (the final image or action constitutes the film's conclusion — not its sermon, but its verdict, delivered through event rather than language).</p>
+
+  <p><strong>Theme and the audience.</strong> A well-executed theme creates a specific audience experience: the feeling of having watched an argument that was conducted fairly. The audience may agree with the film's conclusion or disagree with it, but they should feel that both sides were represented with intelligence and that the conclusion was earned through evidence (plot events and consequences), not assertion (a character saying what the film believes). The fastest way to lose an audience's intellectual trust is to make the antagonist's position obviously stupid. If the audience can see that the writer stacked the deck — made one answer to the thematic question clearly superior by making the opposing answer cartoonishly wrong — the theme becomes propaganda. The best thematic writing makes the antagonist's position genuinely appealing. The audience should understand why someone would hold that position. The film argues against it not by caricaturing it, but by showing its costs when pushed to the extreme.</p>
+
+  <div class="principle"><strong>Craft Principle:</strong> Theme is the question your plot puts on trial — make sure the defense attorney is as smart as the prosecutor.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 1: SLOGAN vs. THEME SENTENCE</strong>
+
+PREMISE: A trauma surgeon discovers that the hospital she
+runs has been systematically deprioritizing uninsured
+patients, and that the policy she inherited — and has been
+enforcing — has cost lives.
+
+SLOGAN (not usable):
+"Healthcare should be equal for everyone."
+    → No one disagrees. No conflict. No drama. Nothing to
+    test. This produces a movie where the surgeon is
+    obviously right and the system is obviously wrong, and
+    the audience watches her confirm what they already
+    believe.
+
+THEME SENTENCE (usable):
+"My film asks whether a person who enforces an unjust
+system without examining it is morally different from the
+person who designed it — tested through a surgeon who must
+decide whether to expose a policy that will destroy the
+institution she's spent her life building."
+    → Contested. Reasonable people disagree about
+    institutional complicity. The surgeon's decision has
+    real costs on both sides. The antagonist (the board
+    chair, the policy's architect) can make a coherent
+    argument: "The policy kept the hospital open. Without
+    it, everyone loses care — insured and uninsured."
+    That's a position the audience can understand even if
+    they ultimately reject it.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 2: THEME AS STRUCTURAL DECISION-MAKER</strong>
+
+PREMISE: A high school chemistry teacher discovers the
+town's water supply is contaminated by a chemical plant
+that funds the school.
+
+THEME SENTENCE: "My film asks whether protecting the people
+you're responsible for justifies concealing a truth that
+would protect a larger group — tested through a teacher
+whose students benefit from the very institution poisoning
+the town."
+
+STRUCTURAL FORK — Act II midpoint:
+The teacher has proof of contamination. She can:
+
+  OPTION A: Go to the press immediately.
+  OPTION B: Confront the plant manager privately first.
+  OPTION C: Bring the evidence to the school board.
+
+Which option does the THEME choose?
+
+Option C. Because the school board — her colleagues, her
+community, the people who championed the science wing —
+is where the thematic question is sharpest. She's not
+just delivering evidence. She's forcing the people she
+works with to answer the same question she's answering:
+is the benefit to OUR students worth the cost to OTHER
+people's children? Options A and B test the premise.
+Option C tests the theme.</div>
+
+  <h2>Page Craft</h2>
+  <div class="block">
+    <div class="block-label">The Micro-Skill: Scene Transitions — CUT TO, Hard Cut, and SMASH CUT</div>
+    <p>In contemporary screenwriting, most scene transitions are implied. You write a new scene heading and the reader understands that the film has cut to a new location and/or time. No transition direction is needed. This wasn't always the case — older screenplays are littered with "CUT TO:" between every scene — but modern convention treats the scene heading itself as the cut. Writing "CUT TO:" between every scene is like writing "then" between every sentence in a novel. It's technically accurate and completely unnecessary.</p>
+    <p>So when <em>do</em> you use a transition direction? Only when the nature of the transition is itself a storytelling choice — when you need the reader to understand that this isn't a normal cut.</p>
+    <p><strong>CUT TO:</strong> Use sparingly, when you want to emphasize a jarring juxtaposition between scenes. A tender conversation between lovers, then CUT TO: the same room, empty, six months later. The "CUT TO:" signals the reader to feel the discontinuity. Without it, the scene heading alone does the work. With it, the writer is saying: <em>notice this gap</em>.</p>
+    <p><strong>SMASH CUT:</strong> A violent, abrupt transition — usually from a quiet or contemplative scene to something loud and kinetic, or vice versa. The SMASH CUT is a pacing tool. It tells the reader (and eventually the editor) that the transition should feel like a punch: no easing, no dissolve, maximum contrast. Use it once or twice per screenplay at most. A script full of SMASH CUTs is a script that doesn't trust its own momentum.</p>
+    <p><strong>Other transitions:</strong> DISSOLVE TO: (signals passage of time, used very rarely now), MATCH CUT TO: (indicates a visual match between the last image of one scene and the first image of the next — a visual rhyme), and FADE TO BLACK / FADE IN: (reserved for major structural breaks, act breaks, or time jumps). All of these are specialized tools. The default transition in a modern screenplay is no transition at all — just a new scene heading.</p>
+
+    <div class="mini-example"><strong>DEFAULT — no transition needed:</strong>
+
+INT. COURTROOM - DAY
+
+The judge strikes the gavel. Adjourned.
+
+INT. ELENA'S CAR - PARKING GARAGE - DAY
+
+Elena sits behind the wheel. The engine is off. She doesn't
+move.
+
+<strong>CUT TO: — emphasizing juxtaposition:</strong>
+
+INT. ELENA'S CHILDHOOD BEDROOM - NIGHT (1994)
+
+She's twelve. Sitting on the bed. The same stillness.
+
+    → The "CUT TO:" signals a time jump that the reader
+    needs to register consciously. Without it, the reader
+    might assume the parking garage scene continues.
+
+<strong>SMASH CUT — maximum contrast:</strong>
+
+INT. MEDITATION CENTER - DAWN
+
+Silence. Twenty people sit cross-legged, eyes closed.
+A bell rings. Stillness.
+
+SMASH CUT TO:
+
+EXT. DEMOLITION SITE - DAY
+
+A wrecking ball hits concrete. Dust explodes outward.
+
+    → The SMASH CUT earns its place because the contrast
+    IS the storytelling. Silence to violence. The
+    juxtaposition says something about the character's
+    two worlds.</div>
+
+    <p><strong>10-minute drill:</strong> Write three scene transitions. First: two scenes connected by a standard cut (no transition direction — just two scene headings, each followed by 2–3 lines of action). Second: two scenes connected by a CUT TO: that emphasizes a meaningful juxtaposition. Third: two scenes connected by a SMASH CUT that uses tonal contrast as storytelling. For each, write a one-sentence note explaining why the transition type was chosen. Total output: six short scene fragments + three transition notes. Time yourself.</p>
+  </div>
+
+  <h2>Core Reading</h2>
+  <div class="block">
+    <div class="block-label">Screenplay Reading — Week 6</div>
+    <p><strong>Assignment:</strong> Read 2 produced feature screenplays, chosen for contrasting approaches to theme.</p>
+    <p><strong>Script Pair Brief:</strong> Select one screenplay where the theme is embedded invisibly — where you finish reading and understand what the film is "about" even though no character ever states it — and one where the theme is more explicitly surfaced, perhaps through dialogue, narration, or structural device. The first teaches you how to bury theme inside character decisions and plot consequences. The second teaches you the risks and occasional rewards of making theme visible — and where the line falls between elegant thematic dialogue and on-the-nose preaching.</p>
+    <p><strong>Where to find scripts legally:</strong> IMSDb, The Script Lab, SimplyScripts, studio FYC releases, and public library systems.</p>
+    <p><strong>Why this pairing:</strong> Theme strategy varies enormously across screenplays. Some films never name their theme and trust the audience to assemble it from evidence. Others have characters articulate competing positions in dialogue — effectively debating the theme on screen. Neither approach is inherently superior, but each carries risks. The invisible-theme approach can leave audiences unsure what the film was trying to say. The explicit-theme approach can collapse drama into didacticism. By reading both strategies in the same week, you'll calibrate where your own screenplay should fall on the spectrum.</p>
+    <p><strong>Reading Lens</strong> (track these while reading):</p>
+    <p>1. Can you state the theme of each screenplay as a contested question — not a message? If you can only state it as a message ("loyalty matters"), push yourself to find the question underneath ("Is loyalty to a person more important than loyalty to a principle?"). 2. Where does the protagonist's decision reveal their position on the thematic question? Find at least two moments. 3. Does the antagonist (or opposing force) embody a coherent alternative answer to the same question? Or is the opposition purely a plot obstacle with no thematic position? 4. Identify any moment where a character directly states the theme. Does the film treat that statement as the answer — or does the plot continue to test it afterward? 5. How does the ending resolve the thematic question? Through action, image, dialogue, or some combination?</p>
+    <p><strong>Journal Prompts:</strong></p>
+    <p>1. Write the theme sentence for each screenplay in the format: "This film asks whether [contested proposition], tested through [premise mechanism]." Which screenplay's theme was easier to articulate? What does that tell you about the film's clarity? 2. Find a scene in each screenplay where the theme is operating invisibly — where what's happening on the surface is plot, but underneath, the thematic question is being tested. What makes the theme present without being stated? 3. Find a scene where the theme surfaces too explicitly — where you can feel the writer reaching for significance. What would the scene need to change to bury the theme more effectively? 4. Does either screenplay's antagonist make a genuinely compelling case for a different answer to the thematic question? If so, which scene is the antagonist's strongest moment — the moment you almost agree with them? 5. If you changed the theme of one screenplay while keeping the same premise, how would the film's key decisions change? Write the alternate theme sentence and identify one scene that would play differently. 6. Which screenplay's approach to theme — invisible or explicit — is closer to what you want for your own project? Why?</p>
+  </div>
+
+  <h2>Writing Exercise</h2>
+  <div class="block">
+    <div class="block-label">Your Project Progress</div>
+    <p><strong>Deliverable:</strong> Theme sentence + 1-page concept document.</p>
+    <p><strong>Constraints:</strong> Produce two artifacts this week:</p>
+    <p><strong>(a) Theme sentence.</strong> One sentence in the format: "My film asks whether [contested proposition], tested through [the specific mechanism of the premise]." The contested proposition must be something reasonable people could disagree about. If everyone would agree with your theme statement, it's a message, not a theme. Rewrite until it generates genuine tension. 30–60 words.</p>
+    <p><strong>(b) One-page concept document.</strong> This is the blueprint that ties together everything you've built so far. It should contain, on a single page: your premise (from Week 5, revised if needed after Reader feedback), your theme sentence, your genre contract (from your Week 3 vocabulary — the core emotional transaction and structural obligations), your budget tier and its key constraints, and a section called "The Argument" — three to five sentences describing how the plot tests the thematic question. What positions do the characters represent? What evidence (events, consequences) does the story present? How does the ending constitute a verdict? The concept doc is a reference tool, not a pitch document — clarity matters more than elegance.</p>
+    <p><strong>Quality bar:</strong> The theme sentence must pass the bumper-sticker test: if it could fit on a bumper sticker and no one would argue with it, it's a message, not a theme. Revise. The concept document must demonstrate that premise, theme, genre, and budget tier are aligned — that the story your premise generates is the same story your theme needs to test its question, delivered within the genre contract you've named, at a production scale your tier supports. If any element feels bolted on rather than integrated, identify the misalignment and address it.</p>
+    <p><strong>Estimated time:</strong> 4–6 hours (theme development: 2 hours; concept document: 2–3 hours; revision after Reader feedback: 1 hour).</p>
+    <p><strong>Human Draft Reminder:</strong> You write the pages. AI helps you think, test, and decide.</p>
+  </div>
+
+  <h2>AI Workshop</h2>
+  <div class="block">
+    <div class="block-label">Phase 1: Two Readers — Foundation</div>
+    <p>The Two Readers return — this time evaluating your theme sentence and concept document. Remember: Reader A (Developmental Editor) evaluates structural and logical soundness. Reader B (Resistant First Reader) evaluates whether the material compels interest. Write your theme sentence and concept document <em>before</em> running the prompts. The Readers test what you've built — they don't build it for you.</p>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader A — Developmental Editor</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt1">You are Reader A — a developmental editor evaluating theme and concept for structural soundness. Here is my concept document for a feature screenplay:
+
+PREMISE: [paste]
+THEME SENTENCE: [paste]
+GENRE CONTRACT: [paste]
+BUDGET TIER: [tier + key constraints]
+THE ARGUMENT: [paste your 3–5 sentence description]
+
+Evaluate along these lines:
+1. CONTESTED GROUND: Is the theme genuinely contested — a question reasonable people disagree about? Or is it a message everyone already accepts? If it's a message, tell me what question is hiding underneath it.
+2. ALIGNMENT: Does the premise actually test the thematic question? Or could this premise generate a film that ignores the theme entirely? Show me where the connection is tight and where it's loose.
+3. STRUCTURAL CONSEQUENCE: If I use this theme sentence to make structural decisions, will it work? Give me a hypothetical fork — a moment where two plot directions are possible — and show me which direction the theme chooses and why.
+4. ANTAGONIST IMPLICATION: Based on my theme, what position must the antagonist hold? Is that position strong enough to sustain a feature, or will I end up with a straw man?
+5. ENDING PRESSURE: What kind of ending does this theme demand? What must the ending resolve, and what happens if I dodge the resolution?
+
+Be specific. Vague approval is useless to me.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt1')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader B — Resistant First Reader</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt2">You are Reader B — a resistant first reader who cares about one thing: do I want to experience this story? Here is my concept document for a feature screenplay:
+
+PREMISE: [paste]
+THEME SENTENCE: [paste]
+GENRE CONTRACT: [paste]
+BUDGET TIER: [tier + key constraints]
+THE ARGUMENT: [paste your 3–5 sentence description]
+
+Evaluate along these lines:
+1. DOES THE THEME ADD OR SUBTRACT? Sometimes a theme makes a compelling premise feel heavy, academic, or preachy. Does my theme deepen the premise or weigh it down? Would I still want to read the script after hearing this theme sentence, or does it make the project sound like homework?
+2. EMOTIONAL STAKES: The theme is intellectual. But is there an emotional core? When the protagonist faces the thematic question, will I FEEL something — or just think something? Where does the emotion live?
+3. FRESHNESS: Have I seen this thematic argument before? Not "has anyone ever explored this question" (all questions have been explored), but "does this specific combination of premise + theme feel like it has something new to show me?"
+4. THE CONVERSATION TEST: If I watched this movie and wanted to argue about it with a friend afterward, what would we argue about? If you can't imagine the argument, the theme may not be provocative enough.
+5. WHAT I'D CUT: Is there anything in the concept document that feels like intellectual scaffolding the writer needs but the audience doesn't? Point to anything that should stay in the writer's notebook and out of the film.
+
+Be honest. I can hear when feedback is being polite.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt2')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label">Disagreement → Decision</div>
+    <p>After running both prompts, add a new entry to your Disagreement Log. This week's entry is especially important because Reader A and Reader B often have fundamentally different reactions to theme. Reader A may love a theme for its structural utility (it generates clear decisions, it narrows the plot, it demands a specific ending). Reader B may find the same theme suffocating (it makes the story feel predetermined, it turns characters into mouthpieces, it kills surprise). If they disagree on whether your theme is an asset or a liability, you have a real decision to make — and your reasoning in the log will reveal whether you're prioritizing architecture or experience. The best themes serve both. But if you have to lean one direction this early, know which way you're leaning and why.</p>
+  </div>
+
+  <h2>Student Self-Check</h2>
+  <div class="self-check">
+    <div class="self-check-label">Before You Move On</div>
+    <div class="self-check-item">Does your theme sentence state a <em>question</em> that reasonable people disagree about — or a <em>message</em> that nobody would argue with? Read it aloud. If it sounds like a fortune cookie, rewrite it.</div>
+    <div class="self-check-item">Can you point to the specific place in your premise where the thematic question gets tested — a situation that forces the protagonist to take a position?</div>
+    <div class="self-check-item">Does your concept document demonstrate alignment between premise, theme, genre, and budget tier — or does at least one element feel disconnected from the others?</div>
+    <div class="self-check-item">Can you describe the antagonist's position on the thematic question in terms that make it sound reasonable — not evil, not stupid, but genuinely defensible from a certain angle?</div>
+    <div class="self-check-item">Have you added this week's Two Readers feedback to your Disagreement Log, including your reasoning for any decisions made?</div>
+  </div>
+
+  <h2>Budget Dial</h2>
+  <div class="block">
+    <div class="block-label">Production Reality Check</div>
+    <p><strong>Budget tier this week:</strong> Your chosen tier, now applied to the concept document.</p>
+    <p><strong>Top 3 cost drivers in theme execution:</strong> 1. Thematic scope — a theme about systemic corruption implies a large world (institutions, hierarchies, many characters representing different levels of the system). A theme about personal betrayal implies a small world (two or three people in close quarters). Your theme has production cost implications. 2. The argument scene — every screenplay needs at least one scene where the thematic question is tested at maximum pressure. This is often the most emotionally complex scene in the film, which means the most demanding performances, which means the most takes, which means the most expensive day on the schedule. Plan for it. 3. The ending — thematic resolution often requires a visual or spatial statement. A character walking away from something. A door closing. An empty room that was once full. These images are cheap to shoot but require the location to be available and dressed. Factor the ending's visual needs into your location plan.</p>
+    <p><strong>Cheaper equivalent:</strong> A theme about institutional failure doesn't require filming inside an actual institution with hundreds of extras. It requires one character who embodies the institution sitting across a table from one character who's been failed by it. The institution is present in the power dynamic between two people in a room.</p>
+    <p><strong>Worth-it spend:</strong> The scene where the antagonist makes their best case. This is often the scene audiences remember most — the moment the "wrong" answer sounds right. It needs space, performance time, and directorial attention. It's also the scene that elevates your theme from propaganda to drama. Budget for it.</p>
+  </div>
+
+  <h2>Editorial Tip</h2>
+  <div class="block">
+    <div class="block-label">The Reader's Eye</div>
+    <p>A professional reader doesn't think about theme while reading your screenplay — at least not consciously. They think about it afterward, when they're writing coverage. And what they write in the "theme" line of their coverage report will be a one-sentence summary of what the film seemed to be arguing. If that sentence matches your theme sentence, your screenplay is working. If it doesn't — if the reader thinks the film is "about" something different from what you intended — one of two things happened: either your theme isn't embedded in the structure deeply enough (the decisions and consequences don't test the question you think they test), or your theme is actually the reader's version and you haven't caught up to your own screenplay yet. Both are useful discoveries. Neither is a failure.</p>
+  </div>
+
+  <h2>Journal Prompt</h2>
+  <div class="block">
+    <div class="block-label">Reflection</div>
+    <p>While writing your theme sentence, did you find yourself gravitating toward a statement you already believe — a settled conviction — rather than a question you're genuinely uncertain about? Write about the difference between a theme that confirms what you already think and a theme that puts your own beliefs under pressure. Which one scares you more? Which one is more likely to produce a screenplay that surprises you during drafting?</p>
+  </div>
+
+  <h2>Week Summary</h2>
+  <div class="block">
+    <div class="block-label">What You've Built</div>
+    <p>By the end of this week you should have:</p>
+    <p>• Read 2 produced screenplays with a focus on contrasting theme strategies<br>
+    • Written a theme sentence in the format: "My film asks whether [contested proposition], tested through [premise mechanism]"<br>
+    • Assembled a 1-page concept document integrating premise, theme, genre contract, budget tier, and thematic argument<br>
+    • Completed the scene transition drill (3 transition types with scene fragments, 10 minutes)<br>
+    • Run the concept document through both Reader A and Reader B prompts<br>
+    • Updated your Disagreement Log with this week's entry and reasoning</p>
+  </div>
+
+  <h2>Looking Ahead</h2>
+  <div class="block">
+    <div class="block-label">Next Week</div>
+    <p>Week 7 is <strong>Protagonist Design: Want / Need / Wound / Line</strong>. You have a premise and a theme. Now you need a person — a character designed to carry both. Not a biography, not a personality quiz, but an architecture: what they want (the conscious goal that drives the plot), what they need (the unconscious truth the theme is testing), the wound that makes the need invisible to them, and the line they won't cross — until the plot forces them to decide whether to cross it. You'll build a character dossier and subject it to three "what if" pressure tests that reveal whether your protagonist can sustain a hundred pages of escalating conflict.</p>
+  </div>
+
+  <!-- PORTFOLIO TRACKER -->
+  <div class="portfolio">
+    <div class="portfolio-label">Your Portfolio So Far</div>
+    <div class="portfolio-item done">Week 1–4: Film journals (8 films) + budget-tier choice ✓ PHASE 0 COMPLETE</div>
+    <div class="portfolio-item done">Week 5: 10 premises → 1 chosen premise + Disagreement Log started</div>
+    <div class="portfolio-item current">Week 6: Theme sentence + 1-page concept doc (THIS WEEK)</div>
+    <div class="portfolio-item upcoming">Week 7: Character dossier + pressure tests</div>
+    <div class="portfolio-item upcoming">Week 8: Antagonist plan + escalation ladder</div>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+</div>
+
+<footer>
+  <p>THE MOVIE ON THE PAGE · SCREENWRITING STUDIO</p>
+  <p style="margin-top:8px; opacity:0.5;">Cinema craft. Human pages. Clean decisions.</p>
+</footer>
+
+<script>
+  function copyPromptBlock(id){
+    const el=document.getElementById(id);
+    const text=el.innerText||el.textContent;
+    const btn=el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.textContent='Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=btn.dataset.label||'Copy';btn.classList.remove('copied');},2000);
+    });
+  }
+</script>
+</body>
+</html>
