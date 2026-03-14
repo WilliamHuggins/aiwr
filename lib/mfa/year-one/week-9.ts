@@ -20,6 +20,7 @@ export const week9Data: WeekData = {
       label: "Craft Lecture",
       title: "Contradiction as the Engine of Depth",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1Snc63jjtcx7glANzrklsGkCfvB0HNTfp/preview" },
         {
           type: "paragraph",
           content: [

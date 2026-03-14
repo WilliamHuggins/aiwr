@@ -20,6 +20,7 @@ export const week10Data: WeekData = {
       label: "Craft Lecture",
       title: "What They Want Is Not What They Need",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1VSnsRU5ytGzlgTC849XKrIWZ47XZArWP/preview" },
         {
           type: "paragraph",
           content: [

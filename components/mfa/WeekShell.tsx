@@ -2,7 +2,7 @@ import type { WeekData, WeekBlock } from "@/lib/mfa/types";
 import Masthead from "@/components/mfa/Masthead";
 import Hero from "@/components/mfa/Hero";
 import Section from "@/components/mfa/Section";
-import { AiWorkshopBox, Card, DividerOrnament, ExerciseBox, GenreGrid, GrammarBox, JournalBox, PullQuote, ReadingList, TipBox, WeekFooterNav } from "@/components/mfa/blocks";
+import { AiWorkshopBox, AudioEmbed, Card, DividerOrnament, ExerciseBox, GenreGrid, GrammarBox, JournalBox, PullQuote, ReadingList, TipBox, WeekFooterNav } from "@/components/mfa/blocks";
 
 function renderParagraphContent(content: any[]) {
   return content.map((part, i) => {
@@ -27,6 +27,7 @@ function renderBlock(block: WeekBlock) {
     case "journal": return <JournalBox title={block.title} question={block.question} />;
     case "genreGrid": return <GenreGrid items={block.items} />;
     case "divider": return <DividerOrnament />;
+    case "audioEmbed": return <AudioEmbed title={block.title} src={block.src} />;
     default: return null;
   }
 }

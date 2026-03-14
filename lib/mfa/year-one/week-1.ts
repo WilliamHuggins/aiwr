@@ -20,6 +20,7 @@ export const week1Data: WeekData = {
       label: "Craft Lecture",
       title: "Begin Before You Are Ready",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/10y68-kecXfZaNESUojiOKgyOJr7PU4Wi/preview" },
         { type: "paragraph", content: ["There is a particular cruelty in the blank page, and it is this: the blank page does not care that you are tired, or that the paragraph you wrote yesterday now sounds hollow, or that you suspect — as every serious writer suspects, on most days — that the entire enterprise of writing is a form of elaborate self-deception. The blank page simply waits. And the question of what kind of writer you will become is, at its most fundamental level, a question of whether you learn to sit down anyway."] },
         { type: "paragraph", content: ["This is the first principle of the writing life, and it is not glamorous. It does not appear on the covers of literary journals. It is not what MFA applicants write about in their personal statements, where the prose tends to run toward revelation — the moment the narrator discovered language, the summer everything changed. The first principle is unglamorous and absolute: ",{ text: "volume precedes quality, and practice precedes inspiration.", emphasized: true }] },
         { type: "pullquote", quote: '"The first draft of anything is shit."', cite: "— Ernest Hemingway, in conversation with F. Scott Fitzgerald" },

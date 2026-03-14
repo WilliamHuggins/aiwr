@@ -20,6 +20,7 @@ export const week3Data: WeekData = {
       label: "Craft Lecture",
       title: "Scene and Summary Are Not Enemies",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1l1z_Fg6GiJLcda4zolZ9DqjSBeIGu1QT/preview" },
         {
           type: "paragraph",
           content: [

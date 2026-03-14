@@ -20,6 +20,7 @@ export const week8Data: WeekData = {
       label: "Craft Lecture",
       title: "The Character Who Reveals Themselves",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1qKDAqR-SzCW7vqBC5SjW9r3o81UNp2Sg/preview" },
         {
           type: "paragraph",
           content: [

@@ -20,6 +20,7 @@ export const week2Data: WeekData = {
       label: "Craft Lecture",
       title: "The Triggering Subject",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1w1kFrwE2LJwLl5H3qqCKlmUk4JWkf-mY/preview" },
         { type: "paragraph", content: ["Richard Hugo called the image the \"triggering subject\" — the concrete thing that unlocks a piece of writing from the inside."] },
         { type: "paragraph", content: ["Images engage the body. Vivid sensory language makes readers experience a scene rather than merely understanding it abstractly."] },
         { type: "pullquote", quote: "Not the idea, not the theme — the image: the thing seen, heard, smelled, tasted, touched.", cite: "Week 2 Craft Principle" },

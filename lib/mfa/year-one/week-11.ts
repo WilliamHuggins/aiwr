@@ -20,6 +20,7 @@ export const week11Data: WeekData = {
       label: "Craft Lecture",
       title: "What People Say Is Not What They Mean",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/18yKWwHi4itj6zZX7PHnd0YMpChw06I5K/preview" },
         {
           type: "paragraph",
           content: [

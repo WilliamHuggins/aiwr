@@ -20,6 +20,7 @@ export const week6Data: WeekData = {
       label: "Craft Lecture",
       title: "What the Characters Will Not Say",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/11wPRQ3VDyFGhzoAh2w5cLRls-C_g2Ah1/preview" },
         {
           type: "paragraph",
           content: [

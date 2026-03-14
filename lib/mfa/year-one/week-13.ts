@@ -20,6 +20,7 @@ export const week13Data: WeekData = {
       label: "Craft Lecture",
       title: "The Place That Could Not Be Anywhere Else",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1M8fTztUJmm_IoTM4quslb4bbTCR1qqvI/preview" },
         {
           type: "paragraph",
           content: [

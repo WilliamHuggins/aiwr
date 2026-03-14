@@ -20,6 +20,7 @@ export const week15Data: WeekData = {
       label: "Craft Lecture",
       title: "What Your Form Can't Do (And What It Can)",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/15V6qQ9nkupnTIoo7TaLNzPjuHDQLZfzX/preview" },
         {
           type: "paragraph",
           content: [

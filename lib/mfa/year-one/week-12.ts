@@ -20,6 +20,7 @@ export const week12Data: WeekData = {
       label: "Craft Lecture",
       title: "The Voice That Could Only Be This Person",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1vGeTbctH7c5WaI0jr4SAg8-A33HmHpJ6/preview" },
         {
           type: "paragraph",
           content: [

@@ -20,6 +20,7 @@ export const week4Data: WeekData = {
       label: "Craft Lecture",
       title: "The Moment After Which Nothing Is the Same",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1uQV_gaOZcEATFrcI6trbeOJL5eGJf6yW/preview" },
         {
           type: "paragraph",
           content: [

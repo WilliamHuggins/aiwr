@@ -20,6 +20,7 @@ export const week16Data: WeekData = {
       label: "Craft Lecture",
       title: "The Book Is Written in the Middle",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1rsc1PfNVTbc8JYyXKLZ_0a_FblthNwEy/preview" },
         {
           type: "paragraph",
           content: [

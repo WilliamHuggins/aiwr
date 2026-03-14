@@ -20,6 +20,7 @@ export const week17Data: WeekData = {
       label: "Craft Lecture",
       title: "The Inside of the Inside",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1AUnlRTQ1W451aTuYbbXDux0eX2fDNCux/preview" },
         {
           type: "paragraph",
           content: [

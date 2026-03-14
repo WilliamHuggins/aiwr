@@ -21,6 +21,7 @@ export const week5Data: WeekData = {
       label: "Craft Lecture",
       title: "The Concrete World Does the Work",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1g4fDffgX8ikVcOANvnRDIpcArvP7BEd2/preview" },
         {
           type: "paragraph",
           content: [
