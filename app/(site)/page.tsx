@@ -1,9 +1,20 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
 import { LatestPostsTeaser } from "@/components/blog/BlogPostListings";
+
+const aiTools = [
+  {
+    title: "Digital Typewriter",
+    description:
+      "A free, distraction-free digital typewriter for drafting prose the old-fashioned way — one word at a time, no backspace allowed.",
+    href: "https://digital-typewriter.vercel.app/",
+    image: "https://i.postimg.cc/Zn4Wb6mn/Chat-GPT-Image-Mar-14-2026-08-12-25-PM.png",
+  },
+];
 
 const HERO_VIDEO_SOURCES = [
   "https://i.imgur.com/ZCoy6Wi.mp4",
@@ -124,6 +135,41 @@ export default function HomePage() {
                 <Button className="rounded-full px-6 py-3 text-xs uppercase tracking-[0.14em]">Explore Tutorials</Button>
               </Link>
             </Card>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16 md:py-24">
+        <Container>
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-3xl font-semibold text-text">AI Tools</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted">
+              Free AI-powered tools built for writers who want to sharpen their craft.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {aiTools.map((tool) => (
+              <Link key={tool.title} href={tool.href} target="_blank" rel="noopener noreferrer" className="group no-underline">
+                <Card className="directory-card flex h-full flex-col overflow-hidden">
+                  <div className="relative aspect-[16/10] w-full">
+                    <Image
+                      src={tool.image}
+                      alt={tool.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-grow flex-col p-7">
+                    <h3 className="font-display text-xl font-semibold text-text">{tool.title}</h3>
+                    <p className="mt-3 flex-grow text-sm leading-relaxed text-muted">{tool.description}</p>
+                    <span className="mt-6 inline-flex items-center gap-2 font-ui text-xs uppercase tracking-[0.14em] text-accent">
+                      Try it free
+                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </span>
+                  </div>
+                </Card>
+              </Link>
+            ))}
           </div>
         </Container>
       </section>
