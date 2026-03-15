@@ -142,7 +142,7 @@ export default function HomePage() {
       <section className="py-16 md:py-24">
         <Container>
           <div className="mb-10 text-center">
-            <h2 className="font-display text-3xl font-semibold text-text">AI Tools</h2>
+            <h2 className="font-display text-3xl font-semibold text-text">Writing Tools</h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted">
               Free AI-powered tools built for writers who want to sharpen their craft.
             </p>
@@ -151,12 +151,12 @@ export default function HomePage() {
             {aiTools.map((tool) => (
               <Link key={tool.title} href={tool.href} target="_blank" rel="noopener noreferrer" className="group no-underline">
                 <Card className="directory-card flex h-full flex-col overflow-hidden">
-                  <div className="relative aspect-[16/10] w-full">
+                  <div className="relative aspect-square w-full">
                     <Image
                       src={tool.image}
                       alt={tool.title}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </div>
                   <div className="flex flex-grow flex-col p-7">
