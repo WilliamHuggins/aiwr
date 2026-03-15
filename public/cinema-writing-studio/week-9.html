@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Movie on the Page — Week 9</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1208; --parchment:#f5f0e8; --cream:#faf7f2;
+    --rust:#c0392b; --gold:#b8860b; --faded:#7a6f5e; --highlight:#fff3cd;
+    --reader-a:#2c4a6e; --reader-a-light:#e8f0f8;
+    --reader-b:#4a2c2c; --reader-b-light:#f8e8e8;
+    --check-green:#2d6a4f; --check-bg:#e8f5e9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:'Source Serif 4',serif;font-size:19px;line-height:1.8;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  .masthead{background:var(--ink);color:var(--parchment);text-align:center;padding:16px 24px 12px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;border-bottom:3px double var(--gold);}
+  .hero{background:var(--parchment);border-bottom:3px double var(--ink);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'≠';position:absolute;font-size:460px;color:rgba(0,0,0,0.025);top:-60px;left:50%;transform:translateX(-50%);
+    font-family:'Playfair Display',serif;font-weight:900;pointer-events:none;}
+  .issue-tag{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:block;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:16px;}
+  h1 em{font-style:italic;color:var(--rust);}
+  .deck{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:var(--faded);max-width:620px;margin:0 auto 28px;line-height:1.5;}
+  .byline{font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--faded);
+    border-top:1px solid var(--faded);border-bottom:1px solid var(--faded);display:inline-block;padding:8px 24px;}
+  .post-date{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:var(--faded);margin-top:16px;display:block;}
+  .article-wrapper{max-width:760px;margin:0 auto;padding:50px 32px 90px;}
+  .drop-cap::first-letter{font-family:'Playfair Display',serif;font-size:92px;font-weight:900;float:left;line-height:0.75;margin:8px 12px 0 -4px;color:var(--rust);}
+  p{margin-bottom:1.2em;}
+  h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin:2.2em 0 0.8em;line-height:1.2;}
+  .pull-quote{margin:2.2em -32px;padding:32px 48px;background:var(--ink);color:var(--parchment);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:26px;line-height:1.4;text-align:center;position:relative;}
+  .pull-quote::before,.pull-quote::after{content:'\201C';font-size:80px;color:var(--gold);position:absolute;line-height:1;font-style:normal;}
+  .pull-quote::before{top:12px;left:16px;} .pull-quote::after{content:'\201D';bottom:-16px;right:16px;}
+  .ornament{text-align:center;color:var(--gold);font-size:28px;margin:2.2em 0;letter-spacing:12px;}
+  .block{margin:2em 0;background:var(--parchment);border:2px solid var(--ink);padding:26px 30px;box-shadow:6px 6px 0 var(--ink);}
+  .block-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden;margin:2em 0;}
+  .meta-cell{padding:16px 18px;background:var(--parchment);border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .meta-cell:nth-child(3n){border-right:none;}
+  .meta-key{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:6px;}
+  .meta-val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.2;}
+  .principle{margin:2em 0;padding:22px 26px;background:var(--highlight);border-left:5px solid var(--gold);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.6;}
+  .mini-example{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.85;background:white;border:2px dashed rgba(0,0,0,0.18);
+    padding:14px 16px;margin:1.2em 0;white-space:pre-wrap;}
+  .reader-intro{display:grid;grid-template-columns:1fr 1fr;margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .reader-card{padding:24px;}
+  .reader-card:first-child{border-right:2px solid var(--ink);background:var(--reader-a-light);}
+  .reader-card:last-child{background:var(--reader-b-light);}
+  .reader-name{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .reader-card:first-child .reader-name{color:var(--reader-a);} .reader-card:last-child .reader-name{color:var(--reader-b);}
+  .reader-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:10px;}
+  .reader-desc{font-size:15px;line-height:1.7;color:var(--faded);}
+  .prompt-pair{margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .prompt-pair-header{padding:16px 24px;background:var(--ink);font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:2px solid var(--ink);}
+  .prompt-half{padding:22px 26px;border-bottom:2px solid var(--ink);}
+  .prompt-half:last-child{border-bottom:none;}
+  .prompt-half-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+  .prompt-text{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.9;background:var(--parchment);border-left:4px solid var(--gold);
+    padding:14px 18px;white-space:pre-wrap;color:var(--ink);}
+  .copy-btn{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border:2px solid var(--ink);
+    background:var(--parchment);cursor:pointer;transition:all 0.15s;border-radius:2px;display:inline-block;margin-top:10px;}
+  .copy-btn:hover{background:var(--ink);color:var(--parchment);}
+  .copy-btn.copied{background:var(--gold);border-color:var(--gold);color:white;}
+  .self-check{margin:2em 0;background:var(--check-bg);border:2px solid var(--check-green);padding:26px 30px;box-shadow:6px 6px 0 var(--check-green);}
+  .self-check-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--check-green);margin-bottom:12px;}
+  .self-check-item{font-size:17px;line-height:1.7;margin-bottom:8px;padding-left:28px;position:relative;}
+  .self-check-item::before{content:'□';position:absolute;left:0;color:var(--check-green);font-weight:bold;}
+  .portfolio{margin:2em 0;background:var(--parchment);border:2px solid var(--faded);padding:26px 30px;}
+  .portfolio-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .portfolio-item{font-family:'Courier Prime',monospace;font-size:13px;line-height:2;color:var(--faded);}
+  .portfolio-item.done::before{content:'✓ ';color:var(--check-green);}
+  .portfolio-item.current{color:var(--ink);font-weight:bold;}
+  .portfolio-item.current::before{content:'→ ';color:var(--rust);}
+  .portfolio-item.upcoming::before{content:'○ ';color:var(--faded);}
+  footer{background:var(--ink);color:var(--parchment);text-align:center;padding:40px 24px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;border-top:3px double var(--gold);}
+  footer p{margin-bottom:0;font-size:12px;}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr;} .meta-cell{border-right:none;} .reader-intro{grid-template-columns:1fr;}
+    .reader-card:first-child{border-right:none;border-bottom:2px solid var(--ink);} .pull-quote{margin:2.2em 0;}}
+</style>
+</head>
+
+<body>
+<div class="masthead">THE MOVIE ON THE PAGE · WEEK 9 OF 32 · SCREENWRITING FOUNDATIONS</div>
+
+<div class="hero">
+  <span class="issue-tag">SCREENWRITING STUDIO</span>
+  <h1>World Rules<br><em>You Can Film</em></h1>
+  <p class="deck">A story world isn't a backdrop. It's a set of rules — and every rule is a promise that generates drama the moment someone breaks it.</p>
+  <span class="byline">The Movie on the Page</span>
+  <span class="post-date">Phase 1 · Screenwriting Foundations · Week 9 of 32</span>
+</div>
+
+<div class="article-wrapper">
+
+  <div class="meta-grid">
+    <div class="meta-cell"><div class="meta-key">Commitment</div><div class="meta-val">8–10 hours</div></div>
+    <div class="meta-cell"><div class="meta-key">Craft Focus</div><div class="meta-val">Building a world with rules the audience can track</div></div>
+    <div class="meta-cell"><div class="meta-key">Cinema Lens</div><div class="meta-val">What the camera can show an audience about how this world works</div></div>
+    <div class="meta-cell"><div class="meta-key">Page Craft</div><div class="meta-val">Location descriptions: specificity without overwriting</div></div>
+    <div class="meta-cell"><div class="meta-key">Exercise Output</div><div class="meta-val">Rules document + locations list + rule-break cost (2–3 pages)</div></div>
+    <div class="meta-cell"><div class="meta-key">Budget Dial</div><div class="meta-val">Your chosen tier</div></div>
+  </div>
+
+  <p class="drop-cap">You've built a protagonist, an antagonist, and a thematic argument. You have an engine (premise), a lens (theme), and two opposing forces designed to collide. What you don't have yet is a <em>place</em> for the collision to happen. And place, in screenwriting, isn't geography. It's governance. Every story world — whether it's a galaxy-spanning empire or a single apartment building — operates according to rules that the audience absorbs and tracks, consciously or not. Who has power and how they got it. What's allowed and what's forbidden. What things cost and who pays. How information moves and who controls it. These rules don't just describe the world. They <em>constrain the story</em>. A character who violates a world rule pays a price, and the audience feels that violation as drama because they understood the rule being broken. A world without clear rules is a world where anything can happen — and a world where anything can happen is a world where nothing matters.</p>
+
+  <div class="pull-quote">The audience doesn't need to know every rule of your world. They need to feel that rules exist — and that breaking them has a cost no one can avoid.</div>
+
+  <h2>Craft Lecture</h2>
+
+  <p><strong>Rules versus setting.</strong> Most screenwriting advice about "worldbuilding" is actually about setting: the time period, the physical environment, the cultural texture. Setting matters — it creates atmosphere, anchors the audience visually, and shapes the tone. But setting is passive. It sits behind the action. Rules are active. They shape the action itself. A film set in a small fishing village has a setting. A film set in a small fishing village where every family owes a debt to the cannery owner, where no one leaves between November and March because the only road floods, and where a woman who speaks at the town meeting before being acknowledged by the moderator gets her fishing permit pulled — that's a world with rules. The setting tells the audience where they are. The rules tell the audience what's possible, what's dangerous, and what a character risks by acting.</p>
+
+  <p>Here's why the distinction matters for your screenplay: setting generates description. Rules generate scenes. If you know the rules of your world, you know what happens when a character pushes against them. Every rule implies a violation, and every violation implies a consequence. That's free conflict — drama that doesn't have to be manufactured because it emerges from the world's internal logic. A character who borrows money from the cannery owner has entered a specific kind of debt, with specific enforcement mechanisms, in a community where everyone knows what that debt means. You don't have to invent an obstacle for that character. The world's rules provide the obstacle automatically.</p>
+
+  <p><strong>The four categories of world rules.</strong> Every story world, regardless of genre or scale, has rules in four categories. You may not need to articulate all four in elaborate detail — some will be more important to your specific premise than others — but you need to know they exist, because gaps in your rule system create gaps in your story's logic.</p>
+
+  <p><strong>Power rules:</strong> Who has authority and how it's exercised. In a hospital: the chief of surgery outranks the attending, who outranks the resident. In a prison: the warden has official power, but the inmate who controls the supply chain has operational power. In a family: the parent who controls the money makes the decisions, regardless of who holds the moral authority. Power rules tell the audience who can give orders and who has to obey them — and, critically, what happens when someone at the bottom challenges someone at the top. Your protagonist and antagonist should occupy positions on this power map, and the map should make clear why the protagonist can't simply overpower the antagonist through authority alone.</p>
+
+  <p><strong>Information rules:</strong> What people know and how they find out. In a courtroom: evidence follows discovery rules. In a small town: gossip travels through the diner, the church, the school pickup line. In a corporate office: email chains create paper trails, and hallway conversations don't. Information rules are crucial because so many plot mechanics depend on who knows what and when. If your world has no defined information pathways, characters will discover things through writer's convenience rather than through the world's logic — and the audience will feel the cheat even if they can't name it.</p>
+
+  <p><strong>Cost rules:</strong> What things cost and who pays. Not just money — though money matters — but social cost, emotional cost, physical cost. In a world where reputation is currency (a law firm, an art gallery, a small religious community), speaking publicly against a powerful figure costs social standing. In a world where silence is currency (a criminal organization, a family with secrets), speaking at all costs safety. Cost rules determine what your protagonist risks every time they act. If the costs are vague, the protagonist's decisions feel weightless. If the costs are specific and visible, every decision carries felt consequence.</p>
+
+  <p><strong>Boundary rules:</strong> What separates inside from outside — literally and figuratively. The threshold between the protagonist's world and the antagonist's territory. The line between the safe space and the dangerous one. The barrier between the known and the unknown. Boundary rules generate some of the most visually powerful moments in cinema: a character crossing a threshold, entering a forbidden space, leaving a zone of safety. They also create natural scene structure — a character on the wrong side of a boundary is automatically in tension, because the audience knows they don't belong there and that the world's enforcement mechanism could activate at any moment.</p>
+
+  <p><strong>Rules must be filmable.</strong> This is the test that separates worldbuilding for novels from worldbuilding for screenplays. Every rule you establish must be communicable through something the camera can show. "In this world, everyone distrusts outsiders" is a novel rule — it describes a psychological state. "In this town, every stranger gets a visit from the sheriff within an hour of arriving" is a filmable rule — it describes a specific, visible behavior that the audience will see enacted on screen. When you're designing your world's rules, ask: how does the audience <em>learn</em> this rule? If the answer is "someone explains it in dialogue," you need a better answer. The ideal: the audience learns the rule by watching it enforced. They see the consequence before they're told the law.</p>
+
+  <p><strong>Rule-break cost.</strong> The most important thing about any rule is what happens when it's broken. A world with rules and no enforcement is a world of suggestions. A world where violations carry visible, proportional, and escalating consequences is a world that generates drama automatically. The "rule-break cost" is a document you're going to write this week: for each major rule in your world, name the consequence of violating it. Make the consequence specific, filmable, and proportional to the violation — a minor infraction costs something recoverable; a major violation costs something permanent. And here's the key structural insight: your protagonist will break at least one of these rules during the screenplay, and the cost they pay for that violation will be one of the turning points of the story. Know the price in advance.</p>
+
+  <div class="principle"><strong>Craft Principle:</strong> A well-designed world doesn't describe where the story takes place — it determines what the story is allowed to do.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 1: RULES VERSUS SETTING — SAME PLACE, DIFFERENT WORLDS</strong>
+
+SETTING ONLY:
+A public high school in a declining industrial town. The
+hallways smell like floor wax and vending machine coffee.
+Fluorescent lights buzz. Trophy cases from the 1990s.
+
+    → Atmosphere: yes. Constraint on the story: none. The
+    characters could do anything in this building without
+    the world pushing back.
+
+SETTING + RULES:
+A public high school funded almost entirely by a single
+corporate donor. The donor's logo is on the gymnasium
+floor, the science wing entrance, the football jerseys.
+
+POWER RULE: The principal answers to the school board,
+but the school board answers to the donor's community
+liaison — an unelected position with veto power over
+curriculum changes and staffing decisions.
+
+INFORMATION RULE: Faculty evaluations are shared with the
+donor's office. Teachers know their performance reviews
+are read by someone outside the school system.
+
+COST RULE: A teacher who publicly criticizes the donor
+loses access to the lab equipment the donor funds. Their
+students suffer. The cost of dissent is borne by the kids.
+
+BOUNDARY RULE: The donor's wing of the building is locked
+after 4 PM. Faculty need special clearance to enter. The
+chemistry teacher's lab is in the donor's wing.
+
+    → Now the world constrains the story. Nora can't
+    investigate freely — her lab is in the donor's space.
+    She can't speak publicly — her students pay the price.
+    She can't go over the principal's head — the real
+    power is the liaison. Every rule generates obstacles.
+    Every obstacle generates scenes.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 2: RULE-BREAK COST — WHAT HAPPENS WHEN THE RULE IS VIOLATED</strong>
+
+RULE: Faculty need special clearance to enter the donor's
+wing after 4 PM.
+
+VIOLATION LEVEL 1 — MINOR:
+Nora stays late in her lab without filing the clearance
+form. The night janitor notices but doesn't report it.
+COST: None — yet. But the janitor now has information.
+
+VIOLATION LEVEL 2 — MODERATE:
+Nora enters the donor's wing at night to access water
+testing records stored in the liaison's office.
+COST: If caught, formal disciplinary action. Loss of lab
+privileges. The liaison learns she's investigating. Her
+cover is blown.
+
+VIOLATION LEVEL 3 — SEVERE:
+Nora removes documents from the liaison's office and
+copies them at the school's front-desk printer, creating
+a paper trail.
+COST: Termination. Possible criminal trespass charge. The
+documents become inadmissible if they surface in any legal
+proceeding because they were obtained illegally. She's
+given the antagonist a weapon: "She broke into my office.
+What does that tell you about her judgment?"
+
+    → The escalating cost structure gives the writer
+    three different versions of the same action — entering
+    the wing — at three different levels of risk. Each
+    level generates a different scene with different
+    stakes. The world's rules do the writer's work.</div>
+
+  <h2>Page Craft</h2>
+  <div class="block">
+    <div class="block-label">The Micro-Skill: Location Descriptions — Specificity Without Overwriting</div>
+    <p>Every time your screenplay enters a new location, the reader needs enough visual information to see the space — and not one detail more. The amateur instinct is to describe everything: the furniture, the light, the temperature, the smell, the art on the walls, the crack in the ceiling, the color of the carpet. The professional instinct is to choose the one or two details that define the space's <em>character</em> and let the reader's imagination fill in the rest.</p>
+    <p>The principle: a location description should tell the reader what this space <em>feels like</em>, not what it looks like in full inventory. A production designer will dress the set. A cinematographer will light it. Your job is to give them a direction — an emotional signature — through specific, curated detail.</p>
+
+    <div class="mini-example"><strong>OVERWRITTEN — inventory list:</strong>
+
+INT. PRINCIPAL'S OFFICE - DAY
+
+A medium-sized office with beige walls and a large oak desk
+in the center. Behind the desk is a leather swivel chair.
+Two visitor chairs face the desk, upholstered in worn green
+fabric. On the wall: framed diplomas from State University,
+a clock showing 2:15, and a photo of the principal shaking
+hands with the governor. A filing cabinet stands in the
+corner. The blinds are half-closed, casting striped shadows
+across the desk. A coffee mug reads "World's Best Boss."
+
+<strong>SPECIFIC — curated detail:</strong>
+
+INT. PRINCIPAL'S OFFICE - DAY
+
+Framed diplomas on one wall. On the opposite wall, larger
+and more prominent: a photo of the principal shaking hands
+with a man in a hard hat, the chemical plant rising behind
+them. The desk faces the door, but the principal's chair
+faces the photo.
+
+    → Two details. The photo's size relative to the
+    diplomas establishes a power hierarchy: the donor
+    matters more than the credentials. The chair facing
+    the photo instead of the door suggests the principal's
+    true audience. The reader now knows everything about
+    this room — not its furniture, but its politics.</div>
+
+    <p>The test: after writing a location description, remove every detail that doesn't tell the reader something about the world's rules, the character's psychology, or the scene's emotional temperature. If a detail is purely decorative — if cutting it doesn't change what the reader understands — cut it. What remains is specific. What you cut was inventory.</p>
+    <p><strong>10-minute drill:</strong> Choose three locations from your screenplay's world (use your locations list from this week's exercise, or improvise). Write an overwritten version of each: 5–8 lines of full inventory. Then rewrite each in 2–3 lines, keeping only the details that reveal character, power, or world rules. Total output: six descriptions (three long, three short). Compare them. The short versions should communicate <em>more</em> meaning with fewer words. Time yourself.</p>
+  </div>
+
+  <h2>Core Reading</h2>
+  <div class="block">
+    <div class="block-label">Screenplay Reading — Week 9</div>
+    <p><strong>Assignment:</strong> Read 2 produced feature screenplays, chosen for worldbuilding within budget constraints.</p>
+    <p><strong>Script Pair Brief:</strong> Select one screenplay set in a tightly constrained world — few locations, small cast, dense rule system (a submarine, a courtroom, a single house, a school) — and one screenplay with a more expansive world that still manages to establish clear, trackable rules across a larger canvas. The first demonstrates how a small world with specific rules generates enormous drama from minimal resources. The second demonstrates the craft of making a bigger world feel governed rather than random — how a writer establishes rules across multiple locations and social contexts without drowning the reader in exposition.</p>
+    <p><strong>Where to find scripts legally:</strong> IMSDb, The Script Lab, SimplyScripts, studio FYC releases, and public library systems.</p>
+    <p><strong>Why this pairing:</strong> Budget tier directly shapes worldbuilding strategy. A micro-budget writer needs to extract maximum drama from minimal locations — and the way to do that is through dense rule systems that constrain every action within those few spaces. A studio-budget writer has access to more spaces but faces the opposite problem: keeping a sprawling world coherent and trackable. Both challenges are solved by rules. Reading both approaches in the same week gives you strategies for your own tier.</p>
+    <p><strong>Reading Lens</strong> (track these while reading):</p>
+    <p>1. Identify the world's power rules: who has authority, how is it exercised, and what happens when it's challenged? 2. How does the audience learn the rules? Through enforcement (watching a consequence happen), through dialogue (someone explains the rule), or through visual design (the space itself communicates the hierarchy)? Which method is most effective? 3. Count the distinct locations. How many are used once versus repeatedly? Do recurring locations accumulate meaning — does the space feel different the third time we're in it than the first? 4. Find a moment where a world rule is broken. What's the cost? Is the cost proportional, and does the audience feel it because they understood the rule? 5. How do location descriptions work in each screenplay? Are they inventories or curated details? Which descriptions are most effective, and what makes them work?</p>
+    <p><strong>Journal Prompts:</strong></p>
+    <p>1. For the constrained-world screenplay: list every rule you can identify (power, information, cost, boundary). How many rules does the writer establish, and how efficiently? Which rules generate the most dramatic value? 2. For the expansive-world screenplay: how does the writer keep the rule system trackable across a larger canvas? Are there anchor locations or anchor characters that embody the rules, making them visible even in new spaces? 3. Find a location description in each screenplay that communicates world rules through curated detail rather than exposition. What details are chosen, and what do they tell you about how the world operates? 4. Identify a moment in each screenplay where the world's rules do the writer's work — where conflict emerges from the logic of the world rather than from a new obstacle the writer invented. What rule is generating the conflict? 5. If you transplanted your protagonist into one of these worlds, which rules would they violate first? What does that tell you about the rules you need to design for your own world?</p>
+  </div>
+
+  <h2>Writing Exercise</h2>
+  <div class="block">
+    <div class="block-label">Your Project Progress</div>
+    <p><strong>Deliverable:</strong> Rules document + locations list + rule-break cost.</p>
+    <p><strong>Constraints:</strong> Produce three artifacts:</p>
+    <p><strong>(a) Rules document</strong> (1–1.5 typed pages). Identify your world's rules in each of the four categories: power rules (who has authority and how it's exercised — at least 2 rules), information rules (how knowledge moves and who controls it — at least 2 rules), cost rules (what actions cost and who pays — at least 2 rules), and boundary rules (what separates inside from outside, safe from dangerous, permitted from forbidden — at least 1 rule). Each rule should be stated in one sentence, followed by 1–2 sentences explaining how it constrains your story. Total: 9–12 rules minimum. Every rule must be filmable — communicable through something the camera can show.</p>
+    <p><strong>(b) Locations list</strong> (0.5–1 typed page). List every distinct location your screenplay will use. For each location, provide: the slug line format (INT./EXT., location name, time of day), one sentence describing the location's emotional signature (not its furniture — its feeling), and a note on how many scenes you estimate will take place there. Flag your primary location (the space with the most scenes) and any locations that appear only once. Count your total. Check it against your budget tier: micro = 1–3 locations; indie = 5–15 locations; studio = no fixed limit but each location must earn its place.</p>
+    <p><strong>(c) Rule-break cost document</strong> (0.5–1 typed page). For at least three of your most important rules, define the cost of breaking them at three escalating levels: minor infraction (recoverable cost), moderate violation (significant cost with lasting consequences), and severe breach (permanent or near-permanent cost). For each level, the cost must be specific, filmable, and proportional. Identify at least one rule your protagonist will break during the screenplay and at what escalation level.</p>
+    <p><strong>Quality bar:</strong> Every rule must pass the filmability test — if you can't describe how the audience learns the rule through action or visual detail (not expository dialogue), the rule isn't filmable yet. Your locations list must align with your budget tier — if you're micro with twelve locations, you have a problem. Your rule-break costs must be specific enough that a reader could predict the consequence before being told — that's how you know the rule is clear.</p>
+    <p><strong>Estimated time:</strong> 5–7 hours (rules document: 2–3 hours; locations list: 1–1.5 hours; rule-break costs: 1–1.5 hours; revision after Reader feedback: 1 hour).</p>
+    <p><strong>Human Draft Reminder:</strong> You write the pages. AI helps you think, test, and decide.</p>
+  </div>
+
+  <h2>AI Workshop</h2>
+  <div class="block">
+    <div class="block-label">Phase 1: Two Readers — Foundation</div>
+    <p>The Two Readers evaluate your world documents this week. Reader A tests whether the rules create structural constraint — do they actually limit what characters can do and generate conflict? Reader B tests whether the world is vivid enough to immerse a reader — does it feel like a place, or like a spreadsheet? Write everything first. Then run the prompts. Then update your Disagreement Log.</p>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader A — Developmental Editor</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt1">You are Reader A — a developmental editor evaluating world design for structural soundness. Here are my documents:
+
+RULES DOCUMENT:
+[Paste all rules organized by category]
+
+LOCATIONS LIST:
+[Paste full list with emotional signatures and scene counts]
+
+RULE-BREAK COST:
+[Paste the three rules with escalating violation levels]
+
+For context:
+PREMISE: [paste from Week 5]
+PROTAGONIST WOUND: [paste from Week 7]
+ANTAGONIST STRATEGY: [paste from Week 8]
+BUDGET TIER: [your tier]
+
+Evaluate along these lines:
+1. CONSTRAINT POWER: Do these rules actually constrain the story? For each rule, can you name a specific action the protagonist CANNOT take because of it? If a rule doesn't prevent anything, it's decoration, not structure.
+2. GAPS: Are there gaps in the rule system — places where a character could bypass the antagonist, solve the problem, or escape the situation because no rule prevents it? Point to any gap that would create a plot hole.
+3. WOUND EXPLOITATION: Does the world's rule system interact with the protagonist's Wound? Is there a rule that the Wound makes the protagonist especially likely to violate — or especially unable to challenge?
+4. ESCALATION SUPPORT: Does the rule-break cost structure support your escalation ladder from Week 8? At which level of the ladder does a specific rule violation become necessary for the protagonist?
+5. TIER ALIGNMENT: Is the locations list realistic for your budget tier? Flag any location that seems unnecessary — a space used once for a scene that could happen somewhere you're already filming.
+
+Stress-test the world. If it leaks, tell me where.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt1')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader B — Resistant First Reader</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt2">You are Reader B — a resistant first reader evaluating whether a story world makes me want to spend two hours inside it. Here are my documents:
+
+RULES DOCUMENT:
+[Paste all rules organized by category]
+
+LOCATIONS LIST:
+[Paste full list with emotional signatures]
+
+RULE-BREAK COST:
+[Paste the three rules with escalating violation levels]
+
+PREMISE: [paste from Week 5]
+
+Evaluate along these lines:
+1. TEXTURE: Does this world feel like a place — somewhere with temperature, sound, and friction — or does it read like a rulebook? What's the one detail in the documents that makes the world feel real, and what's missing that would bring it alive?
+2. DISCOVERY PLEASURE: As a reader, part of the fun of entering a new world is learning how it works. Based on these rules, will I experience that pleasure — the satisfaction of understanding a system well enough to anticipate consequences? Or are the rules so simple they don't reward attention?
+3. OPPRESSIVE QUALITY: A great story world exerts pressure on its inhabitants. Does this world feel like it presses down on the protagonist — like existing inside it costs something every day, even before the plot kicks in? Or does it feel neutral, just a container for the story?
+4. VISUAL IDENTITY: Based on the locations list and emotional signatures, can I picture this world? Is there a dominant visual palette, a recurring spatial motif, a sensory detail that anchors the whole thing? Or does each location feel disconnected from the others?
+5. THE OPENING IMAGE: If I were directing the first shot of this film — the image that tells the audience what kind of world they're entering — what would it be? Can you find that image in these documents, or is it missing?
+
+Make me want to visit this world, even if I wouldn't want to live there.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt2')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label">Disagreement → Decision</div>
+    <p>Add this week's entry to your Disagreement Log. A likely divergence: Reader A may find the rules structurally sound but note they're too abstract — they constrain the story logically but don't manifest as specific, filmable details. Reader B may find the world evocative but note that the rules feel imposed rather than organic — the writer constructed a system instead of discovering a place. The best worldbuilding feels like both simultaneously: a set of constraints that emerges naturally from the specificity of the place. If your Readers diverge this way, the revision isn't about choosing rules over texture or texture over rules. It's about finding the specific physical details — the photo on the principal's wall, the locked door at 4 PM, the fishing permit that gets pulled — where rules and texture are the same thing.</p>
+  </div>
+
+  <h2>Student Self-Check</h2>
+  <div class="self-check">
+    <div class="self-check-label">Before You Move On</div>
+    <div class="self-check-item">Can you state each of your world's rules in one sentence — and for each rule, name something specific the protagonist cannot do because of it?</div>
+    <div class="self-check-item">Does your locations list align with your budget tier? If you're micro-budget with eight locations, can you consolidate? If you're indie with two locations, are you leaving tier resources unused?</div>
+    <div class="self-check-item">Are your rule-break costs specific and filmable — not "there would be consequences" but "the janitor now has information" or "the documents become inadmissible"?</div>
+    <div class="self-check-item">For each rule, can you describe how the audience learns it — through enforcement, visual design, or behavioral pattern — without relying on a character explaining it in dialogue?</div>
+    <div class="self-check-item">Have you identified at least one rule your protagonist will break, and do you know the escalation level and cost of that violation?</div>
+  </div>
+
+  <h2>Budget Dial</h2>
+  <div class="block">
+    <div class="block-label">Production Reality Check</div>
+    <p><strong>Budget tier this week:</strong> Your chosen tier, applied directly to world design and location planning.</p>
+    <p><strong>Top 3 cost drivers in worldbuilding:</strong> 1. Location variety — the number of distinct locations is the most direct cost multiplier in production. Every new location means scouting, permits, transport, setup, and teardown. Consolidate where possible: can two scenes set in different offices happen in the same office? Can the bar and the restaurant be the same establishment? 2. World-specific dressing — if your world has distinctive visual rules (the donor's logo on every surface, surveillance cameras in every hallway, specific signage), every location must be dressed accordingly. The more specific your visual world, the higher the art department budget. Design rules that manifest through a few repeatable details rather than comprehensive environmental overhaul. 3. Establishing shots — the audience needs to understand the geography of your world: how locations relate to each other spatially. Establishing shots (the exterior of the school, the approach to the plant, the town from above) cost surprisingly little to shoot but are often forgotten in budgeting. One well-chosen establishing shot can do the work of three pages of expository dialogue about where things are.</p>
+    <p><strong>Cheaper equivalent:</strong> A world whose geography is established through a map on the protagonist's wall (one prop, one location) instead of through aerial shots of the town, driving sequences between locations, and exterior coverage of every building. The map can be referenced, annotated, and updated as the story progresses — it becomes a visual motif that grounds the audience spatially without any additional production cost.</p>
+    <p><strong>Worth-it spend:</strong> Set dressing your primary location with absolute specificity. If sixty percent of your screenplay takes place in the school, invest in making the school feel lived-in, politically charged, and visually distinctive. The details that communicate world rules — the donor's photo, the locked wing, the evaluation forms on a desk — are all production design elements that cost pennies compared to a new location but add enormous narrative density to every scene shot in that space.</p>
+  </div>
+
+  <h2>Editorial Tip</h2>
+  <div class="block">
+    <div class="block-label">The Reader's Eye</div>
+    <p>A script reader evaluates worldbuilding in the first five pages, often without thinking about it. What they notice is whether the world <em>resists</em> the protagonist. A world that resists — where the simple act of crossing a hallway or making a phone call encounters friction from the world's rules — feels real and dramatic. A world that accommodates — where the protagonist moves freely, gets information easily, and faces obstacles only when the plot requires them — feels thin. The reader won't articulate it as "the world rules are underdesigned." They'll write "the world doesn't feel developed" or "the story feels convenient." Both notes are diagnosed the same way: the rules aren't doing enough work.</p>
+  </div>
+
+  <h2>Journal Prompt</h2>
+  <div class="block">
+    <div class="block-label">Reflection</div>
+    <p>While designing your world's rules, did you discover anything about your story that surprised you? Rules have a way of revealing structural problems you didn't know you had — a protagonist who could bypass the antagonist entirely because no rule prevents it, or a plot that requires information to move in a way your world's information rules don't allow. Write about one rule that, when you articulated it, changed something about how you understood your story. What did the rule reveal that the premise and character design hadn't?</p>
+  </div>
+
+  <h2>Week Summary</h2>
+  <div class="block">
+    <div class="block-label">What You've Built</div>
+    <p>By the end of this week you should have:</p>
+    <p>• Read 2 produced screenplays with a focus on worldbuilding strategies at different scales<br>
+    • Written a rules document covering power, information, cost, and boundary rules (9–12 rules minimum)<br>
+    • Built a locations list aligned with your budget tier, with emotional signatures and scene counts<br>
+    • Created a rule-break cost document with three escalating violation levels for at least three rules<br>
+    • Completed the location description drill (3 overwritten + 3 curated versions, 10 minutes)<br>
+    • Run your world documents through both Reader A and Reader B prompts<br>
+    • Updated your Disagreement Log with this week's entry</p>
+  </div>
+
+  <h2>Looking Ahead</h2>
+  <div class="block">
+    <div class="block-label">Next Week</div>
+    <p>Week 10 is <strong>The Promise Map (What the Audience Paid For)</strong>. You've built a world with rules, a protagonist designed to break under pressure, and an antagonist designed to apply it. Now you step back and ask: what does the audience <em>expect to experience</em> when they sit down with this story? The promise map is a list of nine moments — specific scenes, images, confrontations, or set pieces — that your genre contract obligates you to deliver and your premise is designed to produce. Think of it as the highlight reel the audience is unconsciously waiting for. If you deliver all nine, you've honored the contract. If you miss three, the audience leaves dissatisfied, even if they can't articulate what was missing.</p>
+  </div>
+
+  <!-- PORTFOLIO TRACKER -->
+  <div class="portfolio">
+    <div class="portfolio-label">Your Portfolio So Far</div>
+    <div class="portfolio-item done">Week 1–4: Film journals (8 films) + budget-tier choice ✓ PHASE 0 COMPLETE</div>
+    <div class="portfolio-item done">Week 5: 10 premises → 1 chosen premise + Disagreement Log started</div>
+    <div class="portfolio-item done">Week 6: Theme sentence + 1-page concept doc</div>
+    <div class="portfolio-item done">Week 7: Character dossier + pressure tests</div>
+    <div class="portfolio-item done">Week 8: Antagonist plan + escalation ladder</div>
+    <div class="portfolio-item current">Week 9: World rules + locations list + rule-break cost (THIS WEEK)</div>
+    <div class="portfolio-item upcoming">Week 10: Promise map</div>
+    <div class="portfolio-item upcoming">Week 11: 8-sequence outline</div>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+</div>
+
+<footer>
+  <p>THE MOVIE ON THE PAGE · SCREENWRITING STUDIO</p>
+  <p style="margin-top:8px; opacity:0.5;">Cinema craft. Human pages. Clean decisions.</p>
+</footer>
+
+<script>
+  function copyPromptBlock(id){
+    const el=document.getElementById(id);
+    const text=el.innerText||el.textContent;
+    const btn=el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.textContent='Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=btn.dataset.label||'Copy';btn.classList.remove('copied');},2000);
+    });
+  }
+</script>
+</body>
+</html>
