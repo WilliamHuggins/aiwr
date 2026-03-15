@@ -20,6 +20,7 @@ export const week21Data: WeekData = {
       label: "Craft Lecture",
       title: "Who Gets to Know",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1TgquRU-uoBhb6Y0Z8AhKxUqsOeW-7Dlv/preview" },
         {
           type: "paragraph",
           content: [

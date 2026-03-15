@@ -20,6 +20,7 @@ export const week34Data: WeekData = {
       label: "Craft Lecture",
       title: "The Architecture of Funny",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/19rPQOWCz_URpP8Qb980N9xq894yUSMH1/preview" },
         {
           type: "paragraph",
           content: [

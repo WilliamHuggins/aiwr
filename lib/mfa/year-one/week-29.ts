@@ -20,6 +20,7 @@ export const week29Data: WeekData = {
       label: "Craft Lecture",
       title: "Three Syntactic Worlds",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/19mTLxrHZ2m4_t-tQ67wk_8TqJVI2re4j/preview" },
         {
           type: "paragraph",
           content: [

@@ -20,6 +20,7 @@ export const week30Data: WeekData = {
       label: "Craft Lecture",
       title: "The Figure That Thinks",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1Bwllx7ANe1o2VdAMejqWPSrYrlKn7-YK/preview" },
         {
           type: "paragraph",
           content: [

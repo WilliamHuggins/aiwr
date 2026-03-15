@@ -20,6 +20,7 @@ export const week33Data: WeekData = {
       label: "Craft Lecture",
       title: "A Different Species",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/11_Fj1_2HYa2e2kiFL1biYy5Q4sR3Eoki/preview" },
         {
           type: "paragraph",
           content: [

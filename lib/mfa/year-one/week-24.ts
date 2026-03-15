@@ -20,6 +20,7 @@ export const week24Data: WeekData = {
       label: "Craft Lecture",
       title: "The Engine Beneath Everything",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1v4A6k0o3j8GZU9ngsswkYTcM0rujAWca/preview" },
         {
           type: "paragraph",
           content: [

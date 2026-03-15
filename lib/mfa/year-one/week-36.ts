@@ -20,6 +20,7 @@ export const week36Data: WeekData = {
       label: "Craft Lecture",
       title: "The Declaration of Intent",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/12qREJA6UPSkkvUroNoI51amfQOAgQjkU/preview" },
         {
           type: "paragraph",
           content: [

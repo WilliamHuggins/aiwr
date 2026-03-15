@@ -20,6 +20,7 @@ export const week23Data: WeekData = {
       label: "Craft Lecture",
       title: "The Dial, Not the Switch",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1auBnu5q9CKD5EcIAuQCxioZORfsvwabS/preview" },
         {
           type: "paragraph",
           content: [
