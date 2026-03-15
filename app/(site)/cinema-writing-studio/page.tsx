@@ -7,6 +7,7 @@ const weeks = [
   { href: "/cinema-writing-studio/week-6", label: "Week 6", title: "Theme as Argument (Not a Slogan)", description: "Build a thematic question and concept document that pressure-tests your premise." },
   { href: "/cinema-writing-studio/week-7", label: "Week 7", title: "Protagonist Design", description: "Build a protagonist from four load-bearing elements: Want, Need, Wound, and Line." },
   { href: "/cinema-writing-studio/week-8", label: "Week 8", title: "Antagonism as a System", description: "Design opposition as a force with logic, escalation, and a defensible thematic position." },
+  { href: "/cinema-writing-studio/week-9", label: "Week 9", title: "World Rules You Can Film", description: "Design a world with trackable rules, pressure-tested costs, and production-ready location strategy." },
 ];
 
 export default function CinemaWritingStudioLandingPage() {
