@@ -8,6 +8,7 @@ const weeks = [
   { href: "/cinema-writing-studio/week-7", label: "Week 7", title: "Protagonist Design", description: "Build a protagonist from four load-bearing elements: Want, Need, Wound, and Line." },
   { href: "/cinema-writing-studio/week-8", label: "Week 8", title: "Antagonism as a System", description: "Design opposition as a force with logic, escalation, and a defensible thematic position." },
   { href: "/cinema-writing-studio/week-9", label: "Week 9", title: "World Rules You Can Film", description: "Design a world with trackable rules, pressure-tested costs, and production-ready location strategy." },
+  { href: "/cinema-writing-studio/week-10", label: "Week 10", title: "The Promise Map", description: "Map the nine moments your audience expects and design surprising ways to deliver each one." },
 ];
 
 export default function CinemaWritingStudioLandingPage() {

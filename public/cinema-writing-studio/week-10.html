@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Movie on the Page — Week 10</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1208; --parchment:#f5f0e8; --cream:#faf7f2;
+    --rust:#c0392b; --gold:#b8860b; --faded:#7a6f5e; --highlight:#fff3cd;
+    --reader-a:#2c4a6e; --reader-a-light:#e8f0f8;
+    --reader-b:#4a2c2c; --reader-b-light:#f8e8e8;
+    --check-green:#2d6a4f; --check-bg:#e8f5e9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:'Source Serif 4',serif;font-size:19px;line-height:1.8;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  .masthead{background:var(--ink);color:var(--parchment);text-align:center;padding:16px 24px 12px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;border-bottom:3px double var(--gold);}
+  .hero{background:var(--parchment);border-bottom:3px double var(--ink);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'≠';position:absolute;font-size:460px;color:rgba(0,0,0,0.025);top:-60px;left:50%;transform:translateX(-50%);
+    font-family:'Playfair Display',serif;font-weight:900;pointer-events:none;}
+  .issue-tag{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:block;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:16px;}
+  h1 em{font-style:italic;color:var(--rust);}
+  .deck{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:var(--faded);max-width:620px;margin:0 auto 28px;line-height:1.5;}
+  .byline{font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--faded);
+    border-top:1px solid var(--faded);border-bottom:1px solid var(--faded);display:inline-block;padding:8px 24px;}
+  .post-date{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:var(--faded);margin-top:16px;display:block;}
+  .article-wrapper{max-width:760px;margin:0 auto;padding:50px 32px 90px;}
+  .drop-cap::first-letter{font-family:'Playfair Display',serif;font-size:92px;font-weight:900;float:left;line-height:0.75;margin:8px 12px 0 -4px;color:var(--rust);}
+  p{margin-bottom:1.2em;}
+  h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin:2.2em 0 0.8em;line-height:1.2;}
+  .pull-quote{margin:2.2em -32px;padding:32px 48px;background:var(--ink);color:var(--parchment);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:26px;line-height:1.4;text-align:center;position:relative;}
+  .pull-quote::before,.pull-quote::after{content:'\201C';font-size:80px;color:var(--gold);position:absolute;line-height:1;font-style:normal;}
+  .pull-quote::before{top:12px;left:16px;} .pull-quote::after{content:'\201D';bottom:-16px;right:16px;}
+  .ornament{text-align:center;color:var(--gold);font-size:28px;margin:2.2em 0;letter-spacing:12px;}
+  .block{margin:2em 0;background:var(--parchment);border:2px solid var(--ink);padding:26px 30px;box-shadow:6px 6px 0 var(--ink);}
+  .block-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden;margin:2em 0;}
+  .meta-cell{padding:16px 18px;background:var(--parchment);border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .meta-cell:nth-child(3n){border-right:none;}
+  .meta-key{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:6px;}
+  .meta-val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.2;}
+  .principle{margin:2em 0;padding:22px 26px;background:var(--highlight);border-left:5px solid var(--gold);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.6;}
+  .mini-example{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.85;background:white;border:2px dashed rgba(0,0,0,0.18);
+    padding:14px 16px;margin:1.2em 0;white-space:pre-wrap;}
+  .prompt-pair{margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .prompt-pair-header{padding:16px 24px;background:var(--ink);font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:2px solid var(--ink);}
+  .prompt-half{padding:22px 26px;border-bottom:2px solid var(--ink);}
+  .prompt-half:last-child{border-bottom:none;}
+  .prompt-half-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+  .prompt-text{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.9;background:var(--parchment);border-left:4px solid var(--gold);
+    padding:14px 18px;white-space:pre-wrap;color:var(--ink);}
+  .copy-btn{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border:2px solid var(--ink);
+    background:var(--parchment);cursor:pointer;transition:all 0.15s;border-radius:2px;display:inline-block;margin-top:10px;}
+  .copy-btn:hover{background:var(--ink);color:var(--parchment);}
+  .copy-btn.copied{background:var(--gold);border-color:var(--gold);color:white;}
+  .self-check{margin:2em 0;background:var(--check-bg);border:2px solid var(--check-green);padding:26px 30px;box-shadow:6px 6px 0 var(--check-green);}
+  .self-check-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--check-green);margin-bottom:12px;}
+  .self-check-item{font-size:17px;line-height:1.7;margin-bottom:8px;padding-left:28px;position:relative;}
+  .self-check-item::before{content:'□';position:absolute;left:0;color:var(--check-green);font-weight:bold;}
+  .portfolio{margin:2em 0;background:var(--parchment);border:2px solid var(--faded);padding:26px 30px;}
+  .portfolio-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .portfolio-item{font-family:'Courier Prime',monospace;font-size:13px;line-height:2;color:var(--faded);}
+  .portfolio-item.done::before{content:'✓ ';color:var(--check-green);}
+  .portfolio-item.current{color:var(--ink);font-weight:bold;}
+  .portfolio-item.current::before{content:'→ ';color:var(--rust);}
+  .portfolio-item.upcoming::before{content:'○ ';color:var(--faded);}
+  footer{background:var(--ink);color:var(--parchment);text-align:center;padding:40px 24px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;border-top:3px double var(--gold);}
+  footer p{margin-bottom:0;font-size:12px;}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr;} .meta-cell{border-right:none;} .pull-quote{margin:2.2em 0;}}
+</style>
+</head>
+
+<body>
+<div class="masthead">THE MOVIE ON THE PAGE · WEEK 10 OF 32 · SCREENWRITING FOUNDATIONS</div>
+
+<div class="hero">
+  <span class="issue-tag">SCREENWRITING STUDIO</span>
+  <h1>The Promise Map<br><em>What the Audience Paid For</em></h1>
+  <p class="deck">Before you outline a single sequence, name the nine moments your audience is unconsciously waiting for — then figure out how to deliver each one in a way they didn't expect.</p>
+  <span class="byline">The Movie on the Page</span>
+  <span class="post-date">Phase 1 · Screenwriting Foundations · Week 10 of 32</span>
+</div>
+
+<div class="article-wrapper">
+
+  <div class="meta-grid">
+    <div class="meta-cell"><div class="meta-key">Commitment</div><div class="meta-val">7–9 hours</div></div>
+    <div class="meta-cell"><div class="meta-key">Craft Focus</div><div class="meta-val">Mapping the setpiece moments the audience expects</div></div>
+    <div class="meta-cell"><div class="meta-key">Cinema Lens</div><div class="meta-val">The scenes the audience would describe to a friend the next day</div></div>
+    <div class="meta-cell"><div class="meta-key">Page Craft</div><div class="meta-val">Writing setpieces: pacing action on the page</div></div>
+    <div class="meta-cell"><div class="meta-key">Exercise Output</div><div class="meta-val">Promise map: 9 bullets describing what the audience must experience</div></div>
+    <div class="meta-cell"><div class="meta-key">Budget Dial</div><div class="meta-val">Your chosen tier</div></div>
+  </div>
+
+  <p class="drop-cap">You've built the components: a premise that generates conflict, a theme that gives it meaning, a protagonist and antagonist designed to collide, a world with rules that constrain every action. Before you turn any of this into an outline — before you think about sequence structure, act breaks, or page counts — you need to answer one question from the audience's chair: <em>what did I come here to see?</em> Not the plot. Not the theme. The <em>moments</em>. The scenes that the audience is, without knowing it, already anticipating. The promise map is a list of nine specific experiences your film must deliver — confrontations, revelations, images, decisions, set pieces — that satisfy the contract your genre and premise have created. Think of it as the highlight reel that exists in the audience's imagination before the film starts. Your job is to deliver every item on that reel, but in a form the audience didn't predict.</p>
+
+  <div class="pull-quote">The audience doesn't know they're keeping a list. But they are — and every undelivered promise is a debt that accrues interest until the credits roll.</div>
+
+  <h2>Craft Lecture</h2>
+
+  <p><strong>Where promises come from.</strong> The audience's expectation list doesn't appear from nowhere. It's assembled from three sources, each of which you've already designed: your <strong>genre contract</strong> (Week 3), your <strong>premise</strong> (Week 5), and your <strong>character design</strong> (Weeks 7–8). Genre tells the audience what <em>kind</em> of experiences to expect — horror promises scares, thriller promises escalating jeopardy, romance promises the ache of almost-connection. Premise tells them what <em>specific</em> situations those experiences will arise from — a teacher investigating contamination promises discovery scenes, confrontation with authority, evidence under threat. Character tells them what <em>emotional textures</em> to anticipate — a protagonist with a Wound around institutional loyalty promises scenes of painful compromise, moments where doing the right thing and doing the safe thing pull in opposite directions.</p>
+
+  <p>All three sources feed the promise map. A map built only from genre will be generic — a list of obligations any film in that genre must fulfill. A map built from genre plus premise will be specific to your story but may miss the emotional promises that come from character. A map built from all three is a document that, if you delivered every item on it, would produce the feeling of a complete, satisfying film — even before a single structural decision has been made.</p>
+
+  <p><strong>Why nine?</strong> The number is a guideline, not a law — but it's calibrated to feature-length storytelling. A ninety-to-one-hundred-twenty-minute film has room for roughly nine major moments that the audience will remember and recount afterward. Fewer than nine suggests you haven't fully exploited your premise's potential. More than nine and you risk dilution — too many peaks flatten into a plateau. Nine gives you approximately one major delivery every ten to twelve minutes of screen time, which maps loosely to the scene-sequence rhythm of most features. Some will be big, visceral set pieces. Others will be quiet, devastating character moments. The variety matters. An audience that gets nine loud scenes is exhausted. An audience that gets nine quiet ones is restless. The mix — loud and quiet, external and internal, confrontational and contemplative — is what creates the sensation of a complete experience.</p>
+
+  <p><strong>The three categories of promise.</strong> Each item on your map should fall into one of three categories. You need at least two items from each category to have a balanced map.</p>
+
+  <p><strong>Genre obligations.</strong> These are the moments your genre contract demands. In a thriller: the moment the protagonist realizes how deep the danger goes. The sequence where they're being hunted. The confrontation where they face the antagonist directly. In a drama: the eruption scene where suppressed tension finally detonates. The quiet scene that follows, where the damage is surveyed. In a horror film: the first genuine scare, the fake-out, the final confrontation with the threat. These are non-negotiable. The audience chose your genre and is owed these moments. You can deliver them unconventionally, but you cannot omit them.</p>
+
+  <p><strong>Premise-specific moments.</strong> These are the scenes that only your story can produce — the situations that arise specifically from the collision of your premise, your characters, and your world rules. They're the reason someone would choose <em>this</em> film over another film in the same genre. A generic thriller about corruption has genre obligations any corruption thriller must fulfill. But a thriller about a chemistry teacher whose investigation implicates the institution she built has premise-specific moments that belong to no other story: the scene where she tests the water in her own school's fountain. The scene where a student asks why the science wing smells different. The scene where the school board votes on whether to accept the donor's offer while she watches from the back row. These moments are uniquely yours. They're also the ones the audience will remember most vividly.</p>
+
+  <p><strong>Character-driven moments.</strong> These are emotional turning points that arise from the protagonist's internal architecture — the Want/Need tension, the Wound activation, the Line test. They don't necessarily advance the plot (though the best ones do both). They advance the audience's understanding of who this person is. The moment the protagonist's Wound is visible for the first time. The moment they consider crossing their Line. The moment the Want and Need collide and they have to choose. These are the scenes that make the audience care about the outcome, not just the plot. A film can deliver every genre obligation and every premise-specific moment and still feel hollow if the character-driven moments are missing — because the audience was never given a reason to invest in the person at the center.</p>
+
+  <p><strong>The delivery principle.</strong> Here's the craft that separates competent genre writing from memorable filmmaking: every promise must be delivered, but no promise should be delivered in the most obvious way. If the audience anticipates a confrontation between the teacher and the plant manager, deliver the confrontation — but in a location they didn't expect, with a power dynamic they didn't predict, at a moment in the story when the confrontation means something different than it would have earlier. The promise is honored. The delivery is surprising. This is the "playing surprising notes within the key signature" principle from Week 3, now applied at the structural level. You're not subverting expectations by withholding what the audience wants. You're fulfilling expectations through a door they didn't see.</p>
+
+  <div class="principle"><strong>Craft Principle:</strong> Honor every promise your genre, premise, and characters have made — but deliver each one through a door the audience didn't know existed.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 1: A NINE-ITEM PROMISE MAP</strong>
+
+PREMISE: Chemistry teacher discovers contamination from
+the plant that funds her school.
+GENRE: Thriller / moral drama
+PROTAGONIST: Nora — institutional loyalist with a
+whistleblower Wound.
+
+GENRE OBLIGATIONS:
+1. THE DISCOVERY — Nora finds proof that the water is
+   contaminated. The audience must experience the moment
+   evidence becomes undeniable.
+2. THE PURSUIT — Nora is actively obstructed. She
+   realizes the opposition is organized, resourceful,
+   and watching her. The walls close in.
+3. THE DIRECT CONFRONTATION — Nora and Graham in the
+   same room, competing arguments laid bare, with
+   something at stake that can't be recovered.
+
+PREMISE-SPECIFIC MOMENTS:
+4. THE SCHOOL FOUNTAIN — Nora tests water from the
+   fountain her students drink from every day. The
+   results come back. She's standing in her own lab.
+5. THE DONOR'S OFFER — Graham presents the quiet
+   remediation deal. Everything Nora's Wound wants her
+   to accept, laid out in reasonable terms. The audience
+   should feel the pull.
+6. THE BOARD MEETING — The institution Nora built
+   votes on her fate. She's in the room. Former allies
+   won't look at her. The system works exactly as
+   designed — against her.
+
+CHARACTER-DRIVEN MOMENTS:
+7. THE WOUND SURFACING — A colleague or student
+   discovers Nora's history — the last time she blew
+   the whistle and what it cost. The past invades the
+   present. Nora's careful control cracks.
+8. THE LINE TEST — Nora reaches the point where going
+   public is the only remaining option — and going
+   public means destroying the school. Her Line ("I
+   handle things inside the system") faces annihilation.
+9. THE FINAL IMAGE — After the climactic decision, one
+   image that crystallizes the thematic verdict. Nora
+   in the school. Or Nora not in the school. The
+   presence or absence tells the audience what the
+   story concluded.</div>
+
+  <div class="mini-example"><strong>MICRO-EXAMPLE 2: DELIVERING A PROMISE THROUGH AN UNEXPECTED DOOR</strong>
+
+PROMISE: "The direct confrontation — Nora and Graham in
+the same room, arguments laid bare."
+
+OBVIOUS DELIVERY:
+INT. GRAHAM'S OFFICE - DAY
+Nora storms in. They argue across his desk. He threatens.
+She defies him. Both leave angrier than they arrived.
+
+    → Functional. Fulfills the obligation. Forgettable.
+    The audience predicted this scene the moment they
+    understood the premise.
+
+UNEXPECTED DOOR:
+INT. SCHOOL GYMNASIUM - EVENING
+The annual donor appreciation dinner. Graham is giving a
+speech about community partnership. Nora is seated at the
+faculty table, clapping politely. Graham makes eye contact
+with her during the speech — a single held look — and
+ad-libs a line about "teachers who go above and beyond."
+
+The audience hears it as praise. Nora hears it as a
+warning. After the speech, they meet at the buffet table.
+The confrontation happens in murmured voices between
+smiles, surrounded by parents and students. Neither can
+raise their voice. Neither can leave. The argument is
+conducted entirely in subtext, with both of them holding
+plates of catered food.
+
+    → Same promise delivered. Same confrontation. But the
+    setting (public, celebratory, surveilled by community)
+    compresses the conflict into subtext and stakes.
+    Graham's power is visible — this is HIS event. Nora's
+    vulnerability is visible — her students are watching.
+    The scene is more tense, more specific, and more
+    filmable than the desk argument. The audience got what
+    they were owed. They didn't predict the form.</div>
+
+  <h2>Page Craft</h2>
+  <div class="block">
+    <div class="block-label">The Micro-Skill: Writing Setpieces — Pacing Action on the Page</div>
+    <p>A setpiece is any scene where the premise delivers its core promise at maximum intensity — a chase, a confrontation, a heist execution, a surgical emergency, a public unraveling. Setpieces are the scenes the audience remembers. They're also the scenes most likely to go wrong on the page, because the writer's instinct is to describe everything that happens and the reader's experience is that the pace collapses under the weight of description.</p>
+    <p>The paradox of writing action on the page: the more physical detail you include, the <em>slower</em> the scene reads. A car chase described in exhaustive specificity — every turn, every near-miss, every gear shift — reads like slow motion. A car chase described in fragments — short sentences, white space, sensory flashes — reads like velocity. The principle is counterintuitive but absolute: <strong>speed on the page comes from less, not more.</strong></p>
+
+    <div class="mini-example"><strong>SLOW — too much detail kills momentum:</strong>
+
+Nora pushes through the gymnasium's emergency exit door
+and runs down the concrete steps into the parking lot. Her
+shoes slip on the wet pavement. She catches herself on the
+railing, pushes off, and runs between the rows of parked
+cars toward her Honda Civic, which is parked in the third
+row near the dumpsters. She fumbles in her bag for her keys,
+pulls them out, drops them, picks them up, unlocks the car
+with shaking hands, gets in, starts the engine, and pulls
+out of the space too fast, scraping the car next to her.
+
+<strong>FAST — fragments create velocity:</strong>
+
+Nora hits the emergency exit.
+
+Concrete steps. Wet pavement. Her shoes slip — she
+catches the railing, keeps moving.
+
+The parking lot. Rows of cars. She runs.
+
+Keys. Fumbles. Drops them. Again. Got them.
+
+The engine turns over. She pulls out too fast. Metal
+scrapes metal. She doesn't stop.</div>
+
+    <p>Notice the fragments: "Keys. Fumbles. Drops them. Again. Got them." Five words across three sentences that cover the same action as fifty words in the slow version. The reader's eye moves down the page at the speed of the chase. Each line break is a cut. Each sentence fragment is a shot. You're not writing prose — you're writing rhythm.</p>
+    <p>This technique applies beyond physical action. An emotional setpiece — a public confrontation, a devastating reveal, a decision under pressure — benefits from the same pacing strategy. When the intensity peaks, shorten the sentences. Widen the white space. Let each beat land in isolation. Save the dense, flowing prose for the quieter scenes that surround the setpiece. The contrast between dense surrounding scenes and lean setpiece scenes creates rhythmic variety — the same principle you studied in Week 2, now applied at the sentence level.</p>
+    <p><strong>10-minute drill:</strong> Write a 30-second action sequence — not a car chase or gunfight (unless your genre requires it), but any moment of physical urgency from your screenplay's world: a character rushing to intercept someone, searching a room before being discovered, or trying to retrieve something before it's destroyed. Write it twice. First version: one continuous paragraph, every detail included. Second version: fragmented — no sentence longer than eight words, at least four line breaks, at least two single-word sentences. Compare the felt pace. Total output: two versions of the same 30-second action. Time yourself.</p>
+  </div>
+
+  <h2>Core Reading</h2>
+  <div class="block">
+    <div class="block-label">Screenplay Reading — Week 10</div>
+    <p><strong>Assignment:</strong> Read 2 produced feature screenplays, chosen for setpiece construction and promise delivery.</p>
+    <p><strong>Script Pair Brief:</strong> Select one screenplay celebrated for its setpieces — a film where the major scenes are structurally ambitious, meticulously paced, and memorable as standalone sequences — and one screenplay that works primarily through accumulation rather than peaks: a film where no single scene is the "big scene," but the total effect is devastating. The first teaches you how to construct the high points on your promise map. The second teaches you that a promise map isn't only about spectacle — it includes the quiet, devastating moments that arrive without fanfare and stay with the audience longer than any set piece.</p>
+    <p><strong>Where to find scripts legally:</strong> IMSDb, The Script Lab, SimplyScripts, studio FYC releases, and public library systems.</p>
+    <p><strong>Why this pairing:</strong> Promise delivery operates at two registers — the loud and the quiet — and most screenplays need both. A film that's all setpieces becomes exhausting (the audience has no baseline to measure the peaks against). A film that's all accumulation can feel shapeless (the audience never gets the cathartic release of a fully realized moment). Reading both registers in the same week calibrates your sense of what your own promise map needs: how many loud promises, how many quiet ones, and how they alternate.</p>
+    <p><strong>Reading Lens</strong> (track these while reading):</p>
+    <p>1. Can you reverse-engineer a promise map from the finished screenplay? List the nine (or so) moments the audience was most anticipating and that the film delivered. Which category does each fall into — genre obligation, premise-specific, or character-driven? 2. For each major setpiece or peak scene: how is it paced on the page? Look at sentence length, paragraph density, and white space. Does the writer shift to fragment-style writing during high-intensity moments? 3. Identify a promise that was delivered through an "unexpected door" — a moment the audience was waiting for that arrived in a form they didn't predict. What made the delivery surprising while still honoring the obligation? 4. Find a quiet promise — a moment that isn't a spectacle but that the audience was waiting for emotionally. How does the writer create the sense that this moment is significant without raising the volume? 5. Is there a promise the screenplay fails to deliver — something the genre or premise created an expectation for that the film never fulfilled? How does that gap affect the overall experience?</p>
+    <p><strong>Journal Prompts:</strong></p>
+    <p>1. Write a reverse-engineered promise map for each screenplay: nine bullets describing the moments the audience came to experience. Which map is more balanced across the three categories (genre, premise, character)? 2. For the setpiece-driven screenplay: choose the best-constructed setpiece and analyze its pacing on the page. How does the writer use sentence length, white space, and fragment structure to create momentum? Could you apply the same technique to a scene in your own screenplay? 3. For the accumulation-driven screenplay: identify the moment where the quiet accumulation reaches its peak — the scene that, though understated, carries the greatest emotional weight. What craft techniques make it feel like a climax despite its low volume? 4. Compare how each screenplay handles the direct confrontation between protagonist and antagonist. Does it arrive where you expected it? Does the form of the confrontation match what the premise promised? 5. Look at your own nine-item promise map. After reading these screenplays, is there an item missing — a promise your premise and genre are making that you haven't accounted for? Add it. Is there an item that now feels redundant? Cut it.</p>
+  </div>
+
+  <h2>Writing Exercise</h2>
+  <div class="block">
+    <div class="block-label">Your Project Progress</div>
+    <p><strong>Deliverable:</strong> Promise map — 9 bullets describing what the audience must experience.</p>
+    <p><strong>Constraints:</strong> Write nine items. Each item gets a bullet: a 2–4 sentence description of the moment, naming what happens, what category it belongs to (genre obligation / premise-specific / character-driven), and what the audience feels during it. You need at least 2 items from each category. At least 3 items must be specific enough to suggest a location, a scene structure, and a rough position in the story (first half, midpoint area, or second half). At least 2 items should be quiet promises — emotional moments, not spectacle. For each item, add one sentence describing how you plan to deliver the promise through an "unexpected door" — a detail, setting, timing, or structural choice that makes the delivery surprising while honoring the obligation. Total output: approximately 1.5–2 typed pages.</p>
+    <p><strong>Quality bar:</strong> Every item on the map must be traceable to a source: your genre contract (Week 3/6), your premise (Week 5), or your character design (Weeks 7–8). If an item doesn't connect to any of these sources, it's a scene you want to write, not a scene the audience is waiting for — and it may not belong on the promise map (it can still belong in the screenplay). Your "unexpected door" notes should demonstrate that you're not planning to deliver the most obvious version of each promise. At least two items should make you nervous — moments you're not sure how to execute yet. That's a sign they're ambitious enough.</p>
+    <p><strong>Estimated time:</strong> 4–6 hours (promise map drafting: 2–3 hours; unexpected-door development: 1–2 hours; revision after Reader feedback: 1 hour).</p>
+    <p><strong>Human Draft Reminder:</strong> You write the pages. AI helps you think, test, and decide.</p>
+  </div>
+
+  <h2>AI Workshop</h2>
+  <div class="block">
+    <div class="block-label">Phase 1: Two Readers — Foundation</div>
+    <p>The Two Readers evaluate your promise map. Reader A tests completeness and structural logic — have you accounted for every major obligation? Reader B tests whether the promises, as described, would make a reader want to pick up the script. Write the map first, then run the prompts, then update your Disagreement Log.</p>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader A — Developmental Editor</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt1">You are Reader A — a developmental editor evaluating a promise map for completeness and structural logic. Here is my map:
+
+[Paste all 9 items with categories and unexpected-door notes]
+
+For context:
+PREMISE: [paste from Week 5]
+GENRE CONTRACT: [paste from Week 6 concept doc]
+THEME SENTENCE: [paste from Week 6]
+PROTAGONIST WANT/NEED/WOUND/LINE: [paste from Week 7]
+ANTAGONIST ESCALATION LADDER: [paste the 5 levels from Week 8]
+
+Evaluate along these lines:
+1. COMPLETENESS: Based on my genre contract and premise, is there a promise the audience would expect that I haven't included? Name the missing moment. Conversely, is there an item on the map that doesn't trace back to genre, premise, or character — a scene I want to write that the audience isn't actually waiting for?
+2. CATEGORY BALANCE: Are genre obligations, premise-specific moments, and character-driven moments represented in roughly equal measure? If one category dominates, what's underserved and why does it matter?
+3. ESCALATION MATCH: Does my promise map align with my escalation ladder from Week 8? Each level of the ladder should correspond to at least one item on the map. Flag any level of the ladder that doesn't have a corresponding promise.
+4. THEMATIC COVERAGE: Does at least one promise directly test the thematic question? Which item on the map is the moment where the theme is under maximum pressure?
+5. STRUCTURAL SPACING: Based on the rough positioning I've indicated (first half / midpoint / second half), are the promises distributed across the screenplay or clustered in one section? A front-loaded map suggests a second half without peaks. A back-loaded map suggests a slow start.
+
+Tell me what's missing or misplaced.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt1')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader B — Resistant First Reader</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt2">You are Reader B — a resistant first reader evaluating whether a promise map makes me want to read the screenplay. Here is my map:
+
+[Paste all 9 items with categories and unexpected-door notes]
+
+PREMISE: [paste from Week 5]
+GENRE: [name the genre]
+
+Evaluate along these lines:
+1. ANTICIPATION: Reading these nine items, do I feel anticipation — the specific pleasure of knowing something is coming and wanting to see how it plays out? Which items create the strongest anticipation? Which ones feel obligatory rather than exciting?
+2. UNEXPECTED DOORS: For each item, evaluate the "unexpected door" note. Does the planned delivery actually surprise me, or is it the first thing I'd expect? If the delivery feels predictable, suggest a more surprising approach — not a replacement for the promise, but a more inventive way to deliver it.
+3. EMOTIONAL RANGE: Do the nine items, taken together, create variety — or do they all hit the same emotional register? Am I getting tension AND release, spectacle AND intimacy, confrontation AND silence? What register is underrepresented?
+4. THE TRAILER TEST: Could you cut a trailer from these nine moments? If I saw the trailer, would I buy a ticket? Which moments are "trailer moments" and which are more private — powerful in context but not extractable?
+5. THE DINNER TEST: After watching this film, which of these nine moments would I describe to a friend over dinner? If the answer is fewer than three, the map isn't delivering enough memorable experiences.
+
+Make me want to see this movie.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt2')">Copy Prompt</button>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label">Disagreement → Decision</div>
+    <p>Add this week's entry to your Disagreement Log. A frequent divergence on promise maps: Reader A often identifies missing structural obligations — moments the genre demands that the writer forgot because they were focused on the moments they're excited to write. Reader B often identifies items that feel obligatory rather than exciting — moments included because the genre requires them, not because the writer has found a compelling delivery. Both notes are valid. The resolution: take Reader A's missing items seriously (you owe them), but apply Reader B's standard to every item on the map (each one should generate anticipation, not just check a box). If an obligation feels dull, the problem isn't the obligation — it's the delivery. Find a more surprising door.</p>
+  </div>
+
+  <h2>Student Self-Check</h2>
+  <div class="self-check">
+    <div class="self-check-label">Before You Move On</div>
+    <div class="self-check-item">Can you trace every item on your promise map to a specific source — your genre contract, your premise, or your character design? If an item is an orphan, it may not belong on the map.</div>
+    <div class="self-check-item">Do you have at least 2 items in each category (genre obligation, premise-specific, character-driven)?</div>
+    <div class="self-check-item">Are your "unexpected door" delivery notes genuinely surprising — or are they the first version you thought of? If a delivery feels obvious, push for something more inventive.</div>
+    <div class="self-check-item">Do at least 2 of your 9 items represent quiet, intimate moments rather than high-intensity setpieces?</div>
+    <div class="self-check-item">Are the 9 items distributed across the screenplay's runtime — first half, midpoint area, and second half — rather than clustering in one section?</div>
+  </div>
+
+  <h2>Budget Dial</h2>
+  <div class="block">
+    <div class="block-label">Production Reality Check</div>
+    <p><strong>Budget tier this week:</strong> Your chosen tier, applied to promise-map feasibility.</p>
+    <p><strong>Top 3 cost drivers in promise delivery:</strong> 1. Setpiece production intensity — your loudest promise-map items are almost certainly your most expensive scenes. If three of your nine promises require complex staging, large casts, or special locations, you've allocated a disproportionate share of your budget to peaks. Check: can you deliver the same promise more economically without losing its impact? 2. Unique locations for single scenes — if a promise requires a location that appears nowhere else in the screenplay (a rooftop, a courtroom, a hospital), that's a one-use set. Can the promise be relocated to a space you're already using? The gymnasium donor dinner is more expensive than a hallway confrontation, but if the gymnasium is already in your locations list, the marginal cost is lower. 3. Crowd scenes — any promise that requires a large number of people on screen (a board meeting, a public event, a school assembly) carries extras, catering, and scheduling costs. Evaluate whether the crowd is essential to the promise or whether the same obligation can be fulfilled with fewer bodies.</p>
+    <p><strong>Cheaper equivalent:</strong> A promise-map item reading "the public unraveling — Nora's evidence is presented to the entire town at a packed community meeting" can be delivered as "the evidence surfaces at the wrong moment — Nora's notes are found by a student, who reads them aloud in class." Fewer people. Cheaper location. More intimate. Arguably more devastating, because the audience sees the information spread through the protagonist's most protected space — her classroom — rather than through a public forum she chose.</p>
+    <p><strong>Worth-it spend:</strong> Your single most ambitious promise-map item — the one scene that, if it works, defines the film. Identify it now. That scene gets the premium: the best location, the most shooting time, the most coverage. Everything else can be lean. This scene must deliver. Allocate accordingly.</p>
+  </div>
+
+  <h2>Editorial Tip</h2>
+  <div class="block">
+    <div class="block-label">The Reader's Eye</div>
+    <p>A professional reader keeps an unconscious tally of promises made and promises delivered. By page 30, they know what the film is offering. By page 60, they know whether the film is delivering. By page 90, they're comparing the actual experience against the promised one. The readers who write the most enthusiastic coverage — the ones who champion your script to producers — are the ones who felt that every promise was honored but at least one was delivered in a way that surprised them. The readers who write the most damning coverage are the ones who felt a promise was made on page 10 and never addressed. A script reader will forgive imperfect execution of a promise. They will not forgive its absence.</p>
+  </div>
+
+  <h2>Journal Prompt</h2>
+  <div class="block">
+    <div class="block-label">Reflection</div>
+    <p>Look at your nine-item promise map and identify the one item that makes you most nervous — the promise you're not sure you can deliver well. Write about the nervousness. Is it a technical challenge (you don't know how to pace a confrontation scene), an emotional challenge (the scene requires you to access something personally difficult), or a structural challenge (you're not sure where it fits in the story yet)? Nervousness about a specific scene is often a signal that the scene matters — that it's carrying structural and emotional weight the story needs. Don't shy away from it. Name the difficulty and carry it into the outline phase.</p>
+  </div>
+
+  <h2>Week Summary</h2>
+  <div class="block">
+    <div class="block-label">What You've Built</div>
+    <p>By the end of this week you should have:</p>
+    <p>• Read 2 produced screenplays with a focus on setpiece construction and promise delivery<br>
+    • Written a 9-item promise map categorized by genre obligation, premise-specific moment, and character-driven moment<br>
+    • Developed an "unexpected door" delivery note for each item<br>
+    • Completed the setpiece pacing drill (continuous paragraph vs. fragmented version of a 30-second action sequence, 10 minutes)<br>
+    • Run the promise map through both Reader A and Reader B prompts<br>
+    • Updated your Disagreement Log with this week's entry</p>
+  </div>
+
+  <h2>Looking Ahead</h2>
+  <div class="block">
+    <div class="block-label">Next Week</div>
+    <p>Week 11 is <strong>Feature Structure Without Formula</strong>. You have a promise map — nine moments the audience needs to experience. Now you need a structure to hold them. Week 11 introduces 8-sequence structure as scaffolding: eight discrete narrative units, each with its own internal arc, that together create the momentum of a feature film. You'll build your 8-sequence outline — placing your promise-map items into structural positions, identifying the causal connections between sequences, and discovering the scenes your outline still needs to bridge the gaps between peaks. This is the transition from components to architecture: everything you've built in Weeks 5–10 gets assembled into a single, sequential document that will carry you into drafting.</p>
+  </div>
+
+  <!-- PORTFOLIO TRACKER -->
+  <div class="portfolio">
+    <div class="portfolio-label">Your Portfolio So Far</div>
+    <div class="portfolio-item done">Week 1–4: Film journals (8 films) + budget-tier choice ✓ PHASE 0 COMPLETE</div>
+    <div class="portfolio-item done">Week 5: 10 premises → 1 chosen premise + Disagreement Log started</div>
+    <div class="portfolio-item done">Week 6: Theme sentence + 1-page concept doc</div>
+    <div class="portfolio-item done">Week 7: Character dossier + pressure tests</div>
+    <div class="portfolio-item done">Week 8: Antagonist plan + escalation ladder</div>
+    <div class="portfolio-item done">Week 9: World rules + locations list + rule-break cost</div>
+    <div class="portfolio-item current">Week 10: Promise map — 9 moments the audience must experience (THIS WEEK)</div>
+    <div class="portfolio-item upcoming">Week 11: 8-sequence outline</div>
+    <div class="portfolio-item upcoming">Week 12: Midpoint variants</div>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+</div>
+
+<footer>
+  <p>THE MOVIE ON THE PAGE · SCREENWRITING STUDIO</p>
+  <p style="margin-top:8px; opacity:0.5;">Cinema craft. Human pages. Clean decisions.</p>
+</footer>
+
+<script>
+  function copyPromptBlock(id){
+    const el=document.getElementById(id);
+    const text=el.innerText||el.textContent;
+    const btn=el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.textContent='Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=btn.dataset.label||'Copy';btn.classList.remove('copied');},2000);
+    });
+  }
+</script>
+</body>
+</html>
