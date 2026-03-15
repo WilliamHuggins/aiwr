@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Movie on the Page — Week 7</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1208; --parchment:#f5f0e8; --cream:#faf7f2;
+    --rust:#c0392b; --gold:#b8860b; --faded:#7a6f5e; --highlight:#fff3cd;
+    --reader-a:#2c4a6e; --reader-a-light:#e8f0f8;
+    --reader-b:#4a2c2c; --reader-b-light:#f8e8e8;
+    --check-green:#2d6a4f; --check-bg:#e8f5e9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:'Source Serif 4',serif;font-size:19px;line-height:1.8;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  .masthead{background:var(--ink);color:var(--parchment);text-align:center;padding:16px 24px 12px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;border-bottom:3px double var(--gold);}
+  .hero{background:var(--parchment);border-bottom:3px double var(--ink);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'≠';position:absolute;font-size:460px;color:rgba(0,0,0,0.025);top:-60px;left:50%;transform:translateX(-50%);
+    font-family:'Playfair Display',serif;font-weight:900;pointer-events:none;}
+  .issue-tag{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:block;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:16px;}
+  h1 em{font-style:italic;color:var(--rust);}
+  .deck{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:var(--faded);max-width:620px;margin:0 auto 28px;line-height:1.5;}
+  .byline{font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--faded);
+    border-top:1px solid var(--faded);border-bottom:1px solid var(--faded);display:inline-block;padding:8px 24px;}
+  .post-date{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:var(--faded);margin-top:16px;display:block;}
+  .article-wrapper{max-width:760px;margin:0 auto;padding:50px 32px 90px;}
+  .drop-cap::first-letter{font-family:'Playfair Display',serif;font-size:92px;font-weight:900;float:left;line-height:0.75;margin:8px 12px 0 -4px;color:var(--rust);}
+  p{margin-bottom:1.2em;}
+  h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin:2.2em 0 0.8em;line-height:1.2;}
+  .pull-quote{margin:2.2em -32px;padding:32px 48px;background:var(--ink);color:var(--parchment);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:26px;line-height:1.4;text-align:center;position:relative;}
+  .pull-quote::before,.pull-quote::after{content:'\201C';font-size:80px;color:var(--gold);position:absolute;line-height:1;font-style:normal;}
+  .pull-quote::before{top:12px;left:16px;} .pull-quote::after{content:'\201D';bottom:-16px;right:16px;}
+  .ornament{text-align:center;color:var(--gold);font-size:28px;margin:2.2em 0;letter-spacing:12px;}
+  .block{margin:2em 0;background:var(--parchment);border:2px solid var(--ink);padding:26px 30px;box-shadow:6px 6px 0 var(--ink);}
+  .block-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden;margin:2em 0;}
+  .meta-cell{padding:16px 18px;background:var(--parchment);border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .meta-cell:nth-child(3n){border-right:none;}
+  .meta-key{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:6px;}
+  .meta-val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.2;}
+  .principle{margin:2em 0;padding:22px 26px;background:var(--highlight);border-left:5px solid var(--gold);
+    font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.6;}
+  .mini-example{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.85;background:white;border:2px dashed rgba(0,0,0,0.18);
+    padding:14px 16px;margin:1.2em 0;white-space:pre-wrap;}
+  .reader-intro{display:grid;grid-template-columns:1fr 1fr;margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .reader-card{padding:24px;}
+  .reader-card:first-child{border-right:2px solid var(--ink);background:var(--reader-a-light);}
+  .reader-card:last-child{background:var(--reader-b-light);}
+  .reader-name{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .reader-card:first-child .reader-name{color:var(--reader-a);} .reader-card:last-child .reader-name{color:var(--reader-b);}
+  .reader-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:10px;}
+  .reader-desc{font-size:15px;line-height:1.7;color:var(--faded);}
+  .prompt-pair{margin:2.2em 0;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);}
+  .prompt-pair-header{padding:16px 24px;background:var(--ink);font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:2px solid var(--ink);}
+  .prompt-half{padding:22px 26px;border-bottom:2px solid var(--ink);}
+  .prompt-half:last-child{border-bottom:none;}
+  .prompt-half-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+  .prompt-text{font-family:'Courier Prime',monospace;font-size:13px;line-height:1.9;background:var(--parchment);border-left:4px solid var(--gold);
+    padding:14px 18px;white-space:pre-wrap;color:var(--ink);}
+  .copy-btn{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border:2px solid var(--ink);
+    background:var(--parchment);cursor:pointer;transition:all 0.15s;border-radius:2px;display:inline-block;margin-top:10px;}
+  .copy-btn:hover{background:var(--ink);color:var(--parchment);}
+  .copy-btn.copied{background:var(--gold);border-color:var(--gold);color:white;}
+  .self-check{margin:2em 0;background:var(--check-bg);border:2px solid var(--check-green);padding:26px 30px;box-shadow:6px 6px 0 var(--check-green);}
+  .self-check-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--check-green);margin-bottom:12px;}
+  .self-check-item{font-size:17px;line-height:1.7;margin-bottom:8px;padding-left:28px;position:relative;}
+  .self-check-item::before{content:'□';position:absolute;left:0;color:var(--check-green);font-weight:bold;}
+  .portfolio{margin:2em 0;background:var(--parchment);border:2px solid var(--faded);padding:26px 30px;}
+  .portfolio-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--faded);margin-bottom:12px;}
+  .portfolio-item{font-family:'Courier Prime',monospace;font-size:13px;line-height:2;color:var(--faded);}
+  .portfolio-item.done::before{content:'✓ ';color:var(--check-green);}
+  .portfolio-item.current{color:var(--ink);font-weight:bold;}
+  .portfolio-item.current::before{content:'→ ';color:var(--rust);}
+  .portfolio-item.upcoming::before{content:'○ ';color:var(--faded);}
+  .phase-gate{margin:2em 0;background:var(--ink);color:var(--parchment);border:3px double var(--gold);padding:30px 32px;}
+  .phase-gate-label{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer{background:var(--ink);color:var(--parchment);text-align:center;padding:40px 24px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;border-top:3px double var(--gold);}
+  footer p{margin-bottom:0;font-size:12px;}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr;} .meta-cell{border-right:none;} .reader-intro{grid-template-columns:1fr;}
+    .reader-card:first-child{border-right:none;border-bottom:2px solid var(--ink);} .pull-quote{margin:2.2em 0;}}
+</style>
+</head>
+<body>
+<div class="masthead">THE MOVIE ON THE PAGE · WEEK 7 OF 32 · SCREENWRITING FOUNDATIONS</div>
+<div class="hero">
+  <span class="issue-tag">SCREENWRITING STUDIO</span>
+  <h1>Protagonist Design<br><em>Want / Need / Wound / Line</em></h1>
+  <p class="deck">A character isn't a person. A character is a pressure system — built to crack under the exact forces your premise applies.</p>
+  <span class="byline">The Movie on the Page</span>
+  <span class="post-date">Phase 1 · Screenwriting Foundations · Week 7 of 32</span>
+</div>
+<div class="article-wrapper">
+  <div class="meta-grid">
+    <div class="meta-cell"><div class="meta-key">Commitment</div><div class="meta-val">8–10 hours</div></div>
+    <div class="meta-cell"><div class="meta-key">Craft Focus</div><div class="meta-val">Building a character who can sustain 100 pages of pressure</div></div>
+    <div class="meta-cell"><div class="meta-key">Cinema Lens</div><div class="meta-val">What the audience learns about a person by watching them choose</div></div>
+    <div class="meta-cell"><div class="meta-key">Page Craft</div><div class="meta-val">Character introductions: the first-impression paragraph</div></div>
+    <div class="meta-cell"><div class="meta-key">Exercise Output</div><div class="meta-val">Character dossier (2–3 pages) + 3 pressure tests</div></div>
+    <div class="meta-cell"><div class="meta-key">Budget Dial</div><div class="meta-val">Your chosen tier</div></div>
+  </div>
+  <p class="drop-cap">You have a premise that generates conflict and a theme that gives that conflict meaning. Now you need someone to put through it. Not a biography — not a list of favorite foods and childhood memories and personality traits assembled from a questionnaire. A <em>design</em>. A protagonist is an engineered structure, built from four load-bearing elements that interact with the premise and theme to produce the specific pressure your story requires. If any of the four elements is missing, the structure fails — not with a dramatic collapse, but with the slow, quiet sag of a screenplay where the protagonist drifts through situations instead of driving them. This week you'll learn what those four elements are, how they interlock, and how to test whether your protagonist can carry the weight of a feature-length screenplay without buckling.</p>
+  <div class="pull-quote">Character is not who someone is. Character is what someone does when every option costs something they can't afford to lose.</div>
+  <h2>Craft Lecture</h2>
+  <p><strong>The four elements.</strong> Every protagonist who sustains a feature screenplay is built from four structural components: a <strong>Want</strong>, a <strong>Need</strong>, a <strong>Wound</strong>, and a <strong>Line</strong>. These are not personality traits. They're load-bearing walls. Each one does a specific job in the architecture of your story, and together they create the internal pressure system that makes the external plot meaningful. A protagonist with only a Want is a plot robot. A protagonist with only a Need is a therapy patient. A protagonist with all four is a person the audience can watch for two hours and still not fully understand — which is exactly the kind of person worth watching.</p>
+  <p><strong>Want</strong> is the conscious goal — the thing the protagonist is actively pursuing from the moment the story kicks into gear. It's external, concrete, and visible. The audience can track it. "Save the hospital." "Win the custody hearing." "Find out who's contaminating the water." The Want drives the plot. It creates forward motion. It's what keeps the protagonist doing things, going places, confronting obstacles. Without a clear Want, your screenplay has no engine — the protagonist sits around waiting for things to happen. The Want doesn't have to be sympathetic. It doesn't even have to be admirable. It has to be <em>active</em> — something the protagonist pursues through visible, filmable behavior.</p>
+  <p><strong>Need</strong> is the unconscious truth — the thing the protagonist must learn, accept, or become in order to resolve the thematic question. The character doesn't know they need it. They may actively resist it. The Need is invisible to the protagonist at the start of the story and becomes visible — painfully, gradually — through the pressure the plot applies. Here's the critical structural relationship: the Want and the Need are almost always in tension. The protagonist pursues what they want, and the pursuit forces them to confront what they need. A character who wants to win the custody hearing may need to accept that winning doesn't repair the damage they caused. A character who wants to expose the corruption may need to reckon with their own complicity first. When the Want and the Need collide — when the protagonist realizes they can't have both — you have the climax of your film.</p>
+  <p><strong>Wound</strong> is the prior damage — the thing that happened before the story begins that makes the Need invisible. The Wound is the reason the character doesn't already know the truth they need to learn. It's a past event, relationship, or failure that shaped the protagonist's worldview in a way that the plot will now test. The Wound doesn't have to be dramatic or traumatic in the conventional sense. It doesn't require a tragic backstory. It can be an absence — something that never happened (a conversation never had, a question never asked, a relationship never formed). What matters is that the Wound created a distortion in how the protagonist sees the world, and that distortion is exactly what the premise is going to exploit.</p>
+  <p>A crucial point: the Wound is not the protagonist's motivation. It's their <em>blind spot</em>. It's not the reason they act — it's the reason they act <em>wrong</em>. The Wound is what makes them misread situations, choose the wrong strategy, trust the wrong person, avoid the right confrontation. It's the structural reason the plot can't resolve in the first act: the protagonist's Wound prevents them from seeing the solution that the audience can see. The gap between what the audience understands and what the protagonist understands — the gap created by the Wound — is dramatic irony, and dramatic irony is one of the most powerful tools in screenwriting.</p>
+  <p><strong>Line</strong> is the boundary the protagonist will not cross — the action they consider unthinkable, the compromise they refuse to make, the rule they believe defines who they are. The Line exists to be tested. In the first half of the screenplay, the Line is intact — the protagonist navigates the plot without crossing it. In the second half, the plot applies enough pressure that the Line becomes the protagonist's most important decision: cross it and become someone they don't recognize, or hold it and pay a price they may not survive. The Line is where character becomes visible. Everything before the Line-testing moment is behavior. The moment the Line is under pressure is <em>character</em>.</p>
+  <p>The Line serves a second structural function: it connects the protagonist to the theme. Whatever your thematic question is, the protagonist's Line should be their answer to it — the position they hold at the start of the story that the plot will force them to defend, abandon, or redefine. The forensic accountant whose Line is "I don't destroy institutions — I fix them from inside" holds a specific position on the thematic question of complicity. The plot's job is to apply enough pressure to that Line that the character must either double down on it (at catastrophic personal cost) or cross it (and become someone new). Either choice is valid. Either choice produces a powerful ending. But the audience must feel that the choice was earned through pressure, not imposed by the writer.</p>
+  <p><strong>How the four elements interlock.</strong> The Want drives the plot forward. The Wound distorts the protagonist's strategy, ensuring they pursue the Want in a flawed way. The Need is the truth the Wound obscures — the protagonist discovers it through the consequences of their flawed pursuit. The Line is the final test: the moment where the protagonist must choose between who they've been and who the story has forced them to become. All four elements are shaped by the premise and tested by the theme. A protagonist whose Want, Need, Wound, and Line are all aligned with the premise machine and the thematic question is a character who generates scenes, forces decisions, and arrives at a climax that feels both surprising and inevitable. That's the goal.</p>
+  <div class="principle"><strong>Craft Principle:</strong> The Want drives the plot; the Wound distorts the pursuit; the Need is what the Wound hides; the Line is where the character is finally revealed.</div>
+  <div class="mini-example"><strong>MICRO-EXAMPLE 1: THE FOUR ELEMENTS IN ACTION</strong>
+PREMISE: A high school chemistry teacher discovers the
+town's water supply is contaminated by the chemical plant
+that funds her school.
+THEME: "Can protecting the people you're responsible for
+justify concealing a truth that would protect a larger
+group?"
+WANT: Expose the contamination and protect the town.
+   → External, visible, drives the plot forward. The
+   audience can track her progress.
+NEED: To accept that institutional loyalty — the belief
+that working within the system always produces better
+outcomes than blowing it up — has limits she hasn't
+been willing to see.
+   → She doesn't know this yet. She thinks she can fix
+   it through channels.
+WOUND: Ten years ago, she reported a colleague for
+falsifying lab safety data. The colleague was fired. The
+department was defunded. Three other teachers lost their
+jobs. She was right — but being right cost people she
+cared about their livelihoods.
+   → The Wound makes her Need invisible: she learned
+   that whistleblowing destroys institutions, so she
+   instinctively tries to solve problems internally.
+   This is the flawed strategy the plot will exploit.
+LINE: "I won't go to the press. I'll handle this inside
+the system."
+   → This Line holds through Act I and most of Act II.
+   The plot applies pressure until the system itself
+   becomes the obstacle — the school board, the mayor,
+   the plant — and her Line becomes the thing preventing
+   the truth from coming out. The climax: does she cross
+   the Line and go public, knowing it will destroy the
+   school she built? Or does she hold the Line and let
+   the contamination continue?</div>
+  <div class="mini-example"><strong>MICRO-EXAMPLE 2: PRESSURE TEST — "WHAT IF" SCENARIOS</strong>
+A pressure test takes your protagonist's four elements
+and drops them into a scenario NOT in your screenplay to
+see if the character generates interesting behavior.
+CHARACTER: The chemistry teacher above.
+PRESSURE TEST 1: "What if she found the contamination
+evidence on a colleague's desk — not through her own
+investigation, but because someone else already knows?"
+   → Her Wound activates: she knows what happens to
+   whistleblowers. Does she confront the colleague? Warn
+   them? Join forces? Hide the evidence and pursue her
+   own quieter path? The four elements produce a
+   decision that's specific to THIS character.
+PRESSURE TEST 2: "What if her own child started showing
+symptoms consistent with the contamination?"
+   → The Want (expose it) and the Line (stay inside the
+   system) collide with biological urgency. Can she
+   afford to work through channels when her kid is sick?
+   This test reveals whether the character's internal
+   architecture produces escalation or paralysis.
+PRESSURE TEST 3: "What if the plant offered to fund a
+complete water remediation — quietly, no public
+disclosure — in exchange for her silence?"
+   → This is the test that targets the Need. The offer
+   is exactly what her Wound-distorted worldview wants:
+   the problem solved without institutional destruction.
+   Her Need (to see that working within the system has
+   limits) is directly challenged. A character who takes
+   the deal hasn't learned anything. A character who
+   refuses it has started to grow. Either answer is
+   interesting — which means the character works.</div>
+  <h2>Page Craft</h2>
+  <div class="block">
+    <div class="block-label">The Micro-Skill: Character Introductions — The First-Impression Paragraph</div>
+    <p>The first time a character appears in a screenplay, they get one paragraph. Sometimes two. In that space, you need to accomplish three things: tell the reader the character's name (in CAPS, the first time only), give the reader a visual impression strong enough to cast the role in their mind, and — most importantly — reveal something about who this person is through what they're <em>doing</em> when we first see them.</p>
+    <p>The amateur mistake is to introduce characters through description: age, hair color, build, clothing. These details are useful for casting breakdowns but nearly useless on the page. A reader doesn't remember that a character is "35, athletic, with dark hair and an easy smile." A reader remembers what a character <em>does</em> in the first moment we see them. The introduction is a micro-scene — a single beat that establishes behavior, competence, attitude, or contradiction.</p>
+    <div class="mini-example"><strong>WEAK — describes the character:</strong>
+NORA CHEN (42), petite and precise, with reading glasses
+perched on her head and a lab coat that's seen better days,
+enters the classroom. She has a no-nonsense attitude and
+a quiet authority that commands respect.
+    → The reader is told she's precise and authoritative.
+    They have no reason to believe it. "No-nonsense
+    attitude" is an assertion, not evidence.
+<strong>STRONG — shows the character in action:</strong>
+NORA CHEN (42) stands at the whiteboard, diagramming a
+chemical bond with one hand while erasing a student's wrong
+answer with the other. She doesn't look at the student.
+NORA
+Try again.
+The student tries again. Nora keeps drawing. Pauses. Turns.
+NORA (CONT'D)
+Better. But you rounded.
+    → The reader SEES precision, authority, and high
+    standards — through behavior. The simultaneous
+    drawing-and-erasing shows motor confidence. "But you
+    rounded" shows she's tracking student work while
+    teaching. The reader casts this role in their head
+    immediately, not from hair color, but from behavior.</div>
+    <p>One more guideline: resist the urge to over-introduce. Your protagonist's introduction should establish a single dominant impression, not a complete psychological profile. The reader doesn't need to understand the Wound, the Need, or the Line in the first paragraph. They need one vivid behavioral detail that makes them think, "I want to watch this person." The rest unfolds through the screenplay. An introduction that tries to tell the reader everything about a character tells them nothing — because the reader retains behavior, not biography.</p>
+    <p><strong>10-minute drill:</strong> Write three character introductions — for three different characters, not three versions of the same one. Each introduction must be no longer than four lines of action description plus, optionally, one line of dialogue. Each must introduce the character through behavior, not physical description. Include the character name in CAPS and an approximate age in parentheses. Constraint: no adjectives describing personality ("confident," "nervous," "kind"). Show it. Don't name it. Total output: three introduction paragraphs. Time yourself.</p>
+  </div>
+  <h2>Core Reading</h2>
+  <div class="block">
+    <div class="block-label">Screenplay Reading — Week 7</div>
+    <p><strong>Assignment:</strong> Read 2 produced feature screenplays, chosen for protagonist complexity.</p>
+    <p><strong>Script Pair Brief:</strong> Select one screenplay with a highly active protagonist — a character who drives the plot through relentless pursuit of a clear Want — and one with a protagonist who begins reactive or passive and becomes active over the course of the story. The first demonstrates how a strong Want creates narrative propulsion: the protagonist is a locomotive, and every scene is another mile of track. The second demonstrates the structural challenge of a protagonist whose agency arrives late — and the specific craft techniques writers use to keep the audience engaged while the protagonist is still being shaped by events rather than shaping them.</p>
+    <p><strong>Where to find scripts legally:</strong> IMSDb, The Script Lab, SimplyScripts, studio FYC releases, and public library systems.</p>
+    <p><strong>Why this pairing:</strong> Not every protagonist enters the story as an active pursuer. Some of the most compelling characters in cinema start by being acted upon — and the drama comes from watching them discover their own agency. But a reactive protagonist is structurally dangerous: without a clear Want driving scenes, the writer must rely on external forces to maintain momentum, and the audience can lose patience. By reading both types, you'll understand the trade-offs and develop strategies for whichever type your protagonist requires.</p>
+    <p><strong>Reading Lens</strong> (track these while reading):</p>
+    <p>1. For each protagonist, identify the Want (conscious goal), Need (unconscious truth), Wound (prior damage that distorts perception), and Line (boundary the plot will test). If any element is absent or unclear, note where the screenplay compensates — or fails to. 2. How is the protagonist introduced? What does the first-impression paragraph establish through behavior? 3. At what page does the protagonist's Want become active — when do they start pursuing rather than reacting? 4. Where does the Want/Need tension become visible — the moment when pursuing what they want starts to conflict with what they need? 5. Identify the Line-testing moment. Does the protagonist cross the Line or hold it? How does that decision function as the climax?</p>
+    <p><strong>Journal Prompts:</strong></p>
+    <p>1. Write the four-element breakdown (Want / Need / Wound / Line) for each protagonist. Which element is strongest in each screenplay? Which is weakest or most absent? 2. Compare the two introductions. Which one made you form a stronger first impression, and what specific technique (behavior, dialogue, visual detail) created that impression? 3. Locate the protagonist's Wound in each screenplay. Is it stated explicitly (through dialogue or flashback) or revealed implicitly (through behavior patterns the audience pieces together)? Which approach did you find more effective? 4. Find the moment in each screenplay where the protagonist's flawed strategy — the approach distorted by the Wound — fails for the first time. What happens in the scene, and how does the failure redirect the plot? 5. If you redesigned one protagonist's Wound to create a different distortion, how would the screenplay's second act change? What scenes would no longer work, and what new scenes would the revised Wound generate?</p>
+  </div>
+  <h2>Writing Exercise</h2>
+  <div class="block">
+    <div class="block-label">Your Project Progress</div>
+    <p><strong>Deliverable:</strong> Character dossier + 3 pressure tests.</p>
+    <p><strong>Constraints:</strong> Produce two artifacts:</p>
+    <p><strong>(a) Character dossier</strong> (2–3 typed pages). Include: the protagonist's name; a first-impression paragraph (the introduction as it might appear on page 1 of your screenplay — behavior-based, no personality adjectives, 4 lines max); the four structural elements (Want, Need, Wound, Line) with a paragraph each (75–150 words) explaining the element and how it connects to your premise and theme; and a section called "The Collision" — one paragraph (100–150 words) describing the moment in the story where the Want and the Need collide, forcing the protagonist to choose. You don't need to know the exact scene yet. Describe the nature of the collision: what the character wants to do, what they need to recognize, and why the two are incompatible.</p>
+    <p><strong>(b) Three pressure tests.</strong> Write three "what if" scenarios that are NOT in your planned screenplay. Each scenario drops your protagonist into a situation designed to activate a specific element of their design (one scenario targeting the Wound, one targeting the Line, one targeting the Want/Need tension). For each scenario, write: the setup (2–3 sentences), what your character would do (2–3 sentences), and why — which element of their design drives the response. Each test should be 100–150 words. If your character's response feels generic — if any protagonist would respond the same way — the design needs more specificity.</p>
+    <p><strong>Quality bar:</strong> The Want must be concrete and filmable — something a camera can show being pursued. The Need must connect to the theme sentence from Week 6 — it should be the truth the thematic question demands. The Wound must create a specific distortion (not just "she's damaged" but "she avoids confrontation because the last time she confronted authority, it cost her colleagues their jobs"). The Line must be testable — something the plot can push against. The pressure tests must produce responses specific to <em>this</em> character, not generic human behavior.</p>
+    <p><strong>Estimated time:</strong> 5–7 hours (dossier: 3–4 hours; pressure tests: 1.5–2 hours; revision after Reader feedback: 1 hour).</p>
+    <p><strong>Human Draft Reminder:</strong> You write the pages. AI helps you think, test, and decide.</p>
+  </div>
+  <h2>AI Workshop</h2>
+  <div class="block">
+    <div class="block-label">Phase 1: Two Readers — Foundation</div>
+    <p>The Two Readers evaluate your character dossier this week. Reader A stress-tests the structural architecture: do the four elements interlock, and will they generate scenes? Reader B tests whether the character is someone an audience would want to watch for two hours. Write the dossier and pressure tests first. Then run the prompts. Then update your Disagreement Log.</p>
+  </div>
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader A — Developmental Editor</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt1">You are Reader A — a developmental editor evaluating protagonist design for structural soundness. Here is my character dossier:
+NAME: [name]
+FIRST IMPRESSION: [paste your introduction paragraph]
+WANT: [paste]
+NEED: [paste]
+WOUND: [paste]
+LINE: [paste]
+THE COLLISION: [paste]
+And here are my three pressure tests:
+[Paste all three]
+My premise: [paste from Week 5]
+My theme sentence: [paste from Week 6]
+Evaluate along these lines:
+1. INTERLOCKING: Do the four elements work as a system? Does the Wound actually make the Need invisible, or could this character discover the Need in Act I without any plot pressure? Does the Line connect to the thematic question, or is it an arbitrary boundary?
+2. SCENE GENERATION: Based on this character design, can you name 5 types of scenes the protagonist's flawed strategy (distorted by the Wound) would generate in the first half of the screenplay? If the design is working, these scenes should be obvious.
+3. PRESSURE TEST EVALUATION: Do my three "what if" scenarios produce responses specific to THIS character? Or would most protagonists respond the same way? Flag any test where the response feels generic.
+4. SUSTAINABILITY: Can this character sustain 80–125 pages of escalating pressure? Where do you see the design running thin — the point where the character stops generating interesting behavior?
+5. COLLISION QUALITY: Is the Want/Need collision I described sharp enough for a climax? Does it force a genuine choice, or could the protagonist have both?
+Break something if it's breakable. Better now than at the draft stage.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt1')">Copy Prompt</button>
+    </div>
+  </div>
+  <div class="prompt-pair">
+    <div class="prompt-pair-header">Reader B — Resistant First Reader</div>
+    <div class="prompt-half">
+      <div class="prompt-half-label">Prompt</div>
+      <div class="prompt-text" id="prompt2">You are Reader B — a resistant first reader. I have a pile of sixty scripts. I'm going to read the first ten pages of each and decide which ones to finish. Here is my protagonist's character dossier:
+NAME: [name]
+FIRST IMPRESSION: [paste your introduction paragraph]
+WANT: [paste]
+NEED: [paste]
+WOUND: [paste]
+LINE: [paste]
+THE COLLISION: [paste]
+My premise: [paste from Week 5]
+Evaluate along these lines:
+1. FIRST IMPRESSION: Based on the introduction paragraph alone — before I know anything about Want, Need, Wound, or Line — do I want to spend two hours with this person? What makes me lean in, and what makes me hesitate?
+2. RECOGNITION vs. NOVELTY: Does this character feel like someone I've seen before in a hundred scripts, or is there something specific — a contradiction, an unexpected detail, a surprising choice — that makes them feel particular? Point to the moment of recognition or the moment of novelty.
+3. WATCHABILITY: Some characters are structurally sound but dull to watch. Others are messy but magnetic. Where does this character fall? Is there anything in the design that makes me want to watch them fail, struggle, or discover something?
+4. EMPATHY WITHOUT SYMPATHY: Do I need to like this character to stay engaged? If the character does something morally questionable (which they should, if the Line is being tested), will I still care what happens to them? What in the design earns that continued investment?
+5. THE GAP: Is there a gap between who this character thinks they are and who they actually are? That gap is where dramatic irony lives. Can I see it from the dossier?
+Tell me what you feel, not just what you think.</div>
+      <button class="copy-btn" data-label="Copy Prompt" onclick="copyPromptBlock('prompt2')">Copy Prompt</button>
+    </div>
+  </div>
+  <div class="block">
+    <div class="block-label">Disagreement → Decision</div>
+    <p>Add this week's entry to your Disagreement Log. A common divergence here: Reader A may find the character structurally strong but flag a missing element (a Wound that doesn't quite make the Need invisible, or a Line that's too easy to test). Reader B may find the character emotionally compelling but worry that the structural elements feel over-engineered — that the character reads like an architecture diagram instead of a person. If you get both notes, the challenge is specificity: make the architecture disappear by embedding it in behavior that feels natural. A character whose Wound is visible in how they pour a cup of coffee (alone, at 2 AM, with the precision of someone who has removed all chaos from their domestic routine) is more alive than one whose Wound is explained in voiceover. Record the disagreement, your decision, and — critically — what you're going to do about it.</p>
+  </div>
+  <h2>Student Self-Check</h2>
+  <div class="self-check">
+    <div class="self-check-label">Before You Move On</div>
+    <div class="self-check-item">Is your protagonist's Want concrete enough to film — something a camera can show them pursuing through visible action?</div>
+    <div class="self-check-item">Does your Wound create a specific distortion — a nameable pattern of flawed behavior — not just a vague sense of "damage"?</div>
+    <div class="self-check-item">Is your protagonist's Need connected to your theme sentence from Week 6? Can you trace a line from the thematic question to the truth the character must discover?</div>
+    <div class="self-check-item">Do your three pressure tests produce responses that only YOUR protagonist would have — or would most characters respond the same way?</div>
+    <div class="self-check-item">Does your first-impression paragraph introduce the character through behavior rather than description? Could a casting director read it and picture an actor?</div>
+  </div>
+  <h2>Budget Dial</h2>
+  <div class="block">
+    <div class="block-label">Production Reality Check</div>
+    <p><strong>Budget tier this week:</strong> Your chosen tier, applied to character design.</p>
+    <p><strong>Top 3 cost drivers in protagonist design:</strong> 1. Backstory that requires filming — a Wound shown in flashback costs a period setting, younger casting, and additional shooting days. A Wound revealed through present-tense behavior costs nothing. Favor the behavioral reveal unless your genre requires the flashback. 2. Protagonist skill set — if your character is a pilot, a surgeon, a firefighter, the screenplay will need environments that show them at work. Those environments have production costs. A character whose profession requires expensive settings (operating rooms, cockpits, fire stations) costs more per scene than one whose profession requires a desk. 3. Protagonist mobility — a character who travels to confront the problem requires multiple locations. A character who's pinned in place (by obligation, geography, or choice) concentrates the story into fewer locations. Both work. Know which one your tier supports.</p>
+    <p><strong>Cheaper equivalent:</strong> A protagonist's Wound revealed through a two-page flashback set in a 1990s hospital with period cars, costumes, and set dressing can be replaced by a single present-tense moment: the character freezes when they smell antiseptic. The audience infers the backstory. The production budget pays for a reaction shot instead of a period reconstruction.</p>
+    <p><strong>Worth-it spend:</strong> Your protagonist's introduction scene. First impressions define how the audience relates to the character for the rest of the film. If there's one scene to shoot with extra coverage, extra takes, and extra time for the actor to find the performance, it's the first scene. An introduction that lands gives you audience goodwill for the next ninety minutes. One that falls flat creates a deficit you'll spend the whole film trying to overcome.</p>
+  </div>
+  <h2>Editorial Tip</h2>
+  <div class="block">
+    <div class="block-label">The Reader's Eye</div>
+    <p>Script readers are pattern-matchers. Within the first five pages, they're looking for a protagonist who <em>does something</em> — not someone described as interesting, but someone who behaves interestingly. The most common note on the first page of a screenplay coverage report is "passive protagonist." It means the character was introduced as a recipient of information or events rather than as someone taking action. Even if your protagonist's arc goes from passive to active, the introduction must show them doing <em>something</em> with intention — even if it's the wrong thing. Action reveals character. Stillness can too, but only if the stillness is a choice the reader can feel, not an absence the reader notices.</p>
+  </div>
+  <h2>Journal Prompt</h2>
+  <div class="block">
+    <div class="block-label">Reflection</div>
+    <p>While designing your protagonist's Wound, did you reach for autobiography — a version of your own damage, thinly disguised? There's nothing wrong with that. Personal experience is a legitimate source of character design. But notice whether the autobiographical material serves the <em>premise</em> or only serves your own emotional processing. A Wound that connects to the premise generates scenes. A Wound that connects only to the writer generates therapy. Write about where you drew the line between personal truth and structural usefulness — and whether drawing that line felt like a loss or a relief.</p>
+  </div>
+  <h2>Week Summary</h2>
+  <div class="block">
+    <div class="block-label">What You've Built</div>
+    <p>By the end of this week you should have:</p>
+    <p>• Read 2 produced screenplays with a focus on protagonist complexity and the four-element design<br>
+    • Written a character dossier (2–3 pages) including: first-impression paragraph, Want, Need, Wound, Line, and the Want/Need Collision<br>
+    • Written 3 pressure tests that demonstrate your protagonist's specific behavioral responses<br>
+    • Completed the character introduction drill (3 behavior-based introductions, 10 minutes)<br>
+    • Run the dossier through both Reader A and Reader B prompts<br>
+    • Updated your Disagreement Log with this week's entry</p>
+  </div>
+  <h2>Looking Ahead</h2>
+  <div class="block">
+    <div class="block-label">Next Week</div>
+    <p>Week 8 is <strong>Antagonism as a System</strong>. You've built a protagonist. Now you build what breaks them. Antagonism in a well-designed screenplay isn't a villain — it's a <em>pressure system</em> with its own logic, its own escalation ladder, and its own answer to the thematic question. The antagonist doesn't exist to be evil. The antagonist exists to be <em>right</em> — or at least to make a case compelling enough that the protagonist's position is genuinely threatened. You'll design an antagonist plan with five levels of escalating pressure, each level forcing your protagonist to respond with a strategy that's increasingly distorted by their Wound. The two designs — protagonist and antagonist — will be tested against each other to verify that they produce the conflict your premise requires.</p>
+  </div>
+  <!-- PORTFOLIO TRACKER -->
+  <div class="portfolio">
+    <div class="portfolio-label">Your Portfolio So Far</div>
+    <div class="portfolio-item done">Week 1–4: Film journals (8 films) + budget-tier choice ✓ PHASE 0 COMPLETE</div>
+    <div class="portfolio-item done">Week 5: 10 premises → 1 chosen premise + Disagreement Log started</div>
+    <div class="portfolio-item done">Week 6: Theme sentence + 1-page concept doc</div>
+    <div class="portfolio-item current">Week 7: Character dossier + pressure tests (THIS WEEK)</div>
+    <div class="portfolio-item upcoming">Week 8: Antagonist plan + escalation ladder</div>
+    <div class="portfolio-item upcoming">Week 9: World rules + locations list</div>
+  </div>
+  <div class="ornament">✦ ✦ ✦</div>
+</div>
+<footer>
+  <p>THE MOVIE ON THE PAGE · SCREENWRITING STUDIO</p>
+  <p style="margin-top:8px; opacity:0.5;">Cinema craft. Human pages. Clean decisions.</p>
+</footer>
+<script>
+  function copyPromptBlock(id){
+    const el=document.getElementById(id);
+    const text=el.innerText||el.textContent;
+    const btn=el.nextElementSibling;
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.textContent='Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=btn.dataset.label||'Copy';btn.classList.remove('copied');},2000);
+    });
+  }
+</script>
+</body>
+</html>

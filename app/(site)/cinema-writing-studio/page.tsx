@@ -5,6 +5,7 @@ const weeks = [
   { href: "/cinema-writing-studio/week-2", label: "Week 2", title: "Editing, Rhythm, Scene Purpose", description: "Track scene purpose, cuts, and rhythm across full features." },
   { href: "/cinema-writing-studio/week-3", label: "Week 3", title: "Genre as a Promise", description: "Define genre contracts and identify delivery scenes." },
   { href: "/cinema-writing-studio/week-6", label: "Week 6", title: "Theme as Argument (Not a Slogan)", description: "Build a thematic question and concept document that pressure-tests your premise." },
+  { href: "/cinema-writing-studio/week-7", label: "Week 7", title: "Protagonist Design", description: "Build a protagonist from four load-bearing elements: Want, Need, Wound, and Line." },
 ];
 
 export default function CinemaWritingStudioLandingPage() {
