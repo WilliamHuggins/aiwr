@@ -20,6 +20,7 @@ export const week22Data: WeekData = {
       label: "Craft Lecture",
       title: "The Gap Between What Is Said and What Is True",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1an9wSr-mTjQBhxfZA3JuhAo-5qlYgh87/preview" },
         {
           type: "paragraph",
           content: [

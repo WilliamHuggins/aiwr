@@ -20,6 +20,7 @@ export const week32Data: WeekData = {
       label: "Craft Lecture",
       title: "The Management of Time",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1EITUQEntVx5mSHYjVAClRxDnwy-Sdb02/preview" },
         {
           type: "paragraph",
           content: [

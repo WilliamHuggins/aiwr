@@ -20,6 +20,7 @@ export const week20Data: WeekData = {
       label: "Craft Lecture",
       title: "The Narrator Next Door",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1tVidss_6J70fjWX91dfsQW87_fj4EURC/preview" },
         {
           type: "paragraph",
           content: [

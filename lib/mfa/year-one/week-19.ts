@@ -20,6 +20,7 @@ export const week19Data: WeekData = {
       label: "Craft Lecture",
       title: "The Intimate Prison",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1h58RuHGb9IB0m6QJgrg1E17CT_GjGnWA/preview" },
         {
           type: "paragraph",
           content: [

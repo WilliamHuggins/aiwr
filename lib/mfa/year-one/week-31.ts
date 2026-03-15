@@ -20,6 +20,7 @@ export const week31Data: WeekData = {
       label: "Craft Lecture",
       title: "The Object That Is Not a Symbol",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1DYHYgp2SCTRslKZa9XMYsZEQc6QW2AUC/preview" },
         {
           type: "paragraph",
           content: [

@@ -20,6 +20,7 @@ export const week25Data: WeekData = {
       label: "Craft Lecture",
       title: "The Map and the Territory",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1CjkrMqo6XUoNEettNR2436hixwqUoCEV/preview" },
         {
           type: "paragraph",
           content: [

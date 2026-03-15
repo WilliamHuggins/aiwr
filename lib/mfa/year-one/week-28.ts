@@ -20,6 +20,7 @@ export const week28Data: WeekData = {
       label: "Craft Lecture",
       title: "The Narrator and the Memoirist",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1VNJCjCZZSDn3RAlFuPscnajN1DBiZtc6/preview" },
         {
           type: "paragraph",
           content: [

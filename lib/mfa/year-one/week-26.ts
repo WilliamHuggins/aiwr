@@ -20,6 +20,7 @@ export const week26Data: WeekData = {
       label: "Craft Lecture",
       title: "Structure Is Meaning",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/118PCF9vCI5aP3Ud5P9FwK3-BTgGFoGu0/preview" },
         {
           type: "paragraph",
           content: [

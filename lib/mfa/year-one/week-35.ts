@@ -20,6 +20,7 @@ export const week35Data: WeekData = {
       label: "Craft Lecture",
       title: "Seeing the Manuscript in the Work",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/13Y-QMV3eZXB1ohjyJCIbJwhG8_Znlt4Y/preview" },
         {
           type: "paragraph",
           content: [

@@ -20,6 +20,7 @@ export const week27Data: WeekData = {
       label: "Craft Lecture",
       title: "The Irreducible Signature",
       blocks: [
+        { type: "audioEmbed", title: "Recorded Craft Lecture", src: "https://drive.google.com/file/d/1nup6Se6dJzdpDCyFNIKjENnUZm2AA4Id/preview" },
         {
           type: "paragraph",
           content: [
